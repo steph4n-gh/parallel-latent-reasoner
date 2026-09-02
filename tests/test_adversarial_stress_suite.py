@@ -477,15 +477,16 @@ def test_egate_extreme_tensor_geometries():
 
 def test_cli_demo_flags_execution():
     """Verify demo.py runs cleanly across various flags without exceptions."""
+    demo_script = str(Path(__file__).resolve().parent.parent / "demo.py")
     cmds = [
-        [sys.executable, "projects/parallel_latent_reasoner/demo.py", "--preset", "compact_test", "--steps", "2", "--slots", "4", "--max-tokens", "4"],
-        [sys.executable, "projects/parallel_latent_reasoner/demo.py", "--case", "mcs_01", "--model", "compact_test", "--steps", "2", "--slots", "4", "--max-tokens", "4"],
-        [sys.executable, "projects/parallel_latent_reasoner/demo.py", "--case", "wsd_01", "--model", "compact_test", "--steps", "2", "--slots", "4", "--max-tokens", "4"],
-        [sys.executable, "projects/parallel_latent_reasoner/demo.py", "--case", "sdn_01", "--model", "compact_test", "--steps", "2", "--slots", "4", "--max-tokens", "4"],
-        [sys.executable, "projects/parallel_latent_reasoner/demo.py", "--case", "cms_01", "--model", "compact_test", "--steps", "2", "--slots", "4", "--max-tokens", "4"],
-        [sys.executable, "projects/parallel_latent_reasoner/demo.py", "--case", "atr_01", "--model", "compact_test", "--steps", "2", "--slots", "4", "--max-tokens", "4"],
-        [sys.executable, "projects/parallel_latent_reasoner/demo.py", "--domain", "multi_constraint", "--model", "compact_test", "--steps", "2", "--slots", "4", "--max-tokens", "2"],
-        [sys.executable, "projects/parallel_latent_reasoner/demo.py", "--no-gate", "--steps", "2", "--slots", "4", "--max-tokens", "2"],
+        [sys.executable, demo_script, "--preset", "compact_test", "--steps", "2", "--slots", "4", "--max-tokens", "4"],
+        [sys.executable, demo_script, "--case", "mcs_01", "--model", "compact_test", "--steps", "2", "--slots", "4", "--max-tokens", "4"],
+        [sys.executable, demo_script, "--case", "wsd_01", "--model", "compact_test", "--steps", "2", "--slots", "4", "--max-tokens", "4"],
+        [sys.executable, demo_script, "--case", "sdn_01", "--model", "compact_test", "--steps", "2", "--slots", "4", "--max-tokens", "4"],
+        [sys.executable, demo_script, "--case", "cms_01", "--model", "compact_test", "--steps", "2", "--slots", "4", "--max-tokens", "4"],
+        [sys.executable, demo_script, "--case", "atr_01", "--model", "compact_test", "--steps", "2", "--slots", "4", "--max-tokens", "4"],
+        [sys.executable, demo_script, "--domain", "multi_constraint", "--model", "compact_test", "--steps", "2", "--slots", "4", "--max-tokens", "2"],
+        [sys.executable, demo_script, "--no-gate", "--steps", "2", "--slots", "4", "--max-tokens", "2"],
     ]
 
     for cmd in cmds:
@@ -496,8 +497,9 @@ def test_cli_demo_flags_execution():
 
 def test_cli_demo_invalid_args_exit_code():
     """Verify demo.py gracefully exits with non-zero code on invalid case or domain."""
+    demo_script = str(Path(__file__).resolve().parent.parent / "demo.py")
     res_bad_case = subprocess.run(
-        [sys.executable, "projects/parallel_latent_reasoner/demo.py", "--case", "nonexistent_case_123"],
+        [sys.executable, demo_script, "--case", "nonexistent_case_123"],
         capture_output=True,
         text=True,
     )
@@ -505,7 +507,7 @@ def test_cli_demo_invalid_args_exit_code():
     assert "not found in cognitive suite" in res_bad_case.stderr
 
     res_bad_domain = subprocess.run(
-        [sys.executable, "projects/parallel_latent_reasoner/demo.py", "--domain", "invalid_domain_xyz"],
+        [sys.executable, demo_script, "--domain", "invalid_domain_xyz"],
         capture_output=True,
         text=True,
     )
@@ -515,12 +517,13 @@ def test_cli_demo_invalid_args_exit_code():
 
 def test_cli_run_large_gemma_eval_quick_execution(tmp_path):
     """Verify run_large_gemma_eval.py executes cleanly in quick mode and generates valid artifacts."""
+    run_large_script = str(Path(__file__).resolve().parent.parent / "run_large_gemma_eval.py")
     out_json = tmp_path / "test_suite_results.json"
     out_md = tmp_path / "test_suite_report.md"
 
     cmd = [
         sys.executable,
-        "projects/parallel_latent_reasoner/run_large_gemma_eval.py",
+        run_large_script,
         "--model", "compact_test",
         "--quick",
         "--steps", "4",

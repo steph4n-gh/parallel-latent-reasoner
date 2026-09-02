@@ -307,12 +307,15 @@ def evaluate_preset(
     load_trained_adapter: bool = False,
 ) -> BenchmarkResult:
     """Run comparative benchmark for a single scale preset."""
+    # Load trained adapter only if matching scale preset (compact_test has dim=256)
+    effective_load_adapter = load_trained_adapter and (adapter_path is not None or preset_name == "compact_test")
+
     pipeline = PRLRPipeline.from_preset(
         preset=preset_name,
         num_memory_slots=num_slots,
         deliberation_steps=num_steps,
         adapter_path=adapter_path,
-        load_trained_adapter=load_trained_adapter,
+        load_trained_adapter=effective_load_adapter,
         compile_engine=True,
     )
     config = pipeline.config

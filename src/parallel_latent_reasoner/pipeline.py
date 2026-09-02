@@ -61,6 +61,21 @@ class HybridDeliberationResult:
     mode: str = "hybrid_deliberate_then_verify"
 
     @property
+    def verified_response_text(self) -> str:
+        """Contract property alias for decoded_text."""
+        return self.decoded_text
+
+    @property
+    def deliberation_trajectory(self) -> list[mx.array] | None:
+        """Contract property alias for trajectory_states."""
+        return self.trajectory_states
+
+    @property
+    def latency_metrics(self) -> dict[str, float]:
+        """Contract property alias for latency_breakdown."""
+        return self.latency_breakdown
+
+    @property
     def metrics(self) -> dict[str, float]:
         """Backward-compatibility alias for DeliberationPipelineOutput.metrics."""
         return self.latency_breakdown
@@ -239,6 +254,9 @@ class PRLRPipeline:
                 token_ids = prompt.astype(mx.int32)
         else:
             raise TypeError(f"Unsupported prompt type: {type(prompt)}")
+
+        if token_ids.shape[1] == 0:
+            raise ValueError("Prompt cannot be empty (0 tokens).")
 
         return token_ids
 

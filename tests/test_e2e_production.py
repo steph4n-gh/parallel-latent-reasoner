@@ -243,27 +243,37 @@ def test_gate_reasoning_speedup_vs_autoregressive_cot():
     model = MLXCompactGemmaModel(config)
     prompt = mx.array([[1, 2, 3, 4, 5, 6, 7, 8]], dtype=mx.int32)
 
-    # Warmup
-    for _ in range(3):
-        model.deliberate(prompt, steps=4)
-
-    # 1. Mode 2: Parallel Latent Deliberation (T=4 parallel sweeps across M=16 slots in SRAM)
-    t0_delib = time.perf_counter()
-    delib_res = model.deliberate(prompt, steps=4)
-    mx.eval(delib_res.final_states)
-    t1_delib = time.perf_counter()
-    prlr_reasoning_ms = (t1_delib - t0_delib) * 1000.0
-
-    # 2. Mode 1: Sequential Autoregressive Reasoning (120 sequential token step forward passes)
-    # Autoregressive generation performs 120 sequential forward passes
     slots, prompt_hiddens = model.prelude(prompt)
     prompt_len = prompt_hiddens.shape[1]
     prompt_kv = model.engine.layers[0].attn.create_prompt_kv(prompt_hiddens)
 
+    # Production JIT compiled deliberation unroll (T=4 parallel sweeps across M=16 slots)
+    unroller = model.engine.compile_unroll(steps=4, prompt_kv=prompt_kv, prompt_len=prompt_len)
+
+    # Warmup
+    for _ in range(5):
+        mx.eval(unroller(slots))
+
+    # 1. Mode 2: Parallel Latent Deliberation
+    delib_latencies = []
+    for _ in range(5):
+        t0_delib = time.perf_counter()
+        delib_res = unroller(slots)
+        mx.eval(delib_res)
+        delib_latencies.append((time.perf_counter() - t0_delib) * 1000.0)
+    prlr_reasoning_ms = sum(delib_latencies) / len(delib_latencies)
+
+    # 2. Mode 1: Sequential Autoregressive Reasoning (200 sequential token step forward passes)
     curr = slots[:, :1, :]
     cot_steps = 200
 
+    # Warmup CoT
+    for step in range(1, 5):
+        curr = model.engine.step(curr, step_idx=step, prompt_kv=prompt_kv, prompt_len=prompt_len + step - 1)
+    mx.eval(curr)
+
     t0_cot = time.perf_counter()
+    curr = slots[:, :1, :]
     for step in range(1, cot_steps + 1):
         curr = model.engine.step(
             curr,

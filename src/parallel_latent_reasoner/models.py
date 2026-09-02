@@ -471,6 +471,8 @@ class MLXPreludeProjection(nn.Module):
             prompt_hiddens = prompt
 
         B, P, D = prompt_hiddens.shape
+        if P == 0:
+            raise ValueError("Prompt sequence length P must be >= 1, got 0.")
         # Pooled contextual representation across prompt tokens
         pooled = mx.mean(prompt_hiddens, axis=1, keepdims=True)  # [B, 1, D]
         context_mod = self.context_proj(pooled)  # [B, 1, D]
@@ -725,6 +727,9 @@ class MLXCompactGemmaModel(nn.Module):
 
         loaded = dict(mx.load(str(path)))
         nested = tree_unflatten(list(loaded.items()))
+        if "engine" in nested and "layers" in nested["engine"] and isinstance(nested["engine"]["layers"], list):
+            n_layers = len(self.engine.layers)
+            nested["engine"]["layers"] = nested["engine"]["layers"][:n_layers]
         self.update(nested)
         return loaded
 

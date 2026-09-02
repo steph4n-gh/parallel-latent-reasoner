@@ -61,6 +61,7 @@ def trainer_config() -> TrainerConfig:
         lambda_align=0.5,
         lambda_aux=0.1,
         max_grad_norm=1.0,
+        save_every_epochs=0,
     )
 
 

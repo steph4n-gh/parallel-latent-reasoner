@@ -289,7 +289,7 @@ def test_decode_solution_text_formatting():
 
 def test_automatic_adapter_loading():
     """Verify automatic loading of production checkpoint prlr_latent_adapter.npz."""
-    ckpt_path = Path("projects/parallel_latent_reasoner/checkpoints/prlr_latent_adapter.npz")
+    ckpt_path = Path(__file__).resolve().parent.parent / "checkpoints" / "prlr_latent_adapter.npz"
     if not ckpt_path.exists():
         pytest.skip("Production checkpoint not found in local path.")
 
@@ -306,7 +306,7 @@ def test_automatic_adapter_loading():
 
 def test_explicit_adapter_path_loading():
     """Verify passing explicit adapter checkpoint path loads and binds weights."""
-    ckpt_path = Path("projects/parallel_latent_reasoner/checkpoints/prlr_latent_adapter.npz")
+    ckpt_path = Path(__file__).resolve().parent.parent / "checkpoints" / "prlr_latent_adapter.npz"
     if not ckpt_path.exists():
         pytest.skip("Production checkpoint not found in local path.")
 
