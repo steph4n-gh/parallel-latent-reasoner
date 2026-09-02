@@ -1,2 +1,2 @@
 preset,dim,num_heads,num_slots,deliberation_steps,steps_executed,matched_cot_tokens,delib_latency_ms,cot_latency_ms,speedup,delib_throughput_eff,cot_throughput,delib_peak_vram_mb,cot_peak_vram_mb,compute_saved_pct,exit_reason,initial_erank,final_erank,final_velocity
-compact_test,256,4,16,8,8,200,2.46,68.93,27.97,81151.0,2901.3,25.5,16.02,0.0,max_steps_timeout,1.03,1.68,0.001698
+compact_test,256,4,16,8,8,200,2.32,54.36,23.46,86307.7,3678.9,21.46,16.04,0.0,max_steps_timeout,1.03,2.24,0.001826
