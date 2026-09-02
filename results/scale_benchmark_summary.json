@@ -1,7 +1,7 @@
 {
   "schema": "prlr.benchmark.v1",
   "metadata": {
-    "timestamp": "2026-09-02T22:55:31Z",
+    "timestamp": "2026-09-02T22:58:51Z",
     "platform": "macOS-26.6-arm64-arm-64bit-Mach-O",
     "processor": "arm",
     "device": "Apple Silicon Metal GPU (Unified Memory)",
@@ -19,19 +19,19 @@
       "num_slots": 16,
       "deliberation_steps": 8,
       "steps_executed": 8,
-      "matched_cot_tokens": 128,
-      "delib_latency_ms": 8.27,
-      "cot_latency_ms": 34.6,
-      "speedup": 4.19,
-      "delib_throughput_eff": 15482.8,
-      "cot_throughput": 3698.9,
-      "delib_peak_vram_mb": 14.83,
-      "cot_peak_vram_mb": 15.98,
+      "matched_cot_tokens": 200,
+      "delib_latency_ms": 4.49,
+      "cot_latency_ms": 46.78,
+      "speedup": 10.41,
+      "delib_throughput_eff": 44520.8,
+      "cot_throughput": 4275.2,
+      "delib_peak_vram_mb": 33.29,
+      "cot_peak_vram_mb": 16.08,
       "compute_saved_pct": 0.0,
       "exit_reason": "max_steps_timeout",
-      "initial_erank": 1.19,
-      "final_erank": 1.78,
-      "final_velocity": 0.001449
+      "initial_erank": 1.24,
+      "final_erank": 2.05,
+      "final_velocity": 0.001654
     }
   ]
 }

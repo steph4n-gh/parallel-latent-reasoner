@@ -109,12 +109,15 @@ def run_prlr_demo_execution(
     show_comparison: bool = True,
 ) -> HybridDeliberationResult:
     """Execute PRLR pipeline with live 3-Signal E-Gate telemetry and grounded answer decoding."""
+    # Guard default adapter loading if non-standard slot count is requested
+    effective_load_trained = load_trained_adapter and (adapter_path is not None or num_slots == 16)
+
     pipeline = PRLRPipeline.from_preset(
         preset=preset,
         num_memory_slots=num_slots,
         deliberation_steps=num_steps,
         adapter_path=adapter_path,
-        load_trained_adapter=load_trained_adapter,
+        load_trained_adapter=effective_load_trained,
     )
     config = pipeline.config
 
