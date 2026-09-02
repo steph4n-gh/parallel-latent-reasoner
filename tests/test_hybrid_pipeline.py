@@ -1,29 +1,34 @@
 """Comprehensive Test Suite for PRLR Hybrid Deliberate-Then-Verify Pipeline and JIT Execution.
 
-Covers Tier 1 (Feature Coverage & Unit Contracts) and Tier 2 (Boundary & Stress Invariants):
-1. Pure Latent Deliberation with 3-Signal Dynamic Consensus E-Gate:
-   - Signal 1: Velocity decay v(t)/v(1) < 0.10.
-   - Signal 2: Coda discrete prediction consensus y_hat^(t) == y_hat^(t-1).
-   - Signal 3: SVD effective rank plateau |delta erank| < 0.005.
-   - Halting dynamics: early exit on simple prompts vs max unrolls on divergent inputs.
-   - Telemetry and exit reason tracking ("3_signal_consensus", "max_steps_timeout").
-2. Hybrid Deliberate-Then-Verify Execution:
-   - Phase 1: High-speed parallel Jacobi sweeps in SRAM cache.
-   - Phase 2: Concise grounded discrete Coda decoding without intermediate CoT tokens.
-   - Output container contracts (token_ids, deliberation_steps, final_states, metrics, diagnostics).
-3. MLX JIT Compilation Stability (@mx.compile):
-   - Static graph unroll verification without shape mutations.
-   - Numerical equivalence between @mx.compile and eager execution.
-4. Boundary & Representation Health Invariants:
-   - Variable batch sizes (B=1, 2, 4), memory slots (M=8, 16, 32), and step limits (T=1..32).
-   - ReZero Lipschitz growth ratio ||S^(T)|| / ||S^(0)|| <= 2.5.
-   - Effective rank health (erank >= 4.0 out of M=16).
-   - Finite activations on extreme inputs (+1e6, -1e6, 1e-12, all zeros).
+Covers:
+1. Pure Latent Deliberation (Mode 1) with 3-Signal Dynamic Consensus E-Gate:
+   - Signal 1: Velocity decay v(t)/v(1) < 0.10
+   - Signal 2: Coda discrete prediction consensus y_hat^(t) == y_hat^(t-1)
+   - Signal 3: SVD effective rank plateau |delta erank| < 0.005
+   - Dynamic consensus halting, patience, and telemetry
+2. Hybrid 'Deliberate-Then-Verify' Execution (Mode 2):
+   - Phase 1: High-speed parallel Jacobi sweeps in SRAM cache
+   - Phase 2: Concise grounded discrete token decoding directly conditioned on thought vector
+   - Structured HybridDeliberationResult contract validation
+   - Interface parity between deliberate_and_verify, deliberate_then_verify, and generate
+3. Automatic and Explicit Adapter Checkpoint Loading:
+   - Automatic discovery of checkpoints/prlr_latent_adapter.npz
+   - Explicit path resolution and parameter binding
+   - FileNotFoundError handling for missing checkpoints
+4. MLX JIT Compilation Stability (@mx.compile):
+   - Static graph unroll verification
+   - Numerical equivalence between JIT compiled and eager execution
+5. Representation Health and Memory Invariants:
+   - Variable batch sizes (B=1, 2, 4) and memory slots (M=8, 16, 32)
+   - ReZero Lipschitz growth ratio ||S^(T)|| / ||S^(0)|| <= 2.5
+   - Effective rank health (erank >= 4.0 out of M=16)
+   - Strictly zero KV-cache growth during deliberation sweeps
 """
 
 from __future__ import annotations
 
 import math
+from pathlib import Path
 import mlx.core as mx
 import mlx.nn as nn
 import numpy as np
@@ -48,6 +53,8 @@ from parallel_latent_reasoner.models import (
 from parallel_latent_reasoner.pipeline import (
     DeliberationPipelineOutput,
     GemmaDeliberationPipeline,
+    HybridDeliberationResult,
+    PRLRPipeline,
 )
 from parallel_latent_reasoner.probes import (
     compute_effective_rank,
@@ -177,46 +184,78 @@ def test_egate_patience_parameter():
 
 
 # ============================================================================
-# Tier 1 Tests: Hybrid Deliberate-Then-Verify Pipeline Execution
+# Tier 1 Tests: PRLRPipeline and Hybrid Execution Interfaces
 # ============================================================================
 
-def test_hybrid_pipeline_e2e_output_structure():
-    """Verify DeliberationPipelineOutput contains all required fields, metrics, and states."""
-    config = GemmaLatentConfig.compact_test()
-    pipeline = GemmaDeliberationPipeline(config=config)
+def test_prlr_pipeline_class_and_alias_parity():
+    """Verify PRLRPipeline and GemmaDeliberationPipeline are functional and identical."""
+    p1 = PRLRPipeline.from_preset("compact_test")
+    p2 = GemmaDeliberationPipeline.from_preset("compact_test")
 
-    prompt = "Test reasoning problem"
-    output = pipeline.generate(
-        prompt,
-        max_new_tokens=8,
-        deliberation_steps=6,
+    assert isinstance(p1, PRLRPipeline)
+    assert isinstance(p2, PRLRPipeline)
+    assert p1.config.dim == p2.config.dim
+
+
+def test_hybrid_deliberate_and_verify_interface():
+    """Verify deliberate_and_verify returns full HybridDeliberationResult with structured fields."""
+    pipeline = PRLRPipeline.from_preset("compact_test")
+    prompt = "Balance 4 items under weight limit 15kg"
+
+    result = pipeline.deliberate_and_verify(
+        prompt=prompt,
+        max_steps=6,
+        generate_tokens=16,
         enable_dynamic_gate=True,
         return_diagnostics=True,
     )
 
-    assert isinstance(output, DeliberationPipelineOutput)
-    assert output.token_ids.shape == (1, 8)
-    assert 2 <= output.deliberation_steps <= 6
-    assert output.final_states.shape == (1, config.num_memory_slots, config.dim)
+    assert isinstance(result, HybridDeliberationResult)
+    assert result.prompt == prompt
+    assert isinstance(result.decoded_text, str)
+    assert result.token_ids.shape == (1, 16)
+    assert 2 <= result.deliberation_steps <= 6
+    assert result.final_states.shape == (1, pipeline.config.num_memory_slots, pipeline.config.dim)
 
-    # Metrics verification
-    assert output.metrics is not None
-    assert "prefill_latency_ms" in output.metrics
-    assert "deliberation_latency_ms" in output.metrics
-    assert "coda_decode_latency_ms" in output.metrics
-    assert "total_latency_ms" in output.metrics
-    assert output.metrics["tokens_generated"] == 8.0
+    # Telemetry and verdict
+    assert result.egate_verdict in ("3_signal_consensus", "max_steps_timeout", "active")
+    assert result.gate_telemetry is not None
+    assert len(result.gate_telemetry) >= 2
 
-    # Diagnostics verification
-    assert output.effective_ranks is not None
-    assert len(output.effective_ranks) == output.deliberation_steps + 1
-    assert output.gate_telemetry is not None
+    # Latency breakdown
+    assert "prefill_latency_ms" in result.latency_breakdown
+    assert "deliberation_latency_ms" in result.latency_breakdown
+    assert "coda_decode_latency_ms" in result.latency_breakdown
+    assert "total_latency_ms" in result.latency_breakdown
+    assert "throughput_tok_per_sec" in result.latency_breakdown
+
+    # Memory stats
+    assert "peak_memory_mb" in result.memory_stats
+    assert "active_memory_mb" in result.memory_stats
+    assert result.memory_stats["kv_cache_growth_pct"] == 0.0
+
+    # Backwards-compatibility aliases
+    assert result.metrics == result.latency_breakdown
+    assert result.thought_trajectory == result.trajectory_states
+
+
+def test_deliberate_then_verify_alias_parity():
+    """Verify deliberate_then_verify behaves identically to deliberate_and_verify."""
+    pipeline = PRLRPipeline.from_preset("compact_test")
+    prompt = mx.array([[10, 20, 30, 40]], dtype=mx.int32)
+
+    res1 = pipeline.deliberate_and_verify(prompt, max_steps=4, generate_tokens=8, temperature=0.0)
+    res2 = pipeline.deliberate_then_verify(prompt, max_steps=4, generate_tokens=8, temperature=0.0)
+
+    mx.eval(res1.token_ids, res2.token_ids)
+    assert mx.array_equal(res1.token_ids, res2.token_ids).item()
+    assert res1.deliberation_steps == res2.deliberation_steps
 
 
 def test_hybrid_decoding_without_intermediate_tokens():
     """Verify pure latent deliberation produces final solution tokens with zero intermediate token emit."""
     config = GemmaLatentConfig.compact_test()
-    pipeline = GemmaDeliberationPipeline(config=config)
+    pipeline = PRLRPipeline(config=config)
 
     prompt = mx.array([[10, 20, 30]], dtype=mx.int32)
     delib_res, telemetry = pipeline.deliberate(prompt, steps=5, return_trajectory=True)
@@ -226,7 +265,6 @@ def test_hybrid_decoding_without_intermediate_tokens():
     assert len(delib_res.trajectory_states) == 6  # S^(0) through S^(5)
     for state in delib_res.trajectory_states:
         assert state.shape == (1, config.num_memory_slots, config.dim)
-        # Verify no NaN or Inf
         mx.eval(state)
         assert not mx.isnan(state).any().item()
         assert not mx.isinf(state).any().item()
@@ -234,13 +272,53 @@ def test_hybrid_decoding_without_intermediate_tokens():
 
 def test_decode_solution_text_formatting():
     """Verify decode_solution helper translates token ID arrays to strings."""
-    config = GemmaLatentConfig.compact_test()
-    pipeline = GemmaDeliberationPipeline(config=config)
+    pipeline = PRLRPipeline.from_preset("compact_test")
 
-    # ASCII token IDs (e.g. ord('H'), ord('i'))
+    # ASCII token IDs (e.g. ord('H'), ord('i'), ord('!'))
     toks = mx.array([[72, 105, 33]], dtype=mx.int32)
     decoded_str = pipeline.decode_solution(toks)
     assert decoded_str == "Hi!"
+
+    # Sequence of ints
+    assert pipeline.decode_solution([65, 66, 67]) == "ABC"
+
+
+# ============================================================================
+# Tier 2 Tests: Adapter Loading & Checkpoint Resolution
+# ============================================================================
+
+def test_automatic_adapter_loading():
+    """Verify automatic loading of production checkpoint prlr_latent_adapter.npz."""
+    ckpt_path = Path("projects/parallel_latent_reasoner/checkpoints/prlr_latent_adapter.npz")
+    if not ckpt_path.exists():
+        pytest.skip("Production checkpoint not found in local path.")
+
+    pipeline = PRLRPipeline.from_preset("compact_test", load_trained_adapter=True)
+    assert pipeline.adapter_loaded is True
+    assert pipeline.adapter_path is not None
+    assert "prlr_latent_adapter" in pipeline.adapter_path
+
+    # Verify forward pass with loaded adapter
+    out = pipeline.deliberate_and_verify("Verify 2 + 2 = 4", max_steps=4, generate_tokens=8)
+    assert out.adapter_loaded is True
+    assert out.token_ids.shape == (1, 8)
+
+
+def test_explicit_adapter_path_loading():
+    """Verify passing explicit adapter checkpoint path loads and binds weights."""
+    ckpt_path = Path("projects/parallel_latent_reasoner/checkpoints/prlr_latent_adapter.npz")
+    if not ckpt_path.exists():
+        pytest.skip("Production checkpoint not found in local path.")
+
+    pipeline = PRLRPipeline.from_preset("compact_test", adapter_path=str(ckpt_path))
+    assert pipeline.adapter_loaded is True
+    assert pipeline.adapter_path == str(ckpt_path)
+
+
+def test_missing_adapter_raises_file_not_found():
+    """Verify passing nonexistent adapter path raises FileNotFoundError."""
+    with pytest.raises(FileNotFoundError):
+        PRLRPipeline.from_preset("compact_test", adapter_path="nonexistent_checkpoint_xyz.npz")
 
 
 # ============================================================================
@@ -284,6 +362,22 @@ def test_mlx_jit_multi_iteration_graph_stability():
         assert not mx.isinf(curr).any().item()
 
 
+def test_jit_compiled_pipeline_execution():
+    """Verify pipeline executes smoothly with compile_engine=True and compile_decoder=True."""
+    p_jit = PRLRPipeline.from_preset("compact_test", compile_engine=True, compile_decoder=True)
+    p_eager = PRLRPipeline.from_preset("compact_test", compile_engine=False, compile_decoder=False)
+
+    # Copy weights for exact parity check
+    p_eager.model.update(p_jit.model.parameters())
+
+    prompt = mx.array([[5, 10, 15, 20]], dtype=mx.int32)
+    out_jit = p_jit.deliberate_and_verify(prompt, max_steps=4, generate_tokens=8, temperature=0.0)
+    out_eager = p_eager.deliberate_and_verify(prompt, max_steps=4, generate_tokens=8, temperature=0.0)
+
+    mx.eval(out_jit.token_ids, out_eager.token_ids)
+    assert mx.array_equal(out_jit.token_ids, out_eager.token_ids).item()
+
+
 # ============================================================================
 # Tier 2 Tests: Boundary Conditions, Scaling & Representation Invariants
 # ============================================================================
@@ -291,20 +385,19 @@ def test_mlx_jit_multi_iteration_graph_stability():
 @pytest.mark.parametrize("batch_size", [1, 2, 4])
 def test_variable_batch_sizes(batch_size: int):
     """Verify pipeline forward and deliberation passes across multiple batch sizes."""
-    config = GemmaLatentConfig.compact_test()
-    pipeline = GemmaDeliberationPipeline(config=config)
+    pipeline = PRLRPipeline.from_preset("compact_test")
 
     prompts = mx.zeros((batch_size, 8), dtype=mx.int32)
     output = pipeline.generate(prompts, max_new_tokens=4, deliberation_steps=3, enable_dynamic_gate=False)
     assert output.token_ids.shape == (batch_size, 4)
-    assert output.final_states.shape == (batch_size, config.num_memory_slots, config.dim)
+    assert output.final_states.shape == (batch_size, pipeline.config.num_memory_slots, pipeline.config.dim)
 
 
 @pytest.mark.parametrize("num_slots", [8, 16, 32])
 def test_variable_memory_slots(num_slots: int):
     """Verify architecture correctly scales with M=8, 16, and 32 working memory slots."""
     config = GemmaLatentConfig.compact_test(num_memory_slots=num_slots)
-    pipeline = GemmaDeliberationPipeline(config=config)
+    pipeline = PRLRPipeline(config=config)
 
     out = pipeline.generate("Problem", max_new_tokens=4, deliberation_steps=3)
     assert out.final_states.shape == (1, num_slots, config.dim)
@@ -336,8 +429,7 @@ def test_rezero_lipschitz_norm_growth_bounded():
 def test_representation_health_effective_rank():
     """Verify deliberated states with diverse slot embeddings maintain effective rank erank >= 4.0."""
     config = GemmaLatentConfig.compact_test(num_memory_slots=16)
-    pipeline = GemmaDeliberationPipeline(config=config)
-    # Initialize distinct learned slot anchors
+    pipeline = PRLRPipeline(config=config)
     pipeline.model.prelude.slot_embeddings = mx.random.normal((1, 16, config.dim))
 
     out = pipeline.generate("Complex optimization query", max_new_tokens=4, deliberation_steps=6, return_diagnostics=True)

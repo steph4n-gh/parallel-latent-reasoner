@@ -22,6 +22,7 @@ import json
 import math
 import re
 from typing import Any, Callable, Dict, List, Optional, Tuple, Union
+import mlx.core as mx
 import pytest
 
 from parallel_latent_reasoner.cognitive_suite import (
@@ -32,387 +33,19 @@ from parallel_latent_reasoner.cognitive_suite import (
     load_cognitive_benchmark_suite,
     verify_test_case_result,
 )
-
-
-# ============================================================================
-# Core Dataset Schema & Reference Generator Models
-# ============================================================================
-
-@dataclass
-class DistillationSample:
-    """Standardized dataset record conforming to prlr.dataset.v1 schema."""
-
-    id: str
-    domain: str
-    subdomain: str
-    prompt: str
-    ground_truth: str
-    teacher_cot: Optional[str]
-    target_solution: str
-    verifier_type: str
-    verifier_config: Dict[str, Any]
-    difficulty: int = 1
-    seed: int = 42
-    metadata: Dict[str, Any] = field(default_factory=dict)
-
-    def to_dict(self) -> Dict[str, Any]:
-        return asdict(self)
-
-    @classmethod
-    def from_dict(cls, data: Dict[str, Any]) -> DistillationSample:
-        return cls(
-            id=data["id"],
-            domain=data["domain"],
-            subdomain=data.get("subdomain", "general"),
-            prompt=data["prompt"],
-            ground_truth=data["ground_truth"],
-            teacher_cot=data.get("teacher_cot") or data.get("teacher_cot_thought"),
-            target_solution=data.get("target_solution") or data.get("target_solution_tokens", data["ground_truth"]),
-            verifier_type=data.get("verifier_type", "exact_match"),
-            verifier_config=data.get("verifier_config", {}),
-            difficulty=data.get("difficulty", 1),
-            seed=data.get("seed", 42),
-            metadata=data.get("metadata", {}),
-        )
-
-
-class ProceduralMultiDomainGenerator:
-    """Procedural task generator producing verifiable samples across all 4 reasoning domains."""
-
-    @staticmethod
-    def generate_multistep_reasoning(seed: int = 101, split: str = "train") -> DistillationSample:
-        """Domain 1: Multi-Step Reasoning & Multi-Clue Synthesis."""
-        if split == "test":
-            # Holdout test domain scenarios
-            prompt = (
-                f"Aerospace Diagnostic #{seed}: Telemetry indicates Hydraulic Actuator failed, which caused Flap Lock. "
-                "Flap Lock forced Manual Override, which triggered Safe Mode. "
-                "What was the initial mechanical failure? Options: [Hydraulic Actuator, Flap Lock, Safe Mode]. "
-                "Respond with only the root cause."
-            )
-            gt = "Hydraulic Actuator"
-            cot = f"Root cause trace: Safe Mode <- Manual Override <- Flap Lock <- Hydraulic Actuator. Initial root cause: {gt}."
-            v_type = "exact_match"
-            v_cfg = {"expected_entity": gt, "case_sensitive": False}
-            subdomain = "aerospace_causal_holdout"
-        else:
-            subdomain_type = seed % 4
-            if subdomain_type == 0:
-                suspects_pool = [
-                    ("Alice", "Bob", "Charlie", "David"),
-                    ("Elena", "Felix", "Grace", "Hector"),
-                    ("Iris", "Jack", "Kira", "Liam"),
-                    ("Maya", "Noah", "Olivia", "Peter"),
-                ]
-                s1, s2, culprit, s4 = suspects_pool[seed % len(suspects_pool)]
-                hour = 7 + (seed % 4)
-                minute = 10 + (seed % 40)
-                prompt = (
-                    f"Incident Report #{seed}: Security breach in Sector {seed % 10 + 1} at {hour}:{minute:02d} PM.\n"
-                    f"- {s1} attended the {hour}:00 PM keynote with 50 witnesses in Auditorium A.\n"
-                    f"- {s2} was logged on a video call from {hour-1}:45 PM to {hour+1}:00 PM.\n"
-                    f"- {culprit} claims they walked alone in the courtyard at {hour}:{minute:02d} PM.\n"
-                    f"- {s4} was in the server room with timestamped badge access logs.\n"
-                    f"Identify the only suspect without a verified alibi. Respond with only the name."
-                )
-                cot = f"Checking alibis: {s1}, {s2}, {s4} have verified logs. {culprit} has no alibi. Conclusion: {culprit}."
-                gt = culprit
-                v_type = "exact_match"
-                v_cfg = {"expected_entity": culprit, "case_sensitive": False}
-                subdomain = "alibi_deduction"
-            elif subdomain_type == 1:
-                root_cause = "Power Surge"
-                prompt = (
-                    f"Diagnostic Telemetry #{seed}: Upstream analysis indicates Power Surge caused Sensor Failure. "
-                    "Sensor Failure triggered Cooling Leak, which led to Emergency Shutdown and Turbine Trip. "
-                    "What was the initial root cause component failure? Respond with only the root cause."
-                )
-                cot = f"Root cause trace: Turbine Trip <- Emergency Shutdown <- Cooling Leak <- Sensor Failure <- Power Surge. Conclusion: {root_cause}."
-                gt = root_cause
-                v_type = "exact_match"
-                v_cfg = {"expected_entity": root_cause, "case_sensitive": False}
-                subdomain = "causal_dependency"
-            elif subdomain_type == 2:
-                prompt = (
-                    f"Kinship Query #{seed}: Arthur is the father of Beatrice. Beatrice is the mother of Charles. "
-                    "Charles is the brother of Daisy. What is the kinship relation of Arthur to Daisy? "
-                    "Options: [father, grandfather, uncle, brother]. Respond with only the relation."
-                )
-                cot = "Arthur is father of mother (Beatrice) of Daisy -> Arthur is grandfather to Daisy. Conclusion: grandfather."
-                gt = "grandfather"
-                v_type = "exact_match"
-                v_cfg = {"expected_entity": "grandfather", "case_sensitive": False}
-                subdomain = "genealogical_kinship"
-            else:
-                prompt = (
-                    f"Metabolic Flux #{seed}: Compound A is converted to Compound B by Enzyme E1. "
-                    "Compound B is converted to Product C by Enzyme E2. If a competitive inhibitor blocks Enzyme E1, "
-                    "what happens to the concentration of Product C? Options: [increases, decreases, remains constant]."
-                )
-                cot = "Inhibiting E1 halts production of B -> lack of B halts production of C -> Product C decreases. Conclusion: decreases."
-                gt = "decreases"
-                v_type = "exact_match"
-                v_cfg = {"expected_entity": "decreases", "case_sensitive": False}
-                subdomain = "biochemical_flux"
-
-        return DistillationSample(
-            id=f"msr_{subdomain}_{seed}",
-            domain="multi_step_reasoning",
-            subdomain=subdomain,
-            prompt=prompt,
-            ground_truth=gt,
-            teacher_cot=cot,
-            target_solution=gt,
-            verifier_type=v_type,
-            verifier_config=v_cfg,
-            difficulty=2,
-            seed=seed,
-            metadata={"split": split, **v_cfg},
-        )
-
-    @staticmethod
-    def generate_constraint_satisfaction(seed: int = 202, split: str = "train") -> DistillationSample:
-        """Domain 2: Constraint Satisfaction & Combinatorial Optimization."""
-        if split == "test":
-            # Holdout server provisioning scenario
-            optimal_servers = ["Node_X", "Node_Z"]
-            prompt = (
-                f"Cloud Infrastructure Allocation #{seed}: Select 2 compute instances providing total RAM >= 64 GB and cost <= $120/mo.\n"
-                "Instances: Node_X (32 GB, $50/mo), Node_Y (16 GB, $30/mo), Node_Z (48 GB, $65/mo).\n"
-                "Output JSON with key 'selected_nodes'."
-            )
-            gt = json.dumps({"selected_nodes": optimal_servers})
-            cot = f"Selecting Node_X + Node_Z yields 80 GB RAM (> 64) for $115/mo (<= $120). Solution: {gt}."
-            v_type = "json_schema"
-            v_cfg = {"expected_fields": {"selected_nodes": optimal_servers}, "required_keys": ["selected_nodes"]}
-            subdomain = "cloud_provisioning_holdout"
-        else:
-            subdomain_type = seed % 4
-            if subdomain_type == 0:
-                optimal_payload = ["Spectrometer", "Magnetometer", "Camera"]
-                prompt = (
-                    f"Payload Optimization #{seed}: Select instrument set maximizing data rate with mass <= 30kg, power <= 85W, "
-                    "including Zone A and Zone B instruments.\n"
-                    "Options: Spectrometer (12kg, 35W, 25Mbps, Zone A), Magnetometer (8kg, 20W, 15Mbps, Zone B), "
-                    "Radar (18kg, 55W, 30Mbps, Zone A), Camera (10kg, 30W, 20Mbps, Zone B).\n"
-                    "Output JSON with key 'selected_instruments'."
-                )
-                gt = json.dumps({"selected_instruments": optimal_payload})
-                cot = f"Optimal spacecraft payload selection evaluated across constraints. Solution: {gt}."
-                v_type = "json_schema"
-                v_cfg = {"expected_fields": {"selected_instruments": optimal_payload}, "required_keys": ["selected_instruments"]}
-                subdomain = "payload_knapsack"
-            elif subdomain_type == 1:
-                selected_paths = ["Path_Alpha", "Path_Gamma"]
-                prompt = (
-                    f"Network Traffic Shaper #{seed}: Choose 2 routing paths achieving total bandwidth >= 300 Mbps and latency <= 25 ms.\n"
-                    "Paths: Path_Alpha (200 Mbps, 15 ms), Path_Beta (100 Mbps, 35 ms), Path_Gamma (150 Mbps, 10 ms).\n"
-                    "Output JSON with key 'active_paths'."
-                )
-                gt = json.dumps({"active_paths": selected_paths})
-                cot = f"Network path selection optimization satisfying latency and bandwidth constraints. Solution: {gt}."
-                v_type = "json_schema"
-                v_cfg = {"expected_fields": {"active_paths": selected_paths}, "required_keys": ["active_paths"]}
-                subdomain = "qos_routing"
-            elif subdomain_type == 2:
-                prompt = (
-                    f"Diophantine Cryptarithm #{seed}: Find unique single-digit positive integers W, X, Y, Z such that "
-                    "W + X = 10, W * X = 21, and W > X. What is the value of W? Respond with only the digit."
-                )
-                gt = "7"
-                cot = "Solving quadratic system: W + X = 10 and W * X = 21. Solutions are 7 and 3. Since W > X, W = 7."
-                v_type = "exact_match"
-                v_cfg = {"expected_entity": "7", "case_sensitive": False}
-                subdomain = "cryptarithm_diophantine"
-            else:
-                prompt = (
-                    f"Lexical Constraint #{seed}: What is the 5-letter word meaning 'a fast-running bird' starting with 'z' and ending with 'a'? "
-                    "Options: [zebra, zonda, zorba]. Respond with only the word."
-                )
-                gt = "zebra"
-                cot = "Searching lexicon for 5-letter animal word starting with 'z' and ending with 'a'. Answer is zebra."
-                v_type = "exact_match"
-                v_cfg = {"expected_entity": "zebra", "case_sensitive": False}
-                subdomain = "lexical_pangram"
-
-        return DistillationSample(
-            id=f"csp_{subdomain}_{seed}",
-            domain="constraint_satisfaction",
-            subdomain=subdomain,
-            prompt=prompt,
-            ground_truth=gt,
-            teacher_cot=cot,
-            target_solution=gt,
-            verifier_type=v_type,
-            verifier_config=v_cfg,
-            difficulty=3,
-            seed=seed,
-            metadata={"split": split, **v_cfg},
-        )
-
-    @staticmethod
-    def generate_entity_disambiguation(seed: int = 303, split: str = "train") -> DistillationSample:
-        """Domain 3: Entity Disambiguation & Semantic Binding."""
-        if split == "test":
-            # Holdout robotics manipulation scenario
-            prompt = (
-                f"Robotics Gripper Telemetry #{seed}: The robotic arm dropped the delicate glass vial onto the steel workbench because it was too slippery.\n"
-                "What does 'it' refer to? Options: [the delicate glass vial, the steel workbench]. Respond with only the referent."
-            )
-            gt = "the delicate glass vial"
-            cot = "Physical affordance analysis: An object slips from a gripper because the object itself is too slippery. 'it' = the delicate glass vial."
-            v_type = "exact_match"
-            v_cfg = {"expected_entity": gt, "case_sensitive": False}
-            subdomain = "robotics_affordance_holdout"
-        else:
-            subdomain_type = seed % 4
-            if subdomain_type == 0:
-                prompt = (
-                    f"Affordance Query #{seed}: The grand piano could not fit through the narrow doorway because it was too wide.\n"
-                    "What does 'it' refer to? Options: [the grand piano, the narrow doorway]. Respond with only the referent."
-                )
-                gt = "the grand piano"
-                cot = "Physical geometry: An object cannot pass through an opening because the object is too wide. Referent is the grand piano."
-                v_type = "exact_match"
-                v_cfg = {"expected_entity": "the grand piano", "case_sensitive": False}
-                subdomain = "winograd_affordance"
-            elif subdomain_type == 1:
-                order_id = f"ORD-{1000 + (seed % 9000)}"
-                prompt = (
-                    f"Support Ticket #{seed}: 'Oh wonderful, my package {order_id} arrived in pieces like a puzzle! "
-                    "I definitely wanted broken glass for dinner. Give me a full REFUND right now!'\n"
-                    "Extract structured JSON with keys 'action' and 'order_id'."
-                )
-                gt = json.dumps({"action": "REFUND", "order_id": order_id})
-                cot = f"Semantic denoising sarcasm detection: Action is REFUND and Order ID is {order_id}."
-                v_type = "json_schema"
-                v_cfg = {"expected_fields": {"action": "REFUND", "order_id": order_id}, "required_keys": ["action", "order_id"]}
-                subdomain = "sarcastic_intent"
-            elif subdomain_type == 2:
-                prompt = (
-                    f"Legal Clause #{seed}: 'The Licensor shall indemnify the Licensee against third-party patent claims, "
-                    "provided the Licensee gives prompt written notice.' Who is obligated to provide indemnity?\n"
-                    "Options: [the Licensor, the Licensee]. Respond with only the party."
-                )
-                gt = "the Licensor"
-                cot = "Contract analysis: The Licensor agrees to indemnify the Licensee. Obligated party: the Licensor."
-                v_type = "exact_match"
-                v_cfg = {"expected_entity": "the Licensor", "case_sensitive": False}
-                subdomain = "legal_indemnity"
-            else:
-                prompt = (
-                    f"Pharmacology Disambiguation #{seed}: Lisinopril and Metoprolol were administered to the patient. "
-                    "Which medication acts as an ACE inhibitor? Options: [Lisinopril, Metoprolol]. Respond with only the drug name."
-                )
-                gt = "Lisinopril"
-                cot = "Biomedical taxonomy: Lisinopril is an ACE inhibitor, while Metoprolol is a beta-blocker. Answer: Lisinopril."
-                v_type = "exact_match"
-                v_cfg = {"expected_entity": "Lisinopril", "case_sensitive": False}
-                subdomain = "biomedical_binding"
-
-        return DistillationSample(
-            id=f"wsd_{subdomain}_{seed}",
-            domain="entity_disambiguation",
-            subdomain=subdomain,
-            prompt=prompt,
-            ground_truth=gt,
-            teacher_cot=cot,
-            target_solution=gt,
-            verifier_type=v_type,
-            verifier_config=v_cfg,
-            difficulty=2,
-            seed=seed,
-            metadata={"split": split, **v_cfg},
-        )
-
-    @staticmethod
-    def generate_arithmetic(seed: int = 404, split: str = "train") -> DistillationSample:
-        """Domain 4: Arithmetic & Quantitative Reasoning."""
-        if split == "test":
-            # Holdout compound chemistry concentration calculation
-            sol_vol = 500
-            solute_pct = 12
-            mass = int(sol_vol * solute_pct / 100)  # 60 grams
-            prompt = (
-                f"Chemistry Laboratory Measurement #{seed}: A solution has a volume of {sol_vol} mL with a solute concentration of {solute_pct}%. "
-                "How many grams of solute are dissolved in the solution?"
-            )
-            gt = str(mass)
-            cot = f"Calculation: {sol_vol} mL * {solute_pct}% = {mass} grams solute dissolved."
-            v_type = "mathematical_constraint"
-            v_cfg = {"target_value": float(mass), "tolerance": 1e-4}
-            subdomain = "chemistry_solution_holdout"
-        else:
-            subdomain_type = seed % 4
-            if subdomain_type == 0:
-                init_apples = 24
-                given_bob = 6
-                sold_alice = (init_apples - given_bob) // 3
-                left = (init_apples - given_bob) - sold_alice
-                prompt = (
-                    f"Word Problem #{seed}: Janet starts with {init_apples} apples. She gives {given_bob} to Bob, "
-                    "and sells 1/3 of the remainder to Alice. How many apples does Janet have left?"
-                )
-                gt = str(left)
-                cot = f"1. Initial: {init_apples}. 2. Minus Bob: {init_apples - given_bob}. 3. Minus 1/3: {left} apples."
-                v_type = "mathematical_constraint"
-                v_cfg = {"target_value": float(left), "tolerance": 1e-4}
-                subdomain = "multi_step_word_problem"
-            elif subdomain_type == 1:
-                p_shirt = 25
-                p_pants = 40
-                discount = 15
-                total = (p_shirt * 2 + p_pants) - discount  # 50 + 40 - 15 = 75
-                prompt = (
-                    f"Commerce Calculation #{seed}: A customer buys 2 shirts at ${p_shirt} each and 1 pair of pants for ${p_pants}. "
-                    f"They apply a coupon for ${discount} off the total. What is the final total in dollars?"
-                )
-                gt = str(total)
-                cot = f"Calculation: 2 * ${p_shirt} + ${p_pants} - ${discount} = ${total}."
-                v_type = "mathematical_constraint"
-                v_cfg = {"target_value": float(total), "tolerance": 1e-4}
-                subdomain = "commerce_pricing"
-            elif subdomain_type == 2:
-                speed = 60
-                hours = 2.5
-                dist = int(speed * hours)  # 150
-                prompt = (
-                    f"Velocity Calculation #{seed}: A vehicle travels at a constant speed of {speed} miles per hour for {hours} hours. "
-                    "How many miles does the vehicle travel?"
-                )
-                gt = str(dist)
-                cot = f"Distance equation: {speed} mph * {hours} hours = {dist} miles."
-                v_type = "mathematical_constraint"
-                v_cfg = {"target_value": float(dist), "tolerance": 1e-4}
-                subdomain = "rate_speed_distance"
-            else:
-                base = 80
-                pct = 15
-                result = int(base * (1 + pct / 100))  # 92
-                prompt = (
-                    f"Percentage Problem #{seed}: A stock price of ${base} increases by {pct}%. "
-                    "What is the new stock price in dollars?"
-                )
-                gt = str(result)
-                cot = f"Percentage calculation: ${base} * (1 + {pct}/100) = ${result}."
-                v_type = "mathematical_constraint"
-                v_cfg = {"target_value": float(result), "tolerance": 1e-4}
-                subdomain = "percentage_ratio"
-
-        return DistillationSample(
-            id=f"arith_{subdomain}_{seed}",
-            domain="arithmetic_reasoning",
-            subdomain=subdomain,
-            prompt=prompt,
-            ground_truth=gt,
-            teacher_cot=cot,
-            target_solution=gt,
-            verifier_type=v_type,
-            verifier_config=v_cfg,
-            difficulty=2,
-            seed=seed,
-            metadata={"split": split, **v_cfg},
-        )
+from parallel_latent_reasoner.config import GemmaLatentConfig
+from parallel_latent_reasoner.dataset import (
+    DistillationSample,
+    PRLRDataLoader,
+    PRLRDataset,
+    ProceduralMultiDomainGenerator,
+    check_split_contamination,
+    generate_distillation_dataset,
+    split_dataset,
+    train_prlr_adapter,
+)
+from parallel_latent_reasoner.models import MLXCompactGemmaModel
+from parallel_latent_reasoner.trainer import TrainerConfig
 
 
 # ============================================================================
@@ -779,3 +412,121 @@ def test_unicode_and_latex_math_in_prompts():
     deserialized = json.loads(serialized)
     assert r"\Delta" in deserialized["prompt"]
     assert r"\sum" in deserialized["prompt"]
+
+
+# ============================================================================
+# Tier 3 Tests: Dataset Loaders, Batch Tensor Shapes, and Metal Training
+# ============================================================================
+
+def test_prlr_dataset_and_dataloader_collate():
+    """Verify PRLRDataset and PRLRDataLoader collation into padded MLX tensor batches."""
+    samples = [
+        ProceduralMultiDomainGenerator.generate_multistep_reasoning(seed=101),
+        ProceduralMultiDomainGenerator.generate_constraint_satisfaction(seed=102),
+        ProceduralMultiDomainGenerator.generate_entity_disambiguation(seed=103),
+        ProceduralMultiDomainGenerator.generate_arithmetic(seed=104),
+        ProceduralMultiDomainGenerator.generate_arithmetic(seed=105),
+    ]
+
+    dataset = PRLRDataset(samples, vocab_size=128, max_prompt_len=128, max_target_len=32)
+    assert len(dataset) == 5
+    assert dataset[0].id == samples[0].id
+
+    loader = PRLRDataLoader(
+        dataset,
+        batch_size=2,
+        shuffle=False,
+        vocab_size=128,
+        dim=64,
+        synthesize_teacher_latents=True,
+    )
+    assert len(loader) == 3
+
+    batches = list(loader)
+    assert len(batches) == 3
+
+    # Batch 1 (size 2)
+    b1 = batches[0]
+    assert "input_ids" in b1
+    assert "target_tokens" in b1
+    assert "teacher_latents" in b1
+    assert b1["input_ids"].ndim == 2
+    assert b1["input_ids"].shape[0] == 2
+    assert b1["target_tokens"].ndim == 2
+    assert b1["target_tokens"].shape[0] == 2
+    assert b1["teacher_latents"].shape == (2, 64)
+
+    # Batch 3 (size 1)
+    b3 = batches[2]
+    assert b3["input_ids"].shape[0] == 1
+    assert b3["target_tokens"].shape[0] == 1
+    assert b3["teacher_latents"].shape == (1, 64)
+
+
+def test_generate_distillation_dataset_distribution_and_splits():
+    """Verify generate_distillation_dataset produces balanced, leak-free splits."""
+    train_s, val_s, test_s = generate_distillation_dataset(
+        total_samples=40, train_ratio=0.8, val_ratio=0.1, test_ratio=0.1, seed=42
+    )
+
+    assert len(train_s) == 32
+    assert len(val_s) == 4
+    assert len(test_s) == 4
+
+    # Verify all samples have 100% verifier compliance on ground truth
+    for s in train_s + val_s + test_s:
+        res = s.verify_ground_truth()
+        assert res.passed is True, f"Sample {s.id} failed verification: {res.feedback}"
+        assert res.score == 1.0
+
+
+def test_split_dataset_helper_ratios():
+    """Verify split_dataset correctly partitions datasets according to custom ratios."""
+    samples = ProceduralMultiDomainGenerator.generate_dataset(num_samples=20, split="train")
+    tr, va, te = split_dataset(samples, train_ratio=0.7, val_ratio=0.2, test_ratio=0.1, seed=123)
+    assert len(tr) == 14
+    assert len(va) == 4
+    assert len(te) == 2
+
+
+def test_distillation_sample_ground_truth_verification_method():
+    """Verify DistillationSample verification methods directly execute programmatic verifiers."""
+    s_arith = ProceduralMultiDomainGenerator.generate_arithmetic(seed=555)
+    res = s_arith.verify_ground_truth()
+    assert res.passed is True
+    assert res.score == 1.0
+
+    # Wrong prediction should fail
+    res_wrong = s_arith.verify_prediction("999999")
+    assert res_wrong.passed is False
+    assert res_wrong.score == 0.0
+
+
+def test_train_prlr_adapter_workflow(tmp_path):
+    """Verify train_prlr_adapter trains on Metal GPU and saves reloadable production weights."""
+    cfg = GemmaLatentConfig.compact_test(vocab_size=128)
+    ckpt_path = tmp_path / "test_prlr_adapter.npz"
+
+    model, summary = train_prlr_adapter(
+        config=cfg,
+        num_samples=20,
+        epochs=2,
+        batch_size=4,
+        unroll_steps=3,
+        checkpoint_path=ckpt_path,
+        verbose=False,
+    )
+
+    assert ckpt_path.exists(), "Checkpoint file was not created!"
+    assert ckpt_path.stat().st_size > 0, "Checkpoint file is empty!"
+    assert summary["epochs"] == 2
+    assert summary["total_steps"] > 0
+    assert "initial_loss" in summary
+    assert "final_loss" in summary
+
+    # Verify reloading weights into a fresh model
+    fresh_model = MLXCompactGemmaModel(cfg)
+    loaded_params = fresh_model.load_adapter_weights(ckpt_path)
+    assert len(loaded_params) > 0
+    assert mx.allclose(fresh_model.prelude.slot_embeddings, model.prelude.slot_embeddings)
+

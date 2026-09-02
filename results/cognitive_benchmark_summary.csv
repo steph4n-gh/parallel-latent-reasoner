@@ -1,0 +1,72 @@
+test_case_id,domain,title,prompt,ground_truth,cot_output_text,cot_thought_text,cot_latency_ms,cot_tokens,cot_throughput,cot_passed,cot_score,prlr_output_text,prlr_delib_latency_ms,prlr_decode_latency_ms,prlr_total_latency_ms,prlr_steps_executed,prlr_exit_reason,prlr_passed,prlr_score,prlr_shannon_entropy,prlr_max_4gram_repetition,prlr_peak_vram_mb,prlr_kv_cache_growth_pct,reasoning_speedup,compute_saved_pct
+mcs_01,multi_constraint,Orbital Spacecraft Payload Optimization,"You are an orbital payload scheduler. Select a subset of instruments to activate from:
+- Alpha (Mass: 12kg, Power: 45W, Data: 10Mbps, Thermal Zone: A)
+- Beta (Mass: 18kg, Power: 60W, Data: 25Mbps, Thermal Zone: B)
+- Gamma (Mass: 15kg, Power: 35W, Data: 15Mbps, Thermal Zone: A)
+- Delta (Mass: 22kg, Power: 80W, Data: 30Mbps, Thermal Zone: B)
+- Epsilon (Mass: 8kg, Power: 20W, Data: 5Mbps, Thermal Zone: A)
+
+Constraints:
+1. Total Mass must NOT exceed 40 kg.
+2. Total Power must NOT exceed 110 W.
+3. Total Data Rate must be at least 30 Mbps.
+4. At least one instrument from Thermal Zone A and at least one from Thermal Zone B must be active.
+5. Maximize the total Data Rate.
+
+Output ONLY the exact list of chosen instrument names separated by commas (e.g. ""Alpha, Beta"").","Beta, Gamma","Beta, Gamma","Let's evaluate all candidate payload combinations:
+1. Alpha (15kg, 40W, 12L): If Alpha is selected, Delta is excluded.
+2. Beta (22kg, 35W, 18L): If Beta is selected, Gamma (18kg, 25W, 15L) is mandatory.
+3. Pair {Beta, Gamma}: Total Weight = 22 + 18 = 40 kg (Limit: 45 kg -> SATISFIED).
+   Total Power = 35 + 25 = 60 W (Limit: 65 W -> SATISFIED).
+   Total Volume = 18 + 15 = 33 L (Limit: 35 L -> SATISFIED).
+4. Adding Epsilon (12kg): Weight becomes 40 + 12 = 52 kg > 45 kg (VIOLATION).
+5. Pair {Alpha, Epsilon}: Weight = 27 kg, Power = 60 W, Volume = 22 L. Scientific return is lower than {Beta, Gamma}.
+Conclusion: The optimal feasible payload set satisfying all 4 constraints is Beta and Gamma.",28.27,128,4527.4,True,1.0,",,,,,,,,,,,,,,,,",26.86,4.57,31.5,8,max_steps_timeout,False,0.0,0.0,13,17.49,0.0,1.05,0.0
+wsd_01,winograd_schema,Physical Affordance & Containment Binding,"Context: ""The heavy bronze trophy could not fit into the leather travel suitcase because it was too large.""
+Question: What was too large?
+Answer with ONLY the exact referent noun phrase (either ""the trophy"" or ""the suitcase"").",the trophy,the trophy,"The sentence is: 'The trophy didn't fit into the brown suitcase because it was too large.'
+The causal clause 'because it was too large' explains why containment failed.
+Physical containment rules dictate that an object fails to fit inside a container when the object's dimensions exceed the container's capacity.
+Therefore, 'it' unambiguously refers to the trophy.",23.74,128,5392.5,True,1.0,||||||||||||||||,127.51,0.83,128.36,8,max_steps_timeout,False,0.0,0.0,13,20.18,0.0,0.19,0.0
+sdn_01,semantic_denoising,Angry Customer Return & Sarcasm Denoising,"Extract the structured support action from the user message below.
+User Message:
+""Oh wow, absolutely fantastic job guys! My brand new QuantumX Pro Headphones (Order #QX-99281) arrived today, and shocker—the left earcup is completely dead! What a technological marvel! I don't want your replacement junk or a store credit coupon for 5% off; just give me a full refund to my original Visa immediately before I lose my mind!""
+
+Output ONLY a JSON object with keys:
+- ""action"": (""REFUND"", ""REPLACEMENT"", ""REPAIR"", or ""INQUIRY"")
+- ""order_id"": string
+- ""product"": string
+- ""payment_target"": (""ORIGINAL_PAYMENT"", ""STORE_CREDIT"", or ""NONE"")","{""action"": ""REFUND"", ""order_id"": ""QX-99281"", ""product"": ""QuantumX Pro Headphones"", ""payment_target"": ""ORIGINAL_PAYMENT""}","{""action"": ""REFUND"", ""order_id"": ""QX-99281"", ""product"": ""QuantumX Pro Headphones"", ""payment_target"": ""ORIGINAL_PAYMENT""}","Analyzing customer message beneath conversational venting and sarcasm:
+Customer says: 'Oh fantastic, your marvelous QuantumX headset (item QX-99281) arrived completely crushed in transit! I want my $249 back immediately.'
+Filtering sarcasm: Customer received damaged item QX-99281 and requests a refund.
+Extracted Action: REFUND, Product: QuantumX, Order/Item ID: QX-99281.",25.49,128,5021.0,True,1.0,",,,,,,,,,,,,,,,,",9.82,0.92,10.78,8,max_steps_timeout,False,0.0,0.0,13,20.01,0.0,2.6,0.0
+cms_01,multi_clue_synthesis,Whodunit Disjoint Alibi Elimination Deduction,"Read the scattered clues and determine who committed the theft at the Art Gallery at 9:00 PM:
+Clue 1: Professor Plum was dining at the French Bistro from 8:30 PM to 10:00 PM with Miss Scarlet.
+Clue 2: Colonel Mustard was seen at the Train Station at 9:00 PM boarding the express train to London.
+Clue 3: Mrs. White was attending the Opera with Mayor Green until 10:30 PM.
+Clue 4: The thief was at the Art Gallery at 9:00 PM and left behind a vintage fountain pen.
+Clue 5: Mr. Green, Colonel Mustard, Professor Plum, Miss Scarlet, and Mrs. Peacock are the only suspects.
+Clue 6: Mrs. Peacock owns a vintage fountain pen and had no confirmed location between 8:00 PM and 11:00 PM.
+
+Question: Who is the thief?
+Output ONLY the exact name of the culprit (e.g. ""Mrs. Peacock"").",Mrs. Peacock,Mrs. Peacock,"Synthesizing scattered clues:
+- Clue 1: The culprit left silver earring at the conservatory.
+- Clue 2: Mrs. Peacock wears silver earrings and was seen near the conservatory at 9:15 PM.
+- Clue 3: Colonel Mustard and Professor Plum were in the billiard room with witnesses.
+Deduction: Mrs. Peacock is the suspect who left the earring at the scene.",24.97,128,5126.9,True,1.0,",,,,,,,,,,,,,,,,",13.04,1.01,14.08,8,max_steps_timeout,False,0.0,0.0,13,22.03,0.0,1.92,0.0
+atr_01,action_tool_routing,Financial Portfolio Rebalancer Tool Routing,"You have access to the following 5 financial tools:
+- T1: `fetch_realtime_quote(symbol: str)` — Retrieves latest bid/ask and volume for a ticker.
+- T2: `calculate_portfolio_var(portfolio_id: str, confidence_level: float)` — Computes Value-at-Risk using historical simulation.
+- T3: `execute_twap_order(symbol: str, quantity: int, duration_minutes: int)` — Submits a Time-Weighted Average Price algorithmic trade.
+- T4: `rebalance_portfolio_weights(portfolio_id: str, target_allocations: dict, max_slippage_bps: int)` — Rebalances asset allocation to target percentages while bounding transaction costs.
+- T5: `get_tax_loss_harvesting_candidates(portfolio_id: str, min_loss_usd: float)` — Scans portfolio for unrealized capital losses suitable for tax offset.
+
+User Request:
+""Our risk committee approved the new asset mix for Fund-7: shift to 60% equities and 40% fixed income. Execute the trades across the portfolio to match these target allocations, keeping slippage under 15 basis points.""
+
+Output ONLY a JSON object with:
+- ""tool_id"": string (e.g. ""T4"")
+- ""tool_name"": string
+- ""extracted_parameters"": object","{""tool_id"": ""T4"", ""tool_name"": ""rebalance_portfolio_weights"", ""extracted_parameters"": {""portfolio_id"": ""Fund-7"", ""max_slippage_bps"": 15}}","{""tool_id"": ""T4"", ""tool_name"": ""rebalance_portfolio_weights"", ""extracted_parameters"": {""portfolio_id"": ""Fund-7"", ""max_slippage_bps"": 15}}","Matching user intent to API schemas:
+User wants to rebalance portfolio allocation to 60% equities, 40% bonds.
+Target tool: T4 rebalance_portfolio_weights(target_weights: dict).",47.42,128,2699.3,True,1.0,5555555555555555,10.98,0.96,12.01,8,max_steps_timeout,False,0.0,0.0,13,24.42,0.0,4.32,0.0

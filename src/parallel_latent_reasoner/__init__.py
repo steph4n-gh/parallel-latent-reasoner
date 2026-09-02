@@ -31,6 +31,8 @@ from parallel_latent_reasoner.models import (
 from parallel_latent_reasoner.pipeline import (
     DeliberationPipelineOutput,
     GemmaDeliberationPipeline,
+    HybridDeliberationResult,
+    PRLRPipeline,
 )
 from parallel_latent_reasoner.probes import (
     TrajectoryAnalysis,
@@ -39,6 +41,16 @@ from parallel_latent_reasoner.probes import (
     compute_slot_cosine_similarity,
     compute_slot_velocity,
     detect_limit_cycle,
+)
+from parallel_latent_reasoner.dataset import (
+    DistillationSample,
+    PRLRDataLoader,
+    PRLRDataset,
+    ProceduralMultiDomainGenerator,
+    check_split_contamination,
+    generate_distillation_dataset,
+    split_dataset,
+    train_prlr_adapter,
 )
 from parallel_latent_reasoner.trainer import (
     PRLRBPTTTrainer,
@@ -71,10 +83,20 @@ __all__ = [
     "DynamicConsensusEGate",
     "GateTelemetry",
     "GateDecision",
+    "PRLRPipeline",
     "GemmaDeliberationPipeline",
+    "HybridDeliberationResult",
     "DeliberationPipelineOutput",
     "TrainerConfig",
     "TrainMetrics",
     "PRLRBPTTTrainer",
+    "DistillationSample",
+    "ProceduralMultiDomainGenerator",
+    "PRLRDataset",
+    "PRLRDataLoader",
+    "split_dataset",
+    "check_split_contamination",
+    "generate_distillation_dataset",
+    "train_prlr_adapter",
     "__version__",
 ]
