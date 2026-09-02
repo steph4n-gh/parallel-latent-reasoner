@@ -299,6 +299,26 @@ projects/parallel_latent_reasoner/
 
 ---
 
-## 9. License
+## 9. Documentation & Scenario Guides
 
-Apache-2.0 License.
+Explore in-depth implementation guides for deploying, tuning, and distilling PRLR:
+
+- [Interactive Terminal Deliberation & Visualizer Guide](docs/guides/quickstart_interactive.md)
+- [Fine-Tuning & Distilling Your Own Model (BPTT)](docs/guides/training_and_distillation.md)
+- [Hybrid Deliberate-Then-Verify for Autonomous Agents](docs/guides/hybrid_agent_reasoning.md)
+- [Tuning the 3-Signal Dynamic Consensus E-Gate](docs/guides/tuning_dynamic_egate.md)
+- [Apple Silicon Hardware & Model Sizing Reference](docs/guides/hardware_and_benchmarks.md)
+
+---
+
+## 10. Community & Citation
+
+- **Contributing**: Please see [CONTRIBUTING.md](CONTRIBUTING.md) for development workflows and testing requirements.
+- **Code of Conduct**: Governed by the Contributor Covenant ([CODE_OF_CONDUCT.md](CODE_OF_CONDUCT.md)).
+- **Citation**: If you use PRLR in your research or systems, please cite using [CITATION.cff](CITATION.cff).
+
+---
+
+## 11. License
+
+Licensed under the Apache License, Version 2.0. See [LICENSE](LICENSE) for details.

@@ -216,7 +216,7 @@ def test_large_gemma_26b_a4b_moe_config_properties():
 
 def test_json_config_files_in_configs_directory():
     """Verify standalone config JSON files exist and instantiate cleanly."""
-    configs_dir = Path("/Volumes/Storage/qan_transformers/projects/parallel_latent_reasoner/configs")
+    configs_dir = Path(__file__).resolve().parent.parent / "configs"
     assert configs_dir.exists(), "configs/ directory must exist"
 
     cfg_12b_path = configs_dir / "gemma_12b_q4.json"

@@ -79,7 +79,7 @@ pytest projects/parallel_latent_reasoner/tests/test_egate_probes.py projects/par
 ============================= test session starts ==============================
 platform darwin -- Python 3.14.4, pytest-9.0.3, pluggy-1.6.0 -- /opt/homebrew/opt/python@3.14/bin/python3.14
 cachedir: .pytest_cache
-rootdir: /Volumes/Storage/qan_transformers/projects/parallel_latent_reasoner
+rootdir: .
 configfile: pyproject.toml
 plugins: xdist-3.8.0, asyncio-1.4.0, langsmith-0.9.3, anyio-4.13.0
 collecting ... collected 54 items

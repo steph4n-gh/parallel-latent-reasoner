@@ -4,7 +4,7 @@
     "timestamp": "2026-09-02T23:18:30.899579+00:00",
     "model_preset": "compact_test",
     "adapter_loaded": true,
-    "adapter_path": "/Volumes/Storage/qan_transformers/projects/parallel_latent_reasoner/checkpoints/prlr_latent_adapter.npz",
+    "adapter_path": "checkpoints/prlr_latent_adapter.npz",
     "platform": "macOS-26.6-arm64-arm-64bit-Mach-O",
     "device": "Apple Silicon Metal GPU (Unified Memory)",
     "num_slots_m": 16,
