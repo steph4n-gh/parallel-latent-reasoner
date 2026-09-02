@@ -10,7 +10,7 @@ readme = "README.md"
 requires-python = ">=3.11"
 license = {text = "Apache-2.0"}
 authors = [
-    {name = "QAN Research Team"}
+    {name = "Parallel Latent Reasoner Contributors"}
 ]
 keywords = [
     "latent-reasoning",
@@ -22,7 +22,7 @@ keywords = [
     "dynamic-e-gate"
 ]
 classifiers = [
-    "Development Status :: 3 - Alpha",
+    "Development Status :: 4 - Beta",
     "Intended Audience :: Science/Research",
     "Programming Language :: Python :: 3",
     "Programming Language :: Python :: 3.11",
@@ -36,15 +36,25 @@ dependencies = [
     "numpy>=1.24.0"
 ]
 
+[project.urls]
+Homepage = "https://github.com/steph4n-gh/parallel-latent-reasoner"
+Repository = "https://github.com/steph4n-gh/parallel-latent-reasoner"
+Issues = "https://github.com/steph4n-gh/parallel-latent-reasoner/issues"
+
 [project.optional-dependencies]
 dev = [
     "pytest>=7.0.0",
-    "pytest-cov>=4.0.0"
+    "pytest-cov>=4.0.0",
+    "build>=1.0.0",
+    "twine>=4.0.0"
+]
+app = [
+    "gradio>=4.0.0"
 ]
 
 [project.scripts]
-prlr-demo = "parallel_latent_reasoner.demo:main"
-prlr-benchmark = "parallel_latent_reasoner.run_benchmark:main"
+prlr-demo = "parallel_latent_reasoner.cli:main_demo"
+prlr-benchmark = "parallel_latent_reasoner.cli:main_benchmark"
 
 [tool.setuptools.packages.find]
 where = ["src"]

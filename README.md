@@ -192,6 +192,15 @@ python run_benchmark.py --presets compact_test,gemma_2b,gemma_9b,gemma_12b
 pytest tests/ -v
 ```
 
+### 5.7 Interactive Web UI (Gradio & HuggingFace Spaces)
+
+Launch the dual-pane interactive web interface locally:
+
+```bash
+pip install gradio
+python app.py
+```
+
 ---
 
 ## 6. Python API Usage
@@ -255,10 +264,14 @@ for tel in output.gate_telemetry:
 projects/parallel_latent_reasoner/
 ├── pyproject.toml                         # Standalone package definition
 ├── README.md                              # Documentation & benchmark guide
+├── app.py                                 # Interactive Gradio web application
 ├── demo.py                                # Interactive CLI visualizer & domain explorer
 ├── run_benchmark.py                       # Automated multi-scale benchmark runner
 ├── run_large_gemma_eval.py                # Large Gemma 4 cognitive suite evaluation runner
 ├── run_deliberation.py                    # Standalone deliberation runner
+├── checkpoints/                           # Serialized BPTT adapter weights (<2 MB)
+│   ├── prlr_latent_adapter.npz            # Production cognitive adapter weights
+│   └── prlr_math_adapter.npz              # BPTT mathematical reasoning adapter weights
 ├── configs/                               # Model scale presets (JSON)
 │   ├── baseline_smoke.json
 │   ├── compact_test.json
@@ -267,6 +280,12 @@ projects/parallel_latent_reasoner/
 │   ├── gemma_12b.json
 │   ├── gemma_12b_q4.json
 │   └── gemma_26b_a4b.json
+├── docs/guides/                           # Comprehensive scenario guides
+│   ├── quickstart_interactive.md
+│   ├── training_and_distillation.md
+│   ├── hybrid_agent_reasoning.md
+│   ├── tuning_dynamic_egate.md
+│   └── hardware_and_benchmarks.md
 ├── src/
 │   └── parallel_latent_reasoner/          # Core MLX package
 │       ├── __init__.py                    # Top-level exports
@@ -279,8 +298,10 @@ projects/parallel_latent_reasoner/
 │       ├── visualizer.py                  # Dual-pane terminal comparison visualizer
 │       ├── cognitive_suite.py             # 25-task cognitive benchmark suite & programmatic verifiers
 │       ├── eval_harness.py                # Dual-mode (AR CoT vs PRLR) evaluation harness
+│       ├── trainer.py                     # Native MLX BPTT distillation engine
+│       ├── dataset.py                     # Multi-domain cognitive & math dataset pipeline
 │       └── benchmark.py                   # Multi-scale benchmark harness
-├── tests/                                 # Comprehensive test suite (54 tests, 100% pass)
+├── tests/                                 # Comprehensive test suite (248 tests, 100% pass)
 │   ├── __init__.py
 │   ├── test_packaging_isolation.py
 │   ├── test_config_models.py
