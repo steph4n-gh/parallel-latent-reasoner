@@ -120,16 +120,16 @@ The empirical benchmark evaluates 25 curated, deterministic test cases across 5 
 
 Evaluated against matched autoregressive Chain-of-Thought (CoT) reasoning:
 
-| Cognitive Domain | Sample Count | CoT Accuracy | PRLR Accuracy | CoT Latency | PRLR Latency | Wall-Clock Speedup | Compute Saved |
-|:---|:---:|:---:|:---:|:---:|:---:|:---:|:---:|
-| **Multi-Constraint Satisfaction (MCS)** | 5 | 100.0% | **100.0%** | 1,432.98 ms | **120.30 ms** | **26.20x** | 66.7% |
-| **Winograd Schema Disambiguation (WSD)** | 5 | 100.0% | **100.0%** | 1,414.79 ms | **112.44 ms** | **26.30x** | 66.7% |
-| **Semantic Denoising (SDN)** | 5 | 100.0% | **100.0%** | 1,421.12 ms | **110.65 ms** | **25.69x** | 66.7% |
-| **Cross-Context Clue Synthesis (CMS)** | 5 | 100.0% | **100.0%** | 1,424.20 ms | **112.18 ms** | **25.63x** | 66.7% |
-| **Action & Tool Routing (ATR)** | 5 | 100.0% | **100.0%** | 1,435.52 ms | **114.47 ms** | **25.50x** | 66.7% |
-| **Suite Overall Average** | **25** | **100.0%** | **100.0%** | **1,425.72 ms** | **114.01 ms** | **25.86x** | **66.7%** |
+| Cognitive Domain | Sample Count | CoT Accuracy | PRLR Accuracy | CoT Latency | PRLR Latency | Wall-Clock Speedup |
+|:---|:---:|:---:|:---:|:---:|:---:|:---:|
+| **Multi-Constraint Satisfaction (MCS)** | 5 | 100.0% | **100.0%** | 43.3 ms | **1.9 ms** | **22.8x** |
+| **Winograd Schema Disambiguation (WSD)** | 5 | 100.0% | **100.0%** | 39.3 ms | **1.5 ms** | **26.2x** |
+| **Semantic Denoising (SDN)** | 5 | 100.0% | **100.0%** | 42.2 ms | **2.1 ms** | **20.1x** |
+| **Cross-Context Clue Synthesis (CMS)** | 5 | 100.0% | **100.0%** | 42.8 ms | **1.8 ms** | **23.8x** |
+| **Action & Tool Routing (ATR)** | 5 | 100.0% | **100.0%** | 41.0 ms | **2.0 ms** | **20.5x** |
+| **Suite Overall Total** | **25** | **100.0%** | **100.0%** | **41.7 ms** | **1.9 ms** | **22.7x** |
 
-*For full side-by-side transcripts and telemetry logs for all 25 test cases, see [`results/BENCHMARK_REPORT_LARGE_GEMMA4.md`](results/BENCHMARK_REPORT_LARGE_GEMMA4.md).*
+*For full side-by-side transcripts and telemetry logs for all 25 test cases, see [`results/BENCHMARK_REPORT_LARGE_GEMMA4.md`](results/BENCHMARK_REPORT_LARGE_GEMMA4.md) and [`BENCHMARK_REPORT.md`](BENCHMARK_REPORT.md).*
 
 ---
 

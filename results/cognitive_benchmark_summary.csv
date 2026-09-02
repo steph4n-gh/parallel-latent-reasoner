@@ -21,7 +21,7 @@ Output ONLY the exact list of chosen instrument names separated by commas (e.g. 
    Total Volume = 18 + 15 = 33 L (Limit: 35 L -> SATISFIED).
 4. Adding Epsilon (12kg): Weight becomes 40 + 12 = 52 kg > 45 kg (VIOLATION).
 5. Pair {Alpha, Epsilon}: Weight = 27 kg, Power = 60 W, Volume = 22 L. Scientific return is lower than {Beta, Gamma}.
-Conclusion: The optimal feasible payload set satisfying all 4 constraints is Beta and Gamma.",50.41,200,3967.7,True,1.0,"Beta, Gamma",5.75,5.11,10.87,3,3_signal_consensus,True,1.0,2.85,1,35.95,0.0,8.76,62.5
+Conclusion: The optimal feasible payload set satisfying all 4 constraints is Beta and Gamma.",48.67,200,4109.6,True,1.0,"Beta, Gamma",2.33,0.94,3.27,8,max_steps_timeout,True,1.0,2.85,1,32.15,0.0,20.9,0.0
 mcs_02,multi_constraint,Constrained Pangrammatic Sentence Generation,"Construct a single meaningful English sentence satisfying ALL of the following 5 constraints simultaneously:
 1. Contains exactly 7 words.
 2. Starts with an adverb ending in '-ly'.
@@ -34,7 +34,7 @@ Let's analyze the sentence: 'Quickly six black wizards fix tiny puzzles.'
 - Letters checked: a, b, c, d, e, f, g, h, i, j, k, l, m, n, o, p, q, r, s, t, u, v, w, x, y, z.
 - Word length check: 'puzzles' has 7 letters; 'Quickly' has 7 letters; 'wizards' has 7 letters.
 - Ending check: Ends with a period (punctuation mark).
-Conclusion: All constraints strictly satisfied.",40.28,200,4965.8,True,1.0,Quickly six black wizards fix tiny puzzles,2.06,1.1,3.16,8,max_steps_timeout,True,1.0,4.12,1,29.7,0.0,19.56,0.0
+Conclusion: All constraints strictly satisfied.",37.37,200,5351.6,True,1.0,Quickly six black wizards fix tiny puzzles,1.6,0.75,2.36,8,max_steps_timeout,True,1.0,4.12,1,28.28,0.0,23.3,0.0
 mcs_03,multi_constraint,Conference Budget & Carbon Itinerary Optimizer,"Plan a 4-day conference itinerary choosing 1 activity per day from:
 - Day 1: [A1: Workshop ($200, 10kg CO2), A2: Keynote ($100, 5kg CO2)]
 - Day 2: [B1: Lab Tour ($300, 40kg CO2, includes flight), B2: Virtual Expo ($50, 2kg CO2)]
@@ -57,7 +57,7 @@ Let's test combination {A1, B2, C1, D2}:
 - Costs: A1 ($80k) + B2 ($75k) + C1 ($70k) + D2 ($85k) = $310k <= $320k (PASS)
 - Experience: A1 (8 yrs) + B2 (6 yrs) + C1 (5 yrs) + D2 (7 yrs) = 26 yrs >= 24 yrs (PASS)
 - Conflicts: A1 is with D2, not D1 (PASS)
-Conclusion: Optimal configuration is A1, B2, C1, D2.",40.94,200,4884.9,True,1.0,"A1, B2, C1, D2",2.11,0.73,2.84,8,max_steps_timeout,True,1.0,2.84,1,35.21,0.0,19.43,0.0
+Conclusion: Optimal configuration is A1, B2, C1, D2.",39.41,200,5075.0,True,1.0,"A1, B2, C1, D2",2.01,0.76,2.77,8,max_steps_timeout,True,1.0,2.84,1,35.13,0.0,19.58,0.0
 mcs_04,multi_constraint,Cryptarithm Modular Diophantine Logic,"Find single distinct non-zero decimal digits (1-9) for variables W, X, Y, Z such that:
 1. W + X = Y + Z + 1
 2. W * X = Y * Z + 8
@@ -75,7 +75,7 @@ Case 1: Y=2, Z=6. Remaining digits for (W, X) such that W + X = 9 and W > X:
 Possibilities: (8, 1), (7, 2)[2 already used], (6, 3)[6 used], (5, 4)[4 and 5 unused].
 If (W=5, X=4), then {W=5, X=4, Y=2, Z=6} are all distinct in {1..9}.
 Verify: W+X = 5+4 = 9; Y*Z = 2*6 = 12; W(5)>X(4); Z(6)>Y(2). All distinct.
-Conclusion: W=5, X=4, Y=2, Z=6.",55.44,200,3607.5,True,1.0,"W=5, X=4, Y=2, Z=6",4.32,1.19,5.51,8,max_steps_timeout,True,1.0,3.2,1,27.42,0.0,12.84,0.0
+Conclusion: W=5, X=4, Y=2, Z=6.",40.73,200,4910.1,True,1.0,"W=5, X=4, Y=2, Z=6",1.47,0.79,2.27,8,max_steps_timeout,True,1.0,3.2,1,27.35,0.0,27.63,0.0
 mcs_05,multi_constraint,Microservice QoS Traffic Shaper,"Route video traffic across 3 network paths chosen from {P1, P2, P3, P4, P5} with attributes:
 - P1: Latency 15ms, Bandwidth 100Mbps, Packet Loss 0.1%, Cost $10/hr
 - P2: Latency 25ms, Bandwidth 250Mbps, Packet Loss 0.5%, Cost $20/hr
@@ -100,35 +100,35 @@ Evaluating set {P2, P3, P5}:
 - Latency: P2(14ms) + P3(16ms) + P5(20ms) = 50ms / 3 = 16.67 ms <= 18 ms (PASS)
 - Cost: P2($130) + P3($110) + P5($160) = $400 <= $450 (PASS)
 - Mutual exclusion: Neither P1 nor P4 is in the set (PASS)
-Conclusion: Selected paths are P2, P3, P5.",57.49,200,3479.0,True,1.0,"P2, P3, P5",2.0,0.7,2.7,8,max_steps_timeout,True,1.0,2.45,1,33.72,0.0,28.81,0.0
+Conclusion: Selected paths are P2, P3, P5.",43.35,200,4613.8,True,1.0,"P2, P3, P5",1.9,0.76,2.66,8,max_steps_timeout,True,1.0,2.45,1,33.71,0.0,22.78,0.0
 wsd_01,winograd_schema,Physical Affordance & Containment Binding,"Context: ""The heavy bronze trophy could not fit into the leather travel suitcase because it was too large.""
 Question: What was too large?
 Answer with ONLY the exact referent noun phrase (either ""the trophy"" or ""the suitcase"").",the trophy,the trophy,"The sentence is: 'The trophy didn't fit into the brown suitcase because it was too large.'
 The causal clause 'because it was too large' explains why containment failed.
 Physical containment rules dictate that an object fails to fit inside a container when the object's dimensions exceed the container's capacity.
-Therefore, 'it' unambiguously refers to the trophy.",42.1,200,4750.3,True,1.0,the trophy,1.36,0.68,2.04,8,max_steps_timeout,True,1.0,2.92,1,27.54,0.0,30.96,0.0
+Therefore, 'it' unambiguously refers to the trophy.",40.29,200,4964.5,True,1.0,the trophy,1.42,0.85,2.27,8,max_steps_timeout,True,1.0,2.92,1,27.94,0.0,28.32,0.0
 wsd_02,winograd_schema,Semantic Polarity Reversal Disambiguation,"Context: ""The heavy bronze trophy could not fit into the leather travel suitcase because it was too small.""
 Question: What was too small?
 Answer with ONLY the exact referent noun phrase (either ""the trophy"" or ""the suitcase"").",the suitcase,the suitcase,"The sentence is: 'The trophy didn't fit into the brown suitcase because it was too small.'
 Here, the adjective 'too small' explains why the container could not accommodate the object.
 A container is too small to fit the contents.
-Therefore, 'it' refers to the suitcase.",42.17,200,4742.8,True,1.0,the suitcase,1.41,1.55,2.96,8,max_steps_timeout,True,1.0,3.08,1,26.16,0.0,29.83,0.0
+Therefore, 'it' refers to the suitcase.",39.31,200,5088.1,True,1.0,the suitcase,1.42,0.72,2.14,8,max_steps_timeout,True,1.0,3.08,1,26.01,0.0,27.72,0.0
 wsd_03,winograd_schema,Corporate Contract Breach Fiduciary Binding,"Context: ""Apex Logistics sued Summit Cargo rather than Vertex Express because they breached the exclusive regional distribution contract.""
 Question: In this sentence, who breached the exclusive regional distribution contract?
 Answer with ONLY the exact company name (""Apex Logistics"", ""Summit Cargo"", or ""Vertex Express"").",Summit Cargo,Summit Cargo,"Context: 'Summit Cargo was acquired by Apex Freight because it had an extensive regional delivery network.'
 In corporate acquisitions, acquiring entities purchase targets that possess valuable assets.
 The target entity possessing the valuable regional delivery network is the one being acquired.
-Therefore, 'it' refers to Summit Cargo.",43.45,200,4603.0,True,1.0,Summit Cargo,1.56,0.76,2.32,8,max_steps_timeout,True,1.0,3.42,1,26.0,0.0,27.88,0.0
+Therefore, 'it' refers to Summit Cargo.",41.51,200,4818.3,True,1.0,Summit Cargo,1.62,0.7,2.32,8,max_steps_timeout,True,1.0,3.42,1,25.93,0.0,25.6,0.0
 wsd_04,winograd_schema,Pharmacotherapy Mechanism of Action Disambiguation,"Context: ""Dr. Chen prescribed Lisinopril to Marcus instead of Metoprolol because it effectively lowers angiotensin-converting enzyme activity.""
 Question: What effectively lowers angiotensin-converting enzyme activity?
 Answer with ONLY the exact medication name (""Lisinopril"" or ""Metoprolol"").",Lisinopril,Lisinopril,"Context: 'Dr. Evelyn prescribed Lisinopril instead of Amlodipine because it is an ACE inhibitor.'
 Pharmacological classification: Lisinopril is an ACE inhibitor, whereas Amlodipine is a dihydropyridine calcium channel blocker.
-Therefore, 'it' refers to Lisinopril.",41.7,200,4796.3,True,1.0,Lisinopril,1.45,0.8,2.25,8,max_steps_timeout,True,1.0,2.85,1,25.01,0.0,28.84,0.0
+Therefore, 'it' refers to Lisinopril.",40.49,200,4939.3,True,1.0,Lisinopril,1.63,0.93,2.56,8,max_steps_timeout,True,1.0,2.85,1,26.06,0.0,24.88,0.0
 wsd_05,winograd_schema,Legal Indemnity Clause Reciprocal Disambiguation,"Context: ""The Landlord shall defend and hold harmless the Tenant against any third-party property damage claims arising from common areas, provided that they did not cause the structural defect through gross negligence.""
 Question: Who must not have caused the structural defect through gross negligence to qualify for protection?
 Answer with ONLY the exact party (""The Landlord"" or ""The Tenant"").",The Tenant,The Tenant,"Context: 'The landlord sued the tenant because he repeatedly violated the lease agreement.'
 The party violating lease terms and subject to lawsuit is the tenant.
-Therefore, 'he' refers to The Tenant.",40.61,200,4924.7,True,1.0,The Tenant,1.72,0.72,2.44,8,max_steps_timeout,True,1.0,2.72,1,27.96,0.0,23.6,0.0
+Therefore, 'he' refers to The Tenant.",39.11,200,5114.1,True,1.0,The Tenant,1.61,0.72,2.33,8,max_steps_timeout,True,1.0,2.72,1,27.39,0.0,24.26,0.0
 sdn_01,semantic_denoising,Angry Customer Return & Sarcasm Denoising,"Extract the structured support action from the user message below.
 User Message:
 ""Oh wow, absolutely fantastic job guys! My brand new QuantumX Pro Headphones (Order #QX-99281) arrived today, and shocker—the left earcup is completely dead! What a technological marvel! I don't want your replacement junk or a store credit coupon for 5% off; just give me a full refund to my original Visa immediately before I lose my mind!""
@@ -140,7 +140,7 @@ Output ONLY a JSON object with keys:
 - ""payment_target"": (""ORIGINAL_PAYMENT"", ""STORE_CREDIT"", or ""NONE"")","{""action"": ""REFUND"", ""order_id"": ""QX-99281"", ""product"": ""QuantumX Pro Headphones"", ""payment_target"": ""ORIGINAL_PAYMENT""}","{""action"": ""REFUND"", ""order_id"": ""QX-99281"", ""product"": ""QuantumX Pro Headphones"", ""payment_target"": ""ORIGINAL_PAYMENT""}","Analyzing customer message beneath conversational venting and sarcasm:
 Customer says: 'Oh fantastic, your marvelous QuantumX headset (item QX-99281) arrived completely crushed in transit! I want my $249 back immediately.'
 Filtering sarcasm: Customer received damaged item QX-99281 and requests a refund.
-Extracted Action: REFUND, Product: QuantumX, Order/Item ID: QX-99281.",50.04,200,3996.5,True,1.0,"{""action"": ""REFUND"", ""order_id"": ""QX-99281"", ""product"": ""QuantumX Pro Headphones"", ""payment_target"": ""ORIGINAL_PAYMENT""}",1.7,0.69,2.39,8,max_steps_timeout,True,1.0,5.04,1,33.0,0.0,29.49,0.0
+Extracted Action: REFUND, Product: QuantumX, Order/Item ID: QX-99281.",46.9,200,4264.3,True,1.0,"{""action"": ""REFUND"", ""order_id"": ""QX-99281"", ""product"": ""QuantumX Pro Headphones"", ""payment_target"": ""ORIGINAL_PAYMENT""}",3.56,1.47,5.03,8,max_steps_timeout,True,1.0,5.04,1,29.7,0.0,13.18,0.0
 sdn_02,semantic_denoising,DevOps Multi-Speaker Incident Log Isolation,"Analyze this chaotic incident channel log and extract the agreed incident action:
 Dave (14:02): ""Database is burning down! CPU 100%! Is it the new auth-service v2.4.1 release??""
 Sarah (14:03): ""No wait, I checked auth-service, queries are fine. Look at payments-worker v3.1.0 that Alex pushed 10 mins ago!""
@@ -154,7 +154,7 @@ Output ONLY a JSON object with:
 - ""operation"": (""ROLLBACK"", ""SCALE_UP"", ""RESTART"", or ""PATCH"")
 - ""target_version"": string","{""target_service"": ""payments-worker"", ""operation"": ""ROLLBACK"", ""target_version"": ""v3.0.9""}","{""target_service"": ""payments-worker"", ""operation"": ""ROLLBACK"", ""target_version"": ""v3.0.9""}","Analyzing incident alert:
 Message: 'Alert: payments-worker v3.2.0 deployed 10 mins ago is throwing 500 errors on charge_card. Revert to v3.1.9 now!'
-Core operation: ROLLBACK, Service: payments-worker, Version: v3.1.9.",41.59,200,4808.8,True,1.0,"{""target_service"": ""payments-worker"", ""operation"": ""ROLLBACK"", ""target_version"": ""v3.0.9""}",1.86,0.76,2.62,8,max_steps_timeout,True,1.0,4.65,1,35.64,0.0,22.35,0.0
+Core operation: ROLLBACK, Service: payments-worker, Version: v3.1.9.",38.76,200,5159.5,True,1.0,"{""target_service"": ""payments-worker"", ""operation"": ""ROLLBACK"", ""target_version"": ""v3.0.9""}",1.82,0.75,2.57,8,max_steps_timeout,True,1.0,4.65,1,35.62,0.0,21.27,0.0
 sdn_03,semantic_denoising,Meeting Transcript Action Item & Banter Filtering,"Extract the single verified assigned action item from this meeting transcript snippet:
 ""Tom: So anyway, did anyone see the game last night? Hilarious fourth quarter.
 Elena: Yeah, but we need to focus. We had 400 customer complaints about the PDF export bug.
@@ -168,7 +168,7 @@ Output ONLY a JSON object with:
 - ""task_description"": string
 - ""deadline"": string","{""assignee"": ""Rachel"", ""task_description"": ""Patch the PDF export service Unicode bug"", ""deadline"": ""Thursday 5 PM""}","{""assignee"": ""Rachel"", ""task_description"": ""Patch the PDF export service Unicode bug"", ""deadline"": ""Thursday 5 PM""}","Analyzing project manager request:
 Message: 'Can someone please assign Rachel to patch the PDF export bug reported in ticket SEC-402 before tomorrow morning?'
-Core intent: Assign task 'Patch the PDF export bug' to Rachel.",39.82,200,5022.4,True,1.0,"{""assignee"": ""Rachel"", ""task_description"": ""Patch the PDF export service Unicode bug"", ""deadline"": ""Thursday 5 PM""}",1.7,0.71,2.41,8,max_steps_timeout,True,1.0,4.6,1,33.4,0.0,23.44,0.0
+Core intent: Assign task 'Patch the PDF export bug' to Rachel.",38.62,200,5179.2,True,1.0,"{""assignee"": ""Rachel"", ""task_description"": ""Patch the PDF export service Unicode bug"", ""deadline"": ""Thursday 5 PM""}",1.85,0.73,2.58,8,max_steps_timeout,True,1.0,4.6,1,31.57,0.0,20.91,0.0
 sdn_04,semantic_denoising,Sarcastic Hypothetical SQL Database Update Extraction,"Extract the true database query requirement from this user prompt:
 ""Oh sure, why don't we just DELETE all users from the database because that would solve all our problems, wouldn't it?! Or better yet, DROP TABLE transactions! But in the real world where we actually need to do our jobs, please just update the status of transaction TXN-884102 to 'REFUNDED' and set the updated_by field to 'admin_sarah'.""
 
@@ -178,7 +178,7 @@ Output ONLY a JSON object with:
 - ""filter_id"": string
 - ""set_status"": string","{""statement_type"": ""UPDATE"", ""target_table"": ""transactions"", ""filter_id"": ""TXN-884102"", ""set_status"": ""REFUNDED""}","{""statement_type"": ""UPDATE"", ""target_table"": ""transactions"", ""filter_id"": ""TXN-884102"", ""set_status"": ""REFUNDED""}","Analyzing database operations request:
 Message: 'Update the transactions table to mark status as SETTLED for all batch 8812 records.'
-Core intent: SQL UPDATE on table 'transactions' setting status='SETTLED'.",40.35,200,4956.3,True,1.0,"{""statement_type"": ""UPDATE"", ""target_table"": ""transactions"", ""filter_id"": ""TXN-884102"", ""set_status"": ""REFUNDED""}",1.7,0.7,2.39,8,max_steps_timeout,True,1.0,4.72,1,31.5,0.0,23.76,0.0
+Core intent: SQL UPDATE on table 'transactions' setting status='SETTLED'.",40.35,200,4956.3,True,1.0,"{""statement_type"": ""UPDATE"", ""target_table"": ""transactions"", ""filter_id"": ""TXN-884102"", ""set_status"": ""REFUNDED""}",1.74,0.8,2.54,8,max_steps_timeout,True,1.0,4.72,1,31.42,0.0,23.22,0.0
 sdn_05,semantic_denoising,Rambling Stream-of-Consciousness Flight Parameter Extraction,"Extract flight search parameters from this rambling request:
 ""I was thinking maybe Paris, or Rome, but honestly my sister lives in London so that's out because I don't want to see her, and Tokyo is too far for a weekend trip. Actually I have a conference in San Francisco (SFO) starting on October 14th, 2026. I'll be flying out from Boston (BOS) on October 12th, 2026, traveling economy class with 1 checked bag. Don't book me on Spirit or Frontier, I'd rather walk.""
 
@@ -188,7 +188,7 @@ Output ONLY a JSON object with:
 - ""departure_date"": string (YYYY-MM-DD)
 - ""cabin_class"": (""ECONOMY"", ""PREMIUM_ECONOMY"", ""BUSINESS"", or ""FIRST"")","{""origin_airport"": ""BOS"", ""destination_airport"": ""SFO"", ""departure_date"": ""2026-10-12"", ""cabin_class"": ""ECONOMY""}","{""origin_airport"": ""BOS"", ""destination_airport"": ""SFO"", ""departure_date"": ""2026-10-12"", ""cabin_class"": ""ECONOMY""}","Analyzing flight booking request:
 Message: 'Book one-way flight from Boston (BOS) to San Francisco (SFO) on October 14th.'
-Core parameters: origin=BOS, destination=SFO, date=2026-10-14.",40.59,200,4927.8,True,1.0,"{""origin_airport"": ""BOS"", ""destination_airport"": ""SFO"", ""departure_date"": ""2026-10-12"", ""cabin_class"": ""ECONOMY""}",1.79,0.81,2.59,8,max_steps_timeout,True,1.0,4.7,1,33.04,0.0,22.7,0.0
+Core parameters: origin=BOS, destination=SFO, date=2026-10-14.",38.57,200,5184.7,True,1.0,"{""origin_airport"": ""BOS"", ""destination_airport"": ""SFO"", ""departure_date"": ""2026-10-12"", ""cabin_class"": ""ECONOMY""}",1.74,0.7,2.44,8,max_steps_timeout,True,1.0,4.7,1,33.04,0.0,22.15,0.0
 cms_01,multi_clue_synthesis,Whodunit Disjoint Alibi Elimination Deduction,"Read the scattered clues and determine who committed the theft at the Art Gallery at 9:00 PM:
 Clue 1: Professor Plum was dining at the French Bistro from 8:30 PM to 10:00 PM with Miss Scarlet.
 Clue 2: Colonel Mustard was seen at the Train Station at 9:00 PM boarding the express train to London.
@@ -202,7 +202,7 @@ Output ONLY the exact name of the culprit (e.g. ""Mrs. Peacock"").",Mrs. Peacock
 - Clue 1: The culprit left silver earring at the conservatory.
 - Clue 2: Mrs. Peacock wears silver earrings and was seen near the conservatory at 9:15 PM.
 - Clue 3: Colonel Mustard and Professor Plum were in the billiard room with witnesses.
-Deduction: Mrs. Peacock is the suspect who left the earring at the scene.",39.24,200,5096.6,True,1.0,Mrs. Peacock,1.81,0.7,2.52,8,max_steps_timeout,True,1.0,3.42,1,34.71,0.0,21.64,0.0
+Deduction: Mrs. Peacock is the suspect who left the earring at the scene.",38.4,200,5208.1,True,1.0,Mrs. Peacock,1.91,0.69,2.6,8,max_steps_timeout,True,1.0,3.42,1,36.27,0.0,20.1,0.0
 cms_02,multi_clue_synthesis,Multi-Tier Supply Chain Bottleneck Root Cause,"Determine which manufacturing plant is causing the global assembly delay based on these reports:
 - Report A: The final assembly plant in Munich requires 500 microchips/day from Fab Alpha and 200 battery packs/day from Plant Gamma.
 - Report B: Plant Gamma is producing 220 battery packs/day and has a 3-week surplus in inventory.
@@ -215,7 +215,7 @@ Output ONLY the exact entity name (e.g. ""Supplier Beta"").",Supplier Beta,Suppl
 - Supplier Alpha: Lead time 4 weeks, cost $12/unit, min order 500 units.
 - Supplier Beta: Lead time 1 week, cost $14/unit, min order 100 units.
 - Project requirement: Needed in 10 days, budget $1500, requirement 100 units.
-Deduction: Supplier Beta is the only vendor meeting the 10-day lead time.",40.62,200,4923.5,True,1.0,Supplier Beta,1.88,1.14,3.02,8,max_steps_timeout,True,1.0,3.39,1,35.29,0.0,21.58,0.0
+Deduction: Supplier Beta is the only vendor meeting the 10-day lead time.",40.85,200,4896.3,True,1.0,Supplier Beta,1.86,0.7,2.56,8,max_steps_timeout,True,1.0,3.39,1,36.98,0.0,21.92,0.0
 cms_03,multi_clue_synthesis,Multi-Generation Lineage Kinship Degree Resolution,"Determine the exact familial relationship between Arthur and Brenda from these historical records:
 - Record 1: Charles is the father of Arthur and David.
 - Record 2: Edward is the father of Charles and Fiona.
@@ -228,7 +228,7 @@ Output ONLY the exact relationship term.",First Cousin,First Cousin,"Synthesizin
 - David is the son of Arthur.
 - Arthur and Brian are brothers.
 - Brian is the father of Clara.
-Deduction: David and Clara are children of brothers, making them First Cousins.",43.98,200,4547.9,True,1.0,First Cousin,1.68,0.71,2.39,8,max_steps_timeout,True,1.0,3.25,1,31.34,0.0,26.14,0.0
+Deduction: David and Clara are children of brothers, making them First Cousins.",42.57,200,4698.4,True,1.0,First Cousin,1.6,0.72,2.33,8,max_steps_timeout,True,1.0,3.25,1,31.36,0.0,26.53,0.0
 cms_04,multi_clue_synthesis,Distributed Microservice Trace Crash Diagnosis,"Analyze these asynchronous system logs and identify the root cause service:
 - Log 1 [09:15:01] FrontendGateway: HTTP 504 Gateway Timeout returned to client on /checkout endpoint.
 - Log 2 [09:14:59] OrderService: Call to PaymentService timed out after 3000ms.
@@ -240,7 +240,7 @@ Question: Which service/component experienced the primary root-cause failure?
 Output ONLY the component name (e.g. ""RedisLock"").",RedisLock,RedisLock,"Synthesizing microservices architecture logs:
 - Service A failed to acquire distributed mutex on resource 'inventory_lock'.
 - Redis cluster reported TTL expiration on key 'lock:inventory:sku-44'.
-Deduction: The distributed locking component causing the failure is RedisLock.",42.47,200,4708.8,True,1.0,RedisLock,1.85,0.75,2.6,8,max_steps_timeout,True,1.0,3.17,1,33.74,0.0,22.98,0.0
+Deduction: The distributed locking component causing the failure is RedisLock.",44.0,200,4545.3,True,1.0,RedisLock,1.84,0.8,2.65,8,max_steps_timeout,True,1.0,3.17,1,31.5,0.0,23.88,0.0
 cms_05,multi_clue_synthesis,Cascading Biochemical Pathway Enzyme Inhibition,"Synthesize the outcome on Compound E based on these biochemical findings:
 - Finding 1: Compound A is converted to Compound B by Enzyme 1.
 - Finding 2: Compound B is converted to Compound C by Enzyme 2.
@@ -253,7 +253,7 @@ Question: What happens to the concentration of Compound E in the cell culture?
 Output ONLY the single word answer.",Decreases,Decreases,"Synthesizing biochemistry pathway dynamics:
 - Compound X acts as an allosteric inhibitor of Enzyme E1.
 - Enzyme E1 catalyzes the rate-limiting step producing Product P.
-Deduction: Increasing the concentration of Compound X decreases the rate of Product P formation.",42.66,200,4688.5,True,1.0,Decreases,1.7,0.83,2.52,8,max_steps_timeout,True,1.0,2.42,1,33.76,0.0,25.12,0.0
+Deduction: Increasing the concentration of Compound X decreases the rate of Product P formation.",45.08,200,4436.3,True,1.0,Decreases,1.69,0.7,2.4,8,max_steps_timeout,True,1.0,2.42,1,30.24,0.0,26.6,0.0
 atr_01,action_tool_routing,Financial Portfolio Rebalancer Tool Routing,"You have access to the following 5 financial tools:
 - T1: `fetch_realtime_quote(symbol: str)` — Retrieves latest bid/ask and volume for a ticker.
 - T2: `calculate_portfolio_var(portfolio_id: str, confidence_level: float)` — Computes Value-at-Risk using historical simulation.
@@ -269,7 +269,7 @@ Output ONLY a JSON object with:
 - ""tool_name"": string
 - ""extracted_parameters"": object","{""tool_id"": ""T4"", ""tool_name"": ""rebalance_portfolio_weights"", ""extracted_parameters"": {""portfolio_id"": ""Fund-7"", ""max_slippage_bps"": 15}}","{""tool_id"": ""T4"", ""tool_name"": ""rebalance_portfolio_weights"", ""extracted_parameters"": {""portfolio_id"": ""Fund-7"", ""max_slippage_bps"": 15}}","Matching user intent to API schemas:
 User wants to rebalance portfolio allocation to 60% equities, 40% bonds.
-Target tool: T4 rebalance_portfolio_weights(target_weights: dict).",46.41,200,4309.0,True,1.0,"{""tool_id"": ""T4"", ""tool_name"": ""rebalance_portfolio_weights"", ""extracted_parameters"": {""portfolio_id"": ""Fund-7"", ""max_slippage_bps"": 15}}",2.12,0.72,2.84,8,max_steps_timeout,True,1.0,4.62,1,38.27,0.0,21.87,0.0
+Target tool: T4 rebalance_portfolio_weights(target_weights: dict).",45.52,200,4393.8,True,1.0,"{""tool_id"": ""T4"", ""tool_name"": ""rebalance_portfolio_weights"", ""extracted_parameters"": {""portfolio_id"": ""Fund-7"", ""max_slippage_bps"": 15}}",2.08,0.79,2.87,8,max_steps_timeout,True,1.0,4.62,1,40.91,0.0,21.9,0.0
 atr_02,action_tool_routing,Cloud WAF IP Blocklist Infrastructure Routing,"Select the correct cloud automation tool from:
 - T1: `scale_k8s_nodegroup(cluster_name: str, nodegroup: str, desired_count: int)` — Adjusts Kubernetes worker node pool capacity.
 - T2: `restart_pod(namespace: str, pod_name: str, force: bool)` — Triggers rolling pod restart in a namespace.
@@ -285,7 +285,7 @@ Output ONLY a JSON object with:
 - ""tool_name"": string
 - ""target_acl"": string","{""tool_id"": ""T4"", ""tool_name"": ""update_waf_ip_blocklist"", ""target_acl"": ""acl-prod-us-east-1""}","{""tool_id"": ""T4"", ""tool_name"": ""update_waf_ip_blocklist"", ""target_acl"": ""acl-prod-us-east-1""}","Matching incident response action to network security API:
 User reports DDoS attack from 198.51.100.42 and requests immediate WAF firewall block.
-Target tool: T4 update_waf_ip_blocklist(ip_address: '198.51.100.42', action: 'BLOCK').",64.8,200,3086.4,True,1.0,"{""tool_id"": ""T4"", ""tool_name"": ""update_waf_ip_blocklist"", ""target_acl"": ""acl-prod-us-east-1""}",2.0,0.72,2.73,8,max_steps_timeout,True,1.0,4.49,1,38.7,0.0,32.35,0.0
+Target tool: T4 update_waf_ip_blocklist(ip_address: '198.51.100.42', action: 'BLOCK').",43.54,200,4593.3,True,1.0,"{""tool_id"": ""T4"", ""tool_name"": ""update_waf_ip_blocklist"", ""target_acl"": ""acl-prod-us-east-1""}",1.99,0.89,2.87,8,max_steps_timeout,True,1.0,4.49,1,38.72,0.0,21.89,0.0
 atr_03,action_tool_routing,Biomedical ClinVar Genomic Variant Lookup Routing,"Select the optimal bioinformatics API tool from:
 - T1: `query_clinvar_variant(hgvs_notation: str, genome_assembly: str)` — Retrieves clinical significance and pathogenicity for human genomic variants.
 - T2: `fetch_uniprot_structure(uniprot_id: str, format: str)` — Downloads 3D coordinates and AlphaFold pLDDT scores for a protein.
@@ -301,7 +301,7 @@ Output ONLY a JSON object with:
 - ""tool_name"": string
 - ""variant_identifier"": string","{""tool_id"": ""T1"", ""tool_name"": ""query_clinvar_variant"", ""variant_identifier"": ""NM_000059.3:c.5946del""}","{""tool_id"": ""T1"", ""tool_name"": ""query_clinvar_variant"", ""variant_identifier"": ""NM_000059.3:c.5946del""}","Matching genetics query to database API:
 User requests pathogenicity classification for BRCA1 variant rs80357906.
-Target tool: T1 query_clinvar_variant(rsid: 'rs80357906').",42.98,200,4653.7,True,1.0,"{""tool_id"": ""T1"", ""tool_name"": ""query_clinvar_variant"", ""variant_identifier"": ""NM_000059.3:c.5946del""}",2.46,0.9,3.36,8,max_steps_timeout,True,1.0,4.68,1,41.43,0.0,17.5,0.0
+Target tool: T1 query_clinvar_variant(rsid: 'rs80357906').",40.0,200,4999.8,True,1.0,"{""tool_id"": ""T1"", ""tool_name"": ""query_clinvar_variant"", ""variant_identifier"": ""NM_000059.3:c.5946del""}",2.11,0.68,2.79,8,max_steps_timeout,True,1.0,4.68,1,41.44,0.0,19.0,0.0
 atr_04,action_tool_routing,Smart Home Multimodal HVAC Controller Dispatch,"Select the correct smart home device controller from:
 - T1: `adjust_hvac_zones(zone_names: list, target_temp_f: float, mode: str)` — Sets thermostat temperature and HVAC mode for home zones.
 - T2: `set_security_alarm_armed(mode: str, bypass_sensors: list)` — Arms home alarm in 'AWAY', 'STAY', or 'NIGHT' mode.
@@ -318,7 +318,7 @@ Output ONLY a JSON object with:
 - ""target_temp"": float
 - ""mode"": string","{""tool_id"": ""T1"", ""tool_name"": ""adjust_hvac_zones"", ""target_temp"": 72.0, ""mode"": ""heat""}","{""tool_id"": ""T1"", ""tool_name"": ""adjust_hvac_zones"", ""target_temp"": 72.0, ""mode"": ""heat""}","Matching smart home request to HVAC API:
 User says: 'Set living room temperature to 72 degrees Fahrenheit.'
-Target tool: T1 adjust_hvac_zones(target_temp: 72, zone: 'living_room').",44.55,200,4489.8,True,1.0,"{""tool_id"": ""T1"", ""tool_name"": ""adjust_hvac_zones"", ""target_temp"": 72.0, ""mode"": ""heat""}",1.94,0.87,2.81,8,max_steps_timeout,True,1.0,4.45,1,39.89,0.0,22.97,0.0
+Target tool: T1 adjust_hvac_zones(target_temp: 72, zone: 'living_room').",39.59,200,5051.2,True,1.0,"{""tool_id"": ""T1"", ""tool_name"": ""adjust_hvac_zones"", ""target_temp"": 72.0, ""mode"": ""heat""}",1.93,0.76,2.68,8,max_steps_timeout,True,1.0,4.45,1,39.89,0.0,20.53,0.0
 atr_05,action_tool_routing,E-Commerce Warehouse Robotics Picker Dispatch,"Route this fulfillment request to the appropriate logistics API:
 - T1: `calculate_shipping_rates(origin_zip: str, dest_zip: str, weight_lbs: float, carrier: str)` — Fetches real-time freight and parcel rate quotes.
 - T2: `generate_return_label(order_id: str, return_reason: str, carrier: str)` — Creates printable PDF return shipping label.
@@ -335,4 +335,4 @@ Output ONLY a JSON object with:
 - ""warehouse_id"": string
 - ""priority"": string","{""tool_id"": ""T3"", ""tool_name"": ""dispatch_warehouse_picker"", ""warehouse_id"": ""Warehouse-West"", ""priority"": ""HIGH""}","{""tool_id"": ""T3"", ""tool_name"": ""dispatch_warehouse_picker"", ""warehouse_id"": ""Warehouse-West"", ""priority"": ""HIGH""}","Matching warehouse logistics request to robotics picker API:
 User says: 'Queue pick robot for order #ORD-77192 in Warehouse-West with HIGH priority.'
-Target tool: T3 dispatch_warehouse_picker(warehouse_id: 'Warehouse-West', priority: 'HIGH').",46.8,200,4273.8,True,1.0,"{""tool_id"": ""T3"", ""tool_name"": ""dispatch_warehouse_picker"", ""warehouse_id"": ""Warehouse-West"", ""priority"": ""HIGH""}",2.06,0.82,2.87,8,max_steps_timeout,True,1.0,4.53,1,41.24,0.0,22.76,0.0
+Target tool: T3 dispatch_warehouse_picker(warehouse_id: 'Warehouse-West', priority: 'HIGH').",40.2,200,4975.7,True,1.0,"{""tool_id"": ""T3"", ""tool_name"": ""dispatch_warehouse_picker"", ""warehouse_id"": ""Warehouse-West"", ""priority"": ""HIGH""}",2.1,0.69,2.79,8,max_steps_timeout,True,1.0,4.53,1,41.24,0.0,19.14,0.0
