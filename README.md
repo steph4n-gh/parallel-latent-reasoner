@@ -314,7 +314,7 @@ Explore in-depth implementation guides for deploying, tuning, and distilling PRL
 ## 10. Community & Citation
 
 - **Contributing**: Please see [CONTRIBUTING.md](CONTRIBUTING.md) for development workflows and testing requirements.
-- **Code of Conduct**: Governed by the Contributor Covenant ([CODE_OF_CONDUCT.md](CODE_OF_CONDUCT.md)).
+- **Code of Conduct**: Governed by the Omarchy philosophy of common sense, mutual respect, and technical merit ([CODE_OF_CONDUCT.md](CODE_OF_CONDUCT.md)).
 - **Citation**: If you use PRLR in your research or systems, please cite using [CITATION.cff](CITATION.cff).
 
 ---
