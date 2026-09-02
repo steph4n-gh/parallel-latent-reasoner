@@ -1,0 +1,20 @@
+{
+  "dim": 256,
+  "intermediate_dim": 512,
+  "num_heads": 4,
+  "num_kv_heads": 4,
+  "head_dim": 64,
+  "vocab_size": 1000,
+  "num_memory_slots": 16,
+  "deliberation_steps": 8,
+  "min_steps": 2,
+  "max_steps": 12,
+  "rezero_alpha": 0.05,
+  "rms_norm_eps": 1e-05,
+  "rope_theta": 10000.0,
+  "num_layers": 1,
+  "tie_word_embeddings": true,
+  "step_embed_dim": 64,
+  "final_logit_softcapping": 30.0,
+  "max_position_embeddings": 8192
+}

@@ -1,0 +1,3 @@
+preset,dim,num_heads,num_slots,deliberation_steps,steps_executed,matched_cot_tokens,delib_latency_ms,cot_latency_ms,speedup,delib_throughput_eff,cot_throughput,delib_peak_vram_mb,cot_peak_vram_mb,compute_saved_pct,exit_reason,initial_erank,final_erank,final_velocity
+compact_test,256,4,16,8,8,128,98.41,511.97,5.2,1300.7,250.0,6.27,6.76,0.0,max_steps_timeout,1.0,1.04,3.7e-05
+gemma_2b,2048,8,16,8,8,128,421.96,4997.85,11.84,303.3,25.6,2347.6,2348.22,0.0,max_steps_timeout,1.0,1.04,3e-05

@@ -1,0 +1,58 @@
+{
+  "schema": "prlr.benchmark.v1",
+  "metadata": {
+    "timestamp": "2026-09-02T21:58:37Z",
+    "platform": "macOS-26.6-arm64-arm-64bit-Mach-O",
+    "processor": "arm",
+    "device": "Apple Silicon Metal GPU (Unified Memory)",
+    "mlx_version": "0.31.2",
+    "num_slots_m": 16,
+    "deliberation_steps_t": 8,
+    "enable_gate": true,
+    "repeats": 1
+  },
+  "results": [
+    {
+      "preset": "compact_test",
+      "dim": 256,
+      "num_heads": 4,
+      "num_slots": 16,
+      "deliberation_steps": 8,
+      "steps_executed": 8,
+      "matched_cot_tokens": 128,
+      "delib_latency_ms": 98.41,
+      "cot_latency_ms": 511.97,
+      "speedup": 5.2,
+      "delib_throughput_eff": 1300.7,
+      "cot_throughput": 250.0,
+      "delib_peak_vram_mb": 6.27,
+      "cot_peak_vram_mb": 6.76,
+      "compute_saved_pct": 0.0,
+      "exit_reason": "max_steps_timeout",
+      "initial_erank": 1.0,
+      "final_erank": 1.04,
+      "final_velocity": 3.7e-05
+    },
+    {
+      "preset": "gemma_2b",
+      "dim": 2048,
+      "num_heads": 8,
+      "num_slots": 16,
+      "deliberation_steps": 8,
+      "steps_executed": 8,
+      "matched_cot_tokens": 128,
+      "delib_latency_ms": 421.96,
+      "cot_latency_ms": 4997.85,
+      "speedup": 11.84,
+      "delib_throughput_eff": 303.3,
+      "cot_throughput": 25.6,
+      "delib_peak_vram_mb": 2347.6,
+      "cot_peak_vram_mb": 2348.22,
+      "compute_saved_pct": 0.0,
+      "exit_reason": "max_steps_timeout",
+      "initial_erank": 1.0,
+      "final_erank": 1.04,
+      "final_velocity": 3e-05
+    }
+  ]
+}

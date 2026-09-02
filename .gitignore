@@ -1,0 +1,31 @@
+# OS & IDE
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+
+# Python & Caches
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Build & Dist
+build/
+dist/
+*.egg-info/
+.eggs/
+
+# Environments
+.venv/
+venv/
+env/
+
+# Large Model Weights & Data Cache
+*.safetensors
+*.bin
+*.pt
+!checkpoints/prlr_latent_adapter.npz
