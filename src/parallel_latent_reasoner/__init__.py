@@ -1,57 +1,14 @@
-"""Parallel Latent Reasoner (PRLR) - Standalone MLX Package.
+"""Parallel Latent Reasoner (PRLR) - Backward Compatibility Facade.
 
-Non-autoregressive continuous latent deliberation on Apple Silicon with the
-3-Signal Dynamic Consensus E-Gate.
+Canonical implementations have moved to the `prlr` namespace:
+- `prlr.kernel`: Pure recurrence kernel & telemetry (model-agnostic)
+- `prlr.compact`: Honest 256D testbed model (CI & synthetic tests)
+- `prlr.gemma`: Genuine pretrained Gemma vertical lane
+- `prlr.manifest`: Cryptographic ModelManifest and hash verifier
 """
 
 from __future__ import annotations
 
-from parallel_latent_reasoner.config import GemmaLatentConfig
-from parallel_latent_reasoner.egate import (
-    DynamicConsensusEGate,
-    DynamicDeliberationGate,
-    GateDecision,
-    GateTelemetry,
-)
-from parallel_latent_reasoner.engine import (
-    DeliberationResult,
-    MLXParallelLatentEngine,
-)
-from parallel_latent_reasoner.models import (
-    MLXAdaRMSNorm,
-    MLXCodaLMHead,
-    MLXCompactGemmaModel,
-    MLXGemmaAttention,
-    MLXGemmaMLP,
-    MLXPreludeProjection,
-    MLXRecurrentGemmaBlock,
-    MLXRMSNorm,
-    sinusoidal_step_embedding,
-)
-from parallel_latent_reasoner.pipeline import (
-    DeliberationPipelineOutput,
-    GemmaDeliberationPipeline,
-    HybridDeliberationResult,
-    PRLRPipeline,
-)
-from parallel_latent_reasoner.probes import (
-    TrajectoryAnalysis,
-    analyze_deliberation_trajectory,
-    compute_effective_rank,
-    compute_slot_cosine_similarity,
-    compute_slot_velocity,
-    detect_limit_cycle,
-)
-from parallel_latent_reasoner.dataset import (
-    DistillationSample,
-    PRLRDataLoader,
-    PRLRDataset,
-    ProceduralMultiDomainGenerator,
-    check_split_contamination,
-    generate_distillation_dataset,
-    split_dataset,
-    train_prlr_adapter,
-)
 from parallel_latent_reasoner.cognitive_suite import (
     CognitiveTestCase,
     DomainType,
@@ -62,10 +19,58 @@ from parallel_latent_reasoner.cognitive_suite import (
     load_cognitive_benchmark_suite,
     verify_test_case_result,
 )
-from parallel_latent_reasoner.trainer import (
+from prlr.compact.config import GemmaLatentConfig
+from prlr.compact.dataset import (
+    DistillationSample,
+    PRLRDataLoader,
+    PRLRDataset,
+    ProceduralMultiDomainGenerator,
+    check_split_contamination,
+    generate_distillation_dataset,
+    split_dataset,
+    train_prlr_adapter,
+)
+from prlr.compact.pipeline import (
+    DeliberationPipelineOutput,
+    GemmaDeliberationPipeline,
+    HybridDeliberationResult,
+    PRLRPipeline,
+)
+from prlr.compact.scratch_model import (
+    MLXCodaLMHead,
+    MLXCompactGemmaModel,
+    MLXPreludeProjection,
+)
+from prlr.compact.trainer import (
     PRLRBPTTTrainer,
     TrainerConfig,
     TrainMetrics,
+)
+from prlr.kernel.engine import (
+    DeliberationResult,
+    MLXParallelLatentEngine,
+)
+from prlr.kernel.gates import (
+    DynamicConsensusEGate,
+    DynamicDeliberationGate,
+    GateDecision,
+    GateTelemetry,
+)
+from prlr.kernel.recurrent_core import (
+    MLXAdaRMSNorm,
+    MLXGemmaAttention,
+    MLXGemmaMLP,
+    MLXRecurrentGemmaBlock,
+    MLXRMSNorm,
+    sinusoidal_step_embedding,
+)
+from prlr.kernel.telemetry import (
+    TrajectoryAnalysis,
+    analyze_deliberation_trajectory,
+    compute_effective_rank,
+    compute_slot_cosine_similarity,
+    compute_slot_velocity,
+    detect_limit_cycle,
 )
 
 __version__ = "0.1.0"

@@ -1,0 +1,6 @@
+{
+  "status": "QUARANTINED",
+  "reason": "Legacy 256D compact model exhibited 0.0% task accuracy and entropy collapse (CLM-01..06).",
+  "governing_rule": "Rule 8 (No success prose on failing metrics), Rule 5 (No unverified models as Gemma).",
+  "archived_checkpoints_dir": "checkpoints/legacy_invalid_objective/"
+}

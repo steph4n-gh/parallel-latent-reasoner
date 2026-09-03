@@ -4,8 +4,8 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "parallel-latent-reasoner"
-version = "0.1.0"
-description = "Parallel Continuous Latent Deliberation with 3-Signal Dynamic E-Gate on Apple Silicon"
+version = "0.1.0a0"
+description = "Experimental Pre-release: Parallel Latent Deliberation with Recurrent Depth on Apple Silicon"
 readme = "README.md"
 requires-python = ">=3.11"
 license = {text = "Apache-2.0"}

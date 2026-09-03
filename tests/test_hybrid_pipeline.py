@@ -306,9 +306,10 @@ def test_automatic_adapter_loading():
 
 def test_explicit_adapter_path_loading():
     """Verify passing explicit adapter checkpoint path loads and binds weights."""
-    ckpt_path = Path(__file__).resolve().parent.parent / "checkpoints" / "prlr_latent_adapter.npz"
+    legacy_path = Path(__file__).resolve().parent.parent / "checkpoints" / "legacy_invalid_objective" / "prlr_latent_adapter.npz"
+    ckpt_path = legacy_path if legacy_path.exists() else (Path(__file__).resolve().parent.parent / "checkpoints" / "prlr_latent_adapter.npz")
     if not ckpt_path.exists():
-        pytest.skip("Production checkpoint not found in local path.")
+        pytest.skip("Production or legacy checkpoint not found in local path.")
 
     pipeline = PRLRPipeline.from_preset("compact_test", adapter_path=str(ckpt_path))
     assert pipeline.adapter_loaded is True

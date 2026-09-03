@@ -167,7 +167,7 @@ def test_multidomain_benchmark_suite_execution_and_gates():
     with tempfile.TemporaryDirectory() as tmpdir:
         suite = MultiDomainBenchmarkSuite(
             preset="compact_test",
-            load_trained_adapter=True,
+            load_trained_adapter=False,
             num_slots=16,
             num_steps=8,
             enable_gate=True,
@@ -221,7 +221,7 @@ def test_generate_benchmark_report_markdown_contents():
     """Verify generate_benchmark_report_markdown generates complete publication-grade report."""
     suite = MultiDomainBenchmarkSuite(
         preset="compact_test",
-        load_trained_adapter=True,
+        load_trained_adapter=False,
         num_slots=16,
         num_steps=8,
         enable_gate=True,
@@ -238,6 +238,75 @@ def test_generate_benchmark_report_markdown_contents():
     assert "## 6. Complete Side-by-Side Textual Transcripts" in report_text
     assert "3-Signal Dynamic Consensus E-Gate Telemetry" in report_text
     assert "✅ PASS" in report_text
+
+    # Verify conditional failure prose emitted when gates fail
+    summary = suite.get_summary_statistics()
+    if not summary.get("accuracy_gate_passed"):
+        assert "⚠️ **VERIFICATION FAILURE REPORT**" in report_text
+        assert "delivers frontier-grade accuracy" not in report_text
+
+
+def test_conditional_prose_emission_with_mocked_summary(monkeypatch):
+    """Verify generate_benchmark_report_markdown emits correct prose for both pass and fail states."""
+    suite = MultiDomainBenchmarkSuite(
+        preset="compact_test",
+        load_trained_adapter=False,
+        quick=True,
+    )
+    # Empty run so records list exists
+    suite.records = []
+
+    # Case 1: Failing gates
+    failing_summary = {
+        "prlr_overall_accuracy_pct": 0.0,
+        "accuracy_gate_passed": False,
+        "mean_reasoning_speedup": 1.2,
+        "speedup_gate_passed": False,
+        "mean_delib_latency_ms": 600.0,
+        "sub_500ms_gate_passed": False,
+        "peak_vram_gb": 8.0,
+        "peak_vram_mb": 8192.0,
+        "vram_gate_passed": False,
+        "kv_growth_gate_passed": False,
+        "mean_shannon_entropy": 0.0,
+        "entropy_gate_passed": False,
+        "max_4gram_repetition": 13,
+        "repetition_gate_passed": False,
+    }
+    monkeypatch.setattr(suite, "get_summary_statistics", lambda: failing_summary)
+    monkeypatch.setattr(suite, "to_ascii_table", lambda: "mock table")
+
+    fail_report = generate_benchmark_report_markdown(domain_suite=suite)
+    assert "⚠️ **VERIFICATION FAILURE REPORT**" in fail_report
+    assert "Multi-Domain Reasoning Accuracy: measured 0.0% (target >= 80.0%, status: ❌ FAIL" in fail_report
+    assert "⚠️ **EVIDENCE GATE FAILURE: DEGENERATE TOKEN COLLAPSE DETECTED**" in fail_report
+    assert "delivers frontier-grade accuracy" not in fail_report
+
+    # Case 2: All gates passing
+    passing_summary = {
+        "prlr_overall_accuracy_pct": 95.0,
+        "accuracy_gate_passed": True,
+        "mean_reasoning_speedup": 22.0,
+        "speedup_gate_passed": True,
+        "mean_delib_latency_ms": 2.5,
+        "sub_500ms_gate_passed": True,
+        "peak_vram_gb": 0.05,
+        "peak_vram_mb": 50.0,
+        "vram_gate_passed": True,
+        "kv_growth_gate_passed": True,
+        "mean_shannon_entropy": 3.5,
+        "entropy_gate_passed": True,
+        "max_4gram_repetition": 1,
+        "repetition_gate_passed": True,
+    }
+    monkeypatch.setattr(suite, "get_summary_statistics", lambda: passing_summary)
+
+    pass_report = generate_benchmark_report_markdown(domain_suite=suite)
+    assert "⚠️ **VERIFICATION FAILURE REPORT**" not in pass_report
+    assert "satisfies all empirical verification gates" in pass_report
+    assert "⚠️ **EVIDENCE GATE FAILURE: DEGENERATE TOKEN COLLAPSE DETECTED**" not in pass_report
+    assert "diverse, non-degenerate token distributions" in pass_report
+
 
 
 # ============================================================================
@@ -305,7 +374,7 @@ def test_demo_execution_hybrid_and_pure_latent():
     out_hybrid = run_prlr_demo_execution(
         prompt="If a train travels 80 km/h for 3 hours, how far does it travel?",
         preset="compact_test",
-        load_trained_adapter=True,
+        load_trained_adapter=False,
         num_slots=16,
         num_steps=4,
         mode="hybrid",
@@ -321,7 +390,7 @@ def test_demo_execution_hybrid_and_pure_latent():
     out_pure = run_prlr_demo_execution(
         prompt="What is 10 + 20?",
         preset="compact_test",
-        load_trained_adapter=True,
+        load_trained_adapter=False,
         num_slots=16,
         num_steps=4,
         mode="pure_latent",

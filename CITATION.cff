@@ -2,9 +2,9 @@ cff-version: 1.2.0
 message: "If you use Parallel Latent Reasoner in your research, please cite it as below."
 authors:
   - name: "Parallel Latent Reasoner Contributors"
-title: "Parallel Latent Reasoner: High-Throughput Continuous Latent Deliberation with Recurrent Depth on Apple Silicon"
-version: 1.0.0
-date-released: 2026-09-02
+title: "Parallel Latent Reasoner: Experimental Pre-release"
+version: 0.1.0-alpha
+date-released: 2026-09-03
 url: "https://github.com/steph4n-gh/parallel-latent-reasoner"
 keywords:
   - apple-silicon

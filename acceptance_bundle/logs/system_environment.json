@@ -1,0 +1,20 @@
+{
+  "hardware": {
+    "device_name": "Apple M4 Pro",
+    "chip_architecture": "arm64",
+    "os_version": "Darwin 25.6.0",
+    "total_ram_gb": 24.0,
+    "metal_device": "Apple M4 Pro"
+  },
+  "git": {
+    "commit_sha": "a90ad7ecebdd7a2f7c9d7d5a84227bd5bc729732",
+    "branch": "optimization5",
+    "is_dirty": true,
+    "source_repo": "https://github.com/steph4n-gh/qan-transformers"
+  },
+  "runtime": {
+    "python": "3.14.4 (main, Apr  7 2026, 13:13:20) [Clang 21.0.0 (clang-2100.0.123.102)]",
+    "mlx": "0.31.2",
+    "numpy": "2.4.6"
+  }
+}

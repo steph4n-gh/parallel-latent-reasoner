@@ -92,14 +92,14 @@ def resolve_domain(query: str) -> Optional[DomainType]:
 
 def default_trained_flag() -> bool:
     """Check whether default trained adapter checkpoint is present."""
-    return DEFAULT_CHECKPOINT_PATH.exists() or (Path("checkpoints/prlr_latent_adapter.npz").exists())
+    return DEFAULT_CHECKPOINT_PATH.exists()
 
 
 def run_prlr_demo_execution(
     prompt: str,
     preset: str = "compact_test",
     adapter_path: Optional[str] = None,
-    load_trained_adapter: bool = True,
+    load_trained_adapter: bool = False,
     num_slots: int = 16,
     num_steps: int = 8,
     mode: str = "hybrid",

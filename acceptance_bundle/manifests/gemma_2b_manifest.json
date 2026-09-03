@@ -1,0 +1,36 @@
+{
+  "model_id": "google/gemma-2b-it",
+  "revision": "96988410cbdaeb8d5093d1ebdc5a8fb563e02bad",
+  "architecture": "GemmaForCausalLM",
+  "source_commit": "a90ad7ecebdd7a2f7c9d7d5a84227bd5bc729732",
+  "is_pretrained": true,
+  "random_init": false,
+  "quantization": "bf16",
+  "weights_path": "/Volumes/Storage/huggingface_cache/hub/models--google--gemma-2b-it/snapshots/96988410cbdaeb8d5093d1ebdc5a8fb563e02bad",
+  "weights_sha256": {
+    "model-00001-of-00002.safetensors": "561656f892a2a1ca0837ca529c5ce820a72b40f4f563b1cd0a1acc0b3899c30c",
+    "model-00002-of-00002.safetensors": "20fe2ee66bf1361241a6c522091a5e0328fc6c1703f93734889fa381fcf8760c"
+  },
+  "tokenizer_path": "/Volumes/Storage/huggingface_cache/hub/models--google--gemma-2b-it/snapshots/96988410cbdaeb8d5093d1ebdc5a8fb563e02bad/tokenizer.model",
+  "tokenizer_sha256": "61a7b147390c64585d6c3543dd6fc636906c9af3865a5548f27f31aee1d4c8e2",
+  "adapter_hash": null,
+  "vocabulary_size": 256000,
+  "hidden_dimension": 2048,
+  "num_layers": 18,
+  "num_heads": 8,
+  "head_dimension": 256,
+  "intermediate_dimension": 16384,
+  "num_kv_heads": 1,
+  "max_position_embeddings": 8192,
+  "bos_token_id": 2,
+  "eos_token_id": 1,
+  "pad_token_id": 0,
+  "runtime_versions": {
+    "python": "3.14.4",
+    "mlx": "0.31.2",
+    "transformers": "5.9.0",
+    "sentencepiece": "0.2.1",
+    "numpy": "2.4.6"
+  },
+  "verification_status": "UNVERIFIED"
+}

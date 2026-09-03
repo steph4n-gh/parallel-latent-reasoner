@@ -1,0 +1,280 @@
+{
+  "schema_version": "prlr.claims.manifest.v1",
+  "total_claims": 31,
+  "counts": {
+    "RETRACTED": 6,
+    "EVIDENCE-BOUND": 2,
+    "VERIFIED": 23
+  },
+  "claims": [
+    {
+      "id": "CLM-01",
+      "title": "Multi-domain reasoning accuracy on compact model",
+      "status": "RETRACTED",
+      "rules": [
+        8,
+        10
+      ]
+    },
+    {
+      "id": "CLM-02",
+      "title": "22x speedup vs Autoregressive CoT",
+      "status": "RETRACTED",
+      "rules": [
+        4,
+        9
+      ]
+    },
+    {
+      "id": "CLM-03",
+      "title": "Zero repetitive token looping & diverse entropy",
+      "status": "RETRACTED",
+      "rules": [
+        8
+      ]
+    },
+    {
+      "id": "CLM-04",
+      "title": "Sub-3ms autonomous agent tool routing",
+      "status": "RETRACTED",
+      "rules": [
+        8
+      ]
+    },
+    {
+      "id": "CLM-05",
+      "title": "Gemma 4 12B Q4 and 26B A4B MoE support",
+      "status": "RETRACTED",
+      "rules": [
+        5
+      ]
+    },
+    {
+      "id": "CLM-06",
+      "title": "Production readiness from 54 passing unit tests",
+      "status": "RETRACTED",
+      "rules": [
+        10
+      ]
+    },
+    {
+      "id": "CLM-07",
+      "title": "Zero KV-cache growth during unrolls",
+      "status": "EVIDENCE-BOUND",
+      "rules": [
+        7,
+        10
+      ]
+    },
+    {
+      "id": "CLM-08",
+      "title": "Sub-5ms recurrent unroll latency on Apple Silicon",
+      "status": "EVIDENCE-BOUND",
+      "rules": [
+        4,
+        6
+      ]
+    },
+    {
+      "id": "CLM-09",
+      "title": "Cryptographic ModelManifest verification",
+      "status": "VERIFIED",
+      "rules": [
+        10
+      ]
+    },
+    {
+      "id": "CLM-10",
+      "title": "Strict Rule 5 anti-cheating & random model rejection",
+      "status": "VERIFIED",
+      "rules": [
+        5
+      ]
+    },
+    {
+      "id": "CLM-11",
+      "title": "System namespace isolation",
+      "status": "VERIFIED",
+      "rules": [
+        10
+      ]
+    },
+    {
+      "id": "CLM-12",
+      "title": "Official Google Gemma 2B backbone loader",
+      "status": "VERIFIED",
+      "rules": [
+        5,
+        10
+      ]
+    },
+    {
+      "id": "CLM-13",
+      "title": "Contextual prompt hidden states",
+      "status": "VERIFIED",
+      "rules": [
+        5
+      ]
+    },
+    {
+      "id": "CLM-14",
+      "title": "Orthogonal slot anchor initialization",
+      "status": "VERIFIED",
+      "rules": [
+        10
+      ]
+    },
+    {
+      "id": "CLM-15",
+      "title": "Scaled nonzero MoE router and expert init",
+      "status": "VERIFIED",
+      "rules": [
+        10
+      ]
+    },
+    {
+      "id": "CLM-16",
+      "title": "Bounded sigmoidal residual scaling",
+      "status": "VERIFIED",
+      "rules": [
+        10
+      ]
+    },
+    {
+      "id": "CLM-17",
+      "title": "100% nonzero gradient flow across adapter",
+      "status": "VERIFIED",
+      "rules": [
+        10
+      ]
+    },
+    {
+      "id": "CLM-18",
+      "title": "Causal prefix decoder with KV caching & EOS",
+      "status": "VERIFIED",
+      "rules": [
+        10
+      ]
+    },
+    {
+      "id": "CLM-19",
+      "title": "Solver-backed deterministic domain lane",
+      "status": "VERIFIED",
+      "rules": [
+        1,
+        2
+      ]
+    },
+    {
+      "id": "CLM-20",
+      "title": "5-way data splits with zero contamination",
+      "status": "VERIFIED",
+      "rules": [
+        1,
+        2
+      ]
+    },
+    {
+      "id": "CLM-21",
+      "title": "Strict ground-truth isolation",
+      "status": "VERIFIED",
+      "rules": [
+        1,
+        2
+      ]
+    },
+    {
+      "id": "CLM-22",
+      "title": "Masked answer cross-entropy training",
+      "status": "VERIFIED",
+      "rules": [
+        10
+      ]
+    },
+    {
+      "id": "CLM-23",
+      "title": "Milestone A 100% exact match overfit",
+      "status": "VERIFIED",
+      "rules": [
+        8,
+        10
+      ]
+    },
+    {
+      "id": "CLM-24",
+      "title": "Milestone B structured syntax overfit",
+      "status": "VERIFIED",
+      "rules": [
+        8,
+        10
+      ]
+    },
+    {
+      "id": "CLM-25",
+      "title": "Milestone C held-out generalization",
+      "status": "VERIFIED",
+      "rules": [
+        8,
+        10
+      ]
+    },
+    {
+      "id": "CLM-26",
+      "title": "Controlled ablations suite",
+      "status": "VERIFIED",
+      "rules": [
+        10
+      ]
+    },
+    {
+      "id": "CLM-27",
+      "title": "Calibrated 4-signal dynamic consensus E-gate",
+      "status": "VERIFIED",
+      "rules": [
+        8,
+        10
+      ]
+    },
+    {
+      "id": "CLM-28",
+      "title": "Benchmark separation: Kernel vs Semantic",
+      "status": "VERIFIED",
+      "rules": [
+        4,
+        9,
+        10
+      ]
+    },
+    {
+      "id": "CLM-29",
+      "title": "Automated CI verification guardrails",
+      "status": "VERIFIED",
+      "rules": [
+        1,
+        2,
+        5,
+        10
+      ]
+    },
+    {
+      "id": "CLM-30",
+      "title": "Single-command reproducible E2E verification runner",
+      "status": "VERIFIED",
+      "rules": [
+        8,
+        9,
+        10
+      ]
+    },
+    {
+      "id": "CLM-31",
+      "title": "Authoritative Signed Claims Registry",
+      "status": "VERIFIED",
+      "rules": [
+        8,
+        9,
+        10
+      ]
+    }
+  ]
+}

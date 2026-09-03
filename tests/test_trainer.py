@@ -50,8 +50,8 @@ def compact_model() -> MLXCompactGemmaModel:
 
 
 @pytest.fixture
-def trainer_config() -> TrainerConfig:
-    """Create a test trainer config."""
+def trainer_config(tmp_path: Path) -> TrainerConfig:
+    """Create a test trainer config isolated to tmp_path."""
     return TrainerConfig(
         learning_rate=2e-3,
         min_learning_rate=1e-5,
@@ -61,6 +61,7 @@ def trainer_config() -> TrainerConfig:
         lambda_align=0.5,
         lambda_aux=0.1,
         max_grad_norm=1.0,
+        checkpoint_dir=tmp_path,
         save_every_epochs=0,
     )
 

@@ -46,7 +46,7 @@ class TestDegenerateAndBoundaryInputs:
 
     @pytest.fixture
     def pipeline(self) -> PRLRPipeline:
-        return PRLRPipeline.from_preset("compact_test", load_trained_adapter=True)
+        return PRLRPipeline.from_preset("compact_test", load_trained_adapter=False)
 
     @pytest.fixture
     def model(self) -> MLXCompactGemmaModel:
@@ -109,7 +109,7 @@ class TestTemperatureAndSamplingExtremes:
 
     @pytest.fixture
     def pipeline(self) -> PRLRPipeline:
-        return PRLRPipeline.from_preset("compact_test", load_trained_adapter=True)
+        return PRLRPipeline.from_preset("compact_test", load_trained_adapter=False)
 
     def test_greedy_deterministic_temperature_zero(self, pipeline: PRLRPipeline):
         """Test greedy argmax decoding at temperature = 0.0."""
@@ -249,7 +249,7 @@ class TestMemoryInvarianceSoak:
 
     def test_multi_cycle_soak_kv_cache_and_vram_invariance(self):
         """Execute 120 consecutive deliberation cycles and verify zero memory leak."""
-        pipeline = PRLRPipeline.from_preset("compact_test", load_trained_adapter=True)
+        pipeline = PRLRPipeline.from_preset("compact_test", load_trained_adapter=False)
 
         # 1. Warmup cycles across shape pool
         for sz in range(4, 16):
@@ -331,7 +331,7 @@ class TestInformationTheoreticBounds:
 
     def test_coda_vocabulary_shannon_entropy_bound(self):
         """Verify Coda LM head output logit distribution has Shannon entropy H >= 1.0 bits."""
-        pipeline = PRLRPipeline.from_preset("compact_test", load_trained_adapter=True)
+        pipeline = PRLRPipeline.from_preset("compact_test", load_trained_adapter=False)
         prompts = [
             "Select the optimal cargo configuration for flight.",
             "Solve the multi-variable diophantine equation.",
@@ -395,8 +395,8 @@ class TestDeliberationLatencyAndSpeedup:
         mean_lat = sum(latencies) / len(latencies)
         assert mean_lat <= 500.0, f"Deliberation latency {mean_lat:.2f} ms exceeded 500 ms ceiling!"
 
-    def test_deliberation_speedup_vs_autoregressive_cot(self):
-        """Verify parallel latent deliberation achieves >= 15.0x speedup over sequential CoT token generation."""
+    def test_prlr_parallel_reasoning_speedup_vs_baseline(self):
+        """Verify parallel latent deliberation achieves >= 15.0x speedup over serial recurrent baseline."""
         config = GemmaLatentConfig.compact_test()
         model = MLXCompactGemmaModel(config)
         prompt = mx.array([[1, 2, 3, 4, 5, 6, 7, 8]], dtype=mx.int32)
@@ -421,18 +421,18 @@ class TestDeliberationLatencyAndSpeedup:
             delib_latencies.append((time.perf_counter() - t0) * 1000.0)
         mean_delib_ms = sum(delib_latencies) / len(delib_latencies)
 
-        # 2. Sequential CoT Autoregressive Generation Timing (compute-matched K=200 tokens)
+        # 2. Serial Recurrent Baseline Timing (compute-matched K=200 steps)
         curr = slots[:, :1, :]
-        cot_steps = 200
+        baseline_steps = 200
 
         # Warmup
         for step in range(1, 5):
             curr = model.engine.step(curr, step_idx=step, prompt_kv=prompt_kv, prompt_len=prompt_len + step - 1)
         mx.eval(curr)
 
-        t0_cot = time.perf_counter()
+        t0_baseline = time.perf_counter()
         curr = slots[:, :1, :]
-        for step in range(1, cot_steps + 1):
+        for step in range(1, baseline_steps + 1):
             curr = model.engine.step(
                 curr,
                 step_idx=step,
@@ -444,11 +444,11 @@ class TestDeliberationLatencyAndSpeedup:
             tok_embed = model.prelude.embed_prompt(next_tok)
             curr = curr + 0.1 * tok_embed
         mx.eval(curr)
-        cot_ms = (time.perf_counter() - t0_cot) * 1000.0
+        baseline_ms = (time.perf_counter() - t0_baseline) * 1000.0
 
-        speedup = cot_ms / (mean_delib_ms + 1e-6)
+        speedup = baseline_ms / (mean_delib_ms + 1e-6)
         assert mean_delib_ms <= 500.0, f"Deliberation latency ({mean_delib_ms:.2f} ms) exceeded 500 ms!"
         assert speedup >= 15.0, (
             f"Speedup ({speedup:.2f}x) fell below 15.0x release gate! "
-            f"(Deliberation: {mean_delib_ms:.2f} ms vs CoT: {cot_ms:.2f} ms)"
+            f"(Deliberation: {mean_delib_ms:.2f} ms vs Baseline: {baseline_ms:.2f} ms)"
         )

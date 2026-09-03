@@ -1,0 +1,87 @@
+{
+  "schema_version": "1.0.0",
+  "metadata": {
+    "benchmark_type": "recurrent_latent_memory_kernel_microbenchmark",
+    "disclaimer": "RECURRENT LATENT MEMORY KERNEL MICROBENCHMARK: Measures pure tensor recurrent execution in unified memory on Apple Silicon Metal GPU. Contains ZERO Chain-of-Thought (CoT), language generation, or cognitive reasoning claims per Non-Negotiable Evidence Rules 3 and 4.",
+    "command": "run_kernel_microbenchmark.py --quick",
+    "timestamp_utc": "2026-09-03T13:10:52.172238+00:00",
+    "random_seed": 42,
+    "git": {
+      "commit_sha": "a90ad7ecebdd7a2f7c9d7d5a84227bd5bc729732",
+      "branch": "optimization5",
+      "is_dirty": true,
+      "source_repo": "https://github.com/steph4n-gh/qan-transformers"
+    },
+    "hardware": {
+      "device_name": "Apple M4 Pro",
+      "chip_architecture": "arm64",
+      "os_version": "Darwin 25.6.0",
+      "total_ram_gb": 24.0,
+      "metal_device": "Apple M4 Pro"
+    },
+    "runtime": {
+      "python_version": "3.14.4",
+      "mlx_version": "0.31.2",
+      "numpy_version": "2.4.6"
+    },
+    "rules_enforced": [
+      4,
+      6,
+      7,
+      10
+    ]
+  },
+  "benchmarks": [
+    {
+      "condition_id": "gemma_2b_m16_t8_b1_bfloat16_compiled",
+      "parameters": {
+        "model_tier": "gemma_2b",
+        "dim": 2048,
+        "num_heads": 8,
+        "num_kv_heads": 4,
+        "head_dim": 256,
+        "intermediate_dim": 8192,
+        "num_slots_m": 16,
+        "deliberation_steps_t": 8,
+        "prompt_context_len_p": 128,
+        "batch_size": 1,
+        "precision": "bfloat16",
+        "compiled_jit": true
+      },
+      "timing_ms": {
+        "warmup_runs": 3,
+        "benchmark_runs": 5,
+        "mean": 54.57,
+        "median_p50": 52.71,
+        "p90": 58.76,
+        "p95": 60.74,
+        "p99": 62.33,
+        "min": 52.08,
+        "max": 62.72,
+        "std": 4.09
+      },
+      "flops": {
+        "theoretical_per_step": 2319177728,
+        "theoretical_total": 18553421824,
+        "achieved_gflops": 351.97,
+        "achieved_tflops": 0.35,
+        "arithmetic_intensity_flops_per_byte": 14.44
+      },
+      "memory_bandwidth": {
+        "parameter_bytes": 159932416,
+        "activation_bytes_per_step": 655360,
+        "bytes_moved_total": 1284702208,
+        "achieved_bandwidth_gb_s": 24.37
+      },
+      "vram": {
+        "peak_vram_mb": 1824.02,
+        "active_vram_mb": 0.31,
+        "memory_growth_200_runs_mb": 0.0
+      },
+      "throughput": {
+        "slot_steps_per_sec": 2428.24,
+        "unrolls_per_sec": 18.97
+      }
+    }
+  ]
+}

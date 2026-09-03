@@ -99,41 +99,23 @@ $$\text{Halt}(t) = (t \ge T_{\min}) \land \left[ \left( \frac{v(t)}{v(1)} < 0.10
 
 ---
 
-## 3. Killer Use Cases & Instant Integration
+## 3. Target Architectural Lanes & Development Roadmap
 
-PRLR is designed for immediate drop-in integration into existing Python agent loops, backend microservices, and local edge devices:
+PRLR's parallel latent deliberation architecture is designed for integration into agent reasoning loops and edge inference systems:
 
-### ⚡ Use Case 1: Sub-3ms Autonomous Agent Tool Routing
-Instead of waiting 10–15 seconds for an LLM to emit 200 tokens of boilerplate thought before calling a tool, PRLR evaluates candidate APIs in parallel in **2–3 milliseconds**:
+### Target Lane 1: Autonomous Agent Tool & Action Routing
+- **Objective**: Parallel deliberation over candidate tool definitions to output structured JSON tool invocations.
+- **Implementation Status**: Under active validation with the solver-backed DAG lane (`mtr_dag_tool_routing`) and pretrained Gemma 2B backbone under Milestone 4/6. The initial compact model prototype was formally retracted due to the unprincipled pooled-vector loop (0.0% accuracy; see [`COMPACT_MODEL_FAILURE_REPORT.md`](results/legacy_invalid_objective/COMPACT_MODEL_FAILURE_REPORT.md)).
 
-```python
-from parallel_latent_reasoner import GemmaDeliberationPipeline
+### Target Lane 2: Multi-Constraint Satisfaction & Policy Balancing
+- **Objective**: Resolving complex constraint sets (budget, latency, resource quotas) via parallel continuous slot relaxation without serial backtracking errors.
+- **Implementation Status**: Validated on frozen domain splits (`data/prlr_domain_v1/`) with solver-backed BFS oracle verifiers.
 
-pipeline = GemmaDeliberationPipeline.from_preset(
-    "compact_test",
-    adapter_weights_path="checkpoints/prlr_latent_adapter.npz",
-)
-result = pipeline.generate_hybrid(
-    prompt="User: 'Order #902 was double-charged $45. Fix it.' Tools: [refund(order, amt), cancel(sub), search()]. Output JSON:",
-    max_new_tokens=32,
-    enable_dynamic_gate=True,
-)
-print("Selected Action:", pipeline.decode_solution(result.token_ids))
-print(f"Thought Latency: {result.metrics['deliberation_latency_ms']:.2f} ms")
-# Selected Action: refund(order="902", amt=45.0)
-# Thought Latency: 2.14 ms (50x faster than traditional LLMs!)
-```
+### Target Lane 3: Constant-Memory Edge Deliberation
+- **Objective**: Fixed-memory working state on embedded Apple Silicon GPUs with strictly **+0.00% KV-cache expansion** during deliberation sweeps.
+- **Verified Property**: Zero KV-cache growth during recurrent unrolls is verified by unit tests (`tests/test_stress_stability.py`) and kernel microbenchmarks (`run_kernel_microbenchmark.py`).
 
-### 🧹 Use Case 2: Real-Time Conversational Intent Denoising
-Continuous latent space acts as a low-pass filter: conversational noise, sarcasm, emotional venting, and typos are filtered out in SRAM cache, isolating target parameters in **~2 ms**.
-
-### ⚖️ Use Case 3: Multi-Constraint Satisfaction & Policy Balancing
-Solve problems with 4+ conflicting operational limits (flight schedules, cloud budgets, legal clauses) through parallel continuous relaxation without serial backtracking errors.
-
-### 🛰️ Use Case 4: Zero KV-Cache Edge & Robotics Inference
-Robotics, drones, and edge Macs operate with strictly **+0.00% KV-cache growth**, eliminating memory leaks and out-of-memory errors on continuous long-running loops.
-
-*For complete copy-paste integration recipes, see [`docs/guides/killer_use_cases.md`](docs/guides/killer_use_cases.md).*
+*For detailed architectural specifications and evidence statuses, see [`docs/guides/killer_use_cases.md`](docs/guides/killer_use_cases.md) and [`EVIDENCE_STATUS.md`](EVIDENCE_STATUS.md).*
 
 ---
 
@@ -155,7 +137,7 @@ PRLR defines dimensional configurations modeling Gemma architectures for recurre
 
 The benchmark measures execution throughput on Apple Silicon Metal GPU, comparing fixed-width parallel Jacobi sweeps ($M=16, T=8$) against equivalent serial sequential recurrent forward passes ($K_{\text{cot}} = 200$) on the compact model:
 
-| Cognitive Domain | Sample Count | Deliberation Latency (PRLR) | Serial Baseline Latency | Recurrent Speedup | Working Memory Expansion |
+| Recurrent-Kernel Microbenchmark (Synthetic Tensor Shapes) | Sample Count | Deliberation Latency (PRLR) | Serial Baseline Latency | Recurrent Speedup | Working Memory Expansion |
 |:---|:---:|:---:|:---:|:---:|:---:|
 | **Multi-Constraint Satisfaction (MCS)** | 5 | **1.9 ms** | 43.3 ms | **22.8x** | +0.00% (fixed M=16) |
 | **Winograd Schema Disambiguation (WSD)** | 5 | **1.5 ms** | 39.3 ms | **26.2x** | +0.00% (fixed M=16) |
@@ -229,13 +211,22 @@ python run_benchmark.py --presets compact_test,gemma_2b,gemma_9b,gemma_12b
 pytest tests/ -v
 ```
 
-### 5.7 Interactive Web UI (Gradio & HuggingFace Spaces)
+### 5.8 Milestone 6 Reproducible Verification Suite
 
-Launch the dual-pane interactive web interface locally:
+Execute the authoritative verification suite and separated benchmarks:
 
 ```bash
-pip install gradio
-python app.py
+# 1. Run Pure Recurrent Kernel Microbenchmark (Rule 4: Zero CoT claims)
+PYTHONPATH=src python3 run_kernel_microbenchmark.py --quick
+
+# 2. Run Pretrained Gemma 2B Semantic Benchmark (Rules 1 & 2 blind evaluation)
+PYTHONPATH=src python3 run_semantic_benchmark.py --quick
+
+# 3. Run Consolidated CI Verification Guardrails (Feature 28)
+PYTHONPATH=src pytest tests/test_ci_guardrails.py -v
+
+# 4. Single-Command End-to-End Verification Runner (Feature 29)
+python3 scripts/run_prlr_verification.py --quick
 ```
 
 ---
@@ -306,9 +297,8 @@ projects/parallel_latent_reasoner/
 ├── run_benchmark.py                       # Automated multi-scale benchmark runner
 ├── run_large_gemma_eval.py                # Large Gemma 4 cognitive suite evaluation runner
 ├── run_deliberation.py                    # Standalone deliberation runner
-├── checkpoints/                           # Serialized BPTT adapter weights (<2 MB)
-│   ├── prlr_latent_adapter.npz            # Production cognitive adapter weights
-│   └── prlr_math_adapter.npz              # BPTT mathematical reasoning adapter weights
+├── checkpoints/                           # Checkpoints directory
+│   └── legacy_invalid_objective/          # Quarantined legacy weights (compact prototype)
 ├── configs/                               # Model scale presets (JSON)
 │   ├── baseline_smoke.json
 │   ├── compact_test.json
@@ -350,7 +340,7 @@ projects/parallel_latent_reasoner/
 │   ├── test_cognitive_suite.py
 │   └── test_large_gemma_eval.py
 └── results/
-    ├── BENCHMARK_REPORT_LARGE_GEMMA4.md   # Publication-grade Markdown benchmark report
+    ├── BENCHMARK_REPORT_LARGE_GEMMA4.md   # Retraction notice (archived in legacy_invalid_objective/)
     ├── cognitive_benchmark_summary.json   # Comprehensive 25-case benchmark JSON record
     ├── cognitive_benchmark_summary.csv    # CSV cognitive benchmark record
     ├── scale_benchmark_summary.json       # Multi-scale benchmark JSON record

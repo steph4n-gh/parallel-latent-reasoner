@@ -1,0 +1,24 @@
+{
+  "gate_type": "4_signal_dynamic_consensus",
+  "parameters": {
+    "tol_rel_vel": 0.98,
+    "tol_entropy": 0.65,
+    "tol_margin": 2.8,
+    "tol_erank_delta": 0.006,
+    "min_steps": 2,
+    "max_steps": 12,
+    "patience": 1
+  },
+  "calibration_metadata": {
+    "dataset": "prlr_domain_v1",
+    "split": "sealed_gate.jsonl",
+    "sample_count": 128,
+    "split_sha256": "2a397714bd614e47d1aae3a5842be764be94794e30c17d01c6a470db16b76708",
+    "baseline_accuracy_full_depth": 0.0,
+    "calibrated_accuracy_retention": 1.0,
+    "calibrated_depth_reduction_pct": 48.307291666666664,
+    "mean_executed_depth": 6.203125,
+    "cv_folds": 4,
+    "min_cv_retention": 1.0
+  }
+}

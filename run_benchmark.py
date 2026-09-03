@@ -26,7 +26,7 @@ from parallel_latent_reasoner.benchmark import (
 
 def main() -> None:
     parser = argparse.ArgumentParser(
-        description="Run Automated PRLR vs Autoregressive CoT Comparative & Multi-Domain Benchmark"
+        description="Run Automated PRLR vs serial recurrent baseline Comparative & Multi-Domain Benchmark"
     )
     parser.add_argument(
         "--presets",
@@ -56,8 +56,8 @@ def main() -> None:
         "--trained",
         dest="trained",
         action="store_true",
-        default=True,
-        help="Load production trained adapter weights (default: True).",
+        default=False,
+        help="Load trained adapter checkpoint (default: False).",
     )
     parser.add_argument(
         "--no-trained",

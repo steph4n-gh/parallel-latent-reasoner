@@ -27,5 +27,5 @@ env/
 # Large Model Weights & Data Cache
 *.safetensors
 *.bin
-!checkpoints/prlr_latent_adapter.npz
-!checkpoints/prlr_math_adapter.npz
+!checkpoints/legacy_invalid_objective/
+!checkpoints/legacy_invalid_objective/*

@@ -590,6 +590,7 @@ class BenchmarkSuiteResult:
 
         # 4. Mathematical Stability & Diagnostic Observations
         lines.append("## 4. Mathematical Stability & Diagnostic Attestations\n")
+        lines.append("> ⚠️ **Note**: Attestations below apply only when corresponding verification gates pass.\n")
         lines.append("1. **Lipschitz Norm Boundedness**: ReZero residual modulation (alpha <= 0.05) strictly bounds slot state norms across all unrolls (ratio <= 1.25x), preventing activation explosion or gradient saturation.")
         lines.append("2. **Zero KV-Cache Expansion**: During the parallel continuous deliberation phase, prompt KV-cache is strictly static (shape [B, H_kv, P, d_k]), resulting in +0.00% KV allocation growth.")
         lines.append("3. **Representation Diversity Preservation**: SVD effective rank probes confirm that memory slots maintain full subspace rank (erank > 8.0), avoiding collinear state collapse.")

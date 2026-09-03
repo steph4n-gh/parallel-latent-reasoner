@@ -1,0 +1,255 @@
+{
+  "schema_version": "1.0.0",
+  "metadata": {
+    "benchmark_type": "prlr_gemma_semantic_benchmark",
+    "disclaimer": "PRETRAINED GEMMA 2B SEMANTIC BENCHMARK: Evaluates genuine pretrained google/gemma-2b-it backbone + recurrent deliberation adapter on frozen solver-backed domain splits. Operates under strict Rule 1 (blind evaluation) and Rule 2 (post-hoc verification).",
+    "command": "run_semantic_benchmark.py --quick",
+    "timestamp_utc": "2026-09-03T13:36:35.221240+00:00",
+    "random_seed": 42,
+    "git": {
+      "commit_sha": "a90ad7ecebdd7a2f7c9d7d5a84227bd5bc729732",
+      "branch": "optimization5",
+      "is_dirty": true,
+      "source_repo": "https://github.com/steph4n-gh/qan-transformers"
+    },
+    "hardware": {
+      "device_name": "Apple M4 Pro",
+      "chip_architecture": "arm64",
+      "os_version": "Darwin 25.6.0",
+      "total_ram_gb": 24.0,
+      "metal_device": "Apple M4 Pro"
+    },
+    "runtime": {
+      "python_version": "3.14.4",
+      "mlx_version": "0.31.2",
+      "transformers_version": "5.9.0",
+      "numpy_version": "2.4.6"
+    },
+    "model_manifest": {
+      "model_id": "google/gemma-2b-it",
+      "revision": "96988410cbdaeb8d5093d1ebdc5a8fb563e02bad",
+      "architecture": "GemmaForCausalLM",
+      "source_commit": "a90ad7ecebdd7a2f7c9d7d5a84227bd5bc729732",
+      "is_pretrained": true,
+      "random_init": false,
+      "quantization": "bf16",
+      "weights_path": "/Volumes/Storage/huggingface_cache/hub/models--google--gemma-2b-it/snapshots/96988410cbdaeb8d5093d1ebdc5a8fb563e02bad",
+      "weights_sha256": {
+        "model-00001-of-00002.safetensors": "561656f892a2a1ca0837ca529c5ce820a72b40f4f563b1cd0a1acc0b3899c30c",
+        "model-00002-of-00002.safetensors": "20fe2ee66bf1361241a6c522091a5e0328fc6c1703f93734889fa381fcf8760c"
+      },
+      "tokenizer_path": "/Volumes/Storage/huggingface_cache/hub/models--google--gemma-2b-it/snapshots/96988410cbdaeb8d5093d1ebdc5a8fb563e02bad/tokenizer.model",
+      "tokenizer_sha256": "61a7b147390c64585d6c3543dd6fc636906c9af3865a5548f27f31aee1d4c8e2",
+      "adapter_hash": null,
+      "vocabulary_size": 256000,
+      "hidden_dimension": 2048,
+      "num_layers": 18,
+      "num_heads": 8,
+      "head_dimension": 256,
+      "intermediate_dimension": 16384,
+      "num_kv_heads": 1,
+      "max_position_embeddings": 8192,
+      "bos_token_id": 2,
+      "eos_token_id": 1,
+      "pad_token_id": 0,
+      "runtime_versions": {
+        "python": "3.14.4",
+        "mlx": "0.31.2",
+        "transformers": "5.9.0",
+        "sentencepiece": "0.2.1",
+        "numpy": "2.4.6"
+      },
+      "verification_status": "UNVERIFIED"
+    },
+    "dataset": {
+      "name": "prlr_domain_v1",
+      "split": "sealed_test",
+      "split_sha256": "1be6c4fe69be31ca81a81736841c523e2b022c85bfa90a486ebde1b088f0a5d6",
+      "sample_count": 4
+    },
+    "rules_enforced": [
+      1,
+      2,
+      5,
+      8,
+      9,
+      10
+    ]
+  },
+  "summary": {
+    "exact_match_accuracy": 0.0,
+    "exact_match_ci_95_bca": [
+      0.0,
+      0.0
+    ],
+    "terminal_tool_accuracy": 0.0,
+    "terminal_tool_ci_95_bca": [
+      0.0,
+      0.0
+    ],
+    "operational_validity": 0.0,
+    "operational_validity_ci_95_bca": [
+      0.0,
+      0.0
+    ],
+    "mean_executed_depth": 10.25,
+    "mean_executed_depth_ci_95": [
+      7.454,
+      11.5
+    ],
+    "depth_reduction_pct": 14.58,
+    "stage_latencies_ms": {
+      "prefill": {
+        "mean": 244.71,
+        "median_p50": 178.48,
+        "p95": 434.41,
+        "ci_95_bca": [
+          160.51,
+          404.465
+        ]
+      },
+      "prelude": {
+        "mean": 19.75,
+        "median_p50": 0.51,
+        "p95": 65.97,
+        "ci_95_bca": [
+          0.475,
+          58.27
+        ]
+      },
+      "deliberation": {
+        "mean": 1911.39,
+        "median_p50": 1848.77,
+        "p95": 2285.87,
+        "ci_95_bca": [
+          1658.47,
+          2226.945
+        ]
+      },
+      "decode": {
+        "mean": 1142.63,
+        "median_p50": 1107.07,
+        "p95": 1267.43,
+        "ci_95_bca": [
+          1076.28,
+          1248.8772
+        ]
+      },
+      "total": {
+        "mean": 3318.48,
+        "median_p50": 3304.63,
+        "p95": 3585.07,
+        "ci_95_bca": [
+          3094.75,
+          3539.1475
+        ]
+      }
+    },
+    "vram": {
+      "peak_vram_mb": 5335.89,
+      "active_vram_mb": 5120.1,
+      "memory_growth_mb": 0.0
+    }
+  },
+  "pareto_curves": {
+    "accuracy_vs_depth_ladder": [],
+    "accuracy_vs_egate_compute": []
+  },
+  "raw_predictions": [
+    {
+      "sample_id": "sealed_test_mtr_api_workflow_s300000_k2",
+      "domain": "api_workflow",
+      "prompt_sha256": "c7b74ff22aa12a6a146d5055a9444c78af7348f5216a3aecbfe87ed1e5d3c171",
+      "predicted_text": "```json\n{\n  \"route\": [\"billing_meter\", \"cache_reader\", \"audit_logger\", \"policy_gate\"]\n  \"terminal\": \"audit_logger\"\n}\n```<eos>",
+      "predicted_route": [],
+      "expected_route": [
+        "policy_gate",
+        "audit_logger"
+      ],
+      "exact_match": false,
+      "terminal_match": false,
+      "is_valid": false,
+      "executed_depth": 7,
+      "exit_reason": "4_signal_consensus",
+      "stage_latencies_ms": {
+        "prefill_ms": 479.34,
+        "prelude_ms": 77.51,
+        "deliberation_ms": 1588.5,
+        "decode_ms": 1125.47,
+        "total_ms": 3270.82
+      }
+    },
+    {
+      "sample_id": "sealed_test_mtr_data_pipeline_s300001_k3",
+      "domain": "data_pipeline",
+      "prompt_sha256": "09f33d6bf35376a22a3200dfabdde254904b2287bacdf44516a446a14dd6df22",
+      "predicted_text": "```json\n{\n  \"route\": [\"sample_exporter\", \"model_evaluator\", \"schema_normalizer\", \"lineage_tracer\", \"feature_extractor\"]\n  \"terminal\": \"feature_extractor\"\n}\n```<eos>",
+      "predicted_route": [],
+      "expected_route": [
+        "schema_normalizer",
+        "feature_extractor",
+        "model_evaluator"
+      ],
+      "exact_match": false,
+      "terminal_match": false,
+      "is_valid": false,
+      "executed_depth": 10,
+      "exit_reason": "4_signal_consensus",
+      "stage_latencies_ms": {
+        "prefill_ms": 177.12,
+        "prelude_ms": 0.47,
+        "deliberation_ms": 1868.38,
+        "decode_ms": 1292.48,
+        "total_ms": 3338.44
+      }
+    },
+    {
+      "sample_id": "sealed_test_mtr_security_ops_s300002_k4",
+      "domain": "security_ops",
+      "prompt_sha256": "6837817dc6cab93dc8f3f51b925739fd9468741fb08a1a2ee6859a169f4b0da5",
+      "predicted_text": "```json\nroute:\n- ioc_correlator\n- patch_scheduler\n- quarantine_enforcer\n- hash_lookup\n- endpoint_inspector\n- firewall_reconfig\n```<eos>",
+      "predicted_route": [],
+      "expected_route": [
+        "ioc_correlator",
+        "endpoint_inspector",
+        "quarantine_enforcer",
+        "firewall_reconfig"
+      ],
+      "exact_match": false,
+      "terminal_match": false,
+      "is_valid": false,
+      "executed_depth": 12,
+      "exit_reason": "max_steps_timeout",
+      "stage_latencies_ms": {
+        "prefill_ms": 179.84,
+        "prelude_ms": 0.55,
+        "deliberation_ms": 2359.54,
+        "decode_ms": 1088.66,
+        "total_ms": 3628.59
+      }
+    },
+    {
+      "sample_id": "sealed_test_mtr_robotics_control_s300003_k2",
+      "domain": "robotics_control",
+      "prompt_sha256": "722b747971462039ff8d89bf02c726cc2185b525fd3ee74086d4e6cf84d946ff",
+      "predicted_text": "```json\n{\n  \"route\": [\"battery_monitor\", \"gps_sync\", \"collision_checker\", \"trajectory_planner\"]\n  \"terminal\": \"trajectory_planner\"\n}\n```<eos>",
+      "predicted_route": [],
+      "expected_route": [
+        "collision_checker",
+        "trajectory_planner"
+      ],
+      "exact_match": false,
+      "terminal_match": false,
+      "is_valid": false,
+      "executed_depth": 12,
+      "exit_reason": "max_steps_timeout",
+      "stage_latencies_ms": {
+        "prefill_ms": 142.54,
+        "prelude_ms": 0.45,
+        "deliberation_ms": 1829.16,
+        "decode_ms": 1063.9,
+        "total_ms": 3036.06
+      }
+    }
+  ]
+}

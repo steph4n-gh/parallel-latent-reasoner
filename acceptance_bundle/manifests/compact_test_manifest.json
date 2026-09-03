@@ -1,0 +1,31 @@
+{
+  "model_id": "prlr-compact-testbed",
+  "revision": "scratch-testbed-v1",
+  "architecture": "prlr-compact",
+  "source_commit": "a90ad7ecebdd7a2f7c9d7d5a84227bd5bc729732",
+  "is_pretrained": false,
+  "random_init": true,
+  "quantization": "none",
+  "weights_path": null,
+  "weights_sha256": "UNSPECIFIED_RANDOM_INIT",
+  "tokenizer_path": null,
+  "tokenizer_sha256": "UNSPECIFIED_SYNTHETIC",
+  "adapter_hash": null,
+  "vocabulary_size": 1000,
+  "hidden_dimension": 256,
+  "num_layers": 1,
+  "num_heads": 4,
+  "head_dimension": 64,
+  "intermediate_dimension": 512,
+  "num_kv_heads": 4,
+  "max_position_embeddings": 8192,
+  "bos_token_id": 2,
+  "eos_token_id": 1,
+  "pad_token_id": 0,
+  "runtime_versions": {
+    "python": "3.14.4",
+    "mlx": "0.31.2",
+    "numpy": "2.4.6"
+  },
+  "verification_status": "SYNTHETIC_TESTBED"
+}
