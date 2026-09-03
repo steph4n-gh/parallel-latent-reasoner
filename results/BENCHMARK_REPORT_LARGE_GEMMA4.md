@@ -1,6 +1,6 @@
 # Parallel Latent Reasoner (PRLR) Distillation: Empirical Benchmark Report
 
-**Date**: 2026-09-02 23:58:14 UTC  
+**Date**: 2026-09-03 00:35:59 UTC  
 **Platform**: Apple Silicon Metal GPU (Unified Memory Architecture)  
 **Execution Framework**: Pure MLX (Metal Shaders + JIT `@mx.compile`)  
 **Trained Adapter Artifact**: `checkpoints/prlr_latent_adapter.npz` (Loaded)  
@@ -13,13 +13,13 @@ This empirical evaluation verifies that Parallel Latent Deliberation (PRLR) with
 
 | Empirical Verification Gate | Target Specification | Measured Result | Status |
 |---|:---:|:---:|:---:|
-| **Multi-Domain Reasoning Accuracy** | $\ge 80.0\%$ | **100.0%** | ✅ PASS |
-| **Reasoning Phase Wall-Clock Speedup** | $\ge 15.0\times$ | **22.7x** | ✅ PASS |
+| **Multi-Domain Reasoning Accuracy** | $\ge 80.0\%$ | **0.0%** | ❌ FAIL |
+| **Reasoning Phase Wall-Clock Speedup** | $\ge 15.0\times$ | **22.0x** | ✅ PASS |
 | **Deliberation Phase Latency** | $\le 500.0\text{ ms}$ | **1.9 ms** | ✅ PASS |
-| **Peak Resident VRAM Memory** | $\le 6.0\text{ GB}$ | **0.04 GB** (41.4 MB) | ✅ PASS |
+| **Peak Resident VRAM Memory** | $\le 6.0\text{ GB}$ | **0.04 GB** (43.2 MB) | ✅ PASS |
 | **Thought Phase KV-Cache Expansion** | $+0.00\%$ (Constant $M=16$) | **+0.00%** | ✅ PASS |
-| **Information-Theoretic Shannon Entropy** | $H \ge 1.0\text{ bits}$ | **H = 3.70 bits** | ✅ PASS |
-| **Max 4-Gram Token Repetition** | $< 2$ (No Repetition Loops) | **1** | ✅ PASS |
+| **Information-Theoretic Shannon Entropy** | $H \ge 1.0\text{ bits}$ | **H = 0.00 bits** | ❌ FAIL |
+| **Max 4-Gram Token Repetition** | $< 2$ (No Repetition Loops) | **13** | ❌ FAIL |
 
 ## 2. Multi-Domain Cognitive Benchmark Breakdown
 
@@ -27,12 +27,12 @@ Evaluated across the 5 core cognitive domains where continuous latent deliberati
 
 | Cognitive Domain | Cases | CoT Acc | PRLR Acc | Delib Latency | Speedup | Mean Entropy |
 |---|:---:|:---:|:---:|:---:|:---:|:---:|
-| **Multi Constraint** | 5 | 100.0% | **100.0%** | 1.9 ms | **22.8x** | H=3.09 |
-| **Winograd Schema** | 5 | 100.0% | **100.0%** | 1.5 ms | **26.2x** | H=3.00 |
-| **Semantic Denoising** | 5 | 100.0% | **100.0%** | 2.1 ms | **20.1x** | H=4.74 |
-| **Multi Clue Synthesis** | 5 | 100.0% | **100.0%** | 1.8 ms | **23.8x** | H=3.13 |
-| **Action Tool Routing** | 5 | 100.0% | **100.0%** | 2.0 ms | **20.5x** | H=4.55 |
-| **OVERALL TOTAL** | **25** | 100.0% | **100.0%** | **1.9 ms** | **22.7x** | **H=3.70** |
+| **Multi Constraint** | 5 | 0.0% | **0.0%** | 2.0 ms | **22.0x** | H=0.00 |
+| **Winograd Schema** | 5 | 0.0% | **0.0%** | 1.5 ms | **25.9x** | H=0.00 |
+| **Semantic Denoising** | 5 | 0.0% | **0.0%** | 1.9 ms | **20.3x** | H=0.00 |
+| **Multi Clue Synthesis** | 5 | 0.0% | **0.0%** | 1.8 ms | **21.4x** | H=0.00 |
+| **Action Tool Routing** | 5 | 0.0% | **0.0%** | 2.1 ms | **20.3x** | H=0.00 |
+| **OVERALL TOTAL** | **25** | 0.0% | **0.0%** | **1.9 ms** | **22.0x** | **H=0.00** |
 
 ## 3. Multi-Scale Resident Architecture Scaling
 
@@ -40,7 +40,7 @@ Comparative compute-matched benchmark ($K_{\text{cot}} = T \times M$) across Gem
 
 | Preset | Dim | Delib Latency | CoT Latency | Speedup | Eff Throughput | Peak VRAM | Exit Step | Compute Saved |
 |---|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|
-| **compact_test** | 256 | **2.31 ms** | 43.33 ms | **18.8x** | 86,630.6 tok/s | 28.08 MB | t=8 | 0.0% |
+| **compact_test** | 256 | **2.16 ms** | 41.68 ms | **19.3x** | 92,549.7 tok/s | 25.25 MB | t=8 | 0.0% |
 
 ## 4. Unified Memory & KV-Cache Footprint Verification
 
@@ -52,14 +52,14 @@ Comparative compute-matched benchmark ($K_{\text{cot}} = T \times M$) across Gem
 
 Traditional autoregressive generation on complex constraint-satisfaction tasks frequently suffers from empty answers, degenerate repetition loops, or hallucinated CoT filler. PRLR conducts hypothesis pruning in continuous latent space, decoding directly into concise grounded answers:
 
-- **Mean Shannon Entropy ($H$)**: **3.70 bits** (Threshold $H \ge 1.0$) confirming diverse, non-degenerate token distributions.
-- **Max 4-Gram Repetition**: **1** (Threshold $< 2$), confirming zero repetitive token looping across all evaluated domains.
+- **Mean Shannon Entropy ($H$)**: **0.00 bits** (Threshold $H \ge 1.0$) confirming diverse, non-degenerate token distributions.
+- **Max 4-Gram Repetition**: **13** (Threshold $< 2$), confirming zero repetitive token looping across all evaluated domains.
 
 ## 6. Complete Side-by-Side Textual Transcripts & 3-Signal E-Gate Telemetry
 
 ### 6.1 [mcs_01] Orbital Spacecraft Payload Optimization
-- **Domain**: `multi_constraint` | **Deliberation Steps**: `T=8` (max_steps_timeout) | **Speedup**: `20.9x` | **Compute Saved**: `0.0%`
-- **Shannon Entropy**: `H=2.85 bits` | **Max 4-Gram Repetition**: `1`
+- **Domain**: `multi_constraint` | **Deliberation Steps**: `T=8` (max_steps_timeout) | **Speedup**: `18.3x` | **Compute Saved**: `0.0%`
+- **Shannon Entropy**: `H=0.00 bits` | **Max 4-Gram Repetition**: `13`
 
 **Task Prompt**:
 ```text
@@ -81,51 +81,43 @@ Output ONLY the exact list of chosen instrument names separated by commas (e.g. 
 ```
 
 #### Mode 1: Autoregressive Chain-of-Thought (CoT)
-- **Reasoning Latency**: `48.7 ms` | **Throughput**: `4109.6 tok/s` | **Constraint Satisfied**: `True`
+- **Reasoning Latency**: `44.4 ms` | **Throughput**: `4502.7 tok/s` | **Constraint Satisfied**: `False`
 **Explicit Thought Stream** (`<thought>`):
 ```text
-Let's evaluate all candidate payload combinations:
-1. Alpha (15kg, 40W, 12L): If Alpha is selected, Delta is excluded.
-2. Beta (22kg, 35W, 18L): If Beta is selected, Gamma (18kg, 25W, 15L) is mandatory.
-3. Pair {Beta, Gamma}: Total Weight = 22 + 18 = 40 kg (Limit: 45 kg -> SATISFIED).
-   Total Power = 35 + 25 = 60 W (Limit: 65 W -> SATISFIED).
-   Total Volume = 18 + 15 = 33 L (Limit: 35 L -> SATISFIED).
-4. Adding Epsilon (12kg): Weight becomes 40 + 12 = 52 kg > 45 kg (VIOLATION).
-5. Pair {Alpha, Epsilon}: Weight = 27 kg, Power = 60 W, Volume = 22 L. Scientific return is lower than {Beta, Gamma}.
-Conclusion: The optimal feasible payload set satisfying all 4 constraints is Beta and Gamma.
+[Serial recurrent microbenchmark; not a pretrained LLM thought stream]
 ```
 **Emitted Answer** (`<answer>`):
 ```text
-Beta, Gamma
+<<<<<<<<<<<<<<<<
 ```
 
 #### Mode 2: Parallel Continuous Latent Deliberation (PRLR Deliberate-Then-Verify)
-- **Deliberation Latency**: `2.3 ms` | **Coda Decode Latency**: `0.9 ms` | **Total**: `3.3 ms`
+- **Deliberation Latency**: `2.4 ms` | **Coda Decode Latency**: `0.9 ms` | **Total**: `3.3 ms`
 - **Intermediate Tokens Emitted**: `0` (Zero token bloat during thought sweeps)
-- **Constraint Satisfied**: `True` (Deterministic Verifier Score: `1.0`)
+- **Constraint Satisfied**: `False` (Deterministic Verifier Score: `0.0`)
 **Concise Grounded Decoded Answer**:
 ```text
-Beta, Gamma
+<<<<<<<<<<<<<<<<
 ```
 
 **3-Signal Dynamic Consensus E-Gate Telemetry**:
 | Step | Velocity $v(t)$ | Rel Decay $v(t)/v(1)$ | SVD erank | $\Delta$ erank | Coda Pred $\hat{y}^{(t)}$ | Velocity Signal | Coda Signal | erank Signal | Status |
 |:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|
-| t=0 | 0.000000 | 1.0000 |  1.00 | 0.0000 | `` | ❌ | ❌ | ❌ | Active |
-| t=1 | 0.000019 | 0.9999 |  1.00 | 0.0014 | `` | ❌ | ✅ | ✅ | Active |
-| t=2 | 0.000018 | 0.9871 |  1.00 | 0.0019 | `` | ❌ | ✅ | ✅ | Active |
-| t=3 | 0.000018 | 0.9743 |  1.01 | 0.0018 | `` | ❌ | ✅ | ✅ | Active |
-| t=4 | 0.000018 | 0.9679 |  1.01 | 0.0018 | `` | ❌ | ✅ | ✅ | Active |
-| t=5 | 0.000018 | 0.9711 |  1.01 | 0.0017 | `` | ❌ | ✅ | ✅ | Active |
-| t=6 | 0.000018 | 0.9743 |  1.01 | 0.0017 | `` | ❌ | ✅ | ✅ | Active |
-| t=7 | 0.000018 | 0.9807 |  1.01 | 0.0017 | `` | ❌ | ✅ | ✅ | Active |
-| t=8 | 0.000018 | 0.9807 |  1.01 | 0.0016 | `` | ❌ | ✅ | ✅ | **HALTED (max_steps_timeout)** |
+| t=0 | 0.000000 | 1.0000 |  1.00 | 0.0000 | `<` | ❌ | ❌ | ❌ | Active |
+| t=1 | 0.000023 | 1.0000 |  1.00 | 0.0012 | `<` | ❌ | ✅ | ✅ | Active |
+| t=2 | 0.000022 | 0.9639 |  1.01 | 0.0040 | `<` | ❌ | ✅ | ✅ | Active |
+| t=3 | 0.000022 | 0.9716 |  1.01 | 0.0011 | `<` | ❌ | ✅ | ✅ | Active |
+| t=4 | 0.000022 | 0.9716 |  1.01 | 0.0013 | `<` | ❌ | ✅ | ✅ | Active |
+| t=5 | 0.000022 | 0.9639 |  1.01 | 0.0013 | `<` | ❌ | ✅ | ✅ | Active |
+| t=6 | 0.000022 | 0.9665 |  1.01 | 0.0014 | `<` | ❌ | ✅ | ✅ | Active |
+| t=7 | 0.000022 | 0.9639 |  1.01 | 0.0014 | `<` | ❌ | ✅ | ✅ | Active |
+| t=8 | 0.000022 | 0.9613 |  1.01 | 0.0014 | `<` | ❌ | ✅ | ✅ | **HALTED (max_steps_timeout)** |
 
 ---
 
 ### 6.2 [mcs_02] Constrained Pangrammatic Sentence Generation
-- **Domain**: `multi_constraint` | **Deliberation Steps**: `T=8` (max_steps_timeout) | **Speedup**: `23.3x` | **Compute Saved**: `0.0%`
-- **Shannon Entropy**: `H=4.12 bits` | **Max 4-Gram Repetition**: `1`
+- **Domain**: `multi_constraint` | **Deliberation Steps**: `T=8` (max_steps_timeout) | **Speedup**: `26.2x` | **Compute Saved**: `0.0%`
+- **Shannon Entropy**: `H=0.00 bits` | **Max 4-Gram Repetition**: `13`
 
 **Task Prompt**:
 ```text
@@ -140,48 +132,43 @@ Output ONLY the 7-word sentence without explanation.
 ```
 
 #### Mode 1: Autoregressive Chain-of-Thought (CoT)
-- **Reasoning Latency**: `37.4 ms` | **Throughput**: `5351.6 tok/s` | **Constraint Satisfied**: `True`
+- **Reasoning Latency**: `41.0 ms` | **Throughput**: `4879.3 tok/s` | **Constraint Satisfied**: `False`
 **Explicit Thought Stream** (`<thought>`):
 ```text
-We need to construct a valid English pangram (containing every letter A-Z at least once) with at least one word having exactly 7 letters and ending with a punctuation mark.
-Let's analyze the sentence: 'Quickly six black wizards fix tiny puzzles.'
-- Letters checked: a, b, c, d, e, f, g, h, i, j, k, l, m, n, o, p, q, r, s, t, u, v, w, x, y, z.
-- Word length check: 'puzzles' has 7 letters; 'Quickly' has 7 letters; 'wizards' has 7 letters.
-- Ending check: Ends with a period (punctuation mark).
-Conclusion: All constraints strictly satisfied.
+[Serial recurrent microbenchmark; not a pretrained LLM thought stream]
 ```
 **Emitted Answer** (`<answer>`):
 ```text
-Quickly six black wizards fix tiny puzzles
+<<<<<<<<<<<<<<<<
 ```
 
 #### Mode 2: Parallel Continuous Latent Deliberation (PRLR Deliberate-Then-Verify)
-- **Deliberation Latency**: `1.6 ms` | **Coda Decode Latency**: `0.8 ms` | **Total**: `2.4 ms`
+- **Deliberation Latency**: `1.6 ms` | **Coda Decode Latency**: `0.7 ms` | **Total**: `2.3 ms`
 - **Intermediate Tokens Emitted**: `0` (Zero token bloat during thought sweeps)
-- **Constraint Satisfied**: `True` (Deterministic Verifier Score: `1.0`)
+- **Constraint Satisfied**: `False` (Deterministic Verifier Score: `0.0`)
 **Concise Grounded Decoded Answer**:
 ```text
-Quickly six black wizards fix tiny puzzles
+****************
 ```
 
 **3-Signal Dynamic Consensus E-Gate Telemetry**:
 | Step | Velocity $v(t)$ | Rel Decay $v(t)/v(1)$ | SVD erank | $\Delta$ erank | Coda Pred $\hat{y}^{(t)}$ | Velocity Signal | Coda Signal | erank Signal | Status |
 |:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|
-| t=0 | 0.000000 | 1.0000 |  1.00 | 0.0000 | `'` | ❌ | ❌ | ❌ | Active |
-| t=1 | 0.000022 | 1.0000 |  1.00 | 0.0025 | `'` | ❌ | ✅ | ✅ | Active |
-| t=2 | 0.000021 | 0.9862 |  1.01 | 0.0029 | `'` | ❌ | ✅ | ✅ | Active |
-| t=3 | 0.000021 | 0.9641 |  1.01 | 0.0028 | `'` | ❌ | ✅ | ✅ | Active |
-| t=4 | 0.000021 | 0.9559 |  1.01 | 0.0027 | `'` | ❌ | ✅ | ✅ | Active |
-| t=5 | 0.000021 | 0.9531 |  1.01 | 0.0027 | `'` | ❌ | ✅ | ✅ | Active |
-| t=6 | 0.000021 | 0.9614 |  1.02 | 0.0026 | `'` | ❌ | ✅ | ✅ | Active |
-| t=7 | 0.000021 | 0.9641 |  1.02 | 0.0025 | `'` | ❌ | ✅ | ✅ | Active |
-| t=8 | 0.000021 | 0.9641 |  1.02 | 0.0025 | `'` | ❌ | ✅ | ✅ | **HALTED (max_steps_timeout)** |
+| t=0 | 0.000000 | 1.0000 |  1.00 | 0.0000 | `*` | ❌ | ❌ | ❌ | Active |
+| t=1 | 0.000026 | 1.0000 |  1.00 | 0.0023 | `*` | ❌ | ✅ | ✅ | Active |
+| t=2 | 0.000026 | 0.9953 |  1.01 | 0.0027 | `*` | ❌ | ✅ | ✅ | Active |
+| t=3 | 0.000025 | 0.9861 |  1.01 | 0.0026 | `*` | ❌ | ✅ | ✅ | Active |
+| t=4 | 0.000025 | 0.9768 |  1.01 | 0.0025 | `*` | ❌ | ✅ | ✅ | Active |
+| t=5 | 0.000025 | 0.9768 |  1.01 | 0.0024 | `*` | ❌ | ✅ | ✅ | Active |
+| t=6 | 0.000025 | 0.9722 |  1.02 | 0.0024 | `*` | ❌ | ✅ | ✅ | Active |
+| t=7 | 0.000025 | 0.9676 |  1.02 | 0.0023 | `*` | ❌ | ✅ | ✅ | Active |
+| t=8 | 0.000025 | 0.9652 |  1.02 | 0.0023 | `*` | ❌ | ✅ | ✅ | **HALTED (max_steps_timeout)** |
 
 ---
 
 ### 6.3 [mcs_03] Conference Budget & Carbon Itinerary Optimizer
-- **Domain**: `multi_constraint` | **Deliberation Steps**: `T=8` (max_steps_timeout) | **Speedup**: `19.6x` | **Compute Saved**: `0.0%`
-- **Shannon Entropy**: `H=2.84 bits` | **Max 4-Gram Repetition**: `1`
+- **Domain**: `multi_constraint` | **Deliberation Steps**: `T=8` (max_steps_timeout) | **Speedup**: `22.1x` | **Compute Saved**: `0.0%`
+- **Shannon Entropy**: `H=0.00 bits` | **Max 4-Gram Repetition**: `13`
 
 **Task Prompt**:
 ```text
@@ -202,52 +189,43 @@ Output ONLY the chosen 4 activity codes in order separated by commas (e.g. "A1, 
 ```
 
 #### Mode 1: Autoregressive Chain-of-Thought (CoT)
-- **Reasoning Latency**: `39.4 ms` | **Throughput**: `5075.0 tok/s` | **Constraint Satisfied**: `True`
+- **Reasoning Latency**: `41.0 ms` | **Throughput**: `4875.5 tok/s` | **Constraint Satisfied**: `False`
 **Explicit Thought Stream** (`<thought>`):
 ```text
-We must select a team of 4 specialists (one from each tier A, B, C, D) such that:
-1. Total compensation <= $320k
-2. Combined experience >= 24 years
-3. If A1 is selected, D1 cannot be selected (conflict rule)
-4. Exactly one specialist per category {A, B, C, D}
-Let's test combination {A1, B2, C1, D2}:
-- Costs: A1 ($80k) + B2 ($75k) + C1 ($70k) + D2 ($85k) = $310k <= $320k (PASS)
-- Experience: A1 (8 yrs) + B2 (6 yrs) + C1 (5 yrs) + D2 (7 yrs) = 26 yrs >= 24 yrs (PASS)
-- Conflicts: A1 is with D2, not D1 (PASS)
-Conclusion: Optimal configuration is A1, B2, C1, D2.
+[Serial recurrent microbenchmark; not a pretrained LLM thought stream]
 ```
 **Emitted Answer** (`<answer>`):
 ```text
-A1, B2, C1, D2
+VVVVVVVVVVVVVVVV
 ```
 
 #### Mode 2: Parallel Continuous Latent Deliberation (PRLR Deliberate-Then-Verify)
-- **Deliberation Latency**: `2.0 ms` | **Coda Decode Latency**: `0.8 ms` | **Total**: `2.8 ms`
+- **Deliberation Latency**: `1.9 ms` | **Coda Decode Latency**: `0.7 ms` | **Total**: `2.6 ms`
 - **Intermediate Tokens Emitted**: `0` (Zero token bloat during thought sweeps)
-- **Constraint Satisfied**: `True` (Deterministic Verifier Score: `1.0`)
+- **Constraint Satisfied**: `False` (Deterministic Verifier Score: `0.0`)
 **Concise Grounded Decoded Answer**:
 ```text
-A1, B2, C1, D2
+<<<<<<<<<<<<<<<<
 ```
 
 **3-Signal Dynamic Consensus E-Gate Telemetry**:
 | Step | Velocity $v(t)$ | Rel Decay $v(t)/v(1)$ | SVD erank | $\Delta$ erank | Coda Pred $\hat{y}^{(t)}$ | Velocity Signal | Coda Signal | erank Signal | Status |
 |:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|
-| t=0 | 0.000000 | 1.0000 |  1.00 | 0.0000 | `` | ❌ | ❌ | ❌ | Active |
-| t=1 | 0.000018 | 0.9999 |  1.00 | 0.0018 | `` | ❌ | ✅ | ✅ | Active |
-| t=2 | 0.000018 | 0.9802 |  1.01 | 0.0022 | `` | ❌ | ✅ | ✅ | Active |
-| t=3 | 0.000017 | 0.9605 |  1.01 | 0.0022 | `` | ❌ | ✅ | ✅ | Active |
-| t=4 | 0.000017 | 0.9539 |  1.01 | 0.0021 | `` | ❌ | ✅ | ✅ | Active |
-| t=5 | 0.000017 | 0.9572 |  1.01 | 0.0021 | `` | ❌ | ✅ | ✅ | Active |
-| t=6 | 0.000017 | 0.9605 |  1.01 | 0.0020 | `` | ❌ | ✅ | ✅ | Active |
-| t=7 | 0.000018 | 0.9703 |  1.02 | 0.0020 | `` | ❌ | ✅ | ✅ | Active |
-| t=8 | 0.000018 | 0.9736 |  1.02 | 0.0020 | `` | ❌ | ✅ | ✅ | **HALTED (max_steps_timeout)** |
+| t=0 | 0.000000 | 1.0000 |  1.00 | 0.0000 | `<` | ❌ | ❌ | ❌ | Active |
+| t=1 | 0.000022 | 1.0000 |  1.00 | 0.0015 | `<` | ❌ | ✅ | ✅ | Active |
+| t=2 | 0.000022 | 0.9917 |  1.00 | 0.0020 | `<` | ❌ | ✅ | ✅ | Active |
+| t=3 | 0.000021 | 0.9863 |  1.01 | 0.0019 | `<` | ❌ | ✅ | ✅ | Active |
+| t=4 | 0.000021 | 0.9808 |  1.01 | 0.0019 | `<` | ❌ | ✅ | ✅ | Active |
+| t=5 | 0.000021 | 0.9753 |  1.01 | 0.0018 | `<` | ❌ | ✅ | ✅ | Active |
+| t=6 | 0.000021 | 0.9726 |  1.01 | 0.0018 | `<` | ❌ | ✅ | ✅ | Active |
+| t=7 | 0.000021 | 0.9698 |  1.01 | 0.0017 | `<` | ❌ | ✅ | ✅ | Active |
+| t=8 | 0.000021 | 0.9671 |  1.02 | 0.0017 | `<` | ❌ | ✅ | ✅ | **HALTED (max_steps_timeout)** |
 
 ---
 
 ### 6.4 [mcs_04] Cryptarithm Modular Diophantine Logic
-- **Domain**: `multi_constraint` | **Deliberation Steps**: `T=8` (max_steps_timeout) | **Speedup**: `27.6x` | **Compute Saved**: `0.0%`
-- **Shannon Entropy**: `H=3.20 bits` | **Max 4-Gram Repetition**: `1`
+- **Domain**: `multi_constraint` | **Deliberation Steps**: `T=8` (max_steps_timeout) | **Speedup**: `25.7x` | **Compute Saved**: `0.0%`
+- **Shannon Entropy**: `H=0.00 bits` | **Max 4-Gram Repetition**: `1`
 
 **Task Prompt**:
 ```text
@@ -262,53 +240,43 @@ Output ONLY the assignment in the format: "W=?, X=?, Y=?, Z=?" (e.g. "W=5, X=4, 
 ```
 
 #### Mode 1: Autoregressive Chain-of-Thought (CoT)
-- **Reasoning Latency**: `40.7 ms` | **Throughput**: `4910.1 tok/s` | **Constraint Satisfied**: `True`
+- **Reasoning Latency**: `39.8 ms` | **Throughput**: `5028.1 tok/s` | **Constraint Satisfied**: `False`
 **Explicit Thought Stream** (`<thought>`):
 ```text
-Solving the multi-variable constraint system:
-1. W + X = 9
-2. Y * Z = 12
-3. W > X and Z > Y
-4. W, X, Y, Z are distinct positive integers in {1..9}
-From (2): (Y, Z) pairs in {1..9} with Z > Y: (1, 12)[invalid], (2, 6), (3, 4).
-Case 1: Y=2, Z=6. Remaining digits for (W, X) such that W + X = 9 and W > X:
-Possibilities: (8, 1), (7, 2)[2 already used], (6, 3)[6 used], (5, 4)[4 and 5 unused].
-If (W=5, X=4), then {W=5, X=4, Y=2, Z=6} are all distinct in {1..9}.
-Verify: W+X = 5+4 = 9; Y*Z = 2*6 = 12; W(5)>X(4); Z(6)>Y(2). All distinct.
-Conclusion: W=5, X=4, Y=2, Z=6.
+[Serial recurrent microbenchmark; not a pretrained LLM thought stream]
 ```
 **Emitted Answer** (`<answer>`):
 ```text
-W=5, X=4, Y=2, Z=6
+<<<<<<<<<<<<<<<<
 ```
 
 #### Mode 2: Parallel Continuous Latent Deliberation (PRLR Deliberate-Then-Verify)
-- **Deliberation Latency**: `1.5 ms` | **Coda Decode Latency**: `0.8 ms` | **Total**: `2.3 ms`
+- **Deliberation Latency**: `1.6 ms` | **Coda Decode Latency**: `0.7 ms` | **Total**: `2.2 ms`
 - **Intermediate Tokens Emitted**: `0` (Zero token bloat during thought sweeps)
-- **Constraint Satisfied**: `True` (Deterministic Verifier Score: `1.0`)
+- **Constraint Satisfied**: `False` (Deterministic Verifier Score: `0.0`)
 **Concise Grounded Decoded Answer**:
 ```text
-W=5, X=4, Y=2, Z=6
+
 ```
 
 **3-Signal Dynamic Consensus E-Gate Telemetry**:
 | Step | Velocity $v(t)$ | Rel Decay $v(t)/v(1)$ | SVD erank | $\Delta$ erank | Coda Pred $\hat{y}^{(t)}$ | Velocity Signal | Coda Signal | erank Signal | Status |
 |:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|
-| t=0 | 0.000000 | 1.0000 |  1.00 | 0.0000 | `c` | ❌ | ❌ | ❌ | Active |
-| t=1 | 0.000019 | 0.9999 |  1.00 | 0.0026 | `c` | ❌ | ✅ | ✅ | Active |
-| t=2 | 0.000019 | 0.9811 |  1.01 | 0.0031 | `c` | ❌ | ✅ | ✅ | Active |
-| t=3 | 0.000018 | 0.9622 |  1.01 | 0.0029 | `c` | ❌ | ✅ | ✅ | Active |
-| t=4 | 0.000018 | 0.9528 |  1.01 | 0.0028 | `c` | ❌ | ✅ | ✅ | Active |
-| t=5 | 0.000018 | 0.9559 |  1.02 | 0.0027 | `c` | ❌ | ✅ | ✅ | Active |
-| t=6 | 0.000018 | 0.9654 |  1.02 | 0.0027 | `c` | ❌ | ✅ | ✅ | Active |
-| t=7 | 0.000018 | 0.9748 |  1.02 | 0.0026 | `c` | ❌ | ✅ | ✅ | Active |
-| t=8 | 0.000018 | 0.9748 |  1.02 | 0.0026 | `c` | ❌ | ✅ | ✅ | **HALTED (max_steps_timeout)** |
+| t=0 | 0.000000 | 1.0000 |  1.00 | 0.0000 | `` | ❌ | ❌ | ❌ | Active |
+| t=1 | 0.000022 | 1.0000 |  1.00 | 0.0024 | `` | ❌ | ✅ | ✅ | Active |
+| t=2 | 0.000022 | 0.9890 |  1.01 | 0.0028 | `` | ❌ | ✅ | ✅ | Active |
+| t=3 | 0.000021 | 0.9808 |  1.01 | 0.0027 | `` | ❌ | ✅ | ✅ | Active |
+| t=4 | 0.000021 | 0.9672 |  1.01 | 0.0026 | `` | ❌ | ✅ | ✅ | Active |
+| t=5 | 0.000021 | 0.9562 |  1.01 | 0.0025 | `` | ❌ | ✅ | ✅ | Active |
+| t=6 | 0.000021 | 0.9508 |  1.02 | 0.0024 | `` | ❌ | ✅ | ✅ | Active |
+| t=7 | 0.000021 | 0.9508 |  1.02 | 0.0024 | `` | ❌ | ✅ | ✅ | Active |
+| t=8 | 0.000021 | 0.9480 |  1.02 | 0.0024 | `` | ❌ | ✅ | ✅ | **HALTED (max_steps_timeout)** |
 
 ---
 
 ### 6.5 [mcs_05] Microservice QoS Traffic Shaper
-- **Domain**: `multi_constraint` | **Deliberation Steps**: `T=8` (max_steps_timeout) | **Speedup**: `22.8x` | **Compute Saved**: `0.0%`
-- **Shannon Entropy**: `H=2.45 bits` | **Max 4-Gram Repetition**: `1`
+- **Domain**: `multi_constraint` | **Deliberation Steps**: `T=8` (max_steps_timeout) | **Speedup**: `17.5x` | **Compute Saved**: `0.0%`
+- **Shannon Entropy**: `H=0.00 bits` | **Max 4-Gram Repetition**: `13`
 
 **Task Prompt**:
 ```text
@@ -330,53 +298,43 @@ Output ONLY the 3 path IDs separated by commas in alphabetical order (e.g. "P2, 
 ```
 
 #### Mode 1: Autoregressive Chain-of-Thought (CoT)
-- **Reasoning Latency**: `43.4 ms` | **Throughput**: `4613.8 tok/s` | **Constraint Satisfied**: `True`
+- **Reasoning Latency**: `48.5 ms` | **Throughput**: `4120.6 tok/s` | **Constraint Satisfied**: `False`
 **Explicit Thought Stream** (`<thought>`):
 ```text
-We need to select exactly 3 distinct network transmission paths from P1..P6 to satisfy:
-1. Total bandwidth >= 100 Gbps
-2. Average latency <= 18 ms
-3. Total operational cost <= $450/hr
-4. Mutual exclusion: If P1 is selected, P4 cannot be selected
-Evaluating set {P2, P3, P5}:
-- Bandwidth: P2(40) + P3(35) + P5(50) = 125 Gbps >= 100 Gbps (PASS)
-- Latency: P2(14ms) + P3(16ms) + P5(20ms) = 50ms / 3 = 16.67 ms <= 18 ms (PASS)
-- Cost: P2($130) + P3($110) + P5($160) = $400 <= $450 (PASS)
-- Mutual exclusion: Neither P1 nor P4 is in the set (PASS)
-Conclusion: Selected paths are P2, P3, P5.
+[Serial recurrent microbenchmark; not a pretrained LLM thought stream]
 ```
 **Emitted Answer** (`<answer>`):
 ```text
-P2, P3, P5
+VVVVVVVVVVVVVVVV
 ```
 
 #### Mode 2: Parallel Continuous Latent Deliberation (PRLR Deliberate-Then-Verify)
-- **Deliberation Latency**: `1.9 ms` | **Coda Decode Latency**: `0.8 ms` | **Total**: `2.7 ms`
+- **Deliberation Latency**: `2.8 ms` | **Coda Decode Latency**: `1.5 ms` | **Total**: `4.3 ms`
 - **Intermediate Tokens Emitted**: `0` (Zero token bloat during thought sweeps)
-- **Constraint Satisfied**: `True` (Deterministic Verifier Score: `1.0`)
+- **Constraint Satisfied**: `False` (Deterministic Verifier Score: `0.0`)
 **Concise Grounded Decoded Answer**:
 ```text
-P2, P3, P5
+<<<<<<<<<<<<<<<<
 ```
 
 **3-Signal Dynamic Consensus E-Gate Telemetry**:
 | Step | Velocity $v(t)$ | Rel Decay $v(t)/v(1)$ | SVD erank | $\Delta$ erank | Coda Pred $\hat{y}^{(t)}$ | Velocity Signal | Coda Signal | erank Signal | Status |
 |:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|
-| t=0 | 0.000000 | 1.0000 |  1.00 | 0.0000 | `` | ❌ | ❌ | ❌ | Active |
-| t=1 | 0.000019 | 0.9999 |  1.00 | 0.0018 | `` | ❌ | ✅ | ✅ | Active |
-| t=2 | 0.000019 | 0.9874 |  1.01 | 0.0023 | `` | ❌ | ✅ | ✅ | Active |
-| t=3 | 0.000018 | 0.9687 |  1.01 | 0.0023 | `` | ❌ | ✅ | ✅ | Active |
-| t=4 | 0.000018 | 0.9624 |  1.01 | 0.0022 | `` | ❌ | ✅ | ✅ | Active |
-| t=5 | 0.000018 | 0.9624 |  1.01 | 0.0021 | `` | ❌ | ✅ | ✅ | Active |
-| t=6 | 0.000019 | 0.9749 |  1.01 | 0.0021 | `` | ❌ | ✅ | ✅ | Active |
-| t=7 | 0.000019 | 0.9781 |  1.02 | 0.0021 | `` | ❌ | ✅ | ✅ | Active |
-| t=8 | 0.000019 | 0.9781 |  1.02 | 0.0020 | `` | ❌ | ✅ | ✅ | **HALTED (max_steps_timeout)** |
+| t=0 | 0.000000 | 1.0000 |  1.00 | 0.0000 | `` | ❌ | ❌ | ❌ | Active |
+| t=1 | 0.000023 | 1.0000 |  1.00 | 0.0014 | `` | ❌ | ✅ | ✅ | Active |
+| t=2 | 0.000022 | 0.9894 |  1.00 | 0.0019 | `` | ❌ | ✅ | ✅ | Active |
+| t=3 | 0.000022 | 0.9761 |  1.01 | 0.0018 | `` | ❌ | ✅ | ✅ | Active |
+| t=4 | 0.000022 | 0.9682 |  1.01 | 0.0018 | `` | ❌ | ✅ | ✅ | Active |
+| t=5 | 0.000022 | 0.9629 |  1.01 | 0.0018 | `` | ❌ | ✅ | ✅ | Active |
+| t=6 | 0.000022 | 0.9629 |  1.01 | 0.0017 | `` | ❌ | ✅ | ✅ | Active |
+| t=7 | 0.000022 | 0.9629 |  1.01 | 0.0017 | `<` | ❌ | ❌ | ✅ | Active |
+| t=8 | 0.000022 | 0.9629 |  1.01 | 0.0017 | `<` | ❌ | ✅ | ✅ | **HALTED (max_steps_timeout)** |
 
 ---
 
 ### 6.6 [wsd_01] Physical Affordance & Containment Binding
-- **Domain**: `winograd_schema` | **Deliberation Steps**: `T=8` (max_steps_timeout) | **Speedup**: `28.3x` | **Compute Saved**: `0.0%`
-- **Shannon Entropy**: `H=2.92 bits` | **Max 4-Gram Repetition**: `1`
+- **Domain**: `winograd_schema` | **Deliberation Steps**: `T=8` (max_steps_timeout) | **Speedup**: `25.5x` | **Compute Saved**: `0.0%`
+- **Shannon Entropy**: `H=0.00 bits` | **Max 4-Gram Repetition**: `1`
 
 **Task Prompt**:
 ```text
@@ -386,46 +344,43 @@ Answer with ONLY the exact referent noun phrase (either "the trophy" or "the sui
 ```
 
 #### Mode 1: Autoregressive Chain-of-Thought (CoT)
-- **Reasoning Latency**: `40.3 ms` | **Throughput**: `4964.5 tok/s` | **Constraint Satisfied**: `True`
+- **Reasoning Latency**: `38.7 ms` | **Throughput**: `5171.1 tok/s` | **Constraint Satisfied**: `False`
 **Explicit Thought Stream** (`<thought>`):
 ```text
-The sentence is: 'The trophy didn't fit into the brown suitcase because it was too large.'
-The causal clause 'because it was too large' explains why containment failed.
-Physical containment rules dictate that an object fails to fit inside a container when the object's dimensions exceed the container's capacity.
-Therefore, 'it' unambiguously refers to the trophy.
+[Serial recurrent microbenchmark; not a pretrained LLM thought stream]
 ```
 **Emitted Answer** (`<answer>`):
 ```text
-the trophy
+<<<<<<<<<<<<<<<<
 ```
 
 #### Mode 2: Parallel Continuous Latent Deliberation (PRLR Deliberate-Then-Verify)
-- **Deliberation Latency**: `1.4 ms` | **Coda Decode Latency**: `0.8 ms` | **Total**: `2.3 ms`
+- **Deliberation Latency**: `1.5 ms` | **Coda Decode Latency**: `0.8 ms` | **Total**: `2.3 ms`
 - **Intermediate Tokens Emitted**: `0` (Zero token bloat during thought sweeps)
-- **Constraint Satisfied**: `True` (Deterministic Verifier Score: `1.0`)
+- **Constraint Satisfied**: `False` (Deterministic Verifier Score: `0.0`)
 **Concise Grounded Decoded Answer**:
 ```text
-the trophy
+
 ```
 
 **3-Signal Dynamic Consensus E-Gate Telemetry**:
 | Step | Velocity $v(t)$ | Rel Decay $v(t)/v(1)$ | SVD erank | $\Delta$ erank | Coda Pred $\hat{y}^{(t)}$ | Velocity Signal | Coda Signal | erank Signal | Status |
 |:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|
-| t=0 | 0.000000 | 1.0000 |  1.00 | 0.0000 | `c` | ❌ | ❌ | ❌ | Active |
-| t=1 | 0.000021 | 1.0000 |  1.00 | 0.0027 | `c` | ❌ | ✅ | ✅ | Active |
-| t=2 | 0.000021 | 0.9856 |  1.01 | 0.0031 | `c` | ❌ | ✅ | ✅ | Active |
-| t=3 | 0.000020 | 0.9770 |  1.01 | 0.0030 | `c` | ❌ | ✅ | ✅ | Active |
-| t=4 | 0.000020 | 0.9713 |  1.01 | 0.0029 | `c` | ❌ | ✅ | ✅ | Active |
-| t=5 | 0.000020 | 0.9684 |  1.02 | 0.0028 | `c` | ❌ | ✅ | ✅ | Active |
-| t=6 | 0.000020 | 0.9742 |  1.02 | 0.0027 | `c` | ❌ | ✅ | ✅ | Active |
-| t=7 | 0.000020 | 0.9742 |  1.02 | 0.0027 | `c` | ❌ | ✅ | ✅ | Active |
-| t=8 | 0.000020 | 0.9742 |  1.02 | 0.0026 | `c` | ❌ | ✅ | ✅ | **HALTED (max_steps_timeout)** |
+| t=0 | 0.000000 | 1.0000 |  1.00 | 0.0000 | `` | ❌ | ❌ | ❌ | Active |
+| t=1 | 0.000022 | 1.0000 |  1.00 | 0.0026 | `` | ❌ | ✅ | ✅ | Active |
+| t=2 | 0.000021 | 0.9944 |  1.01 | 0.0029 | `` | ❌ | ✅ | ✅ | Active |
+| t=3 | 0.000021 | 0.9889 |  1.01 | 0.0028 | `` | ❌ | ✅ | ✅ | Active |
+| t=4 | 0.000021 | 0.9834 |  1.01 | 0.0027 | `` | ❌ | ✅ | ✅ | Active |
+| t=5 | 0.000021 | 0.9806 |  1.01 | 0.0026 | `` | ❌ | ✅ | ✅ | Active |
+| t=6 | 0.000021 | 0.9779 |  1.02 | 0.0025 | `` | ❌ | ✅ | ✅ | Active |
+| t=7 | 0.000021 | 0.9751 |  1.02 | 0.0025 | `` | ❌ | ✅ | ✅ | Active |
+| t=8 | 0.000021 | 0.9723 |  1.02 | 0.0024 | `` | ❌ | ✅ | ✅ | **HALTED (max_steps_timeout)** |
 
 ---
 
 ### 6.7 [wsd_02] Semantic Polarity Reversal Disambiguation
-- **Domain**: `winograd_schema` | **Deliberation Steps**: `T=8` (max_steps_timeout) | **Speedup**: `27.7x` | **Compute Saved**: `0.0%`
-- **Shannon Entropy**: `H=3.08 bits` | **Max 4-Gram Repetition**: `1`
+- **Domain**: `winograd_schema` | **Deliberation Steps**: `T=8` (max_steps_timeout) | **Speedup**: `28.0x` | **Compute Saved**: `0.0%`
+- **Shannon Entropy**: `H=0.00 bits` | **Max 4-Gram Repetition**: `1`
 
 **Task Prompt**:
 ```text
@@ -435,46 +390,43 @@ Answer with ONLY the exact referent noun phrase (either "the trophy" or "the sui
 ```
 
 #### Mode 1: Autoregressive Chain-of-Thought (CoT)
-- **Reasoning Latency**: `39.3 ms` | **Throughput**: `5088.1 tok/s` | **Constraint Satisfied**: `True`
+- **Reasoning Latency**: `39.3 ms` | **Throughput**: `5093.9 tok/s` | **Constraint Satisfied**: `False`
 **Explicit Thought Stream** (`<thought>`):
 ```text
-The sentence is: 'The trophy didn't fit into the brown suitcase because it was too small.'
-Here, the adjective 'too small' explains why the container could not accommodate the object.
-A container is too small to fit the contents.
-Therefore, 'it' refers to the suitcase.
+[Serial recurrent microbenchmark; not a pretrained LLM thought stream]
 ```
 **Emitted Answer** (`<answer>`):
 ```text
-the suitcase
+<<<<<<<<<<<<<<<<
 ```
 
 #### Mode 2: Parallel Continuous Latent Deliberation (PRLR Deliberate-Then-Verify)
-- **Deliberation Latency**: `1.4 ms` | **Coda Decode Latency**: `0.7 ms` | **Total**: `2.1 ms`
+- **Deliberation Latency**: `1.4 ms` | **Coda Decode Latency**: `0.8 ms` | **Total**: `2.2 ms`
 - **Intermediate Tokens Emitted**: `0` (Zero token bloat during thought sweeps)
-- **Constraint Satisfied**: `True` (Deterministic Verifier Score: `1.0`)
+- **Constraint Satisfied**: `False` (Deterministic Verifier Score: `0.0`)
 **Concise Grounded Decoded Answer**:
 ```text
-the suitcase
+
 ```
 
 **3-Signal Dynamic Consensus E-Gate Telemetry**:
 | Step | Velocity $v(t)$ | Rel Decay $v(t)/v(1)$ | SVD erank | $\Delta$ erank | Coda Pred $\hat{y}^{(t)}$ | Velocity Signal | Coda Signal | erank Signal | Status |
 |:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|
-| t=0 | 0.000000 | 1.0000 |  1.00 | 0.0000 | `` | ❌ | ❌ | ❌ | Active |
-| t=1 | 0.000021 | 1.0000 |  1.00 | 0.0028 | `` | ❌ | ✅ | ✅ | Active |
-| t=2 | 0.000021 | 0.9857 |  1.01 | 0.0032 | `` | ❌ | ✅ | ✅ | Active |
-| t=3 | 0.000020 | 0.9743 |  1.01 | 0.0031 | `` | ❌ | ✅ | ✅ | Active |
-| t=4 | 0.000020 | 0.9686 |  1.01 | 0.0030 | `` | ❌ | ✅ | ✅ | Active |
-| t=5 | 0.000020 | 0.9686 |  1.02 | 0.0029 | `` | ❌ | ✅ | ✅ | Active |
-| t=6 | 0.000020 | 0.9686 |  1.02 | 0.0028 | `` | ❌ | ✅ | ✅ | Active |
-| t=7 | 0.000020 | 0.9743 |  1.02 | 0.0028 | `` | ❌ | ✅ | ✅ | Active |
-| t=8 | 0.000020 | 0.9743 |  1.02 | 0.0027 | `c` | ❌ | ❌ | ✅ | **HALTED (max_steps_timeout)** |
+| t=0 | 0.000000 | 1.0000 |  1.00 | 0.0000 | `` | ❌ | ❌ | ❌ | Active |
+| t=1 | 0.000022 | 1.0000 |  1.00 | 0.0026 | `` | ❌ | ✅ | ✅ | Active |
+| t=2 | 0.000022 | 0.9972 |  1.01 | 0.0030 | `` | ❌ | ✅ | ✅ | Active |
+| t=3 | 0.000021 | 0.9890 |  1.01 | 0.0028 | `` | ❌ | ✅ | ✅ | Active |
+| t=4 | 0.000021 | 0.9835 |  1.01 | 0.0027 | `` | ❌ | ✅ | ✅ | Active |
+| t=5 | 0.000021 | 0.9780 |  1.01 | 0.0026 | `` | ❌ | ✅ | ✅ | Active |
+| t=6 | 0.000021 | 0.9725 |  1.02 | 0.0026 | `` | ❌ | ✅ | ✅ | Active |
+| t=7 | 0.000021 | 0.9725 |  1.02 | 0.0025 | `` | ❌ | ✅ | ✅ | Active |
+| t=8 | 0.000021 | 0.9697 |  1.02 | 0.0025 | `` | ❌ | ✅ | ✅ | **HALTED (max_steps_timeout)** |
 
 ---
 
 ### 6.8 [wsd_03] Corporate Contract Breach Fiduciary Binding
-- **Domain**: `winograd_schema` | **Deliberation Steps**: `T=8` (max_steps_timeout) | **Speedup**: `25.6x` | **Compute Saved**: `0.0%`
-- **Shannon Entropy**: `H=3.42 bits` | **Max 4-Gram Repetition**: `1`
+- **Domain**: `winograd_schema` | **Deliberation Steps**: `T=8` (max_steps_timeout) | **Speedup**: `26.4x` | **Compute Saved**: `0.0%`
+- **Shannon Entropy**: `H=0.00 bits` | **Max 4-Gram Repetition**: `13`
 
 **Task Prompt**:
 ```text
@@ -484,46 +436,43 @@ Answer with ONLY the exact company name ("Apex Logistics", "Summit Cargo", or "V
 ```
 
 #### Mode 1: Autoregressive Chain-of-Thought (CoT)
-- **Reasoning Latency**: `41.5 ms` | **Throughput**: `4818.3 tok/s` | **Constraint Satisfied**: `True`
+- **Reasoning Latency**: `39.8 ms` | **Throughput**: `5020.3 tok/s` | **Constraint Satisfied**: `False`
 **Explicit Thought Stream** (`<thought>`):
 ```text
-Context: 'Summit Cargo was acquired by Apex Freight because it had an extensive regional delivery network.'
-In corporate acquisitions, acquiring entities purchase targets that possess valuable assets.
-The target entity possessing the valuable regional delivery network is the one being acquired.
-Therefore, 'it' refers to Summit Cargo.
+[Serial recurrent microbenchmark; not a pretrained LLM thought stream]
 ```
 **Emitted Answer** (`<answer>`):
 ```text
-Summit Cargo
+<<<<<<<<<<<<<<<<
 ```
 
 #### Mode 2: Parallel Continuous Latent Deliberation (PRLR Deliberate-Then-Verify)
-- **Deliberation Latency**: `1.6 ms` | **Coda Decode Latency**: `0.7 ms` | **Total**: `2.3 ms`
+- **Deliberation Latency**: `1.5 ms` | **Coda Decode Latency**: `0.7 ms` | **Total**: `2.2 ms`
 - **Intermediate Tokens Emitted**: `0` (Zero token bloat during thought sweeps)
-- **Constraint Satisfied**: `True` (Deterministic Verifier Score: `1.0`)
+- **Constraint Satisfied**: `False` (Deterministic Verifier Score: `0.0`)
 **Concise Grounded Decoded Answer**:
 ```text
-Summit Cargo
+<<<<<<<<<<<<<<<<
 ```
 
 **3-Signal Dynamic Consensus E-Gate Telemetry**:
 | Step | Velocity $v(t)$ | Rel Decay $v(t)/v(1)$ | SVD erank | $\Delta$ erank | Coda Pred $\hat{y}^{(t)}$ | Velocity Signal | Coda Signal | erank Signal | Status |
 |:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|
-| t=0 | 0.000000 | 1.0000 |  1.00 | 0.0000 | `` | ❌ | ❌ | ❌ | Active |
-| t=1 | 0.000020 | 0.9999 |  1.00 | 0.0027 | `` | ❌ | ✅ | ✅ | Active |
-| t=2 | 0.000019 | 0.9788 |  1.01 | 0.0031 | `` | ❌ | ✅ | ✅ | Active |
-| t=3 | 0.000019 | 0.9516 |  1.01 | 0.0030 | `` | ❌ | ✅ | ✅ | Active |
-| t=4 | 0.000019 | 0.9426 |  1.01 | 0.0029 | `` | ❌ | ✅ | ✅ | Active |
-| t=5 | 0.000019 | 0.9426 |  1.02 | 0.0028 | `` | ❌ | ✅ | ✅ | Active |
-| t=6 | 0.000019 | 0.9456 |  1.02 | 0.0028 | `` | ❌ | ✅ | ✅ | Active |
-| t=7 | 0.000019 | 0.9486 |  1.02 | 0.0027 | `` | ❌ | ✅ | ✅ | Active |
-| t=8 | 0.000019 | 0.9426 |  1.02 | 0.0027 | `` | ❌ | ✅ | ✅ | **HALTED (max_steps_timeout)** |
+| t=0 | 0.000000 | 1.0000 |  1.00 | 0.0000 | `<` | ❌ | ❌ | ❌ | Active |
+| t=1 | 0.000020 | 1.0000 |  1.00 | 0.0025 | `<` | ❌ | ✅ | ✅ | Active |
+| t=2 | 0.000020 | 0.9912 |  1.01 | 0.0029 | `<` | ❌ | ✅ | ✅ | Active |
+| t=3 | 0.000020 | 0.9794 |  1.01 | 0.0027 | `<` | ❌ | ✅ | ✅ | Active |
+| t=4 | 0.000020 | 0.9794 |  1.01 | 0.0027 | `<` | ❌ | ✅ | ✅ | Active |
+| t=5 | 0.000020 | 0.9736 |  1.01 | 0.0026 | `<` | ❌ | ✅ | ✅ | Active |
+| t=6 | 0.000020 | 0.9706 |  1.02 | 0.0025 | `<` | ❌ | ✅ | ✅ | Active |
+| t=7 | 0.000020 | 0.9706 |  1.02 | 0.0025 | `<` | ❌ | ✅ | ✅ | Active |
+| t=8 | 0.000020 | 0.9706 |  1.02 | 0.0024 | `<` | ❌ | ✅ | ✅ | **HALTED (max_steps_timeout)** |
 
 ---
 
 ### 6.9 [wsd_04] Pharmacotherapy Mechanism of Action Disambiguation
 - **Domain**: `winograd_schema` | **Deliberation Steps**: `T=8` (max_steps_timeout) | **Speedup**: `24.9x` | **Compute Saved**: `0.0%`
-- **Shannon Entropy**: `H=2.85 bits` | **Max 4-Gram Repetition**: `1`
+- **Shannon Entropy**: `H=0.00 bits` | **Max 4-Gram Repetition**: `13`
 
 **Task Prompt**:
 ```text
@@ -533,45 +482,43 @@ Answer with ONLY the exact medication name ("Lisinopril" or "Metoprolol").
 ```
 
 #### Mode 1: Autoregressive Chain-of-Thought (CoT)
-- **Reasoning Latency**: `40.5 ms` | **Throughput**: `4939.3 tok/s` | **Constraint Satisfied**: `True`
+- **Reasoning Latency**: `40.3 ms` | **Throughput**: `4964.6 tok/s` | **Constraint Satisfied**: `False`
 **Explicit Thought Stream** (`<thought>`):
 ```text
-Context: 'Dr. Evelyn prescribed Lisinopril instead of Amlodipine because it is an ACE inhibitor.'
-Pharmacological classification: Lisinopril is an ACE inhibitor, whereas Amlodipine is a dihydropyridine calcium channel blocker.
-Therefore, 'it' refers to Lisinopril.
+[Serial recurrent microbenchmark; not a pretrained LLM thought stream]
 ```
 **Emitted Answer** (`<answer>`):
 ```text
-Lisinopril
+<<<<<<<<<<<<<<<<
 ```
 
 #### Mode 2: Parallel Continuous Latent Deliberation (PRLR Deliberate-Then-Verify)
-- **Deliberation Latency**: `1.6 ms` | **Coda Decode Latency**: `0.9 ms` | **Total**: `2.6 ms`
+- **Deliberation Latency**: `1.6 ms` | **Coda Decode Latency**: `0.7 ms` | **Total**: `2.4 ms`
 - **Intermediate Tokens Emitted**: `0` (Zero token bloat during thought sweeps)
-- **Constraint Satisfied**: `True` (Deterministic Verifier Score: `1.0`)
+- **Constraint Satisfied**: `False` (Deterministic Verifier Score: `0.0`)
 **Concise Grounded Decoded Answer**:
 ```text
-Lisinopril
+<<<<<<<<<<<<<<<<
 ```
 
 **3-Signal Dynamic Consensus E-Gate Telemetry**:
 | Step | Velocity $v(t)$ | Rel Decay $v(t)/v(1)$ | SVD erank | $\Delta$ erank | Coda Pred $\hat{y}^{(t)}$ | Velocity Signal | Coda Signal | erank Signal | Status |
 |:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|
-| t=0 | 0.000000 | 1.0000 |  1.00 | 0.0000 | `i` | ❌ | ❌ | ❌ | Active |
-| t=1 | 0.000022 | 1.0000 |  1.00 | 0.0029 | `i` | ❌ | ✅ | ✅ | Active |
-| t=2 | 0.000022 | 0.9758 |  1.01 | 0.0033 | `i` | ❌ | ✅ | ✅ | Active |
-| t=3 | 0.000021 | 0.9489 |  1.01 | 0.0032 | `i` | ❌ | ✅ | ✅ | Active |
-| t=4 | 0.000021 | 0.9328 |  1.01 | 0.0031 | `i` | ❌ | ✅ | ✅ | Active |
-| t=5 | 0.000021 | 0.9301 |  1.02 | 0.0030 | `i` | ❌ | ✅ | ✅ | Active |
-| t=6 | 0.000021 | 0.9301 |  1.02 | 0.0029 | `i` | ❌ | ✅ | ✅ | Active |
-| t=7 | 0.000021 | 0.9301 |  1.02 | 0.0029 | `i` | ❌ | ✅ | ✅ | Active |
-| t=8 | 0.000021 | 0.9301 |  1.03 | 0.0028 | `i` | ❌ | ✅ | ✅ | **HALTED (max_steps_timeout)** |
+| t=0 | 0.000000 | 1.0000 |  1.00 | 0.0000 | `<` | ❌ | ❌ | ❌ | Active |
+| t=1 | 0.000017 | 0.9999 |  1.00 | 0.0032 | `<` | ❌ | ✅ | ✅ | Active |
+| t=2 | 0.000017 | 0.9999 |  1.01 | 0.0035 | `<` | ❌ | ✅ | ✅ | Active |
+| t=3 | 0.000017 | 0.9897 |  1.01 | 0.0034 | `<` | ❌ | ✅ | ✅ | Active |
+| t=4 | 0.000017 | 0.9862 |  1.01 | 0.0032 | `<` | ❌ | ✅ | ✅ | Active |
+| t=5 | 0.000017 | 0.9828 |  1.02 | 0.0031 | `<` | ❌ | ✅ | ✅ | Active |
+| t=6 | 0.000017 | 0.9794 |  1.02 | 0.0031 | `<` | ❌ | ✅ | ✅ | Active |
+| t=7 | 0.000017 | 0.9794 |  1.02 | 0.0030 | `<` | ❌ | ✅ | ✅ | Active |
+| t=8 | 0.000017 | 0.9794 |  1.03 | 0.0030 | `<` | ❌ | ✅ | ✅ | **HALTED (max_steps_timeout)** |
 
 ---
 
 ### 6.10 [wsd_05] Legal Indemnity Clause Reciprocal Disambiguation
-- **Domain**: `winograd_schema` | **Deliberation Steps**: `T=8` (max_steps_timeout) | **Speedup**: `24.3x` | **Compute Saved**: `0.0%`
-- **Shannon Entropy**: `H=2.72 bits` | **Max 4-Gram Repetition**: `1`
+- **Domain**: `winograd_schema` | **Deliberation Steps**: `T=8` (max_steps_timeout) | **Speedup**: `24.9x` | **Compute Saved**: `0.0%`
+- **Shannon Entropy**: `H=0.00 bits` | **Max 4-Gram Repetition**: `13`
 
 **Task Prompt**:
 ```text
@@ -581,45 +528,43 @@ Answer with ONLY the exact party ("The Landlord" or "The Tenant").
 ```
 
 #### Mode 1: Autoregressive Chain-of-Thought (CoT)
-- **Reasoning Latency**: `39.1 ms` | **Throughput**: `5114.1 tok/s` | **Constraint Satisfied**: `True`
+- **Reasoning Latency**: `39.2 ms` | **Throughput**: `5107.3 tok/s` | **Constraint Satisfied**: `False`
 **Explicit Thought Stream** (`<thought>`):
 ```text
-Context: 'The landlord sued the tenant because he repeatedly violated the lease agreement.'
-The party violating lease terms and subject to lawsuit is the tenant.
-Therefore, 'he' refers to The Tenant.
+[Serial recurrent microbenchmark; not a pretrained LLM thought stream]
 ```
 **Emitted Answer** (`<answer>`):
 ```text
-The Tenant
+<<<<<<<<<<<<<<<<
 ```
 
 #### Mode 2: Parallel Continuous Latent Deliberation (PRLR Deliberate-Then-Verify)
 - **Deliberation Latency**: `1.6 ms` | **Coda Decode Latency**: `0.7 ms` | **Total**: `2.3 ms`
 - **Intermediate Tokens Emitted**: `0` (Zero token bloat during thought sweeps)
-- **Constraint Satisfied**: `True` (Deterministic Verifier Score: `1.0`)
+- **Constraint Satisfied**: `False` (Deterministic Verifier Score: `0.0`)
 **Concise Grounded Decoded Answer**:
 ```text
-The Tenant
+****************
 ```
 
 **3-Signal Dynamic Consensus E-Gate Telemetry**:
 | Step | Velocity $v(t)$ | Rel Decay $v(t)/v(1)$ | SVD erank | $\Delta$ erank | Coda Pred $\hat{y}^{(t)}$ | Velocity Signal | Coda Signal | erank Signal | Status |
 |:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|
-| t=0 | 0.000000 | 1.0000 |  1.00 | 0.0000 | `` | ❌ | ❌ | ❌ | Active |
-| t=1 | 0.000019 | 0.9999 |  1.00 | 0.0023 | `` | ❌ | ✅ | ✅ | Active |
-| t=2 | 0.000018 | 0.9903 |  1.01 | 0.0027 | `` | ❌ | ✅ | ✅ | Active |
-| t=3 | 0.000018 | 0.9743 |  1.01 | 0.0026 | `` | ❌ | ✅ | ✅ | Active |
-| t=4 | 0.000018 | 0.9679 |  1.01 | 0.0025 | `` | ❌ | ✅ | ✅ | Active |
-| t=5 | 0.000018 | 0.9679 |  1.01 | 0.0024 | `` | ❌ | ✅ | ✅ | Active |
-| t=6 | 0.000018 | 0.9743 |  1.02 | 0.0024 | `` | ❌ | ✅ | ✅ | Active |
-| t=7 | 0.000018 | 0.9743 |  1.02 | 0.0023 | `` | ❌ | ✅ | ✅ | Active |
-| t=8 | 0.000018 | 0.9775 |  1.02 | 0.0023 | `` | ❌ | ✅ | ✅ | **HALTED (max_steps_timeout)** |
+| t=0 | 0.000000 | 1.0000 |  1.00 | 0.0000 | `*` | ❌ | ❌ | ❌ | Active |
+| t=1 | 0.000023 | 1.0000 |  1.00 | 0.0021 | `*` | ❌ | ✅ | ✅ | Active |
+| t=2 | 0.000023 | 0.9898 |  1.01 | 0.0025 | `*` | ❌ | ✅ | ✅ | Active |
+| t=3 | 0.000023 | 0.9847 |  1.01 | 0.0024 | `*` | ❌ | ✅ | ✅ | Active |
+| t=4 | 0.000023 | 0.9821 |  1.01 | 0.0023 | `*` | ❌ | ✅ | ✅ | Active |
+| t=5 | 0.000023 | 0.9795 |  1.01 | 0.0023 | `*` | ❌ | ✅ | ✅ | Active |
+| t=6 | 0.000023 | 0.9770 |  1.01 | 0.0022 | `*` | ❌ | ✅ | ✅ | Active |
+| t=7 | 0.000023 | 0.9744 |  1.02 | 0.0022 | `*` | ❌ | ✅ | ✅ | Active |
+| t=8 | 0.000023 | 0.9744 |  1.02 | 0.0021 | `*` | ❌ | ✅ | ✅ | **HALTED (max_steps_timeout)** |
 
 ---
 
 ### 6.11 [sdn_01] Angry Customer Return & Sarcasm Denoising
-- **Domain**: `semantic_denoising` | **Deliberation Steps**: `T=8` (max_steps_timeout) | **Speedup**: `13.2x` | **Compute Saved**: `0.0%`
-- **Shannon Entropy**: `H=5.04 bits` | **Max 4-Gram Repetition**: `1`
+- **Domain**: `semantic_denoising` | **Deliberation Steps**: `T=8` (max_steps_timeout) | **Speedup**: `22.4x` | **Compute Saved**: `0.0%`
+- **Shannon Entropy**: `H=0.00 bits` | **Max 4-Gram Repetition**: `13`
 
 **Task Prompt**:
 ```text
@@ -635,46 +580,43 @@ Output ONLY a JSON object with keys:
 ```
 
 #### Mode 1: Autoregressive Chain-of-Thought (CoT)
-- **Reasoning Latency**: `46.9 ms` | **Throughput**: `4264.3 tok/s` | **Constraint Satisfied**: `True`
+- **Reasoning Latency**: `39.2 ms` | **Throughput**: `5101.3 tok/s` | **Constraint Satisfied**: `False`
 **Explicit Thought Stream** (`<thought>`):
 ```text
-Analyzing customer message beneath conversational venting and sarcasm:
-Customer says: 'Oh fantastic, your marvelous QuantumX headset (item QX-99281) arrived completely crushed in transit! I want my $249 back immediately.'
-Filtering sarcasm: Customer received damaged item QX-99281 and requests a refund.
-Extracted Action: REFUND, Product: QuantumX, Order/Item ID: QX-99281.
+[Serial recurrent microbenchmark; not a pretrained LLM thought stream]
 ```
 **Emitted Answer** (`<answer>`):
 ```text
-{"action": "REFUND", "order_id": "QX-99281", "product": "QuantumX Pro Headphones", "payment_target": "ORIGINAL_PAYMENT"}
+<<<<<<<<<<<<<<<<
 ```
 
 #### Mode 2: Parallel Continuous Latent Deliberation (PRLR Deliberate-Then-Verify)
-- **Deliberation Latency**: `3.6 ms` | **Coda Decode Latency**: `1.5 ms` | **Total**: `5.0 ms`
+- **Deliberation Latency**: `1.8 ms` | **Coda Decode Latency**: `0.7 ms` | **Total**: `2.5 ms`
 - **Intermediate Tokens Emitted**: `0` (Zero token bloat during thought sweeps)
-- **Constraint Satisfied**: `True` (Deterministic Verifier Score: `1.0`)
+- **Constraint Satisfied**: `False` (Deterministic Verifier Score: `0.0`)
 **Concise Grounded Decoded Answer**:
 ```text
-{"action": "REFUND", "order_id": "QX-99281", "product": "QuantumX Pro Headphones", "payment_target": "ORIGINAL_PAYMENT"}
+<<<<<<<<<<<<<<<<
 ```
 
 **3-Signal Dynamic Consensus E-Gate Telemetry**:
 | Step | Velocity $v(t)$ | Rel Decay $v(t)/v(1)$ | SVD erank | $\Delta$ erank | Coda Pred $\hat{y}^{(t)}$ | Velocity Signal | Coda Signal | erank Signal | Status |
 |:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|
-| t=0 | 0.000000 | 1.0000 |  1.00 | 0.0000 | `` | ❌ | ❌ | ❌ | Active |
-| t=1 | 0.000015 | 0.9999 |  1.00 | 0.0016 | `` | ❌ | ✅ | ✅ | Active |
-| t=2 | 0.000015 | 0.9838 |  1.00 | 0.0021 | `` | ❌ | ✅ | ✅ | Active |
-| t=3 | 0.000014 | 0.9677 |  1.01 | 0.0021 | `` | ❌ | ✅ | ✅ | Active |
-| t=4 | 0.000014 | 0.9596 |  1.01 | 0.0020 | `` | ❌ | ✅ | ✅ | Active |
-| t=5 | 0.000014 | 0.9596 |  1.01 | 0.0020 | `` | ❌ | ✅ | ✅ | Active |
-| t=6 | 0.000014 | 0.9677 |  1.01 | 0.0020 | `` | ❌ | ✅ | ✅ | Active |
-| t=7 | 0.000014 | 0.9757 |  1.02 | 0.0019 | `` | ❌ | ✅ | ✅ | Active |
-| t=8 | 0.000014 | 0.9757 |  1.02 | 0.0019 | `` | ❌ | ✅ | ✅ | **HALTED (max_steps_timeout)** |
+| t=0 | 0.000000 | 1.0000 |  1.00 | 0.0000 | `<` | ❌ | ❌ | ❌ | Active |
+| t=1 | 0.000018 | 0.9999 |  1.00 | 0.0014 | `<` | ❌ | ✅ | ✅ | Active |
+| t=2 | 0.000018 | 0.9935 |  1.00 | 0.0020 | `<` | ❌ | ✅ | ✅ | Active |
+| t=3 | 0.000018 | 0.9870 |  1.01 | 0.0019 | `<` | ❌ | ✅ | ✅ | Active |
+| t=4 | 0.000018 | 0.9806 |  1.01 | 0.0019 | `<` | ❌ | ✅ | ✅ | Active |
+| t=5 | 0.000018 | 0.9741 |  1.01 | 0.0018 | `<` | ❌ | ✅ | ✅ | Active |
+| t=6 | 0.000018 | 0.9741 |  1.01 | 0.0018 | `<` | ❌ | ✅ | ✅ | Active |
+| t=7 | 0.000018 | 0.9741 |  1.01 | 0.0017 | `<` | ❌ | ✅ | ✅ | Active |
+| t=8 | 0.000018 | 0.9741 |  1.02 | 0.0017 | `<` | ❌ | ✅ | ✅ | **HALTED (max_steps_timeout)** |
 
 ---
 
 ### 6.12 [sdn_02] DevOps Multi-Speaker Incident Log Isolation
-- **Domain**: `semantic_denoising` | **Deliberation Steps**: `T=8` (max_steps_timeout) | **Speedup**: `21.3x` | **Compute Saved**: `0.0%`
-- **Shannon Entropy**: `H=4.65 bits` | **Max 4-Gram Repetition**: `1`
+- **Domain**: `semantic_denoising` | **Deliberation Steps**: `T=8` (max_steps_timeout) | **Speedup**: `16.9x` | **Compute Saved**: `0.0%`
+- **Shannon Entropy**: `H=0.00 bits` | **Max 4-Gram Repetition**: `13`
 
 **Task Prompt**:
 ```text
@@ -693,45 +635,43 @@ Output ONLY a JSON object with:
 ```
 
 #### Mode 1: Autoregressive Chain-of-Thought (CoT)
-- **Reasoning Latency**: `38.8 ms` | **Throughput**: `5159.5 tok/s` | **Constraint Satisfied**: `True`
+- **Reasoning Latency**: `41.6 ms` | **Throughput**: `4804.8 tok/s` | **Constraint Satisfied**: `False`
 **Explicit Thought Stream** (`<thought>`):
 ```text
-Analyzing incident alert:
-Message: 'Alert: payments-worker v3.2.0 deployed 10 mins ago is throwing 500 errors on charge_card. Revert to v3.1.9 now!'
-Core operation: ROLLBACK, Service: payments-worker, Version: v3.1.9.
+[Serial recurrent microbenchmark; not a pretrained LLM thought stream]
 ```
 **Emitted Answer** (`<answer>`):
 ```text
-{"target_service": "payments-worker", "operation": "ROLLBACK", "target_version": "v3.0.9"}
+<<<<<<<<<<<<<<<<
 ```
 
 #### Mode 2: Parallel Continuous Latent Deliberation (PRLR Deliberate-Then-Verify)
-- **Deliberation Latency**: `1.8 ms` | **Coda Decode Latency**: `0.8 ms` | **Total**: `2.6 ms`
+- **Deliberation Latency**: `2.5 ms` | **Coda Decode Latency**: `0.7 ms` | **Total**: `3.2 ms`
 - **Intermediate Tokens Emitted**: `0` (Zero token bloat during thought sweeps)
-- **Constraint Satisfied**: `True` (Deterministic Verifier Score: `1.0`)
+- **Constraint Satisfied**: `False` (Deterministic Verifier Score: `0.0`)
 **Concise Grounded Decoded Answer**:
 ```text
-{"target_service": "payments-worker", "operation": "ROLLBACK", "target_version": "v3.0.9"}
+<<<<<<<<<<<<<<<<
 ```
 
 **3-Signal Dynamic Consensus E-Gate Telemetry**:
 | Step | Velocity $v(t)$ | Rel Decay $v(t)/v(1)$ | SVD erank | $\Delta$ erank | Coda Pred $\hat{y}^{(t)}$ | Velocity Signal | Coda Signal | erank Signal | Status |
 |:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|
-| t=0 | 0.000000 | 1.0000 |  1.00 | 0.0000 | `i` | ❌ | ❌ | ❌ | Active |
-| t=1 | 0.000016 | 0.9999 |  1.00 | 0.0015 | `i` | ❌ | ✅ | ✅ | Active |
-| t=2 | 0.000015 | 0.9808 |  1.00 | 0.0021 | `i` | ❌ | ✅ | ✅ | Active |
-| t=3 | 0.000015 | 0.9655 |  1.01 | 0.0020 | `i` | ❌ | ✅ | ✅ | Active |
-| t=4 | 0.000015 | 0.9578 |  1.01 | 0.0020 | `i` | ❌ | ✅ | ✅ | Active |
-| t=5 | 0.000015 | 0.9616 |  1.01 | 0.0019 | `i` | ❌ | ✅ | ✅ | Active |
-| t=6 | 0.000015 | 0.9655 |  1.01 | 0.0019 | `i` | ❌ | ✅ | ✅ | Active |
-| t=7 | 0.000015 | 0.9731 |  1.01 | 0.0019 | `i` | ❌ | ✅ | ✅ | Active |
-| t=8 | 0.000015 | 0.9731 |  1.02 | 0.0018 | `i` | ❌ | ✅ | ✅ | **HALTED (max_steps_timeout)** |
+| t=0 | 0.000000 | 1.0000 |  1.00 | 0.0000 | `<` | ❌ | ❌ | ❌ | Active |
+| t=1 | 0.000018 | 0.9999 |  1.00 | 0.0014 | `<` | ❌ | ✅ | ✅ | Active |
+| t=2 | 0.000018 | 0.9935 |  1.00 | 0.0019 | `<` | ❌ | ✅ | ✅ | Active |
+| t=3 | 0.000018 | 0.9806 |  1.01 | 0.0019 | `<` | ❌ | ✅ | ✅ | Active |
+| t=4 | 0.000018 | 0.9741 |  1.01 | 0.0018 | `<` | ❌ | ✅ | ✅ | Active |
+| t=5 | 0.000018 | 0.9741 |  1.01 | 0.0018 | `<` | ❌ | ✅ | ✅ | Active |
+| t=6 | 0.000018 | 0.9677 |  1.01 | 0.0017 | `<` | ❌ | ✅ | ✅ | Active |
+| t=7 | 0.000018 | 0.9677 |  1.01 | 0.0017 | `<` | ❌ | ✅ | ✅ | Active |
+| t=8 | 0.000018 | 0.9677 |  1.02 | 0.0017 | `<` | ❌ | ✅ | ✅ | **HALTED (max_steps_timeout)** |
 
 ---
 
 ### 6.13 [sdn_03] Meeting Transcript Action Item & Banter Filtering
-- **Domain**: `semantic_denoising` | **Deliberation Steps**: `T=8` (max_steps_timeout) | **Speedup**: `20.9x` | **Compute Saved**: `0.0%`
-- **Shannon Entropy**: `H=4.60 bits` | **Max 4-Gram Repetition**: `1`
+- **Domain**: `semantic_denoising` | **Deliberation Steps**: `T=8` (max_steps_timeout) | **Speedup**: `21.5x` | **Compute Saved**: `0.0%`
+- **Shannon Entropy**: `H=0.00 bits` | **Max 4-Gram Repetition**: `1`
 
 **Task Prompt**:
 ```text
@@ -750,45 +690,43 @@ Output ONLY a JSON object with:
 ```
 
 #### Mode 1: Autoregressive Chain-of-Thought (CoT)
-- **Reasoning Latency**: `38.6 ms` | **Throughput**: `5179.2 tok/s` | **Constraint Satisfied**: `True`
+- **Reasoning Latency**: `39.7 ms` | **Throughput**: `5039.5 tok/s` | **Constraint Satisfied**: `False`
 **Explicit Thought Stream** (`<thought>`):
 ```text
-Analyzing project manager request:
-Message: 'Can someone please assign Rachel to patch the PDF export bug reported in ticket SEC-402 before tomorrow morning?'
-Core intent: Assign task 'Patch the PDF export bug' to Rachel.
+[Serial recurrent microbenchmark; not a pretrained LLM thought stream]
 ```
 **Emitted Answer** (`<answer>`):
 ```text
-{"assignee": "Rachel", "task_description": "Patch the PDF export service Unicode bug", "deadline": "Thursday 5 PM"}
+<<<<<<<<<<<<<<<<
 ```
 
 #### Mode 2: Parallel Continuous Latent Deliberation (PRLR Deliberate-Then-Verify)
-- **Deliberation Latency**: `1.9 ms` | **Coda Decode Latency**: `0.7 ms` | **Total**: `2.6 ms`
+- **Deliberation Latency**: `1.9 ms` | **Coda Decode Latency**: `1.3 ms` | **Total**: `3.2 ms`
 - **Intermediate Tokens Emitted**: `0` (Zero token bloat during thought sweeps)
-- **Constraint Satisfied**: `True` (Deterministic Verifier Score: `1.0`)
+- **Constraint Satisfied**: `False` (Deterministic Verifier Score: `0.0`)
 **Concise Grounded Decoded Answer**:
 ```text
-{"assignee": "Rachel", "task_description": "Patch the PDF export service Unicode bug", "deadline": "Thursday 5 PM"}
+
 ```
 
 **3-Signal Dynamic Consensus E-Gate Telemetry**:
 | Step | Velocity $v(t)$ | Rel Decay $v(t)/v(1)$ | SVD erank | $\Delta$ erank | Coda Pred $\hat{y}^{(t)}$ | Velocity Signal | Coda Signal | erank Signal | Status |
 |:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|
-| t=0 | 0.000000 | 1.0000 |  1.00 | 0.0000 | `` | ❌ | ❌ | ❌ | Active |
-| t=1 | 0.000018 | 0.9999 |  1.00 | 0.0017 | `` | ❌ | ✅ | ✅ | Active |
-| t=2 | 0.000018 | 0.9870 |  1.01 | 0.0022 | `` | ❌ | ✅ | ✅ | Active |
-| t=3 | 0.000018 | 0.9741 |  1.01 | 0.0022 | `` | ❌ | ✅ | ✅ | Active |
-| t=4 | 0.000018 | 0.9677 |  1.01 | 0.0021 | `` | ❌ | ✅ | ✅ | Active |
-| t=5 | 0.000018 | 0.9677 |  1.01 | 0.0020 | `` | ❌ | ✅ | ✅ | Active |
-| t=6 | 0.000018 | 0.9741 |  1.01 | 0.0020 | `` | ❌ | ✅ | ✅ | Active |
-| t=7 | 0.000018 | 0.9741 |  1.02 | 0.0020 | `` | ❌ | ✅ | ✅ | Active |
-| t=8 | 0.000018 | 0.9741 |  1.02 | 0.0019 | `` | ❌ | ✅ | ✅ | **HALTED (max_steps_timeout)** |
+| t=0 | 0.000000 | 1.0000 |  1.00 | 0.0000 | `` | ❌ | ❌ | ❌ | Active |
+| t=1 | 0.000023 | 1.0000 |  1.00 | 0.0018 | `` | ❌ | ✅ | ✅ | Active |
+| t=2 | 0.000023 | 0.9949 |  1.01 | 0.0023 | `` | ❌ | ✅ | ✅ | Active |
+| t=3 | 0.000023 | 0.9822 |  1.01 | 0.0022 | `` | ❌ | ✅ | ✅ | Active |
+| t=4 | 0.000023 | 0.9771 |  1.01 | 0.0021 | `` | ❌ | ✅ | ✅ | Active |
+| t=5 | 0.000023 | 0.9746 |  1.01 | 0.0021 | `` | ❌ | ✅ | ✅ | Active |
+| t=6 | 0.000023 | 0.9746 |  1.01 | 0.0020 | `` | ❌ | ✅ | ✅ | Active |
+| t=7 | 0.000023 | 0.9695 |  1.02 | 0.0020 | `` | ❌ | ✅ | ✅ | Active |
+| t=8 | 0.000023 | 0.9695 |  1.02 | 0.0020 | `` | ❌ | ✅ | ✅ | **HALTED (max_steps_timeout)** |
 
 ---
 
 ### 6.14 [sdn_04] Sarcastic Hypothetical SQL Database Update Extraction
-- **Domain**: `semantic_denoising` | **Deliberation Steps**: `T=8` (max_steps_timeout) | **Speedup**: `23.2x` | **Compute Saved**: `0.0%`
-- **Shannon Entropy**: `H=4.72 bits` | **Max 4-Gram Repetition**: `1`
+- **Domain**: `semantic_denoising` | **Deliberation Steps**: `T=8` (max_steps_timeout) | **Speedup**: `19.8x` | **Compute Saved**: `0.0%`
+- **Shannon Entropy**: `H=0.00 bits` | **Max 4-Gram Repetition**: `1`
 
 **Task Prompt**:
 ```text
@@ -803,45 +741,43 @@ Output ONLY a JSON object with:
 ```
 
 #### Mode 1: Autoregressive Chain-of-Thought (CoT)
-- **Reasoning Latency**: `40.4 ms` | **Throughput**: `4956.3 tok/s` | **Constraint Satisfied**: `True`
+- **Reasoning Latency**: `37.5 ms` | **Throughput**: `5336.4 tok/s` | **Constraint Satisfied**: `False`
 **Explicit Thought Stream** (`<thought>`):
 ```text
-Analyzing database operations request:
-Message: 'Update the transactions table to mark status as SETTLED for all batch 8812 records.'
-Core intent: SQL UPDATE on table 'transactions' setting status='SETTLED'.
+[Serial recurrent microbenchmark; not a pretrained LLM thought stream]
 ```
 **Emitted Answer** (`<answer>`):
 ```text
-{"statement_type": "UPDATE", "target_table": "transactions", "filter_id": "TXN-884102", "set_status": "REFUNDED"}
+<<<<<<<<<<<<<<<<
 ```
 
 #### Mode 2: Parallel Continuous Latent Deliberation (PRLR Deliberate-Then-Verify)
-- **Deliberation Latency**: `1.7 ms` | **Coda Decode Latency**: `0.8 ms` | **Total**: `2.5 ms`
+- **Deliberation Latency**: `1.9 ms` | **Coda Decode Latency**: `0.7 ms` | **Total**: `2.6 ms`
 - **Intermediate Tokens Emitted**: `0` (Zero token bloat during thought sweeps)
-- **Constraint Satisfied**: `True` (Deterministic Verifier Score: `1.0`)
+- **Constraint Satisfied**: `False` (Deterministic Verifier Score: `0.0`)
 **Concise Grounded Decoded Answer**:
 ```text
-{"statement_type": "UPDATE", "target_table": "transactions", "filter_id": "TXN-884102", "set_status": "REFUNDED"}
+
 ```
 
 **3-Signal Dynamic Consensus E-Gate Telemetry**:
 | Step | Velocity $v(t)$ | Rel Decay $v(t)/v(1)$ | SVD erank | $\Delta$ erank | Coda Pred $\hat{y}^{(t)}$ | Velocity Signal | Coda Signal | erank Signal | Status |
 |:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|
-| t=0 | 0.000000 | 1.0000 |  1.00 | 0.0000 | `c` | ❌ | ❌ | ❌ | Active |
-| t=1 | 0.000018 | 0.9999 |  1.00 | 0.0023 | `c` | ❌ | ✅ | ✅ | Active |
-| t=2 | 0.000018 | 0.9835 |  1.01 | 0.0028 | `c` | ❌ | ✅ | ✅ | Active |
-| t=3 | 0.000017 | 0.9638 |  1.01 | 0.0027 | `c` | ❌ | ✅ | ✅ | Active |
-| t=4 | 0.000017 | 0.9539 |  1.01 | 0.0026 | `c` | ❌ | ✅ | ✅ | Active |
-| t=5 | 0.000017 | 0.9539 |  1.01 | 0.0025 | `c` | ❌ | ✅ | ✅ | Active |
-| t=6 | 0.000018 | 0.9671 |  1.02 | 0.0025 | `c` | ❌ | ✅ | ✅ | Active |
-| t=7 | 0.000018 | 0.9671 |  1.02 | 0.0024 | `c` | ❌ | ✅ | ✅ | Active |
-| t=8 | 0.000018 | 0.9703 |  1.02 | 0.0024 | `c` | ❌ | ✅ | ✅ | **HALTED (max_steps_timeout)** |
+| t=0 | 0.000000 | 1.0000 |  1.00 | 0.0000 | `` | ❌ | ❌ | ❌ | Active |
+| t=1 | 0.000022 | 1.0000 |  1.00 | 0.0019 | `` | ❌ | ✅ | ✅ | Active |
+| t=2 | 0.000022 | 0.9945 |  1.01 | 0.0023 | `` | ❌ | ✅ | ✅ | Active |
+| t=3 | 0.000021 | 0.9835 |  1.01 | 0.0022 | `` | ❌ | ✅ | ✅ | Active |
+| t=4 | 0.000021 | 0.9780 |  1.01 | 0.0022 | `` | ❌ | ✅ | ✅ | Active |
+| t=5 | 0.000021 | 0.9780 |  1.01 | 0.0021 | `` | ❌ | ✅ | ✅ | Active |
+| t=6 | 0.000021 | 0.9752 |  1.01 | 0.0021 | `` | ❌ | ✅ | ✅ | Active |
+| t=7 | 0.000021 | 0.9725 |  1.02 | 0.0020 | `` | ❌ | ✅ | ✅ | Active |
+| t=8 | 0.000021 | 0.9725 |  1.02 | 0.0020 | `` | ❌ | ✅ | ✅ | **HALTED (max_steps_timeout)** |
 
 ---
 
 ### 6.15 [sdn_05] Rambling Stream-of-Consciousness Flight Parameter Extraction
-- **Domain**: `semantic_denoising` | **Deliberation Steps**: `T=8` (max_steps_timeout) | **Speedup**: `22.1x` | **Compute Saved**: `0.0%`
-- **Shannon Entropy**: `H=4.70 bits` | **Max 4-Gram Repetition**: `1`
+- **Domain**: `semantic_denoising` | **Deliberation Steps**: `T=8` (max_steps_timeout) | **Speedup**: `20.9x` | **Compute Saved**: `0.0%`
+- **Shannon Entropy**: `H=0.00 bits` | **Max 4-Gram Repetition**: `13`
 
 **Task Prompt**:
 ```text
@@ -856,45 +792,43 @@ Output ONLY a JSON object with:
 ```
 
 #### Mode 1: Autoregressive Chain-of-Thought (CoT)
-- **Reasoning Latency**: `38.6 ms` | **Throughput**: `5184.7 tok/s` | **Constraint Satisfied**: `True`
+- **Reasoning Latency**: `37.3 ms` | **Throughput**: `5363.7 tok/s` | **Constraint Satisfied**: `False`
 **Explicit Thought Stream** (`<thought>`):
 ```text
-Analyzing flight booking request:
-Message: 'Book one-way flight from Boston (BOS) to San Francisco (SFO) on October 14th.'
-Core parameters: origin=BOS, destination=SFO, date=2026-10-14.
+[Serial recurrent microbenchmark; not a pretrained LLM thought stream]
 ```
 **Emitted Answer** (`<answer>`):
 ```text
-{"origin_airport": "BOS", "destination_airport": "SFO", "departure_date": "2026-10-12", "cabin_class": "ECONOMY"}
+<<<<<<<<<<<<<<<<
 ```
 
 #### Mode 2: Parallel Continuous Latent Deliberation (PRLR Deliberate-Then-Verify)
-- **Deliberation Latency**: `1.7 ms` | **Coda Decode Latency**: `0.7 ms` | **Total**: `2.4 ms`
+- **Deliberation Latency**: `1.8 ms` | **Coda Decode Latency**: `0.7 ms` | **Total**: `2.5 ms`
 - **Intermediate Tokens Emitted**: `0` (Zero token bloat during thought sweeps)
-- **Constraint Satisfied**: `True` (Deterministic Verifier Score: `1.0`)
+- **Constraint Satisfied**: `False` (Deterministic Verifier Score: `0.0`)
 **Concise Grounded Decoded Answer**:
 ```text
-{"origin_airport": "BOS", "destination_airport": "SFO", "departure_date": "2026-10-12", "cabin_class": "ECONOMY"}
+<<<<<<<<<<<<<<<<
 ```
 
 **3-Signal Dynamic Consensus E-Gate Telemetry**:
 | Step | Velocity $v(t)$ | Rel Decay $v(t)/v(1)$ | SVD erank | $\Delta$ erank | Coda Pred $\hat{y}^{(t)}$ | Velocity Signal | Coda Signal | erank Signal | Status |
 |:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|
-| t=0 | 0.000000 | 1.0000 |  1.00 | 0.0000 | `` | ❌ | ❌ | ❌ | Active |
-| t=1 | 0.000016 | 0.9999 |  1.00 | 0.0016 | `` | ❌ | ✅ | ✅ | Active |
-| t=2 | 0.000016 | 0.9852 |  1.00 | 0.0020 | `` | ❌ | ✅ | ✅ | Active |
-| t=3 | 0.000016 | 0.9667 |  1.01 | 0.0020 | `` | ❌ | ✅ | ✅ | Active |
-| t=4 | 0.000015 | 0.9594 |  1.01 | 0.0019 | `` | ❌ | ✅ | ✅ | Active |
-| t=5 | 0.000015 | 0.9594 |  1.01 | 0.0019 | `` | ❌ | ✅ | ✅ | Active |
-| t=6 | 0.000016 | 0.9667 |  1.01 | 0.0018 | `` | ❌ | ✅ | ✅ | Active |
-| t=7 | 0.000016 | 0.9741 |  1.01 | 0.0018 | `` | ❌ | ✅ | ✅ | Active |
-| t=8 | 0.000016 | 0.9741 |  1.02 | 0.0018 | `` | ❌ | ✅ | ✅ | **HALTED (max_steps_timeout)** |
+| t=0 | 0.000000 | 1.0000 |  1.00 | 0.0000 | `<` | ❌ | ❌ | ❌ | Active |
+| t=1 | 0.000020 | 1.0000 |  1.00 | 0.0014 | `<` | ❌ | ✅ | ✅ | Active |
+| t=2 | 0.000020 | 0.9940 |  1.00 | 0.0018 | `<` | ❌ | ✅ | ✅ | Active |
+| t=3 | 0.000020 | 0.9822 |  1.01 | 0.0018 | `<` | ❌ | ✅ | ✅ | Active |
+| t=4 | 0.000020 | 0.9763 |  1.01 | 0.0017 | `<` | ❌ | ✅ | ✅ | Active |
+| t=5 | 0.000020 | 0.9763 |  1.01 | 0.0017 | `<` | ❌ | ✅ | ✅ | Active |
+| t=6 | 0.000020 | 0.9763 |  1.01 | 0.0017 | `<` | ❌ | ✅ | ✅ | Active |
+| t=7 | 0.000020 | 0.9763 |  1.01 | 0.0016 | `<` | ❌ | ✅ | ✅ | Active |
+| t=8 | 0.000020 | 0.9704 |  1.01 | 0.0016 | `<` | ❌ | ✅ | ✅ | **HALTED (max_steps_timeout)** |
 
 ---
 
 ### 6.16 [cms_01] Whodunit Disjoint Alibi Elimination Deduction
-- **Domain**: `multi_clue_synthesis` | **Deliberation Steps**: `T=8` (max_steps_timeout) | **Speedup**: `20.1x` | **Compute Saved**: `0.0%`
-- **Shannon Entropy**: `H=3.42 bits` | **Max 4-Gram Repetition**: `1`
+- **Domain**: `multi_clue_synthesis` | **Deliberation Steps**: `T=8` (max_steps_timeout) | **Speedup**: `20.7x` | **Compute Saved**: `0.0%`
+- **Shannon Entropy**: `H=0.00 bits` | **Max 4-Gram Repetition**: `13`
 
 **Task Prompt**:
 ```text
@@ -911,47 +845,43 @@ Output ONLY the exact name of the culprit (e.g. "Mrs. Peacock").
 ```
 
 #### Mode 1: Autoregressive Chain-of-Thought (CoT)
-- **Reasoning Latency**: `38.4 ms` | **Throughput**: `5208.1 tok/s` | **Constraint Satisfied**: `True`
+- **Reasoning Latency**: `38.9 ms` | **Throughput**: `5142.0 tok/s` | **Constraint Satisfied**: `False`
 **Explicit Thought Stream** (`<thought>`):
 ```text
-Synthesizing scattered clues:
-- Clue 1: The culprit left silver earring at the conservatory.
-- Clue 2: Mrs. Peacock wears silver earrings and was seen near the conservatory at 9:15 PM.
-- Clue 3: Colonel Mustard and Professor Plum were in the billiard room with witnesses.
-Deduction: Mrs. Peacock is the suspect who left the earring at the scene.
+[Serial recurrent microbenchmark; not a pretrained LLM thought stream]
 ```
 **Emitted Answer** (`<answer>`):
 ```text
-Mrs. Peacock
+<<<<<<<<<<<<<<<<
 ```
 
 #### Mode 2: Parallel Continuous Latent Deliberation (PRLR Deliberate-Then-Verify)
 - **Deliberation Latency**: `1.9 ms` | **Coda Decode Latency**: `0.7 ms` | **Total**: `2.6 ms`
 - **Intermediate Tokens Emitted**: `0` (Zero token bloat during thought sweeps)
-- **Constraint Satisfied**: `True` (Deterministic Verifier Score: `1.0`)
+- **Constraint Satisfied**: `False` (Deterministic Verifier Score: `0.0`)
 **Concise Grounded Decoded Answer**:
 ```text
-Mrs. Peacock
+<<<<<<<<<<<<<<<<
 ```
 
 **3-Signal Dynamic Consensus E-Gate Telemetry**:
 | Step | Velocity $v(t)$ | Rel Decay $v(t)/v(1)$ | SVD erank | $\Delta$ erank | Coda Pred $\hat{y}^{(t)}$ | Velocity Signal | Coda Signal | erank Signal | Status |
 |:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|
-| t=0 | 0.000000 | 1.0000 |  1.00 | 0.0000 | `` | ❌ | ❌ | ❌ | Active |
-| t=1 | 0.000020 | 0.9999 |  1.00 | 0.0016 | `` | ❌ | ✅ | ✅ | Active |
-| t=2 | 0.000019 | 0.9878 |  1.00 | 0.0021 | `` | ❌ | ✅ | ✅ | Active |
-| t=3 | 0.000019 | 0.9756 |  1.01 | 0.0020 | `` | ❌ | ✅ | ✅ | Active |
-| t=4 | 0.000019 | 0.9664 |  1.01 | 0.0020 | `` | ❌ | ✅ | ✅ | Active |
-| t=5 | 0.000019 | 0.9695 |  1.01 | 0.0019 | `` | ❌ | ✅ | ✅ | Active |
-| t=6 | 0.000019 | 0.9756 |  1.01 | 0.0019 | `` | ❌ | ✅ | ✅ | Active |
-| t=7 | 0.000019 | 0.9756 |  1.01 | 0.0018 | `` | ❌ | ✅ | ✅ | Active |
-| t=8 | 0.000019 | 0.9786 |  1.02 | 0.0018 | `` | ❌ | ✅ | ✅ | **HALTED (max_steps_timeout)** |
+| t=0 | 0.000000 | 1.0000 |  1.00 | 0.0000 | `<` | ❌ | ❌ | ❌ | Active |
+| t=1 | 0.000024 | 1.0000 |  1.00 | 0.0015 | `<` | ❌ | ✅ | ✅ | Active |
+| t=2 | 0.000023 | 0.9899 |  1.00 | 0.0019 | `<` | ❌ | ✅ | ✅ | Active |
+| t=3 | 0.000023 | 0.9799 |  1.01 | 0.0018 | `<` | ❌ | ✅ | ✅ | Active |
+| t=4 | 0.000023 | 0.9748 |  1.01 | 0.0018 | `<` | ❌ | ✅ | ✅ | Active |
+| t=5 | 0.000023 | 0.9748 |  1.01 | 0.0017 | `<` | ❌ | ✅ | ✅ | Active |
+| t=6 | 0.000023 | 0.9723 |  1.01 | 0.0017 | `<` | ❌ | ✅ | ✅ | Active |
+| t=7 | 0.000023 | 0.9698 |  1.01 | 0.0017 | `<` | ❌ | ✅ | ✅ | Active |
+| t=8 | 0.000023 | 0.9698 |  1.01 | 0.0016 | `<` | ❌ | ✅ | ✅ | **HALTED (max_steps_timeout)** |
 
 ---
 
 ### 6.17 [cms_02] Multi-Tier Supply Chain Bottleneck Root Cause
-- **Domain**: `multi_clue_synthesis` | **Deliberation Steps**: `T=8` (max_steps_timeout) | **Speedup**: `21.9x` | **Compute Saved**: `0.0%`
-- **Shannon Entropy**: `H=3.39 bits` | **Max 4-Gram Repetition**: `1`
+- **Domain**: `multi_clue_synthesis` | **Deliberation Steps**: `T=8` (max_steps_timeout) | **Speedup**: `20.6x` | **Compute Saved**: `0.0%`
+- **Shannon Entropy**: `H=0.00 bits` | **Max 4-Gram Repetition**: `1`
 
 **Task Prompt**:
 ```text
@@ -967,47 +897,43 @@ Output ONLY the exact entity name (e.g. "Supplier Beta").
 ```
 
 #### Mode 1: Autoregressive Chain-of-Thought (CoT)
-- **Reasoning Latency**: `40.9 ms` | **Throughput**: `4896.3 tok/s` | **Constraint Satisfied**: `True`
+- **Reasoning Latency**: `38.9 ms` | **Throughput**: `5141.4 tok/s` | **Constraint Satisfied**: `False`
 **Explicit Thought Stream** (`<thought>`):
 ```text
-Synthesizing vendor constraints:
-- Supplier Alpha: Lead time 4 weeks, cost $12/unit, min order 500 units.
-- Supplier Beta: Lead time 1 week, cost $14/unit, min order 100 units.
-- Project requirement: Needed in 10 days, budget $1500, requirement 100 units.
-Deduction: Supplier Beta is the only vendor meeting the 10-day lead time.
+[Serial recurrent microbenchmark; not a pretrained LLM thought stream]
 ```
 **Emitted Answer** (`<answer>`):
 ```text
-Supplier Beta
+<<<<<<<<<<<<<<<<
 ```
 
 #### Mode 2: Parallel Continuous Latent Deliberation (PRLR Deliberate-Then-Verify)
-- **Deliberation Latency**: `1.9 ms` | **Coda Decode Latency**: `0.7 ms` | **Total**: `2.6 ms`
+- **Deliberation Latency**: `1.9 ms` | **Coda Decode Latency**: `0.8 ms` | **Total**: `2.7 ms`
 - **Intermediate Tokens Emitted**: `0` (Zero token bloat during thought sweeps)
-- **Constraint Satisfied**: `True` (Deterministic Verifier Score: `1.0`)
+- **Constraint Satisfied**: `False` (Deterministic Verifier Score: `0.0`)
 **Concise Grounded Decoded Answer**:
 ```text
-Supplier Beta
+
 ```
 
 **3-Signal Dynamic Consensus E-Gate Telemetry**:
 | Step | Velocity $v(t)$ | Rel Decay $v(t)/v(1)$ | SVD erank | $\Delta$ erank | Coda Pred $\hat{y}^{(t)}$ | Velocity Signal | Coda Signal | erank Signal | Status |
 |:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|
-| t=0 | 0.000000 | 1.0000 |  1.00 | 0.0000 | `` | ❌ | ❌ | ❌ | Active |
-| t=1 | 0.000019 | 0.9999 |  1.00 | 0.0015 | `` | ❌ | ✅ | ✅ | Active |
-| t=2 | 0.000019 | 0.9811 |  1.00 | 0.0020 | `` | ❌ | ✅ | ✅ | Active |
-| t=3 | 0.000018 | 0.9622 |  1.01 | 0.0019 | `` | ❌ | ✅ | ✅ | Active |
-| t=4 | 0.000018 | 0.9559 |  1.01 | 0.0019 | `` | ❌ | ✅ | ✅ | Active |
-| t=5 | 0.000018 | 0.9559 |  1.01 | 0.0018 | `` | ❌ | ✅ | ✅ | Active |
-| t=6 | 0.000018 | 0.9591 |  1.01 | 0.0018 | `` | ❌ | ✅ | ✅ | Active |
-| t=7 | 0.000018 | 0.9654 |  1.01 | 0.0017 | `i` | ❌ | ❌ | ✅ | Active |
-| t=8 | 0.000018 | 0.9622 |  1.02 | 0.0017 | `i` | ❌ | ✅ | ✅ | **HALTED (max_steps_timeout)** |
+| t=0 | 0.000000 | 1.0000 |  1.00 | 0.0000 | `` | ❌ | ❌ | ❌ | Active |
+| t=1 | 0.000022 | 1.0000 |  1.00 | 0.0014 | `` | ❌ | ✅ | ✅ | Active |
+| t=2 | 0.000022 | 0.9918 |  1.00 | 0.0018 | `` | ❌ | ✅ | ✅ | Active |
+| t=3 | 0.000021 | 0.9808 |  1.01 | 0.0018 | `` | ❌ | ✅ | ✅ | Active |
+| t=4 | 0.000021 | 0.9726 |  1.01 | 0.0017 | `` | ❌ | ✅ | ✅ | Active |
+| t=5 | 0.000021 | 0.9726 |  1.01 | 0.0017 | `` | ❌ | ✅ | ✅ | Active |
+| t=6 | 0.000021 | 0.9699 |  1.01 | 0.0017 | `` | ❌ | ✅ | ✅ | Active |
+| t=7 | 0.000021 | 0.9699 |  1.01 | 0.0016 | `` | ❌ | ✅ | ✅ | Active |
+| t=8 | 0.000021 | 0.9699 |  1.01 | 0.0016 | `` | ❌ | ✅ | ✅ | **HALTED (max_steps_timeout)** |
 
 ---
 
 ### 6.18 [cms_03] Multi-Generation Lineage Kinship Degree Resolution
-- **Domain**: `multi_clue_synthesis` | **Deliberation Steps**: `T=8` (max_steps_timeout) | **Speedup**: `26.5x` | **Compute Saved**: `0.0%`
-- **Shannon Entropy**: `H=3.25 bits` | **Max 4-Gram Repetition**: `1`
+- **Domain**: `multi_clue_synthesis` | **Deliberation Steps**: `T=8` (max_steps_timeout) | **Speedup**: `22.7x` | **Compute Saved**: `0.0%`
+- **Shannon Entropy**: `H=0.00 bits` | **Max 4-Gram Repetition**: `1`
 
 **Task Prompt**:
 ```text
@@ -1023,47 +949,43 @@ Output ONLY the exact relationship term.
 ```
 
 #### Mode 1: Autoregressive Chain-of-Thought (CoT)
-- **Reasoning Latency**: `42.6 ms` | **Throughput**: `4698.4 tok/s` | **Constraint Satisfied**: `True`
+- **Reasoning Latency**: `38.1 ms` | **Throughput**: `5246.9 tok/s` | **Constraint Satisfied**: `False`
 **Explicit Thought Stream** (`<thought>`):
 ```text
-Synthesizing genealogical relationships:
-- David is the son of Arthur.
-- Arthur and Brian are brothers.
-- Brian is the father of Clara.
-Deduction: David and Clara are children of brothers, making them First Cousins.
+[Serial recurrent microbenchmark; not a pretrained LLM thought stream]
 ```
 **Emitted Answer** (`<answer>`):
 ```text
-First Cousin
+<<<<<<<<<<<<<<<<
 ```
 
 #### Mode 2: Parallel Continuous Latent Deliberation (PRLR Deliberate-Then-Verify)
-- **Deliberation Latency**: `1.6 ms` | **Coda Decode Latency**: `0.7 ms` | **Total**: `2.3 ms`
+- **Deliberation Latency**: `1.7 ms` | **Coda Decode Latency**: `0.7 ms` | **Total**: `2.4 ms`
 - **Intermediate Tokens Emitted**: `0` (Zero token bloat during thought sweeps)
-- **Constraint Satisfied**: `True` (Deterministic Verifier Score: `1.0`)
+- **Constraint Satisfied**: `False` (Deterministic Verifier Score: `0.0`)
 **Concise Grounded Decoded Answer**:
 ```text
-First Cousin
+
 ```
 
 **3-Signal Dynamic Consensus E-Gate Telemetry**:
 | Step | Velocity $v(t)$ | Rel Decay $v(t)/v(1)$ | SVD erank | $\Delta$ erank | Coda Pred $\hat{y}^{(t)}$ | Velocity Signal | Coda Signal | erank Signal | Status |
 |:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|
-| t=0 | 0.000000 | 1.0000 |  1.00 | 0.0000 | `` | ❌ | ❌ | ❌ | Active |
-| t=1 | 0.000017 | 0.9999 |  1.00 | 0.0018 | `` | ❌ | ✅ | ✅ | Active |
-| t=2 | 0.000017 | 0.9931 |  1.01 | 0.0023 | `` | ❌ | ✅ | ✅ | Active |
-| t=3 | 0.000017 | 0.9828 |  1.01 | 0.0023 | `` | ❌ | ✅ | ✅ | Active |
-| t=4 | 0.000017 | 0.9760 |  1.01 | 0.0022 | `` | ❌ | ✅ | ✅ | Active |
-| t=5 | 0.000017 | 0.9760 |  1.01 | 0.0021 | `` | ❌ | ✅ | ✅ | Active |
-| t=6 | 0.000017 | 0.9760 |  1.01 | 0.0021 | `` | ❌ | ✅ | ✅ | Active |
-| t=7 | 0.000017 | 0.9794 |  1.02 | 0.0020 | `` | ❌ | ✅ | ✅ | Active |
-| t=8 | 0.000017 | 0.9794 |  1.02 | 0.0020 | `` | ❌ | ✅ | ✅ | **HALTED (max_steps_timeout)** |
+| t=0 | 0.000000 | 1.0000 |  1.00 | 0.0000 | `` | ❌ | ❌ | ❌ | Active |
+| t=1 | 0.000022 | 1.0000 |  1.00 | 0.0018 | `` | ❌ | ✅ | ✅ | Active |
+| t=2 | 0.000022 | 0.9972 |  1.01 | 0.0023 | `` | ❌ | ✅ | ✅ | Active |
+| t=3 | 0.000022 | 0.9863 |  1.01 | 0.0022 | `` | ❌ | ✅ | ✅ | Active |
+| t=4 | 0.000022 | 0.9863 |  1.01 | 0.0021 | `` | ❌ | ✅ | ✅ | Active |
+| t=5 | 0.000022 | 0.9836 |  1.01 | 0.0021 | `` | ❌ | ✅ | ✅ | Active |
+| t=6 | 0.000021 | 0.9809 |  1.01 | 0.0020 | `` | ❌ | ✅ | ✅ | Active |
+| t=7 | 0.000021 | 0.9782 |  1.02 | 0.0020 | `` | ❌ | ✅ | ✅ | Active |
+| t=8 | 0.000021 | 0.9727 |  1.02 | 0.0019 | `` | ❌ | ✅ | ✅ | **HALTED (max_steps_timeout)** |
 
 ---
 
 ### 6.19 [cms_04] Distributed Microservice Trace Crash Diagnosis
-- **Domain**: `multi_clue_synthesis` | **Deliberation Steps**: `T=8` (max_steps_timeout) | **Speedup**: `23.9x` | **Compute Saved**: `0.0%`
-- **Shannon Entropy**: `H=3.17 bits` | **Max 4-Gram Repetition**: `1`
+- **Domain**: `multi_clue_synthesis` | **Deliberation Steps**: `T=8` (max_steps_timeout) | **Speedup**: `21.0x` | **Compute Saved**: `0.0%`
+- **Shannon Entropy**: `H=0.00 bits` | **Max 4-Gram Repetition**: `13`
 
 **Task Prompt**:
 ```text
@@ -1079,46 +1001,43 @@ Output ONLY the component name (e.g. "RedisLock").
 ```
 
 #### Mode 1: Autoregressive Chain-of-Thought (CoT)
-- **Reasoning Latency**: `44.0 ms` | **Throughput**: `4545.3 tok/s` | **Constraint Satisfied**: `True`
+- **Reasoning Latency**: `37.3 ms` | **Throughput**: `5358.5 tok/s` | **Constraint Satisfied**: `False`
 **Explicit Thought Stream** (`<thought>`):
 ```text
-Synthesizing microservices architecture logs:
-- Service A failed to acquire distributed mutex on resource 'inventory_lock'.
-- Redis cluster reported TTL expiration on key 'lock:inventory:sku-44'.
-Deduction: The distributed locking component causing the failure is RedisLock.
+[Serial recurrent microbenchmark; not a pretrained LLM thought stream]
 ```
 **Emitted Answer** (`<answer>`):
 ```text
-RedisLock
+<<<<<<<<<<<<<<<<
 ```
 
 #### Mode 2: Parallel Continuous Latent Deliberation (PRLR Deliberate-Then-Verify)
-- **Deliberation Latency**: `1.8 ms` | **Coda Decode Latency**: `0.8 ms` | **Total**: `2.6 ms`
+- **Deliberation Latency**: `1.8 ms` | **Coda Decode Latency**: `0.7 ms` | **Total**: `2.5 ms`
 - **Intermediate Tokens Emitted**: `0` (Zero token bloat during thought sweeps)
-- **Constraint Satisfied**: `True` (Deterministic Verifier Score: `1.0`)
+- **Constraint Satisfied**: `False` (Deterministic Verifier Score: `0.0`)
 **Concise Grounded Decoded Answer**:
 ```text
-RedisLock
+<<<<<<<<<<<<<<<<
 ```
 
 **3-Signal Dynamic Consensus E-Gate Telemetry**:
 | Step | Velocity $v(t)$ | Rel Decay $v(t)/v(1)$ | SVD erank | $\Delta$ erank | Coda Pred $\hat{y}^{(t)}$ | Velocity Signal | Coda Signal | erank Signal | Status |
 |:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|
-| t=0 | 0.000000 | 1.0000 |  1.00 | 0.0000 | `` | ❌ | ❌ | ❌ | Active |
-| t=1 | 0.000018 | 0.9999 |  1.00 | 0.0019 | `` | ❌ | ✅ | ✅ | Active |
-| t=2 | 0.000018 | 0.9865 |  1.01 | 0.0024 | `` | ❌ | ✅ | ✅ | Active |
-| t=3 | 0.000017 | 0.9664 |  1.01 | 0.0024 | `` | ❌ | ✅ | ✅ | Active |
-| t=4 | 0.000017 | 0.9597 |  1.01 | 0.0023 | `` | ❌ | ✅ | ✅ | Active |
-| t=5 | 0.000017 | 0.9597 |  1.01 | 0.0022 | `` | ❌ | ✅ | ✅ | Active |
-| t=6 | 0.000017 | 0.9664 |  1.01 | 0.0022 | `` | ❌ | ✅ | ✅ | Active |
-| t=7 | 0.000017 | 0.9664 |  1.02 | 0.0021 | `` | ❌ | ✅ | ✅ | Active |
-| t=8 | 0.000017 | 0.9664 |  1.02 | 0.0021 | `` | ❌ | ✅ | ✅ | **HALTED (max_steps_timeout)** |
+| t=0 | 0.000000 | 1.0000 |  1.00 | 0.0000 | `<` | ❌ | ❌ | ❌ | Active |
+| t=1 | 0.000017 | 0.9999 |  1.00 | 0.0016 | `<` | ❌ | ✅ | ✅ | Active |
+| t=2 | 0.000017 | 0.9930 |  1.00 | 0.0021 | `<` | ❌ | ✅ | ✅ | Active |
+| t=3 | 0.000017 | 0.9930 |  1.01 | 0.0020 | `<` | ❌ | ✅ | ✅ | Active |
+| t=4 | 0.000017 | 0.9861 |  1.01 | 0.0020 | `<` | ❌ | ✅ | ✅ | Active |
+| t=5 | 0.000017 | 0.9861 |  1.01 | 0.0019 | `<` | ❌ | ✅ | ✅ | Active |
+| t=6 | 0.000017 | 0.9861 |  1.01 | 0.0019 | `<` | ❌ | ✅ | ✅ | Active |
+| t=7 | 0.000017 | 0.9793 |  1.01 | 0.0018 | `<` | ❌ | ✅ | ✅ | Active |
+| t=8 | 0.000017 | 0.9793 |  1.02 | 0.0018 | `<` | ❌ | ✅ | ✅ | **HALTED (max_steps_timeout)** |
 
 ---
 
 ### 6.20 [cms_05] Cascading Biochemical Pathway Enzyme Inhibition
-- **Domain**: `multi_clue_synthesis` | **Deliberation Steps**: `T=8` (max_steps_timeout) | **Speedup**: `26.6x` | **Compute Saved**: `0.0%`
-- **Shannon Entropy**: `H=2.42 bits` | **Max 4-Gram Repetition**: `1`
+- **Domain**: `multi_clue_synthesis` | **Deliberation Steps**: `T=8` (max_steps_timeout) | **Speedup**: `22.3x` | **Compute Saved**: `0.0%`
+- **Shannon Entropy**: `H=0.00 bits` | **Max 4-Gram Repetition**: `13`
 
 **Task Prompt**:
 ```text
@@ -1135,46 +1054,43 @@ Output ONLY the single word answer.
 ```
 
 #### Mode 1: Autoregressive Chain-of-Thought (CoT)
-- **Reasoning Latency**: `45.1 ms` | **Throughput**: `4436.3 tok/s` | **Constraint Satisfied**: `True`
+- **Reasoning Latency**: `38.1 ms` | **Throughput**: `5246.2 tok/s` | **Constraint Satisfied**: `False`
 **Explicit Thought Stream** (`<thought>`):
 ```text
-Synthesizing biochemistry pathway dynamics:
-- Compound X acts as an allosteric inhibitor of Enzyme E1.
-- Enzyme E1 catalyzes the rate-limiting step producing Product P.
-Deduction: Increasing the concentration of Compound X decreases the rate of Product P formation.
+[Serial recurrent microbenchmark; not a pretrained LLM thought stream]
 ```
 **Emitted Answer** (`<answer>`):
 ```text
-Decreases
+<<<<<<<<<<<<<<<<
 ```
 
 #### Mode 2: Parallel Continuous Latent Deliberation (PRLR Deliberate-Then-Verify)
 - **Deliberation Latency**: `1.7 ms` | **Coda Decode Latency**: `0.7 ms` | **Total**: `2.4 ms`
 - **Intermediate Tokens Emitted**: `0` (Zero token bloat during thought sweeps)
-- **Constraint Satisfied**: `True` (Deterministic Verifier Score: `1.0`)
+- **Constraint Satisfied**: `False` (Deterministic Verifier Score: `0.0`)
 **Concise Grounded Decoded Answer**:
 ```text
-Decreases
+<<<<<<<<<<<<<<<<
 ```
 
 **3-Signal Dynamic Consensus E-Gate Telemetry**:
 | Step | Velocity $v(t)$ | Rel Decay $v(t)/v(1)$ | SVD erank | $\Delta$ erank | Coda Pred $\hat{y}^{(t)}$ | Velocity Signal | Coda Signal | erank Signal | Status |
 |:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|
-| t=0 | 0.000000 | 1.0000 |  1.00 | 0.0000 | `` | ❌ | ❌ | ❌ | Active |
-| t=1 | 0.000020 | 0.9999 |  1.00 | 0.0020 | `` | ❌ | ✅ | ✅ | Active |
-| t=2 | 0.000019 | 0.9878 |  1.01 | 0.0024 | `` | ❌ | ✅ | ✅ | Active |
-| t=3 | 0.000019 | 0.9696 |  1.01 | 0.0023 | `` | ❌ | ✅ | ✅ | Active |
-| t=4 | 0.000019 | 0.9635 |  1.01 | 0.0023 | `` | ❌ | ✅ | ✅ | Active |
-| t=5 | 0.000019 | 0.9665 |  1.01 | 0.0022 | `` | ❌ | ✅ | ✅ | Active |
-| t=6 | 0.000019 | 0.9726 |  1.01 | 0.0022 | `` | ❌ | ✅ | ✅ | Active |
-| t=7 | 0.000019 | 0.9726 |  1.02 | 0.0021 | `` | ❌ | ✅ | ✅ | Active |
-| t=8 | 0.000019 | 0.9726 |  1.02 | 0.0021 | `` | ❌ | ✅ | ✅ | **HALTED (max_steps_timeout)** |
+| t=0 | 0.000000 | 1.0000 |  1.00 | 0.0000 | `<` | ❌ | ❌ | ❌ | Active |
+| t=1 | 0.000022 | 1.0000 |  1.00 | 0.0017 | `<` | ❌ | ✅ | ✅ | Active |
+| t=2 | 0.000022 | 0.9945 |  1.00 | 0.0021 | `<` | ❌ | ✅ | ✅ | Active |
+| t=3 | 0.000021 | 0.9890 |  1.01 | 0.0021 | `<` | ❌ | ✅ | ✅ | Active |
+| t=4 | 0.000021 | 0.9835 |  1.01 | 0.0020 | `<` | ❌ | ✅ | ✅ | Active |
+| t=5 | 0.000021 | 0.9780 |  1.01 | 0.0020 | `<` | ❌ | ✅ | ✅ | Active |
+| t=6 | 0.000021 | 0.9780 |  1.01 | 0.0019 | `<` | ❌ | ✅ | ✅ | Active |
+| t=7 | 0.000021 | 0.9780 |  1.01 | 0.0019 | `<` | ❌ | ✅ | ✅ | Active |
+| t=8 | 0.000021 | 0.9752 |  1.02 | 0.0019 | `<` | ❌ | ✅ | ✅ | **HALTED (max_steps_timeout)** |
 
 ---
 
 ### 6.21 [atr_01] Financial Portfolio Rebalancer Tool Routing
-- **Domain**: `action_tool_routing` | **Deliberation Steps**: `T=8` (max_steps_timeout) | **Speedup**: `21.9x` | **Compute Saved**: `0.0%`
-- **Shannon Entropy**: `H=4.62 bits` | **Max 4-Gram Repetition**: `1`
+- **Domain**: `action_tool_routing` | **Deliberation Steps**: `T=8` (max_steps_timeout) | **Speedup**: `18.5x` | **Compute Saved**: `0.0%`
+- **Shannon Entropy**: `H=0.00 bits` | **Max 4-Gram Repetition**: `13`
 
 **Task Prompt**:
 ```text
@@ -1195,45 +1111,43 @@ Output ONLY a JSON object with:
 ```
 
 #### Mode 1: Autoregressive Chain-of-Thought (CoT)
-- **Reasoning Latency**: `45.5 ms` | **Throughput**: `4393.8 tok/s` | **Constraint Satisfied**: `True`
+- **Reasoning Latency**: `38.6 ms` | **Throughput**: `5175.1 tok/s` | **Constraint Satisfied**: `False`
 **Explicit Thought Stream** (`<thought>`):
 ```text
-Matching user intent to API schemas:
-User wants to rebalance portfolio allocation to 60% equities, 40% bonds.
-Target tool: T4 rebalance_portfolio_weights(target_weights: dict).
+[Serial recurrent microbenchmark; not a pretrained LLM thought stream]
 ```
 **Emitted Answer** (`<answer>`):
 ```text
-{"tool_id": "T4", "tool_name": "rebalance_portfolio_weights", "extracted_parameters": {"portfolio_id": "Fund-7", "max_slippage_bps": 15}}
+<<<<<<<<<<<<<<<<
 ```
 
 #### Mode 2: Parallel Continuous Latent Deliberation (PRLR Deliberate-Then-Verify)
-- **Deliberation Latency**: `2.1 ms` | **Coda Decode Latency**: `0.8 ms` | **Total**: `2.9 ms`
+- **Deliberation Latency**: `2.1 ms` | **Coda Decode Latency**: `0.7 ms` | **Total**: `2.8 ms`
 - **Intermediate Tokens Emitted**: `0` (Zero token bloat during thought sweeps)
-- **Constraint Satisfied**: `True` (Deterministic Verifier Score: `1.0`)
+- **Constraint Satisfied**: `False` (Deterministic Verifier Score: `0.0`)
 **Concise Grounded Decoded Answer**:
 ```text
-{"tool_id": "T4", "tool_name": "rebalance_portfolio_weights", "extracted_parameters": {"portfolio_id": "Fund-7", "max_slippage_bps": 15}}
+****************
 ```
 
 **3-Signal Dynamic Consensus E-Gate Telemetry**:
 | Step | Velocity $v(t)$ | Rel Decay $v(t)/v(1)$ | SVD erank | $\Delta$ erank | Coda Pred $\hat{y}^{(t)}$ | Velocity Signal | Coda Signal | erank Signal | Status |
 |:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|
-| t=0 | 0.000000 | 1.0000 |  1.00 | 0.0000 | `i` | ❌ | ❌ | ❌ | Active |
-| t=1 | 0.000019 | 0.9999 |  1.00 | 0.0013 | `i` | ❌ | ✅ | ✅ | Active |
-| t=2 | 0.000019 | 0.9846 |  1.00 | 0.0017 | `i` | ❌ | ✅ | ✅ | Active |
-| t=3 | 0.000019 | 0.9630 |  1.01 | 0.0017 | `i` | ❌ | ✅ | ✅ | Active |
-| t=4 | 0.000018 | 0.9538 |  1.01 | 0.0017 | `i` | ❌ | ✅ | ✅ | Active |
-| t=5 | 0.000018 | 0.9538 |  1.01 | 0.0016 | `i` | ❌ | ✅ | ✅ | Active |
-| t=6 | 0.000019 | 0.9600 |  1.01 | 0.0016 | `i` | ❌ | ✅ | ✅ | Active |
-| t=7 | 0.000019 | 0.9600 |  1.01 | 0.0016 | `i` | ❌ | ✅ | ✅ | Active |
-| t=8 | 0.000019 | 0.9600 |  1.01 | 0.0016 | `i` | ❌ | ✅ | ✅ | **HALTED (max_steps_timeout)** |
+| t=0 | 0.000000 | 1.0000 |  1.00 | 0.0000 | `*` | ❌ | ❌ | ❌ | Active |
+| t=1 | 0.000019 | 0.9999 |  1.00 | 0.0011 | `*` | ❌ | ✅ | ✅ | Active |
+| t=2 | 0.000019 | 0.9937 |  1.00 | 0.0016 | `*` | ❌ | ✅ | ✅ | Active |
+| t=3 | 0.000019 | 0.9779 |  1.01 | 0.0016 | `*` | ❌ | ✅ | ✅ | Active |
+| t=4 | 0.000018 | 0.9748 |  1.01 | 0.0015 | `*` | ❌ | ✅ | ✅ | Active |
+| t=5 | 0.000018 | 0.9748 |  1.01 | 0.0015 | `*` | ❌ | ✅ | ✅ | Active |
+| t=6 | 0.000018 | 0.9748 |  1.01 | 0.0015 | `*` | ❌ | ✅ | ✅ | Active |
+| t=7 | 0.000018 | 0.9716 |  1.01 | 0.0014 | `*` | ❌ | ✅ | ✅ | Active |
+| t=8 | 0.000018 | 0.9685 |  1.01 | 0.0014 | `*` | ❌ | ✅ | ✅ | **HALTED (max_steps_timeout)** |
 
 ---
 
 ### 6.22 [atr_02] Cloud WAF IP Blocklist Infrastructure Routing
-- **Domain**: `action_tool_routing` | **Deliberation Steps**: `T=8` (max_steps_timeout) | **Speedup**: `21.9x` | **Compute Saved**: `0.0%`
-- **Shannon Entropy**: `H=4.49 bits` | **Max 4-Gram Repetition**: `1`
+- **Domain**: `action_tool_routing` | **Deliberation Steps**: `T=8` (max_steps_timeout) | **Speedup**: `19.6x` | **Compute Saved**: `0.0%`
+- **Shannon Entropy**: `H=0.00 bits` | **Max 4-Gram Repetition**: `13`
 
 **Task Prompt**:
 ```text
@@ -1254,45 +1168,43 @@ Output ONLY a JSON object with:
 ```
 
 #### Mode 1: Autoregressive Chain-of-Thought (CoT)
-- **Reasoning Latency**: `43.5 ms` | **Throughput**: `4593.3 tok/s` | **Constraint Satisfied**: `True`
+- **Reasoning Latency**: `39.7 ms` | **Throughput**: `5033.1 tok/s` | **Constraint Satisfied**: `False`
 **Explicit Thought Stream** (`<thought>`):
 ```text
-Matching incident response action to network security API:
-User reports DDoS attack from 198.51.100.42 and requests immediate WAF firewall block.
-Target tool: T4 update_waf_ip_blocklist(ip_address: '198.51.100.42', action: 'BLOCK').
+[Serial recurrent microbenchmark; not a pretrained LLM thought stream]
 ```
 **Emitted Answer** (`<answer>`):
 ```text
-{"tool_id": "T4", "tool_name": "update_waf_ip_blocklist", "target_acl": "acl-prod-us-east-1"}
+<<<<<<<<<<<<<<<<
 ```
 
 #### Mode 2: Parallel Continuous Latent Deliberation (PRLR Deliberate-Then-Verify)
-- **Deliberation Latency**: `2.0 ms` | **Coda Decode Latency**: `0.9 ms` | **Total**: `2.9 ms`
+- **Deliberation Latency**: `2.0 ms` | **Coda Decode Latency**: `0.7 ms` | **Total**: `2.8 ms`
 - **Intermediate Tokens Emitted**: `0` (Zero token bloat during thought sweeps)
-- **Constraint Satisfied**: `True` (Deterministic Verifier Score: `1.0`)
+- **Constraint Satisfied**: `False` (Deterministic Verifier Score: `0.0`)
 **Concise Grounded Decoded Answer**:
 ```text
-{"tool_id": "T4", "tool_name": "update_waf_ip_blocklist", "target_acl": "acl-prod-us-east-1"}
+<<<<<<<<<<<<<<<<
 ```
 
 **3-Signal Dynamic Consensus E-Gate Telemetry**:
 | Step | Velocity $v(t)$ | Rel Decay $v(t)/v(1)$ | SVD erank | $\Delta$ erank | Coda Pred $\hat{y}^{(t)}$ | Velocity Signal | Coda Signal | erank Signal | Status |
 |:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|
-| t=0 | 0.000000 | 1.0000 |  1.00 | 0.0000 | `i` | ❌ | ❌ | ❌ | Active |
-| t=1 | 0.000017 | 0.9999 |  1.00 | 0.0014 | `i` | ❌ | ✅ | ✅ | Active |
-| t=2 | 0.000017 | 0.9790 |  1.00 | 0.0020 | `i` | ❌ | ✅ | ✅ | Active |
-| t=3 | 0.000016 | 0.9650 |  1.01 | 0.0020 | `i` | ❌ | ✅ | ✅ | Active |
-| t=4 | 0.000016 | 0.9580 |  1.01 | 0.0019 | `i` | ❌ | ✅ | ✅ | Active |
-| t=5 | 0.000016 | 0.9580 |  1.01 | 0.0019 | `i` | ❌ | ✅ | ✅ | Active |
-| t=6 | 0.000016 | 0.9650 |  1.01 | 0.0018 | `i` | ❌ | ✅ | ✅ | Active |
-| t=7 | 0.000016 | 0.9650 |  1.01 | 0.0018 | `i` | ❌ | ✅ | ✅ | Active |
-| t=8 | 0.000016 | 0.9650 |  1.02 | 0.0018 | `i` | ❌ | ✅ | ✅ | **HALTED (max_steps_timeout)** |
+| t=0 | 0.000000 | 1.0000 |  1.00 | 0.0000 | `<` | ❌ | ❌ | ❌ | Active |
+| t=1 | 0.000019 | 0.9999 |  1.00 | 0.0013 | `<` | ❌ | ✅ | ✅ | Active |
+| t=2 | 0.000019 | 0.9936 |  1.00 | 0.0017 | `<` | ❌ | ✅ | ✅ | Active |
+| t=3 | 0.000018 | 0.9808 |  1.01 | 0.0017 | `<` | ❌ | ✅ | ✅ | Active |
+| t=4 | 0.000018 | 0.9745 |  1.01 | 0.0017 | `<` | ❌ | ✅ | ✅ | Active |
+| t=5 | 0.000018 | 0.9808 |  1.01 | 0.0016 | `<` | ❌ | ✅ | ✅ | Active |
+| t=6 | 0.000018 | 0.9777 |  1.01 | 0.0016 | `<` | ❌ | ✅ | ✅ | Active |
+| t=7 | 0.000018 | 0.9777 |  1.01 | 0.0016 | `<` | ❌ | ✅ | ✅ | Active |
+| t=8 | 0.000018 | 0.9777 |  1.01 | 0.0016 | `<` | ❌ | ✅ | ✅ | **HALTED (max_steps_timeout)** |
 
 ---
 
 ### 6.23 [atr_03] Biomedical ClinVar Genomic Variant Lookup Routing
-- **Domain**: `action_tool_routing` | **Deliberation Steps**: `T=8` (max_steps_timeout) | **Speedup**: `19.0x` | **Compute Saved**: `0.0%`
-- **Shannon Entropy**: `H=4.68 bits` | **Max 4-Gram Repetition**: `1`
+- **Domain**: `action_tool_routing` | **Deliberation Steps**: `T=8` (max_steps_timeout) | **Speedup**: `21.4x` | **Compute Saved**: `0.0%`
+- **Shannon Entropy**: `H=0.00 bits` | **Max 4-Gram Repetition**: `13`
 
 **Task Prompt**:
 ```text
@@ -1313,45 +1225,43 @@ Output ONLY a JSON object with:
 ```
 
 #### Mode 1: Autoregressive Chain-of-Thought (CoT)
-- **Reasoning Latency**: `40.0 ms` | **Throughput**: `4999.8 tok/s` | **Constraint Satisfied**: `True`
+- **Reasoning Latency**: `44.0 ms` | **Throughput**: `4543.8 tok/s` | **Constraint Satisfied**: `False`
 **Explicit Thought Stream** (`<thought>`):
 ```text
-Matching genetics query to database API:
-User requests pathogenicity classification for BRCA1 variant rs80357906.
-Target tool: T1 query_clinvar_variant(rsid: 'rs80357906').
+[Serial recurrent microbenchmark; not a pretrained LLM thought stream]
 ```
 **Emitted Answer** (`<answer>`):
 ```text
-{"tool_id": "T1", "tool_name": "query_clinvar_variant", "variant_identifier": "NM_000059.3:c.5946del"}
+<<<<<<<<<<<<<<<<
 ```
 
 #### Mode 2: Parallel Continuous Latent Deliberation (PRLR Deliberate-Then-Verify)
 - **Deliberation Latency**: `2.1 ms` | **Coda Decode Latency**: `0.7 ms` | **Total**: `2.8 ms`
 - **Intermediate Tokens Emitted**: `0` (Zero token bloat during thought sweeps)
-- **Constraint Satisfied**: `True` (Deterministic Verifier Score: `1.0`)
+- **Constraint Satisfied**: `False` (Deterministic Verifier Score: `0.0`)
 **Concise Grounded Decoded Answer**:
 ```text
-{"tool_id": "T1", "tool_name": "query_clinvar_variant", "variant_identifier": "NM_000059.3:c.5946del"}
+<<<<<<<<<<<<<<<<
 ```
 
 **3-Signal Dynamic Consensus E-Gate Telemetry**:
 | Step | Velocity $v(t)$ | Rel Decay $v(t)/v(1)$ | SVD erank | $\Delta$ erank | Coda Pred $\hat{y}^{(t)}$ | Velocity Signal | Coda Signal | erank Signal | Status |
 |:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|
-| t=0 | 0.000000 | 1.0000 |  1.00 | 0.0000 | `i` | ❌ | ❌ | ❌ | Active |
-| t=1 | 0.000018 | 0.9999 |  1.00 | 0.0013 | `i` | ❌ | ✅ | ✅ | Active |
-| t=2 | 0.000018 | 0.9806 |  1.00 | 0.0018 | `i` | ❌ | ✅ | ✅ | Active |
-| t=3 | 0.000018 | 0.9580 |  1.01 | 0.0018 | `i` | ❌ | ✅ | ✅ | Active |
-| t=4 | 0.000018 | 0.9483 |  1.01 | 0.0018 | `i` | ❌ | ✅ | ✅ | Active |
-| t=5 | 0.000017 | 0.9451 |  1.01 | 0.0017 | `i` | ❌ | ✅ | ✅ | Active |
-| t=6 | 0.000018 | 0.9548 |  1.01 | 0.0017 | `i` | ❌ | ✅ | ✅ | Active |
-| t=7 | 0.000018 | 0.9548 |  1.01 | 0.0017 | `i` | ❌ | ✅ | ✅ | Active |
-| t=8 | 0.000018 | 0.9548 |  1.01 | 0.0016 | `i` | ❌ | ✅ | ✅ | **HALTED (max_steps_timeout)** |
+| t=0 | 0.000000 | 1.0000 |  1.00 | 0.0000 | `*` | ❌ | ❌ | ❌ | Active |
+| t=1 | 0.000018 | 0.9999 |  1.00 | 0.0011 | `*` | ❌ | ✅ | ✅ | Active |
+| t=2 | 0.000018 | 0.9899 |  1.00 | 0.0016 | `*` | ❌ | ✅ | ✅ | Active |
+| t=3 | 0.000017 | 0.9765 |  1.01 | 0.0016 | `*` | ❌ | ✅ | ✅ | Active |
+| t=4 | 0.000017 | 0.9698 |  1.01 | 0.0016 | `*` | ❌ | ✅ | ✅ | Active |
+| t=5 | 0.000017 | 0.9665 |  1.01 | 0.0016 | `*` | ❌ | ✅ | ✅ | Active |
+| t=6 | 0.000017 | 0.9698 |  1.01 | 0.0015 | `<` | ❌ | ❌ | ✅ | Active |
+| t=7 | 0.000017 | 0.9698 |  1.01 | 0.0015 | `<` | ❌ | ✅ | ✅ | Active |
+| t=8 | 0.000017 | 0.9632 |  1.01 | 0.0015 | `<` | ❌ | ✅ | ✅ | **HALTED (max_steps_timeout)** |
 
 ---
 
 ### 6.24 [atr_04] Smart Home Multimodal HVAC Controller Dispatch
-- **Domain**: `action_tool_routing` | **Deliberation Steps**: `T=8` (max_steps_timeout) | **Speedup**: `20.5x` | **Compute Saved**: `0.0%`
-- **Shannon Entropy**: `H=4.45 bits` | **Max 4-Gram Repetition**: `1`
+- **Domain**: `action_tool_routing` | **Deliberation Steps**: `T=8` (max_steps_timeout) | **Speedup**: `21.7x` | **Compute Saved**: `0.0%`
+- **Shannon Entropy**: `H=0.00 bits` | **Max 4-Gram Repetition**: `13`
 
 **Task Prompt**:
 ```text
@@ -1373,45 +1283,43 @@ Output ONLY a JSON object with:
 ```
 
 #### Mode 1: Autoregressive Chain-of-Thought (CoT)
-- **Reasoning Latency**: `39.6 ms` | **Throughput**: `5051.2 tok/s` | **Constraint Satisfied**: `True`
+- **Reasoning Latency**: `44.6 ms` | **Throughput**: `4481.9 tok/s` | **Constraint Satisfied**: `False`
 **Explicit Thought Stream** (`<thought>`):
 ```text
-Matching smart home request to HVAC API:
-User says: 'Set living room temperature to 72 degrees Fahrenheit.'
-Target tool: T1 adjust_hvac_zones(target_temp: 72, zone: 'living_room').
+[Serial recurrent microbenchmark; not a pretrained LLM thought stream]
 ```
 **Emitted Answer** (`<answer>`):
 ```text
-{"tool_id": "T1", "tool_name": "adjust_hvac_zones", "target_temp": 72.0, "mode": "heat"}
+<<<<<<<<<<<<<<<<
 ```
 
 #### Mode 2: Parallel Continuous Latent Deliberation (PRLR Deliberate-Then-Verify)
-- **Deliberation Latency**: `1.9 ms` | **Coda Decode Latency**: `0.8 ms` | **Total**: `2.7 ms`
+- **Deliberation Latency**: `2.1 ms` | **Coda Decode Latency**: `0.7 ms` | **Total**: `2.8 ms`
 - **Intermediate Tokens Emitted**: `0` (Zero token bloat during thought sweeps)
-- **Constraint Satisfied**: `True` (Deterministic Verifier Score: `1.0`)
+- **Constraint Satisfied**: `False` (Deterministic Verifier Score: `0.0`)
 **Concise Grounded Decoded Answer**:
 ```text
-{"tool_id": "T1", "tool_name": "adjust_hvac_zones", "target_temp": 72.0, "mode": "heat"}
+<<<<<<<<<<<<<<<<
 ```
 
 **3-Signal Dynamic Consensus E-Gate Telemetry**:
 | Step | Velocity $v(t)$ | Rel Decay $v(t)/v(1)$ | SVD erank | $\Delta$ erank | Coda Pred $\hat{y}^{(t)}$ | Velocity Signal | Coda Signal | erank Signal | Status |
 |:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|
-| t=0 | 0.000000 | 1.0000 |  1.00 | 0.0000 | `` | ❌ | ❌ | ❌ | Active |
-| t=1 | 0.000018 | 0.9999 |  1.00 | 0.0015 | `` | ❌ | ✅ | ✅ | Active |
-| t=2 | 0.000018 | 0.9832 |  1.00 | 0.0020 | `` | ❌ | ✅ | ✅ | Active |
-| t=3 | 0.000017 | 0.9665 |  1.01 | 0.0020 | `` | ❌ | ✅ | ✅ | Active |
-| t=4 | 0.000017 | 0.9565 |  1.01 | 0.0019 | `` | ❌ | ✅ | ✅ | Active |
-| t=5 | 0.000017 | 0.9598 |  1.01 | 0.0019 | `` | ❌ | ✅ | ✅ | Active |
-| t=6 | 0.000017 | 0.9665 |  1.01 | 0.0018 | `` | ❌ | ✅ | ✅ | Active |
-| t=7 | 0.000017 | 0.9698 |  1.01 | 0.0018 | `` | ❌ | ✅ | ✅ | Active |
-| t=8 | 0.000017 | 0.9698 |  1.02 | 0.0018 | `` | ❌ | ✅ | ✅ | **HALTED (max_steps_timeout)** |
+| t=0 | 0.000000 | 1.0000 |  1.00 | 0.0000 | `*` | ❌ | ❌ | ❌ | Active |
+| t=1 | 0.000019 | 0.9999 |  1.00 | 0.0012 | `*` | ❌ | ✅ | ✅ | Active |
+| t=2 | 0.000019 | 0.9905 |  1.00 | 0.0017 | `*` | ❌ | ✅ | ✅ | Active |
+| t=3 | 0.000018 | 0.9810 |  1.01 | 0.0017 | `*` | ❌ | ✅ | ✅ | Active |
+| t=4 | 0.000018 | 0.9810 |  1.01 | 0.0016 | `*` | ❌ | ✅ | ✅ | Active |
+| t=5 | 0.000018 | 0.9778 |  1.01 | 0.0016 | `*` | ❌ | ✅ | ✅ | Active |
+| t=6 | 0.000018 | 0.9746 |  1.01 | 0.0016 | `*` | ❌ | ✅ | ✅ | Active |
+| t=7 | 0.000018 | 0.9746 |  1.01 | 0.0015 | `*` | ❌ | ✅ | ✅ | Active |
+| t=8 | 0.000018 | 0.9778 |  1.01 | 0.0015 | `<` | ❌ | ❌ | ✅ | **HALTED (max_steps_timeout)** |
 
 ---
 
 ### 6.25 [atr_05] E-Commerce Warehouse Robotics Picker Dispatch
-- **Domain**: `action_tool_routing` | **Deliberation Steps**: `T=8` (max_steps_timeout) | **Speedup**: `19.1x` | **Compute Saved**: `0.0%`
-- **Shannon Entropy**: `H=4.53 bits` | **Max 4-Gram Repetition**: `1`
+- **Domain**: `action_tool_routing` | **Deliberation Steps**: `T=8` (max_steps_timeout) | **Speedup**: `20.5x` | **Compute Saved**: `0.0%`
+- **Shannon Entropy**: `H=0.00 bits` | **Max 4-Gram Repetition**: `13`
 
 **Task Prompt**:
 ```text
@@ -1433,38 +1341,36 @@ Output ONLY a JSON object with:
 ```
 
 #### Mode 1: Autoregressive Chain-of-Thought (CoT)
-- **Reasoning Latency**: `40.2 ms` | **Throughput**: `4975.7 tok/s` | **Constraint Satisfied**: `True`
+- **Reasoning Latency**: `43.3 ms` | **Throughput**: `4621.0 tok/s` | **Constraint Satisfied**: `False`
 **Explicit Thought Stream** (`<thought>`):
 ```text
-Matching warehouse logistics request to robotics picker API:
-User says: 'Queue pick robot for order #ORD-77192 in Warehouse-West with HIGH priority.'
-Target tool: T3 dispatch_warehouse_picker(warehouse_id: 'Warehouse-West', priority: 'HIGH').
+[Serial recurrent microbenchmark; not a pretrained LLM thought stream]
 ```
 **Emitted Answer** (`<answer>`):
 ```text
-{"tool_id": "T3", "tool_name": "dispatch_warehouse_picker", "warehouse_id": "Warehouse-West", "priority": "HIGH"}
+<<<<<<<<<<<<<<<<
 ```
 
 #### Mode 2: Parallel Continuous Latent Deliberation (PRLR Deliberate-Then-Verify)
 - **Deliberation Latency**: `2.1 ms` | **Coda Decode Latency**: `0.7 ms` | **Total**: `2.8 ms`
 - **Intermediate Tokens Emitted**: `0` (Zero token bloat during thought sweeps)
-- **Constraint Satisfied**: `True` (Deterministic Verifier Score: `1.0`)
+- **Constraint Satisfied**: `False` (Deterministic Verifier Score: `0.0`)
 **Concise Grounded Decoded Answer**:
 ```text
-{"tool_id": "T3", "tool_name": "dispatch_warehouse_picker", "warehouse_id": "Warehouse-West", "priority": "HIGH"}
+****************
 ```
 
 **3-Signal Dynamic Consensus E-Gate Telemetry**:
 | Step | Velocity $v(t)$ | Rel Decay $v(t)/v(1)$ | SVD erank | $\Delta$ erank | Coda Pred $\hat{y}^{(t)}$ | Velocity Signal | Coda Signal | erank Signal | Status |
 |:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|
-| t=0 | 0.000000 | 1.0000 |  1.00 | 0.0000 | `` | ❌ | ❌ | ❌ | Active |
-| t=1 | 0.000018 | 0.9999 |  1.00 | 0.0015 | `` | ❌ | ✅ | ✅ | Active |
-| t=2 | 0.000018 | 0.9799 |  1.00 | 0.0019 | `` | ❌ | ✅ | ✅ | Active |
-| t=3 | 0.000017 | 0.9599 |  1.01 | 0.0019 | `` | ❌ | ✅ | ✅ | Active |
-| t=4 | 0.000017 | 0.9533 |  1.01 | 0.0019 | `` | ❌ | ✅ | ✅ | Active |
-| t=5 | 0.000017 | 0.9533 |  1.01 | 0.0018 | `` | ❌ | ✅ | ✅ | Active |
-| t=6 | 0.000017 | 0.9599 |  1.01 | 0.0018 | `` | ❌ | ✅ | ✅ | Active |
-| t=7 | 0.000017 | 0.9633 |  1.01 | 0.0018 | `` | ❌ | ✅ | ✅ | Active |
-| t=8 | 0.000017 | 0.9599 |  1.02 | 0.0017 | `` | ❌ | ✅ | ✅ | **HALTED (max_steps_timeout)** |
+| t=0 | 0.000000 | 1.0000 |  1.00 | 0.0000 | `*` | ❌ | ❌ | ❌ | Active |
+| t=1 | 0.000019 | 0.9999 |  1.00 | 0.0011 | `*` | ❌ | ✅ | ✅ | Active |
+| t=2 | 0.000019 | 0.9905 |  1.00 | 0.0016 | `*` | ❌ | ✅ | ✅ | Active |
+| t=3 | 0.000019 | 0.9842 |  1.01 | 0.0016 | `*` | ❌ | ✅ | ✅ | Active |
+| t=4 | 0.000018 | 0.9779 |  1.01 | 0.0016 | `*` | ❌ | ✅ | ✅ | Active |
+| t=5 | 0.000018 | 0.9747 |  1.01 | 0.0015 | `*` | ❌ | ✅ | ✅ | Active |
+| t=6 | 0.000018 | 0.9779 |  1.01 | 0.0015 | `*` | ❌ | ✅ | ✅ | Active |
+| t=7 | 0.000018 | 0.9779 |  1.01 | 0.0015 | `*` | ❌ | ✅ | ✅ | Active |
+| t=8 | 0.000018 | 0.9779 |  1.01 | 0.0015 | `*` | ❌ | ✅ | ✅ | **HALTED (max_steps_timeout)** |
 
 ---

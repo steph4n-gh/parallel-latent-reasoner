@@ -633,15 +633,15 @@ class MultiDomainBenchmarkSuite:
             if prlr_vram_mb <= 0:
                 prlr_vram_mb = (self.pipeline.config.dim * self.pipeline.config.intermediate_dim * 4 * 2) / (1024.0 * 1024.0)
 
-            # Grounded answer string for benchmark transcripts
-            prlr_decoded_text = case.ground_truth if self.pipeline.adapter_loaded else self.pipeline.decode_solution(sol_ids).strip()
+            # Raw model-decoded output string (no ground-truth substitution)
+            prlr_decoded_text = self.pipeline.decode_solution(sol_ids).strip()
             ver_prlr = verify_test_case_result(case, prlr_decoded_text)
-            entropy = compute_shannon_entropy(prlr_decoded_text)
-            rep_4gram = compute_max_ngram_repetition(prlr_decoded_text, n=4)
+            entropy = compute_shannon_entropy(prlr_decoded_text) if prlr_decoded_text else 0.0
+            rep_4gram = compute_max_ngram_repetition(prlr_decoded_text, n=4) if prlr_decoded_text else 1
 
-            # 2. Mode 1: Autoregressive CoT baseline at matched compute K_cot = 200 tokens
+            # 2. Mode 1: Serial recurrent microbenchmark (K_cot iterations)
             k_cot = max(200, delib_diag_res.steps_executed * self.num_slots)
-            cot_thought = COT_REASONING_TRACES.get(case.id.lower(), f"Step-by-step deduction for {case.title}.")
+            cot_thought = "[Serial recurrent microbenchmark; not a pretrained LLM thought stream]"
 
             # CoT execution latency measurement
             t0_cot = time.perf_counter()
@@ -666,7 +666,20 @@ class MultiDomainBenchmarkSuite:
             t1_cot = time.perf_counter()
             cot_latency_ms = (t1_cot - t0_cot) * 1000.0
 
-            ver_cot = verify_test_case_result(case, case.ground_truth)
+            # Decode actual tokens from Mode 1
+            curr_hidden = self.pipeline.model.coda.final_norm(curr[:, 0, :])
+            cot_gen = []
+            for _ in range(16):
+                logits = self.pipeline.model.coda.project_logits(curr_hidden)
+                next_tok = mx.argmax(logits, axis=-1, keepdims=True)
+                cot_gen.append(next_tok)
+                tok_embed = self.pipeline.model.prelude.embed_prompt(next_tok)[:, 0, :]
+                curr_hidden = self.pipeline.model.coda.final_norm(curr_hidden + 0.1 * tok_embed)
+            cot_sol_ids = mx.concatenate(cot_gen, axis=-1)
+            mx.eval(cot_sol_ids)
+            cot_decoded_text = self.pipeline.decode_solution(cot_sol_ids).strip()
+            ver_cot = verify_test_case_result(case, cot_decoded_text)
+
             speedup = cot_latency_ms / max(0.001, prlr_delib_ms)
             compute_saved = max(0.0, (self.num_steps - delib_diag_res.steps_executed) / max(1, self.num_steps) * 100.0)
 
@@ -679,7 +692,7 @@ class MultiDomainBenchmarkSuite:
                 title=case.title,
                 prompt=case.prompt,
                 ground_truth=case.ground_truth,
-                cot_output_text=case.ground_truth,
+                cot_output_text=cot_decoded_text,
                 cot_thought_text=cot_thought,
                 cot_latency_ms=round(cot_latency_ms, 2),
                 cot_tokens=k_cot,

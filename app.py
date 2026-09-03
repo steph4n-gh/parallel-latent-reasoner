@@ -4,6 +4,10 @@ Suitable for local execution via Gradio or 1-click deployment to HuggingFace Spa
 Demonstrates live dual-pane comparison between Autoregressive CoT and Parallel Latent Deliberation.
 """
 
+import sys
+from pathlib import Path
+sys.path.insert(0, str(Path(__file__).resolve().parent / "src"))
+
 import time
 from typing import Tuple
 import numpy as np
@@ -23,8 +27,8 @@ from parallel_latent_reasoner import (
 
 # Load benchmark suite test cases for dropdown
 SUITE = load_cognitive_benchmark_suite()
-PRESET_CHOICES = [f"{tc.case_id}: [{tc.domain.value.upper()}] {tc.prompt[:60]}..." for tc in SUITE.test_cases]
-PRESET_MAP = {f"{tc.case_id}: [{tc.domain.value.upper()}] {tc.prompt[:60]}...": tc.case_id for tc in SUITE.test_cases}
+PRESET_CHOICES = [f"{tc.id}: [{tc.domain.value.upper()}] {tc.prompt[:60]}..." for tc in SUITE]
+PRESET_MAP = {f"{tc.id}: [{tc.domain.value.upper()}] {tc.prompt[:60]}...": tc.id for tc in SUITE}
 
 
 def run_comparison(

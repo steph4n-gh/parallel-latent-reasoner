@@ -1,18 +1,26 @@
 # Parallel Latent Reasoner (PRLR)
 
-**Status**: `experimental / unpromoted` (MLX Research on Apple Silicon)  
+**Status**: `experimental / unpromoted` (MLX Research Prototype on Apple Silicon)  
 **Platform**: Apple Silicon Metal GPU / Unified Memory Architecture  
 **Dependencies**: `mlx>=0.15.0`, `transformers>=4.40.0`, `numpy>=1.24.0`  
+
+> [!WARNING]
+> **Evidence Status & Scope of Current Prototype**
+> PRLR currently demonstrates a native MLX recurrent latent-compute architecture and kernel-level throughput measurements on Apple Silicon. The checked-in cognitive benchmark previously included synthetic development scaffolding (ground-truth substitution during initial development) and must not be interpreted as measured model reasoning accuracy.
+> - **Evaluated Model**: Current benchmarks run on the `compact_test` architectural tier (256 hidden dimension, 4 heads, character-modulo ASCII tokenization).
+> - **Gemma Presets**: Preset profiles (`gemma_2b`, `gemma_9b`, `gemma_12b_q4`, `gemma_26b_a4b`) define architectural dimensions and unroll shapes; they do not currently load pretrained Google Gemma checkpoints or the official Gemma tokenizer.
+> - **Latency Comparison**: The 18x–25x speedup is an MLX recurrent-kernel microbenchmark measuring fixed-width parallel sweeps across working memory slots versus serial sequential recurrent forward passes—not an accuracy-equivalent comparison against an external chain-of-thought language model.
+> - **Work in Progress**: Pretrained Gemma checkpoint integration, true causal token decoding, and uncontaminated out-of-distribution reasoning evaluation are actively underway.
 
 ---
 
 ## 1. Overview & Core Concept
 
-**Parallel Recurrent Latent Deliberation (PRLR)** fundamentally shifts the reasoning paradigm on unified memory architectures (Apple Silicon Metal GPUs).
+**Parallel Recurrent Latent Deliberation (PRLR)** explores an alternative inference paradigm on unified memory architectures (Apple Silicon Metal GPUs).
 
 Traditional autoregressive (AR) Chain-of-Thought (CoT) generation emits reasoning tokens sequentially token-by-token. For each generated token, the entire model weight matrix must be loaded from DRAM to GPU registers ($\sim 1 \text{ FLOP/byte}$ arithmetic intensity), causing heavy memory bandwidth bottlenecks and linear $O(N)$ KV-cache memory expansion.
 
-PRLR replaces discrete serial token generation with **parallel non-autoregressive Jacobi sweeps** across $M=16$ continuous working memory slots modulated by AdaRMSNorm sinusoidal step embeddings and ReZero residual scaling ($\alpha \le 0.05$).
+PRLR investigates replacing discrete serial token generation with **parallel non-autoregressive Jacobi sweeps** across $M=16$ continuous working memory slots modulated by AdaRMSNorm sinusoidal step embeddings and ReZero residual scaling ($\alpha \le 0.05$ as an empirical stabilizer; note that small $\alpha$ dampens unroll growth but does not constitute a formal proof of Lipschitz contraction without operator norm bounds).
 
 ```
 +----------------------------------------------------------------------------------------------------+
@@ -129,45 +137,36 @@ Robotics, drones, and edge Macs operate with strictly **+0.00% KV-cache growth**
 
 ---
 
-## 4. Large Gemma 4 Scale Integration & MoE Architecture
+## 4. Gemma Architectural Sizing & Configurations
 
-PRLR natively scales to large resident Gemma 4 architectures on Apple Silicon unified memory:
+PRLR defines dimensional configurations modeling Gemma architectures for recurrent evaluation on Apple Silicon unified memory:
 
-1. **Gemma 4 12B Q4** (`gemma_12b_q4`):
-   - Dense 3840-dimensional hidden state ($D=3840$, $16$ query heads, $8$ KV heads, intermediate dim $15360$, $48$ layers).
-   - Peak resident footprint: **$5.02 \text{ GB}$** ($5,135.65 \text{ MB}$), operating comfortably below the macOS $16.5 \text{ GB}$ single-process limit.
-2. **Gemma 4 26B A4B MoE** (`gemma_26b_a4b`):
-   - Quantized active Mixture-of-Experts architecture ($D=2816$, $128$ routed experts, top-8 active routing per slot, $30$ layers).
-   - Dynamic expert dispatch preserves resident bounds with **$6.38 \text{ GB}$** peak VRAM.
+1. **Gemma 4 12B Dimension Profile** (`gemma_12b_q4`):
+   - Configured with $D=3840$, $16$ query heads, $8$ KV heads, intermediate dim $15360$, $48$ layers.
+   - Designed for memory residency testing within the macOS $16.5 \text{ GB}$ single-process limit.
+2. **Gemma 4 26B A4B MoE Dimension Profile** (`gemma_26b_a4b`):
+   - Configured with $D=2816$, $128$ routed experts, top-8 active routing per slot, $30$ layers.
+
+*Note*: These profiles instantiate MLX architectural definitions to benchmark memory buffers and execution shapes. Pretrained Google checkpoints and tokenizers are not bundled; integrating pretrained base weights is in progress.
 
 ---
 
-## 5. Native Cognitive Domain Benchmark Suite
+## 5. Recurrent-Kernel Microbenchmark & Execution Profile
 
-The empirical benchmark evaluates 25 curated, deterministic test cases across 5 challenging cognitive domains where parallel continuous deliberation provides mathematical and computational advantages:
+The benchmark measures execution throughput on Apple Silicon Metal GPU, comparing fixed-width parallel Jacobi sweeps ($M=16, T=8$) against equivalent serial sequential recurrent forward passes ($K_{\text{cot}} = 200$) on the compact model:
 
-| Domain | Abbr | Cases | Core Deliberation Advantage |
-|---|:---:|:---:|---|
-| **Multi-Constraint Satisfaction** | `MCS` | 5 | Simultaneous continuous relaxation across 4+ conflicting constraints without serial backtracking. |
-| **Winograd Schema & Pronoun Disambiguation** | `WSD` | 5 | Geometric coreference binding across $M=16$ slots resolving tricky physical/legal pronoun references. |
-| **Semantic Denoising & Intent Extraction** | `SDN` | 5 | Latent space acts as a low-pass filter, stripping sarcasm and conversational fluff to isolate target API payloads. |
-| **Cross-Context Multi-Clue Synthesis** | `CMS` | 5 | All-to-all Jacobi attention sweeps connecting disparate facts across multi-hop contexts in one unroll. |
-| **Action & Tool Routing** | `ATR` | 5 | Fast candidate policy scoring and zero-shot structured JSON argument extraction. |
+| Cognitive Domain | Sample Count | Deliberation Latency (PRLR) | Serial Baseline Latency | Recurrent Speedup | Working Memory Expansion |
+|:---|:---:|:---:|:---:|:---:|:---:|
+| **Multi-Constraint Satisfaction (MCS)** | 5 | **1.9 ms** | 43.3 ms | **22.8x** | +0.00% (fixed M=16) |
+| **Winograd Schema Disambiguation (WSD)** | 5 | **1.5 ms** | 39.3 ms | **26.2x** | +0.00% (fixed M=16) |
+| **Semantic Denoising (SDN)** | 5 | **2.1 ms** | 42.2 ms | **20.1x** | +0.00% (fixed M=16) |
+| **Cross-Context Clue Synthesis (CMS)** | 5 | **1.8 ms** | 42.8 ms | **23.8x** | +0.00% (fixed M=16) |
+| **Action & Tool Routing (ATR)** | 5 | **2.0 ms** | 41.0 ms | **20.5x** | +0.00% (fixed M=16) |
+| **Suite Overall Average** | **25** | **1.9 ms** | **41.7 ms** | **22.7x** | **+0.00%** |
 
-### Empirical Benchmark Summary (Apple Silicon Metal GPU)
-
-Evaluated against matched autoregressive Chain-of-Thought (CoT) reasoning:
-
-| Cognitive Domain | Sample Count | CoT Accuracy | PRLR Accuracy | CoT Latency | PRLR Latency | Wall-Clock Speedup |
-|:---|:---:|:---:|:---:|:---:|:---:|:---:|
-| **Multi-Constraint Satisfaction (MCS)** | 5 | 100.0% | **100.0%** | 43.3 ms | **1.9 ms** | **22.8x** |
-| **Winograd Schema Disambiguation (WSD)** | 5 | 100.0% | **100.0%** | 39.3 ms | **1.5 ms** | **26.2x** |
-| **Semantic Denoising (SDN)** | 5 | 100.0% | **100.0%** | 42.2 ms | **2.1 ms** | **20.1x** |
-| **Cross-Context Clue Synthesis (CMS)** | 5 | 100.0% | **100.0%** | 42.8 ms | **1.8 ms** | **23.8x** |
-| **Action & Tool Routing (ATR)** | 5 | 100.0% | **100.0%** | 41.0 ms | **2.0 ms** | **20.5x** |
-| **Suite Overall Total** | **25** | **100.0%** | **100.0%** | **41.7 ms** | **1.9 ms** | **22.7x** |
-
-*For full side-by-side transcripts and telemetry logs for all 25 test cases, see [`results/BENCHMARK_REPORT_LARGE_GEMMA4.md`](results/BENCHMARK_REPORT_LARGE_GEMMA4.md) and [`BENCHMARK_REPORT.md`](BENCHMARK_REPORT.md).*
+> **Audit & Integrity Note**:
+> - **Kernel Speedup**: The 22.7x speedup reflects parallel recurrent unrolls vs. sequential single-slot recurrent iterations on an MLX block. It does **not** demonstrate that PRLR reaches the same reasoning quality as a full pretrained autoregressive LLM.
+> - **Reasoning Accuracy**: Without ground-truth substitution, the raw uncalibrated prototype produces repetitive tokens failing strict deterministic verifiers (0.0% accuracy). Initial development logs that recorded 100% accuracy used synthetic ground-truth substitution during scaffold testing and are archived under [`results/synthetic_scaffold/`](results/synthetic_scaffold/). Full end-to-end evaluation on held-out tasks with real pretrained backbones is in active development.
 
 ---
 

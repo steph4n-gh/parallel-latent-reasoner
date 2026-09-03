@@ -52,6 +52,16 @@ from parallel_latent_reasoner.dataset import (
     split_dataset,
     train_prlr_adapter,
 )
+from parallel_latent_reasoner.cognitive_suite import (
+    CognitiveTestCase,
+    DomainType,
+    EvaluationResult,
+    VerifierType,
+    get_domain_summary,
+    get_test_case_by_id,
+    load_cognitive_benchmark_suite,
+    verify_test_case_result,
+)
 from parallel_latent_reasoner.trainer import (
     PRLRBPTTTrainer,
     TrainerConfig,
@@ -98,5 +108,13 @@ __all__ = [
     "check_split_contamination",
     "generate_distillation_dataset",
     "train_prlr_adapter",
+    "CognitiveTestCase",
+    "DomainType",
+    "EvaluationResult",
+    "VerifierType",
+    "get_domain_summary",
+    "get_test_case_by_id",
+    "load_cognitive_benchmark_suite",
+    "verify_test_case_result",
     "__version__",
 ]

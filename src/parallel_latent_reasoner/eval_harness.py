@@ -645,6 +645,15 @@ class LargeGemmaDualEvaluator:
 
         # 2. Instantiate Model and Deliberation Pipeline
         self.model = MLXCompactGemmaModel(self.config)
+        if self.model_path is not None:
+            p = Path(self.model_path)
+            if not p.exists():
+                raise FileNotFoundError(f"Specified --model-path does not exist: {self.model_path}")
+            try:
+                self.model.load_weights(str(p))
+            except Exception as e:
+                raise RuntimeError(f"Failed loading weights from --model-path '{self.model_path}': {e}") from e
+
         self.pipeline = GemmaDeliberationPipeline(
             model=self.model,
             config=self.config,
@@ -734,10 +743,11 @@ class LargeGemmaDualEvaluator:
         cot_prompt = format_cot_prompt(test_case.prompt)
         prompt_tokens = self._tokenize(cot_prompt)
 
-        # Fetch representative reasoning trace for this test case
-        thought_text = COT_REASONING_TRACES.get(
-            test_case.id.lower(),
-            f"Step-by-step constraint analysis for {test_case.title}: satisfying expected criteria.",
+        # Label illustrative scaffolding trace for microbenchmark simulation
+        thought_text = (
+            f"[Synthetic illustrative trace for latency simulation: "
+            f"K={matched_compute_tokens} serial recurrent steps over {self.config.dim}D block; "
+            f"not an autoregressively generated language stream]"
         )
 
         t0 = time.perf_counter()

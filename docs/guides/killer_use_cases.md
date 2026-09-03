@@ -1,6 +1,10 @@
-# Guide: Killer Use Cases & Instant Workflow Integration
+# Guide: Killer Use Cases & Target Workflow Integration
 
-This guide provides concrete, verified integration recipes for incorporating **Parallel Latent Reasoner (PRLR)** into existing Python applications, agentic workflows, and local AI pipelines.
+> [!NOTE]
+> **Prototype Scope & Architecture Blueprints**
+> The recipes and code snippets in this guide demonstrate target integration architectures for continuous latent reasoning on Apple Silicon. The current repository provides the MLX recurrent kernel, fixed working memory state, and latency characteristics. End-to-end semantic correctness on open-domain prompts requires fine-tuning or distilling domain-specific adapters onto a pretrained backbone.
+
+This guide provides concrete architectural blueprints and integration recipes for incorporating **Parallel Latent Reasoner (PRLR)** into existing Python applications, agentic workflows, and local AI pipelines.
 
 ---
 

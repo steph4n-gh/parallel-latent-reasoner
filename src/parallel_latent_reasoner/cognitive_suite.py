@@ -507,6 +507,22 @@ def verify_test_case_result(
     response_text: str,
 ) -> EvaluationResult:
     """Evaluate an LLM response against a test case using deterministic rules."""
+    if not response_text or not response_text.strip():
+        return EvaluationResult(
+            passed=False,
+            score=0.0,
+            feedback="Rejected: Generated response is empty.",
+        )
+
+    # Fail loudly on non-printable control characters (e.g. \u0007 BEL, null bytes)
+    control_chars = [c for c in response_text if ord(c) < 32 and c not in ("\n", "\r", "\t")]
+    if control_chars:
+        return EvaluationResult(
+            passed=False,
+            score=0.0,
+            feedback=f"Rejected: Generated response contains non-printable control characters: {[ord(c) for c in control_chars[:5]]}",
+        )
+
     case_id = test_case.id.lower()
 
     # Specialized custom verifiers for MCS domain

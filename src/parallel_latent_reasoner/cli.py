@@ -16,7 +16,7 @@ def main_demo():
 def main_benchmark():
     from parallel_latent_reasoner.benchmark import MultiScaleBenchmarkSuite
     suite = MultiScaleBenchmarkSuite()
-    suite.run_all()
+    suite.run()
 
 if __name__ == '__main__':
     main_demo()
