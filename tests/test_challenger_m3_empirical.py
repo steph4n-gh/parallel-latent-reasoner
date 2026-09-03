@@ -40,6 +40,23 @@ CHECKPOINT_PATH = PROJECT_DIR / "checkpoints" / "gemma_2b_prlr_adapter.safetenso
 SIDECAR_PATH = PROJECT_DIR / "checkpoints" / "gemma_2b_prlr_adapter.json"
 EGATE_CONFIG_PATH = PROJECT_DIR / "checkpoints" / "calibrated_egate_config.json"
 
+if not CHECKPOINT_PATH.exists():
+    try:
+        scripts_dir = Path(__file__).parent.parent / "scripts"
+        if str(scripts_dir) not in sys.path:
+            sys.path.insert(0, str(scripts_dir))
+        from download_checkpoint import ensure_checkpoint
+        ensure_checkpoint(target_dir=CHECKPOINT_PATH.parent, quiet=True)
+    except Exception:
+        pass
+
+if not CHECKPOINT_PATH.exists():
+    pytest.skip(
+        f"Production checkpoint {CHECKPOINT_PATH.name} not found. "
+        "Run `python scripts/download_checkpoint.py` to download from GitHub release.",
+        allow_module_level=True,
+    )
+
 
 def compute_max_4gram_repetition(text: str) -> int:
     """Compute maximum frequency count of any 4-gram in the text."""

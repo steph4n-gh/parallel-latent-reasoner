@@ -225,6 +225,20 @@ class PRLRPipeline:
         if load_weights and load_trained_adapter:
             default_adapter_name = "checkpoints/gemma_2b_prlr_adapter.safetensors"
             target_path = _resolve_project_path(adapter_path or default_adapter_name)
+            if not target_path.exists() and adapter_path is None:
+                # Attempt to download production checkpoint from GitHub Release
+                try:
+                    import importlib.util
+                    download_script = target_path.parents[1] / "scripts" / "download_checkpoint.py"
+                    if download_script.exists():
+                        spec = importlib.util.spec_from_file_location("download_checkpoint", str(download_script))
+                        if spec and spec.loader:
+                            mod = importlib.util.module_from_spec(spec)
+                            spec.loader.exec_module(mod)
+                            target_path = mod.ensure_checkpoint(target_dir=target_path.parent)
+                except Exception:
+                    pass
+
             if target_path.exists():
                 self.adapter.load_weights(str(target_path), strict=strict_loading)
                 self.adapter_loaded = True
@@ -233,7 +247,11 @@ class PRLRPipeline:
                 if adapter_path is not None:
                     raise FileNotFoundError(f"Requested adapter checkpoint not found: {adapter_path}")
                 else:
-                    raise FileNotFoundError(f"Production adapter checkpoint not found at {target_path}")
+                    raise FileNotFoundError(
+                        f"Production adapter checkpoint not found at {target_path}. "
+                        "Run `python scripts/download_checkpoint.py` or download from "
+                        "https://github.com/steph4n-gh/parallel-latent-reasoner/releases/tag/v0.2.0-alpha"
+                    )
         else:
             self.adapter_loaded = False
             self.adapter_path = None

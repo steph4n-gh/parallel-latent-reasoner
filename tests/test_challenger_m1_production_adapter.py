@@ -30,6 +30,23 @@ CHECKPOINT_DIR = Path(__file__).parent.parent / "checkpoints"
 CHECKPOINT_WEIGHTS = CHECKPOINT_DIR / "gemma_2b_prlr_adapter.safetensors"
 CHECKPOINT_SIDECAR = CHECKPOINT_DIR / "gemma_2b_prlr_adapter.json"
 
+if not CHECKPOINT_WEIGHTS.exists():
+    try:
+        scripts_dir = Path(__file__).parent.parent / "scripts"
+        if str(scripts_dir) not in sys.path:
+            sys.path.insert(0, str(scripts_dir))
+        from download_checkpoint import ensure_checkpoint
+        ensure_checkpoint(target_dir=CHECKPOINT_DIR, quiet=True)
+    except Exception:
+        pass
+
+if not CHECKPOINT_WEIGHTS.exists():
+    pytest.skip(
+        f"Production checkpoint {CHECKPOINT_WEIGHTS.name} not found. "
+        "Run `python scripts/download_checkpoint.py` to download from GitHub release.",
+        allow_module_level=True,
+    )
+
 
 @pytest.fixture(scope="module")
 def loaded_adapter() -> GemmaRecurrentAdapter:
