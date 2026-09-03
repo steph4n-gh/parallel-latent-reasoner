@@ -6,7 +6,9 @@
 - **Hardware Platform**: Apple Silicon Metal GPU (`arm64`), macOS Unified Memory Architecture
 - **Git Commit SHA**: `a90ad7ecebdd7a2f7c9d7d5a84227bd5bc729732`
 - **Model Reference**: `google/gemma-2b-it` (Architecture: `GemmaForCausalLM`)
+- **Production Adapter Checkpoint SHA-256**: `6048262d99e5d28851adfc87a379a2796802926605ab74e33553b4d9347028d7`
 - **Dataset Manifest SHA-256**: `cdfb10f9cbd3d6d9d8380f901822919362bc4d9928a6a0ad41b1a9dcf8bb6b82`
+- **Semantic Benchmark Artifact SHA-256**: `81f15af40e01980f95aff18e302980a71055bf95b2041622e5be13b15a29c516`
 - **Governing Policies**: `AGENTS.md`, `docs/documentation_policy.md`, Non-Negotiable Evidence Rules 1–10
 
 ---
@@ -38,7 +40,9 @@ Every active claim MUST map to:
 
 ---
 
-## 2. Master Claims Registry (31 Claims)
+## 2. Master Claims Registry
+
+### 2.1 Core Subsystem & Architecture Registry (Claims CLM-01 – CLM-31)
 
 | Claim ID | Claim Description | Status / Classification | Architectural Tier | Dataset / Split Scope | Artifact Path | Artifact SHA-256 | Reproduction Command | Enforced Rules | Audit & Verification Notes |
 |:---:|---|:---:|:---:|:---:|---|---|---|:---:|---|
@@ -68,11 +72,24 @@ Every active claim MUST map to:
 | **CLM-24** | Milestone B structured syntax overfit (256 ex) | **VERIFIED** | Gemma 2B + Adapter | 256 examples | `tests/test_gemma_trainer.py` | `14f4d2e1...` | `pytest tests/test_gemma_trainer.py -k test_milestone_b` | R8, R10 | Valid JSON syntax overfit verified. |
 | **CLM-25** | Milestone C held-out generalization | **VERIFIED** | Gemma 2B + Adapter | Unseen instances | `tests/test_gemma_trainer.py` | `14f4d2e1...` | `pytest tests/test_gemma_trainer.py -k test_milestone_c` | R8, R10 | Nonzero generalization verified on held-out procedural split. |
 | **CLM-26** | Controlled ablations ($T, M$, knockout, merge) | **VERIFIED** | Pretrained Gemma 2B | 8 canonical conditions | `tests/test_ablations.py` | `6cfa29f8...` | `pytest tests/test_ablations.py` | R10 | 8/8 tests passed: depth progression, slot scaling, causal knockout logit shifts. |
-| **CLM-27** | Calibrated 4-signal dynamic consensus E-gate | **VERIFIED** | Gemma 2B + E-Gate | `sealed_gate.jsonl` | `checkpoints/calibrated_egate_config.json` | `89fa2c9c...` | `pytest tests/test_calibrated_egate.py` | R8, R10 | 100% accuracy retention ($\ge 99\%$), 48.3% depth reduction ($\ge 15\%$) verified. |
-| **CLM-28** | Benchmark separation: Kernel vs Semantic | **VERIFIED** | Microbench & Semantic Bench | Recurrent unroll & Gemma 2B | `results/kernel_microbenchmark.json` | `c3dc4c09...` | `python run_kernel_microbenchmark.py --quick` | R4, R9, R10 | Separates hardware FLOPs/bandwidth from end-to-end semantic reasoning. |
+| **CLM-27** | Calibrated 4-signal dynamic consensus E-gate | **VERIFIED** | Gemma 2B + E-Gate | `sealed_test.jsonl` | `checkpoints/calibrated_egate_config.json`, `results/semantic_benchmark.json` | `89fa2c9c...` | `pytest tests/test_calibrated_egate.py` | R8, R10 | 100% accuracy retention ($\ge 99\%$), 20.02% depth reduction ($\ge 15\%$) verified on `sealed_test.jsonl`. |
+| **CLM-28** | Benchmark separation: Kernel vs Semantic | **VERIFIED** | Microbench & Semantic Bench | Recurrent unroll & Gemma 2B | `results/kernel_microbenchmark.json`, `results/semantic_benchmark.json` | `c3dc4c09...` | `python run_kernel_microbenchmark.py --quick` | R4, R9, R10 | Separates hardware FLOPs/bandwidth from end-to-end semantic reasoning (`results/semantic_benchmark.json`, `checkpoints/gemma_2b_prlr_adapter.safetensors`). |
 | **CLM-29** | Automated CI verification guardrails | **VERIFIED** | CI Guardrails (12 tests) | 15 split files & model AST | `tests/test_ci_guardrails.py` | `01e26021...` | `pytest tests/test_ci_guardrails.py -v` | R1, R2, R5, R10 | 12 guardrail tests pass 100%: AST isolation, 100% gradient flow, bit-flip defense. |
 | **CLM-30** | Single-command reproducible E2E verification runner | **VERIFIED** | Unified E2E Verifier | Complete test & bench suite | `scripts/run_prlr_verification.py` | `a846aa12...` | `python scripts/run_prlr_verification.py --quick` | R8, R9, R10 | Executes 7 sequential verification stages, emits signed attestation, exits 0. |
 | **CLM-31** | Authoritative Signed Claims Registry (`CLAIMS.md`) | **VERIFIED** | Documentation | All 31 project claims | `projects/parallel_latent_reasoner/CLAIMS.md` | `[self]` | `python scripts/run_prlr_verification.py` | R8, R9, R10 | 100% of historical and active claims mapped to verified on-disk artifacts. |
+
+---
+
+### 2.2 Production Pretrained Gemma 2B Claims (Milestone 4: C1 – C6)
+
+| Claim ID | Claim Description | Status / Classification | Architectural Tier | Dataset / Split Scope | Artifact Path | Artifact SHA-256 | Reproduction Command | Enforced Rules | Non-Oracle Status & Audit Notes |
+|:---:|---|:---:|---|---|---|---|---|:---:|---|
+| **C1** | Non-Zero Held-Out Procedural Reasoning Accuracy | **EVIDENCE-BOUND (TARGET FAIL)** | `google/gemma-2b-it` + Adapter (88.69M params) | `data/prlr_domain_v1/sealed_test.jsonl` (256 samples) | `results/semantic_benchmark.json` | `81f15af4...` | `PYTHONPATH=src python3 run_semantic_benchmark.py --split sealed_test` | R1, R2, R8, R10 | **VERIFIED NON-ORACLE**. Blind evaluation under Rules 1 & 2. Exact Match: 18.36% (target >= 75.0% -> FAIL), Terminal Tool: 81.64% (target >= 85.0% -> FAIL). Adapter SHA-256: `6048262d...`. |
+| **C2** | Latent Deliberation Latency & Speedup vs Baseline | **EVIDENCE-BOUND (DISQUALIFIED SPEEDUP)** | `google/gemma-2b-it` + Adapter ($M=16, T=4$) | Apple M4 Pro Metal GPU Deliberation | `results/semantic_benchmark.json` | `81f15af4...` | `PYTHONPATH=src python3 run_semantic_benchmark.py --split sealed_test` | R4, R6, R9, R10 | **VERIFIED NON-ORACLE**. Measured via MLX Metal timers (Rule 6). Mean: 791.19 ms (p50: 451.31 ms). Speedup disqualified under Rule 9 due to EM quality gap. |
+| **C3** | Information Entropy & Degeneracy Elimination | **VERIFIED (PASS / MAX REP FAIL)** | `google/gemma-2b-it` + Adapter ($M=16, T=4$) | Emitted token sequences on `sealed_test.jsonl` | `results/semantic_benchmark.json` | `81f15af4...` | `PYTHONPATH=src python3 run_semantic_benchmark.py --split sealed_test` | R3, R8, R10 | **VERIFIED NON-ORACLE**. Shannon Entropy $H = 4.45\text{ bits}$ (target >= 3.0 -> PASS). Mean 4-gram rep: 1.09 (PASS). Max 4-gram rep: 5 (target <= 2 -> FAIL). |
+| **C4** | Autonomous Agent Tool Routing & Operational Validity | **VERIFIED (EXPERIMENTAL)** | `google/gemma-2b-it` + Adapter ($M=16, T=4$) | `mtr_dag_tool_routing` domain (`sealed_test.jsonl`) | `results/semantic_benchmark.json` | `81f15af4...` | `PYTHONPATH=src python3 run_semantic_benchmark.py --split sealed_test` | R1, R2, R8, R10 | **VERIFIED NON-ORACLE**. 100% operational validity (256/256 valid JSON). Terminal tool routing: 81.64% (209/256). Verified post-hoc by DAG BFS oracle. |
+| **C5** | Pretrained Gemma 2B Architecture & Weight Provenance | **VERIFIED (PRE-RELEASE PRETRAINED LANE)** | `google/gemma-2b-it` + `gemma_2b_prlr_adapter.safetensors` | Official Google weights + SentencePiece tokenizer | `checkpoints/gemma_2b_prlr_adapter.json`, `src/prlr/manifest.py` | `db40b258...` | `PYTHONPATH=src pytest tests/test_rule5_anti_cheating.py` | R5, R10 | **VERIFIED NON-ORACLE**. Verified by ModelManifest and Rule 5 anti-cheating guardrails. Adapter SHA-256: `6048262d...`, loss 0.1499 < 0.15. |
+| **C6** | Calibrated Dynamic E-Gate Compute Reduction | **VERIFIED (PASS)** | `google/gemma-2b-it` + `GemmaCalibratedEGate` | `data/prlr_domain_v1/sealed_test.jsonl` | `checkpoints/calibrated_egate_config.json` | `89fa2c9c...` | `PYTHONPATH=src pytest tests/test_calibrated_egate.py` | R8, R9, R10 | **VERIFIED NON-ORACLE**. Signals derived strictly from runtime tensors. Accuracy retention: 100.00% (PASS). Depth reduction: 20.02% (PASS). |
 
 ---
 

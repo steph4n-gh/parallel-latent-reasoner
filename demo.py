@@ -64,8 +64,8 @@ DOMAIN_ALIASES = {
 }
 
 MODEL_PRESETS = [
-    "compact_test",
     "gemma_2b",
+    "compact_test",
     "gemma_9b",
     "gemma_12b",
     "gemma_12b_q4",
@@ -81,7 +81,7 @@ DOMAIN_PRESETS_INFO = [
     ("5", "Action & Tool Routing (ATR)", DomainType.ACTION_TOOL_ROUTING, "Zero-shot JSON candidate ranking and argument dispatch"),
 ]
 
-DEFAULT_CHECKPOINT_PATH = Path(__file__).resolve().parent / "checkpoints" / "prlr_latent_adapter.npz"
+DEFAULT_CHECKPOINT_PATH = Path(__file__).resolve().parent / "checkpoints" / "gemma_2b_prlr_adapter.safetensors"
 
 
 def resolve_domain(query: str) -> Optional[DomainType]:
@@ -97,111 +97,130 @@ def default_trained_flag() -> bool:
 
 def run_prlr_demo_execution(
     prompt: str,
-    preset: str = "compact_test",
+    preset: str = "gemma_2b",
     adapter_path: Optional[str] = None,
-    load_trained_adapter: bool = False,
+    load_trained_adapter: bool = True,
     num_slots: int = 16,
-    num_steps: int = 8,
+    num_steps: int = 4,
     mode: str = "hybrid",
     enable_gate: bool = True,
-    max_tokens: int = 16,
+    max_tokens: int = 32,
     temperature: float = 0.0,
     show_comparison: bool = True,
 ) -> HybridDeliberationResult:
     """Execute PRLR pipeline with live 3-Signal E-Gate telemetry and grounded answer decoding."""
-    # Guard default adapter loading if non-standard slot count is requested
     effective_load_trained = load_trained_adapter and (adapter_path is not None or num_slots == 16)
 
-    pipeline = PRLRPipeline.from_preset(
-        preset=preset,
-        num_memory_slots=num_slots,
-        deliberation_steps=num_steps,
-        adapter_path=adapter_path,
-        load_trained_adapter=effective_load_trained,
-    )
-    config = pipeline.config
-
-    # Execute Deliberation
-    if mode == "pure_latent":
-        t0 = time.perf_counter()
-        delib_res, gate_telemetry = pipeline.deliberate(
-            prompt_tokens=prompt,
-            steps=num_steps,
-            enable_dynamic_gate=enable_gate,
-            return_trajectory=True,
-            compute_probes=True,
+    if preset == "gemma_2b":
+        from prlr.pipeline import PRLRPipeline
+        ckpt = adapter_path or (str(DEFAULT_CHECKPOINT_PATH) if effective_load_trained else None)
+        pipeline = PRLRPipeline(
+            adapter_path=ckpt,
+            load_trained_adapter=effective_load_trained,
+            deliberation_steps=num_steps,
+            num_slots=num_slots,
         )
-        t1 = time.perf_counter()
-        delib_ms = (t1 - t0) * 1000.0
-
-        # Read top Coda token
-        coda_logits = pipeline.model.coda(delib_res.final_states, pool=True)
-        coda_tok = int(mx.argmax(coda_logits, axis=-1)[0].item())
-        decoded_text = chr(coda_tok % 128) if 32 <= (coda_tok % 128) <= 126 else str(coda_tok)
-
-        out = HybridDeliberationResult(
+        out = pipeline.deliberate_and_verify(
             prompt=prompt,
-            token_ids=mx.array([[coda_tok]], dtype=mx.int32),
-            decoded_text=decoded_text,
-            deliberation_steps=delib_res.steps_executed,
-            final_states=delib_res.final_states,
-            consensus_step=gate_telemetry[-1].step if (gate_telemetry and gate_telemetry[-1].halt) else None,
-            egate_verdict=gate_telemetry[-1].exit_reason if gate_telemetry else "active",
-            gate_telemetry=gate_telemetry,
-            coda_logits=coda_logits,
-            trajectory_states=delib_res.trajectory_states,
-            latency_breakdown={
-                "prefill_latency_ms": 0.5,
-                "deliberation_latency_ms": delib_ms,
-                "coda_decode_latency_ms": 0.2,
-                "total_latency_ms": delib_ms + 0.7,
-                "throughput_tok_per_sec": (float(num_slots * delib_res.steps_executed) / max(0.001, delib_ms / 1000.0)),
-            },
-            memory_stats={
-                "peak_memory_mb": (config.dim * config.intermediate_dim * 4 * 2) / (1024.0 * 1024.0),
-                "kv_cache_growth_pct": 0.0,
-                "num_memory_slots": float(num_slots),
-            },
-            adapter_loaded=pipeline.adapter_loaded,
-            adapter_path=pipeline.adapter_path,
-            mode="pure_latent",
+            max_steps=num_steps,
+            max_new_tokens=max_tokens,
+            temperature=temperature,
+            enable_dynamic_gate=enable_gate,
         )
     else:
+        from parallel_latent_reasoner.pipeline import PRLRPipeline as LegacyPRLRPipeline
+        print(f"\n[!] NOTICE: Executing testbed preset '{preset}'.")
+        pipeline = LegacyPRLRPipeline.from_preset(
+            preset=preset,
+            num_memory_slots=num_slots,
+            deliberation_steps=num_steps,
+            adapter_path=adapter_path,
+            load_trained_adapter=effective_load_trained and (adapter_path is not None),
+        )
         out = pipeline.deliberate_and_verify(
             prompt=prompt,
             max_steps=num_steps,
             generate_tokens=max_tokens,
             temperature=temperature,
             enable_dynamic_gate=enable_gate,
-            return_diagnostics=True,
         )
+
+    if mode == "pure_latent":
+        out.mode = "pure_latent"
 
     # Display Side-by-Side View
     if show_comparison:
-        # Simulate / Measure Matched Autoregressive CoT baseline
-        steps_executed = out.deliberation_steps
-        k_cot = steps_executed * num_slots
-        delib_latency_ms = out.latency_breakdown.get("deliberation_latency_ms", 5.0)
-        decode_latency_ms = out.latency_breakdown.get("coda_decode_latency_ms", 1.0)
-        simulated_step_ms = max(0.2, (delib_latency_ms / max(1, steps_executed)) * (num_slots * 0.75))
-        cot_latency_ms = k_cot * simulated_step_ms
-        peak_vram_mb = out.memory_stats.get("peak_memory_mb", 10.0)
+        if preset == "gemma_2b":
+            base_res = pipeline.generate_baseline(
+                prompt=prompt,
+                max_new_tokens=max_tokens,
+                temperature=temperature,
+            )
+            cot_text = base_res.generated_text
+            cot_latency_ms = base_res.latency_ms
+            cot_token_count = len(base_res.tokens) if base_res.tokens else max_tokens
+            peak_vram_mb = (
+                float(mx.get_peak_memory() / (1024 * 1024))
+                if hasattr(mx, "get_peak_memory")
+                else 0.0
+            )
+            delib_latency_ms = out.latency_breakdown.get("deliberation_ms", 5.0)
+            decode_latency_ms = out.latency_breakdown.get("decode_ms", 1.0)
+        else:
+            t0_base = time.perf_counter()
+            token_ids = pipeline.encode_prompt(prompt)
+            gen_tokens = pipeline.model.generate(
+                token_ids,
+                max_new_tokens=max_tokens,
+                steps=0,
+                temperature=temperature,
+            )
+            mx.eval(gen_tokens)
+            cot_latency_ms = (time.perf_counter() - t0_base) * 1000.0
+            cot_text = pipeline.decode_solution(gen_tokens)
+            cot_token_count = gen_tokens.size
+            peak_vram_mb = (
+                float(mx.get_peak_memory() / (1024 * 1024))
+                if hasattr(mx, "get_peak_memory")
+                else 0.0
+            )
+            delib_latency_ms = out.latency_breakdown.get("deliberation_latency_ms", 5.0)
+            decode_latency_ms = out.latency_breakdown.get("coda_decode_latency_ms", 1.0)
 
-        cot_text = (
-            f"Step 1: Parse input query and extract key constraints. "
-            f"Step 2: Unroll hypothesis candidates sequentially across KV-cache. "
-            f"Step 3: Compare candidate solutions against domain boundary conditions. "
-            f"Step 4: Formulate final grounded answer: {out.decoded_text.strip()}."
+        class DisplayConfig:
+            def __init__(self, dim=2048, num_heads=8, num_memory_slots=16, deliberation_steps=4):
+                self.dim = dim
+                self.num_heads = num_heads
+                self.num_memory_slots = num_memory_slots
+                self.deliberation_steps = deliberation_steps
+
+        class DisplayTelemetry:
+            def __init__(self, t: Any):
+                self.step = getattr(t, "step", 0)
+                self.velocity = getattr(t, "velocity", 0.0)
+                self.rel_velocity = getattr(t, "rel_velocity", getattr(t, "relative_velocity_decay", 1.0))
+                self.erank = getattr(t, "erank", 1.0)
+                self.coda_token_str = getattr(t, "first_token_str", getattr(t, "coda_token_str", getattr(t, "top_token_str", "")))
+                self.coda_token = getattr(t, "first_token_id", getattr(t, "coda_token", 0))
+                self.halt = getattr(t, "halt", False)
+                self.exit_reason = getattr(t, "exit_reason", "active")
+
+        cfg = DisplayConfig(
+            dim=2048 if preset == "gemma_2b" else getattr(pipeline.config, "dim", 256),
+            num_heads=8,
+            num_memory_slots=num_slots,
+            deliberation_steps=num_steps,
         )
+        adapted_telems = [DisplayTelemetry(t) for t in (out.gate_telemetry or [])]
 
         view = render_comparison_view(
             prompt=prompt if isinstance(prompt, str) else str(prompt),
-            config=config,
+            config=cfg,
             cot_tokens_text=cot_text,
-            cot_token_count=k_cot,
+            cot_token_count=cot_token_count,
             cot_latency_ms=cot_latency_ms,
             cot_peak_vram_mb=peak_vram_mb,
-            gate_telemetries=out.gate_telemetry or [],
+            gate_telemetries=adapted_telems,
             delib_latency_ms=delib_latency_ms,
             delib_peak_vram_mb=peak_vram_mb,
             decoded_solution=out.decoded_text.strip() or "Verified Grounded Solution",
@@ -216,9 +235,9 @@ def run_prlr_demo_execution(
         print(f"  - Adapter Status: {'[LOADED]' if out.adapter_loaded else '[BASE WEIGHTS]'} ({out.adapter_path or 'none'})")
         print(f"  - Mode: {out.mode} | Unrolls Executed: T={out.deliberation_steps}/{num_steps}")
         print(f"  - 3-Signal E-Gate Verdict: {out.egate_verdict} (Consensus Step: {out.consensus_step or 'N/A'})")
-        if out.effective_ranks and len(out.effective_ranks) >= 2:
-            print(f"  - SVD Effective Rank: {out.effective_ranks[0]:.2f} -> {out.effective_ranks[-1]:.2f} (Delta: {abs(out.effective_ranks[-1] - out.effective_ranks[-2]):.4f})")
         print(f"  - KV-Cache Expansion: +0.00% (Strictly Constant Sequence Length M={num_slots})")
+        if hasattr(out, "shannon_entropy") and out.shannon_entropy is not None:
+            print(f"  - Shannon Entropy: {out.shannon_entropy:.2f} bits")
         print(f"  - Grounded Decoded Output: \"{out.decoded_text.strip()}\"")
         print("-" * 80 + "\n")
 
@@ -543,9 +562,9 @@ def main() -> None:
     parser.add_argument(
         "--model",
         type=str,
-        default="compact_test",
+        default="gemma_2b",
         choices=MODEL_PRESETS,
-        help="Resident scale model configuration architecture (default: compact_test).",
+        help="Resident scale model configuration architecture (default: gemma_2b).",
     )
     parser.add_argument(
         "--adapter",
@@ -601,8 +620,8 @@ def main() -> None:
         "-t",
         "--steps",
         type=int,
-        default=8,
-        help="Maximum deliberation unroll sweeps T (default: 8).",
+        default=4,
+        help="Maximum deliberation unroll sweeps T (default: 4).",
     )
     parser.add_argument(
         "--no-gate",
@@ -717,7 +736,11 @@ def main() -> None:
         return
 
     # 5. Custom Prompt or Default Prompt Mode
-    prompt = args.prompt if args.prompt is not None else "If a car travels 60 mph for 2.5 hours, how far does it go?"
+    prompt = (
+        args.prompt
+        if args.prompt is not None
+        else "<start_of_turn>user\nPlan route: initial [input_a] target [output_z]<end_of_turn>\n<start_of_turn>model\n"
+    )
     run_prlr_demo_execution(
         prompt=prompt,
         preset=args.model,

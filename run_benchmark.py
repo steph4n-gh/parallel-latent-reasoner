@@ -28,6 +28,9 @@ def main() -> None:
     parser = argparse.ArgumentParser(
         description="Run Automated PRLR vs serial recurrent baseline Comparative & Multi-Domain Benchmark"
     )
+    default_adapter_path = Path(__file__).resolve().parent / "checkpoints" / "gemma_2b_prlr_adapter.safetensors"
+    default_trained = default_adapter_path.exists()
+
     parser.add_argument(
         "--presets",
         type=str,
@@ -37,8 +40,8 @@ def main() -> None:
     parser.add_argument(
         "--preset",
         type=str,
-        default=None,
-        help="Single scale preset to benchmark (default: compact_test).",
+        default="gemma_2b",
+        help="Single scale preset to benchmark (default: gemma_2b).",
     )
     parser.add_argument(
         "--config",
@@ -49,15 +52,15 @@ def main() -> None:
     parser.add_argument(
         "--adapter",
         type=str,
-        default=None,
+        default=str(default_adapter_path),
         help="Path to trained adapter checkpoint (.npz or .safetensors).",
     )
     parser.add_argument(
         "--trained",
         dest="trained",
         action="store_true",
-        default=False,
-        help="Load trained adapter checkpoint (default: False).",
+        default=default_trained,
+        help="Load trained adapter checkpoint (default: True if checkpoint exists).",
     )
     parser.add_argument(
         "--no-trained",
@@ -104,8 +107,8 @@ def main() -> None:
     parser.add_argument(
         "--output-dir",
         type=str,
-        default=str(Path(__file__).resolve().parent / "results"),
-        help="Directory to save JSON and CSV artifacts (default: results/).",
+        default=None,
+        help="Directory to save JSON and CSV artifacts (default: results/smoke/ if --quick else results/).",
     )
     parser.add_argument(
         "--report-path",
@@ -116,8 +119,14 @@ def main() -> None:
 
     args = parser.parse_args()
 
+    project_root = Path(__file__).resolve().parent
+    if args.output_dir is None:
+        output_dir = project_root / "results" / "smoke" if args.quick else project_root / "results"
+    else:
+        output_dir = Path(args.output_dir)
+
     # Determine primary preset
-    selected_preset = args.preset or args.config or "compact_test"
+    selected_preset = args.preset or args.config or "gemma_2b"
     if args.presets:
         scale_presets = [p.strip() for p in args.presets.split(",") if p.strip()]
     else:
@@ -130,6 +139,71 @@ def main() -> None:
     print(f"  Trained Adapter: {'Enabled' if args.trained else 'Disabled'} ({args.adapter or 'default checkpoint'})")
     print("=" * 80)
 
+    if selected_preset == "gemma_2b":
+        print("\n--- Pretrained Gemma 2B Semantic Benchmark Suite ---")
+        import json
+        from prlr.eval.semantic_bench import (
+            SemanticBenchmarkRunner,
+            generate_markdown_report as generate_semantic_markdown_report,
+        )
+        from prlr.gemma.adapter import GemmaRecurrentAdapter
+        from prlr.gemma.backbone import PretrainedGemmaBackbone
+        from prlr.gemma.decoder import GemmaCausalPrefixDecoder
+        from prlr.manifest import ModelManifest
+
+        manifest = ModelManifest.gemma_2b_it()
+        backbone = PretrainedGemmaBackbone(manifest=manifest, load_weights=True)
+        adapter = GemmaRecurrentAdapter(
+            dim=2048,
+            num_slots=args.slots,
+            num_layers=1,
+            deliberation_steps=args.steps,
+        )
+        if args.trained and Path(args.adapter).exists():
+            adapter.load_weights(str(args.adapter), strict=True)
+        decoder = GemmaCausalPrefixDecoder(backbone=backbone, adapter=adapter)
+
+        data_dir = project_root / "data" / "prlr_domain_v1"
+        runner = SemanticBenchmarkRunner(
+            backbone=backbone,
+            adapter=adapter,
+            decoder=decoder,
+            data_dir=data_dir,
+        )
+
+        sample_limit = 4 if args.quick else None
+        run_pareto = not args.quick
+
+        results = runner.run_benchmark(
+            split="sealed_test",
+            limit=sample_limit,
+            run_pareto=run_pareto,
+        )
+
+        output_dir.mkdir(parents=True, exist_ok=True)
+        json_path = output_dir / "semantic_benchmark.json"
+        with open(json_path, "w", encoding="utf-8") as f:
+            json.dump(results, f, indent=2)
+
+        md_content = generate_semantic_markdown_report(results)
+        md_path = output_dir / "SEMANTIC_BENCHMARK_REPORT.md"
+        with open(md_path, "w", encoding="utf-8") as f:
+            f.write(md_content)
+
+        print("\n" + "=" * 80)
+        print("  PRETRAINED GEMMA 2B BENCHMARK SUMMARY")
+        print("=" * 80)
+        print(f"  Exact Match Accuracy:          {results.get('exact_match_accuracy', 0.0):.1f}%")
+        print(f"  Terminal Tool Routing:         {results.get('terminal_tool_accuracy', 0.0):.1f}%")
+        print(f"  Shannon Entropy:               {results.get('mean_shannon_entropy', 0.0):.2f} bits")
+        print(f"  Max 4-Gram Repetition:         {results.get('max_4gram_repetition', 1)}")
+        print(f"  Calibrated E-Gate Retention:   {results.get('accuracy_retention_pct', 100.0):.1f}%")
+        print(f"  Calibrated Depth Reduction:    {results.get('depth_reduction_pct', 0.0):.1f}%")
+        print(f"  Saved JSON:                    {json_path}")
+        print(f"  Saved Report:                  {md_path}")
+        print("=" * 80)
+        return
+
     # 1. Multi-Scale Architecture Latency & Memory Benchmark
     print("\n--- Phase 1: Multi-Scale Compute-Matched Latency Benchmark ---")
     scale_suite = MultiScaleBenchmarkSuite(
@@ -140,7 +214,7 @@ def main() -> None:
         repeats=args.repeats,
         adapter_path=args.adapter,
         load_trained_adapter=args.trained,
-        output_dir=args.output_dir,
+        output_dir=str(output_dir),
     )
     scale_suite.run()
     print("\n" + "=" * 80)

@@ -59,12 +59,13 @@ def compute_masked_ce_loss(
     target_ids: mx.array,
     target_mask: mx.array | None = None,
     steps: int | None = None,
+    prompt_mask: mx.array | None = None,
 ) -> Tuple[mx.array, mx.array]:
     """Compute masked answer cross-entropy loss strictly on target tokens.
 
     Zero loss on prefix slots, prompt tokens, and padding tokens.
     """
-    slots = adapter(prompt_hiddens, steps=steps)
+    slots = adapter(prompt_hiddens, steps=steps, mask=prompt_mask)
     loss, target_logits = decoder.forward(
         prompt_ids=prompt_ids,
         prefix_latents=slots,
@@ -140,55 +141,67 @@ class GemmaPRLRTrainer:
         decoder = self.decoder
         steps = self.config.deliberation_steps
 
-        def loss_fn(model, p_hid, p_ids, t_ids, t_mask):
+        def loss_fn(model, p_hid, p_ids, t_ids, t_mask, p_mask=None):
             loss, _ = compute_masked_ce_loss(
-                model, decoder, p_hid, p_ids, t_ids, target_mask=t_mask, steps=steps
+                model,
+                decoder,
+                p_hid,
+                p_ids,
+                t_ids,
+                target_mask=t_mask,
+                steps=steps,
+                prompt_mask=p_mask,
             )
             return loss
 
         loss_and_grad_fn = nn.value_and_grad(adapter, loss_fn)
 
         @mx.compile
-        def _step(p_hid, p_ids, t_ids, t_mask):
-            loss, grads = loss_and_grad_fn(adapter, p_hid, p_ids, t_ids, t_mask)
+        def _step(p_hid, p_ids, t_ids, t_mask, p_mask=None):
+            loss, grads = loss_and_grad_fn(adapter, p_hid, p_ids, t_ids, t_mask, p_mask)
             return loss, grads
 
         return _step
 
     def _parse_batch(
         self, batch: Union[Dict[str, Any], DomainBatch]
-    ) -> Tuple[mx.array, mx.array, mx.array, Optional[mx.array]]:
+    ) -> Tuple[mx.array, mx.array, mx.array, Optional[mx.array], Optional[mx.array]]:
+        prompt_mask: Optional[mx.array] = None
         if isinstance(batch, DomainBatch):
             prompt_ids = batch.input_ids
             target_ids = batch.target_ids
             target_mask = batch.target_mask
+            prompt_mask = batch.prompt_mask
             prompt_hiddens = self.backbone.extract_contextual_hiddens(prompt_ids)
+            mx.eval(prompt_hiddens)
         elif isinstance(batch, dict):
             prompt_ids = batch.get("prompt_ids")
             if prompt_ids is None:
                 prompt_ids = batch["input_ids"]
             target_ids = batch["target_ids"]
             target_mask = batch.get("target_mask")
+            prompt_mask = batch.get("prompt_mask") if "prompt_mask" in batch else batch.get("mask")
 
             if "prompt_hiddens" in batch:
                 prompt_hiddens = batch["prompt_hiddens"]
             else:
                 prompt_hiddens = self.backbone.extract_contextual_hiddens(prompt_ids)
+                mx.eval(prompt_hiddens)
         else:
             raise TypeError(f"Unsupported batch type: {type(batch)}")
 
-        return prompt_hiddens, prompt_ids, target_ids, target_mask
+        return prompt_hiddens, prompt_ids, target_ids, target_mask, prompt_mask
 
     def train_step(
         self, batch: Union[Dict[str, Any], DomainBatch]
     ) -> Tuple[float, Dict[str, Any]]:
         """Execute a single forward-backward-optimizer step on Metal GPU."""
-        prompt_hiddens, prompt_ids, target_ids, target_mask = self._parse_batch(batch)
+        prompt_hiddens, prompt_ids, target_ids, target_mask, prompt_mask = self._parse_batch(batch)
         steps = self.config.deliberation_steps
         decoder = self.decoder
 
         def loss_fn(model):
-            slots = model(prompt_hiddens, steps=steps)
+            slots = model(prompt_hiddens, steps=steps, mask=prompt_mask)
             loss, _ = decoder.forward(
                 prompt_ids=prompt_ids,
                 prefix_latents=slots,
@@ -225,7 +238,7 @@ class GemmaPRLRTrainer:
     ) -> Dict[str, Any]:
         """Stage A: 1-Batch overfit test to verify loss < 0.05 and 100% exact match."""
         t0 = time.perf_counter()
-        prompt_hiddens, prompt_ids, target_ids, target_mask = self._parse_batch(batch)
+        prompt_hiddens, prompt_ids, target_ids, target_mask, prompt_mask = self._parse_batch(batch)
 
         target_tokens = target_ids[0].tolist()
         # Filter out trailing pad tokens (ID 0)
@@ -242,6 +255,7 @@ class GemmaPRLRTrainer:
                     "target_ids": target_ids,
                     "target_mask": target_mask,
                     "prompt_hiddens": prompt_hiddens,
+                    "prompt_mask": prompt_mask,
                 }
             )
             if loss_val < loss_threshold:
@@ -249,7 +263,7 @@ class GemmaPRLRTrainer:
                 break
 
         # Verification of greedy generation exact match
-        slots = self.adapter(prompt_hiddens, steps=self.config.deliberation_steps)
+        slots = self.adapter(prompt_hiddens, steps=self.config.deliberation_steps, mask=prompt_mask)
         generated = self.decoder.generate(
             prompt_ids=prompt_ids[:1],
             prefix_latents=slots[:1],
@@ -282,7 +296,7 @@ class GemmaPRLRTrainer:
         ckpt_dir.mkdir(parents=True, exist_ok=True)
         save_path = Path(filepath) if filepath is not None else ckpt_dir / "prlr_gemma_adapter.safetensors"
 
-        adapter_params = dict(tree_flatten(self.adapter.trainable_parameters()))
+        adapter_params = dict(tree_flatten(self.adapter.parameters()))
         meta = {
             "model_id": getattr(self.backbone.manifest, "model_id", "google/gemma-2b-it"),
             "deliberation_steps": str(self.config.deliberation_steps),
@@ -309,7 +323,11 @@ class GemmaPRLRTrainer:
             "total_parameters": sum(p.size for p in adapter_params.values()),
             "training_config": cfg_dict,
             "final_step": self.current_step,
+            "final_loss": float(self.training_history[-1]["loss"]) if self.training_history else None,
         }
+        if extra_metadata:
+            sidecar_data.update(extra_metadata)
+
         with open(sidecar_path, "w", encoding="utf-8") as fp:
             json.dump(sidecar_data, fp, indent=2)
 

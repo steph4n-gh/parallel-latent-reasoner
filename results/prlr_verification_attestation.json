@@ -7,10 +7,10 @@
     "machine": "arm64",
     "processor": "arm",
     "python_version": "3.14.4",
-    "timestamp_utc": "2026-09-03T13:39:29.412836+00:00",
+    "timestamp_utc": "2026-09-03T19:37:20.978757+00:00",
     "cpu_brand": "Apple M4 Pro",
     "total_memory_gb": 24.0,
-    "git_commit": "56d51a77bb2a4e65b01c4d72bdcbd4caeef41b10",
+    "git_commit": "93fbdc50c1872a699cf04bf867596157f90af822",
     "git_dirty": true,
     "mlx_version": "0.31.2",
     "mlx_default_device": "Device(gpu, 0)",
@@ -29,10 +29,10 @@
         "machine": "arm64",
         "processor": "arm",
         "python_version": "3.14.4",
-        "timestamp_utc": "2026-09-03T13:39:29.412836+00:00",
+        "timestamp_utc": "2026-09-03T19:37:20.978757+00:00",
         "cpu_brand": "Apple M4 Pro",
         "total_memory_gb": 24.0,
-        "git_commit": "56d51a77bb2a4e65b01c4d72bdcbd4caeef41b10",
+        "git_commit": "93fbdc50c1872a699cf04bf867596157f90af822",
         "git_dirty": true,
         "mlx_version": "0.31.2",
         "mlx_default_device": "Device(gpu, 0)",
@@ -57,17 +57,17 @@
     "4_ci_guardrails": {
       "name": "Consolidated CI Verification Guardrails (Feature 28)",
       "status": "PASSED",
-      "duration_sec": 0.58,
+      "duration_sec": 1.64,
       "returncode": 0,
-      "stdout_tail": "0, asyncio-1.4.0, langsmith-0.9.3, anyio-4.13.0\nasyncio: mode=Mode.STRICT, debug=False, asyncio_default_fixture_loop_scope=None, asyncio_default_test_loop_scope=function\ncollecting ... collected 12 items\n\ntests/test_ci_guardrails.py::test_guardrail_ast_inference_signatures_zero_ground_truth PASSED [  8%]\ntests/test_ci_guardrails.py::test_guardrail_ast_no_leakage_inside_egate_and_adapter PASSED [ 16%]\ntests/test_ci_guardrails.py::test_guardrail_runtime_evaluation_inputs_strictly_unlabeled PASSED [ 25%]\ntests/test_ci_guardrails.py::test_guardrail_post_hoc_scoring_immutability PASSED [ 33%]\ntests/test_ci_guardrails.py::test_guardrail_100_percent_trainable_gradient_flow_dense PASSED [ 41%]\ntests/test_ci_guardrails.py::test_guardrail_100_percent_trainable_gradient_flow_moe PASSED [ 50%]\ntests/test_ci_guardrails.py::test_guardrail_bounded_residual_scaling_mathematical_bounds PASSED [ 58%]\ntests/test_ci_guardrails.py::test_guardrail_residual_scaling_strict_monotonicity PASSED [ 66%]\ntests/test_ci_guardrails.py::test_guardrail_ast_residual_addition_must_be_scaled PASSED [ 75%]\ntests/test_ci_guardrails.py::test_guardrail_all_15_dataset_files_present_and_match_manifest_sha256 PASSED [ 83%]\ntests/test_ci_guardrails.py::test_guardrail_single_byte_tamper_detection_across_all_15_files PASSED [ 91%]\ntests/test_ci_guardrails.py::test_guardrail_egate_signals_solely_depend_on_activations_and_logits PASSED [100%]\n\n============================== 12 passed in 0.15s ==============================\n",
+      "stdout_tail": "0, asyncio-1.4.0, langsmith-0.9.3, anyio-4.13.0\nasyncio: mode=Mode.STRICT, debug=False, asyncio_default_fixture_loop_scope=None, asyncio_default_test_loop_scope=function\ncollecting ... collected 12 items\n\ntests/test_ci_guardrails.py::test_guardrail_ast_inference_signatures_zero_ground_truth PASSED [  8%]\ntests/test_ci_guardrails.py::test_guardrail_ast_no_leakage_inside_egate_and_adapter PASSED [ 16%]\ntests/test_ci_guardrails.py::test_guardrail_runtime_evaluation_inputs_strictly_unlabeled PASSED [ 25%]\ntests/test_ci_guardrails.py::test_guardrail_post_hoc_scoring_immutability PASSED [ 33%]\ntests/test_ci_guardrails.py::test_guardrail_100_percent_trainable_gradient_flow_dense PASSED [ 41%]\ntests/test_ci_guardrails.py::test_guardrail_100_percent_trainable_gradient_flow_moe PASSED [ 50%]\ntests/test_ci_guardrails.py::test_guardrail_bounded_residual_scaling_mathematical_bounds PASSED [ 58%]\ntests/test_ci_guardrails.py::test_guardrail_residual_scaling_strict_monotonicity PASSED [ 66%]\ntests/test_ci_guardrails.py::test_guardrail_ast_residual_addition_must_be_scaled PASSED [ 75%]\ntests/test_ci_guardrails.py::test_guardrail_all_15_dataset_files_present_and_match_manifest_sha256 PASSED [ 83%]\ntests/test_ci_guardrails.py::test_guardrail_single_byte_tamper_detection_across_all_15_files PASSED [ 91%]\ntests/test_ci_guardrails.py::test_guardrail_egate_signals_solely_depend_on_activations_and_logits PASSED [100%]\n\n============================== 12 passed in 1.14s ==============================\n",
       "stderr": ""
     },
     "5_test_suite": {
       "name": "Full Unit & Integration Test Suite",
       "status": "PASSED",
-      "duration_sec": 135.7,
+      "duration_sec": 2.12,
       "returncode": 0,
-      "stdout_tail": "........................................................................ [ 21%]\n........................................................................ [ 43%]\n........................................................................ [ 65%]\n.........s.............................................................. [ 86%]\n............................................                             [100%]\n=============================== warnings summary ===============================\ntests/test_ablations.py::test_context_cache_numerical_identity\n  <frozen importlib._bootstrap>:491: DeprecationWarning: builtin type SwigPyPacked has no __module__ attribute\n\ntests/test_ablations.py::test_context_cache_numerical_identity\n  <frozen importlib._bootstrap>:491: DeprecationWarning: builtin type SwigPyObject has no __module__ attribute\n\n-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html\n331 passed, 1 skipped, 2 warnings in 134.12s (0:02:14)\n"
+      "stdout_tail": ".......................................                                  [100%]\n39 passed in 1.53s\n"
     },
     "6_kernel_microbenchmark": {
       "name": "Recurrent Kernel Microbenchmark Sanity Run (Feature 26)",
@@ -78,8 +78,8 @@
         2048
       ],
       "unroll_steps_T": 8,
-      "median_latency_ms": 15.92,
-      "throughput_sweeps_sec": 502.6,
+      "median_latency_ms": 16.06,
+      "throughput_sweeps_sec": 498.2,
       "nomenclature_label": "Recurrent Latent Memory Kernel (No CoT Claims)"
     },
     "7_semantic_benchmark": {

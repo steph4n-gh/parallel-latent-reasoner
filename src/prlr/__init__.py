@@ -19,6 +19,11 @@ from prlr.manifest import (
     load_model,
     verify_model_manifest,
 )
+from prlr.pipeline import (
+    HybridDeliberationResult,
+    PipelineResult,
+    PRLRPipeline,
+)
 from prlr import kernel
 from prlr import compact
 from prlr import gemma
@@ -35,6 +40,9 @@ __all__ = [
     "RuleViolationError",
     "ArchitectureMismatchError",
     "ManifestError",
+    "PRLRPipeline",
+    "PipelineResult",
+    "HybridDeliberationResult",
     "kernel",
     "compact",
     "gemma",

@@ -24,6 +24,7 @@ if str(SRC_DIR) not in sys.path:
 from prlr.eval.semantic_bench import (
     DISCLAIMER_SEMANTIC,
     SemanticBenchmarkRunner,
+    generate_markdown_report,
     render_semantic_markdown_report,
 )
 from prlr.gemma.adapter import GemmaRecurrentAdapter
@@ -45,8 +46,8 @@ def main() -> int:
     parser.add_argument(
         "--checkpoint",
         type=Path,
-        default=None,
-        help="Optional path to trained adapter weights (.safetensors / .npz).",
+        default=PROJECT_DIR / "checkpoints" / "gemma_2b_prlr_adapter.safetensors",
+        help="Path to trained adapter weights (.safetensors / .npz) (default: checkpoints/gemma_2b_prlr_adapter.safetensors).",
     )
     parser.add_argument(
         "--limit",
@@ -75,8 +76,8 @@ def main() -> int:
     parser.add_argument(
         "--output-dir",
         type=Path,
-        default=PROJECT_DIR / "results",
-        help="Directory to save output reports (default: results/).",
+        default=None,
+        help="Directory to save output reports (default: results/smoke/ if --quick else results/).",
     )
     parser.add_argument(
         "--seed",
@@ -86,6 +87,9 @@ def main() -> int:
     )
 
     args = parser.parse_args()
+
+    if args.output_dir is None:
+        args.output_dir = PROJECT_DIR / "results" / "smoke" if args.quick else PROJECT_DIR / "results"
 
     print("=" * 80)
     print("  PARALLEL LATENT REASONER — PRETRAINED SEMANTIC BENCHMARK (FEATURE 27)")
@@ -132,7 +136,7 @@ def main() -> int:
     print(f"[✓] Semantic benchmark JSON saved to: {json_path}")
 
     # Save Markdown report
-    md_content = render_semantic_markdown_report(results)
+    md_content = generate_markdown_report(results)
     md_path = args.output_dir / "SEMANTIC_BENCHMARK_REPORT.md"
     with open(md_path, "w", encoding="utf-8") as f:
         f.write(md_content)
@@ -145,9 +149,13 @@ def main() -> int:
     print("  SEMANTIC BENCHMARK SUMMARY")
     print("=" * 80)
     print(f"  Exact Match Accuracy : {sm['exact_match_accuracy'] * 100:.2f}% (95% BCa CI: [{sm['exact_match_ci_95_bca'][0] * 100:.1f}%, {sm['exact_match_ci_95_bca'][1] * 100:.1f}%])")
-    print(f"  Terminal Accuracy    : {sm['terminal_tool_accuracy'] * 100:.2f}%")
+    print(f"  Terminal Accuracy    : {sm['terminal_tool_accuracy'] * 100:.2f}% (95% BCa CI: [{sm['terminal_tool_ci_95_bca'][0] * 100:.1f}%, {sm['terminal_tool_ci_95_bca'][1] * 100:.1f}%])")
+    print(f"  Shannon Entropy (H)  : {sm.get('mean_shannon_entropy', 0.0):.2f} bits")
+    print(f"  Max 4-Gram Repetition: {sm.get('max_4gram_repetition', 0)}")
+    print(f"  E-Gate Retention     : {sm.get('accuracy_retention_pct', 100.0):.2f}%")
+    print(f"  E-Gate Depth Reduct. : {sm['depth_reduction_pct']:.2f}% (vs fixed T=4)")
+    print(f"  Mean Executed Depth  : {sm['mean_executed_depth']:.2f} / 12")
     print(f"  Operational Validity : {sm['operational_validity'] * 100:.2f}%")
-    print(f"  Mean Executed Depth  : {sm['mean_executed_depth']:.2f} / 12 (Depth Reduction: {sm['depth_reduction_pct']:.1f}%)")
     print(f"  Prefill Latency (p50): {lat['prefill']['median_p50']:.2f} ms")
     print(f"  Deliberation (p50)   : {lat['deliberation']['median_p50']:.2f} ms")
     print(f"  Decode Latency (p50) : {lat['decode']['median_p50']:.2f} ms")

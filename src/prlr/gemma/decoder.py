@@ -29,9 +29,11 @@ class GemmaCausalPrefixDecoder(nn.Module):
         hidden_dim: int = 2048,
         project_prefix: bool = False,
         eos_token_ids: Sequence[int] = (1, 107),
+        adapter: Optional[Any] = None,
     ):
         super().__init__()
         self.backbone = backbone
+        self.adapter = adapter
         self.prefix_dim = prefix_dim
         self.hidden_dim = hidden_dim
         self.project_prefix = project_prefix

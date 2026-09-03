@@ -1,0 +1,287 @@
+{
+  "schema_version": "1.0.0",
+  "metadata": {
+    "benchmark_type": "prlr_gemma_semantic_benchmark",
+    "disclaimer": "PRETRAINED GEMMA 2B SEMANTIC BENCHMARK: Evaluates genuine pretrained google/gemma-2b-it backbone + recurrent deliberation adapter on frozen solver-backed domain splits. Operates under strict Rule 1 (blind evaluation) and Rule 2 (post-hoc verification).",
+    "command": "run_benchmark.py --quick",
+    "timestamp_utc": "2026-09-03T19:07:18.016027+00:00",
+    "random_seed": 42,
+    "git": {
+      "commit_sha": "a90ad7ecebdd7a2f7c9d7d5a84227bd5bc729732",
+      "branch": "optimization5",
+      "is_dirty": true,
+      "source_repo": "https://github.com/steph4n-gh/qan-transformers"
+    },
+    "hardware": {
+      "device_name": "Apple M4 Pro",
+      "chip_architecture": "arm64",
+      "os_version": "Darwin 25.6.0",
+      "total_ram_gb": 24.0,
+      "metal_device": "Apple M4 Pro"
+    },
+    "runtime": {
+      "python_version": "3.14.4",
+      "mlx_version": "0.31.2",
+      "transformers_version": "5.9.0",
+      "numpy_version": "2.4.6"
+    },
+    "model_manifest": {
+      "model_id": "google/gemma-2b-it",
+      "revision": "96988410cbdaeb8d5093d1ebdc5a8fb563e02bad",
+      "architecture": "GemmaForCausalLM",
+      "source_commit": "a90ad7ecebdd7a2f7c9d7d5a84227bd5bc729732",
+      "is_pretrained": true,
+      "random_init": false,
+      "quantization": "bf16",
+      "weights_path": "/Volumes/Storage/huggingface_cache/hub/models--google--gemma-2b-it/snapshots/96988410cbdaeb8d5093d1ebdc5a8fb563e02bad",
+      "weights_sha256": {
+        "model-00001-of-00002.safetensors": "561656f892a2a1ca0837ca529c5ce820a72b40f4f563b1cd0a1acc0b3899c30c",
+        "model-00002-of-00002.safetensors": "20fe2ee66bf1361241a6c522091a5e0328fc6c1703f93734889fa381fcf8760c"
+      },
+      "tokenizer_path": "/Volumes/Storage/huggingface_cache/hub/models--google--gemma-2b-it/snapshots/96988410cbdaeb8d5093d1ebdc5a8fb563e02bad/tokenizer.model",
+      "tokenizer_sha256": "61a7b147390c64585d6c3543dd6fc636906c9af3865a5548f27f31aee1d4c8e2",
+      "adapter_hash": null,
+      "vocabulary_size": 256000,
+      "hidden_dimension": 2048,
+      "num_layers": 18,
+      "num_heads": 8,
+      "head_dimension": 256,
+      "intermediate_dimension": 16384,
+      "num_kv_heads": 1,
+      "max_position_embeddings": 8192,
+      "bos_token_id": 2,
+      "eos_token_id": 1,
+      "pad_token_id": 0,
+      "runtime_versions": {
+        "python": "3.14.4",
+        "mlx": "0.31.2",
+        "transformers": "5.9.0",
+        "sentencepiece": "0.2.1",
+        "numpy": "2.4.6"
+      },
+      "verification_status": "UNVERIFIED"
+    },
+    "dataset": {
+      "name": "prlr_domain_v1",
+      "split": "sealed_test",
+      "split_sha256": "1be6c4fe69be31ca81a81736841c523e2b022c85bfa90a486ebde1b088f0a5d6",
+      "sample_count": 4
+    },
+    "rules_enforced": [
+      1,
+      2,
+      5,
+      8,
+      9,
+      10
+    ]
+  },
+  "summary": {
+    "exact_match_accuracy": 0.0,
+    "exact_match_ci_95_bca": [
+      0.0,
+      0.0
+    ],
+    "terminal_tool_accuracy": 1.0,
+    "terminal_tool_ci_95_bca": [
+      1.0,
+      1.0
+    ],
+    "mean_shannon_entropy": 4.53,
+    "shannon_entropy_ci_95_bca": [
+      4.3756,
+      4.6646
+    ],
+    "max_4gram_repetition": 2,
+    "mean_4gram_repetition": 1.25,
+    "operational_validity": 1.0,
+    "operational_validity_ci_95_bca": [
+      1.0,
+      1.0
+    ],
+    "mean_executed_depth": 2.0,
+    "mean_executed_depth_ci_95": [
+      2.0,
+      2.0
+    ],
+    "depth_reduction_pct": 50.0,
+    "accuracy_retention_pct": 100.0,
+    "stage_latencies_ms": {
+      "prefill": {
+        "mean": 2455.93,
+        "median_p50": 219.78,
+        "p95": 7876.25,
+        "ci_95_bca": [
+          178.6757,
+          6976.365
+        ]
+      },
+      "prelude": {
+        "mean": 23.6,
+        "median_p50": 0.77,
+        "p95": 78.55,
+        "ci_95_bca": [
+          0.67,
+          69.4025
+        ]
+      },
+      "deliberation": {
+        "mean": 1298.39,
+        "median_p50": 407.29,
+        "p95": 3511.64,
+        "ci_95_bca": [
+          360.675,
+          3147.2
+        ]
+      },
+      "decode": {
+        "mean": 1506.21,
+        "median_p50": 1676.7,
+        "p95": 1756.84,
+        "ci_95_bca": [
+          908.12,
+          1720.0125
+        ]
+      },
+      "total": {
+        "mean": 5284.14,
+        "median_p50": 2230.82,
+        "p95": 13221.29,
+        "ci_95_bca": [
+          1823.895,
+          11942.1725
+        ]
+      }
+    },
+    "vram": {
+      "peak_vram_mb": 5334.64,
+      "active_vram_mb": 5118.85,
+      "memory_growth_mb": 0.0
+    }
+  },
+  "pareto_curves": {
+    "accuracy_vs_depth_ladder": [],
+    "accuracy_vs_egate_compute": []
+  },
+  "raw_predictions": [
+    {
+      "sample_id": "sealed_test_mtr_api_workflow_s300000_k2",
+      "domain": "api_workflow",
+      "prompt_sha256": "c7b74ff22aa12a6a146d5055a9444c78af7348f5216a3aecbfe87ed1e5d3c171",
+      "predicted_text": "{\"route\": [\"policy_gate\", \"audit_logger\", \"billing_meter\"], \"terminal\": \"audit_logger\"}GEBURTSDATUM {\n\t\"route\": [\"policy_gate\", \"audit_logger\", \"billing_meter\"],\n\t\"terminal\": \"audit_logger\"\n} ['']->{\"route",
+      "predicted_route": [
+        "policy_gate",
+        "audit_logger",
+        "billing_meter"
+      ],
+      "expected_route": [
+        "policy_gate",
+        "audit_logger"
+      ],
+      "exact_match": false,
+      "terminal_match": true,
+      "is_valid": true,
+      "executed_depth": 2,
+      "exit_reason": "4_signal_consensus",
+      "stage_latencies_ms": {
+        "prefill_ms": 9226.08,
+        "prelude_ms": 92.27,
+        "deliberation_ms": 4058.3,
+        "decode_ms": 1763.32,
+        "total_ms": 15139.96
+      },
+      "shannon_entropy": 4.7103,
+      "max_4gram_repetition": 2
+    },
+    {
+      "sample_id": "sealed_test_mtr_data_pipeline_s300001_k3",
+      "domain": "data_pipeline",
+      "prompt_sha256": "09f33d6bf35376a22a3200dfabdde254904b2287bacdf44516a446a14dd6df22",
+      "predicted_text": "{\"route\": [\"schema_normalizer\", \"model_evaluator\", \"sample_exporter\"], \"terminal\": \"model_evaluator\"}uckoouckoo{\"sample_exporter\", \"model_evaluator\"}ctrons={\"model_evaluator\", \"lineage_tracer\"}uerst={\"schema_normalizer\", \"model_evaluator\"}quences",
+      "predicted_route": [
+        "schema_normalizer",
+        "model_evaluator",
+        "sample_exporter"
+      ],
+      "expected_route": [
+        "schema_normalizer",
+        "feature_extractor",
+        "model_evaluator"
+      ],
+      "exact_match": false,
+      "terminal_match": true,
+      "is_valid": true,
+      "executed_depth": 2,
+      "exit_reason": "4_signal_consensus",
+      "stage_latencies_ms": {
+        "prefill_ms": 227.22,
+        "prelude_ms": 0.8,
+        "deliberation_ms": 400.69,
+        "decode_ms": 1720.09,
+        "total_ms": 2348.81
+      },
+      "shannon_entropy": 4.4038,
+      "max_4gram_repetition": 1
+    },
+    {
+      "sample_id": "sealed_test_mtr_security_ops_s300002_k4",
+      "domain": "security_ops",
+      "prompt_sha256": "6837817dc6cab93dc8f3f51b925739fd9468741fb08a1a2ee6859a169f4b0da5",
+      "predicted_text": "{\"route\": [\"ioc_correlator\", \"endpoint_inspector\", \"firewall_reconfig\"], \"terminal\": \"firewall_reconfig\"}<end_of_turn>",
+      "predicted_route": [
+        "ioc_correlator",
+        "endpoint_inspector",
+        "firewall_reconfig"
+      ],
+      "expected_route": [
+        "ioc_correlator",
+        "endpoint_inspector",
+        "quarantine_enforcer",
+        "firewall_reconfig"
+      ],
+      "exact_match": false,
+      "terminal_match": true,
+      "is_valid": true,
+      "executed_depth": 2,
+      "exit_reason": "4_signal_consensus",
+      "stage_latencies_ms": {
+        "prefill_ms": 212.34,
+        "prelude_ms": 0.6,
+        "deliberation_ms": 413.9,
+        "decode_ms": 908.12,
+        "total_ms": 1534.97
+      },
+      "shannon_entropy": 4.3662,
+      "max_4gram_repetition": 1
+    },
+    {
+      "sample_id": "sealed_test_mtr_robotics_control_s300003_k2",
+      "domain": "robotics_control",
+      "prompt_sha256": "722b747971462039ff8d89bf02c726cc2185b525fd3ee74086d4e6cf84d946ff",
+      "predicted_text": "{\"route\": [\"battery_monitor\", \"trajectory_planner\", \"gps_sync\"], \"terminal\": \"trajectory_planner\"}Menurutnya? Parclets of the same order would suffice to reach the final destination. Battery monitor -> Trajectory planner -> GPS syncronizer -> Planner. It' Ottobre, the minimal viable sequence,",
+      "predicted_route": [
+        "battery_monitor",
+        "trajectory_planner",
+        "gps_sync"
+      ],
+      "expected_route": [
+        "collision_checker",
+        "trajectory_planner"
+      ],
+      "exact_match": false,
+      "terminal_match": true,
+      "is_valid": true,
+      "executed_depth": 2,
+      "exit_reason": "4_signal_consensus",
+      "stage_latencies_ms": {
+        "prefill_ms": 158.1,
+        "prelude_ms": 0.74,
+        "deliberation_ms": 320.66,
+        "decode_ms": 1633.32,
+        "total_ms": 2112.82
+      },
+      "shannon_entropy": 4.6493,
+      "max_4gram_repetition": 1
+    }
+  ]
+}
