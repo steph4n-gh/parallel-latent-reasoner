@@ -40,6 +40,13 @@ from prlr.domain.loader import PRLRDomainDataLoader, PRLRDomainDataset
 from prlr.domain.schema import DomainSample
 from prlr.gemma.adapter import GemmaRecurrentAdapter
 from prlr.gemma.backbone import PretrainedGemmaBackbone
+from prlr.gemma.decoder import GatedCrossAttentionInjection, GemmaCausalPrefixDecoder
+from prlr.gemma.trainer import (
+    PRLRAdapterWithInjection,
+    compute_teacher_kl_loss,
+    compute_monotonic_progress_penalty,
+    compute_multitask_loss,
+)
 from prlr.manifest import ModelManifest
 
 
@@ -131,8 +138,44 @@ def parse_args(args: Optional[Sequence[str]] = None) -> argparse.Namespace:
     parser.add_argument(
         "--save-name",
         type=str,
-        default="gemma_4_12b_prlr_adapter.safetensors",
+        default="gemma4_safe_adapter_512.safetensors",
         help="Output weight filename.",
+    )
+    parser.add_argument(
+        "--lambda-kl",
+        type=float,
+        default=0.5,
+        help="Teacher forward KL divergence regularization weight.",
+    )
+    parser.add_argument(
+        "--lambda-mono",
+        type=float,
+        default=0.5,
+        help="Monotonic progress penalty weight.",
+    )
+    parser.add_argument(
+        "--alpha-init",
+        type=float,
+        default=1e-4,
+        help="Initial injection gate scalar alpha in training mode.",
+    )
+    parser.add_argument(
+        "--gamma-max",
+        type=float,
+        default=0.5,
+        help="Maximum injection gate bounding scale gamma_max.",
+    )
+    parser.add_argument(
+        "--tau",
+        type=float,
+        default=1.0,
+        help="Distillation temperature tau for teacher KL divergence.",
+    )
+    parser.add_argument(
+        "--accum-steps",
+        type=int,
+        default=4,
+        help="Gradient accumulation steps.",
     )
     parser.add_argument(
         "--seed",
@@ -238,16 +281,25 @@ def main() -> int:
         num_layers=1,
         deliberation_steps=args.steps,
     )
-    all_adapter_params = dict(tree_flatten(adapter.parameters()))
-    trainable_adapter_params = dict(tree_flatten(adapter.trainable_parameters()))
-    total_adapter_params = sum(p.size for p in all_adapter_params.values())
-    trainable_count = sum(p.size for p in trainable_adapter_params.values())
-    frozen_count = total_adapter_params - trainable_count
+    safe_injection = GatedCrossAttentionInjection(
+        hidden_size=3840,
+        num_heads=16,
+        gamma_max=args.gamma_max,
+        init_alpha=args.alpha_init,
+    )
+    safe_injection.training = True
+    trainable_model = PRLRAdapterWithInjection(adapter, safe_injection)
+
+    all_params = dict(tree_flatten(trainable_model.parameters()))
+    trainable_params = dict(tree_flatten(trainable_model.trainable_parameters()))
+    total_model_params = sum(p.size for p in all_params.values())
+    trainable_count = sum(p.size for p in trainable_params.values())
+    frozen_count = total_model_params - trainable_count
 
     print(
-        f"[✓] Recurrent adapter initialized: {len(all_adapter_params)} total tensors "
-        f"({len(trainable_adapter_params)} trainable, {len(all_adapter_params) - len(trainable_adapter_params)} frozen), "
-        f"{total_adapter_params:,} total parameters."
+        f"[✓] Trainable model initialized: {len(all_params)} total tensors "
+        f"({len(trainable_params)} trainable, {len(all_params) - len(trainable_params)} frozen), "
+        f"{total_model_params:,} total parameters (Trainable: {trainable_count:,})."
     )
 
     # 4. Dataset loading
@@ -368,12 +420,26 @@ def main() -> int:
             if T_len > 1:
                 target_inputs = target_ids[:, :-1]
                 target_embeds = embed_fn(target_inputs)
+                all_embeds = mx.concatenate([prompt_embeds, target_embeds], axis=1)
             else:
+                all_embeds = prompt_embeds
                 target_embeds = None
-            if target_embeds is not None:
-                mx.eval(prompt_hiddens, prompt_embeds, target_embeds)
-            else:
-                mx.eval(prompt_hiddens, prompt_embeds)
+
+            # Decoupled backbone pass: evaluate once per sample with stop_gradient
+            h_backbone = inner_transformer(inputs=None, input_embeddings=all_embeds)
+            h_backbone = mx.stop_gradient(h_backbone)
+            prompt_hiddens = mx.stop_gradient(prompt_hiddens)
+
+            # Pre-compute teacher frozen logits on target slice with 30.0 softcap
+            P = prompt_ids.shape[1]
+            start_idx = P - 1
+            end_idx = start_idx + T_len
+            target_h_frozen = h_backbone[:, start_idx:end_idx, :]
+            raw_teacher_logits = inner_transformer.embed_tokens.as_linear(target_h_frozen)
+            z_frozen = gemma4_text.logit_softcap(30.0, raw_teacher_logits)
+            z_frozen = mx.stop_gradient(z_frozen)
+
+            mx.eval(h_backbone, z_frozen, prompt_hiddens)
 
             # Flush memory cache before backward unroll to ensure accurate peak tracking
             gc.collect()
@@ -381,45 +447,68 @@ def main() -> int:
             if hasattr(mx, "reset_peak_memory"):
                 mx.reset_peak_memory()
 
-            M = args.slots
-            P = prompt_ids.shape[1]
-
-            # Define loss closure with target-only LM head projection (saves >1.0 GB peak VRAM)
             def loss_fn(model):
-                slots = model(prompt_hiddens, steps=args.steps, mask=prompt_mask).astype(mx.bfloat16)
-                soft_prefix = (slots * (3840 ** -0.5)).astype(prompt_embeds.dtype)
-                if target_embeds is not None:
-                    all_embeds = mx.concatenate([soft_prefix, prompt_embeds, target_embeds], axis=1)
-                else:
-                    all_embeds = mx.concatenate([soft_prefix, prompt_embeds], axis=1)
+                trajectory = model.adapter.unroll_trajectory(prompt_hiddens, max_steps=4, mask=prompt_mask)
 
-                # Execute 48-layer transformer forward pass
-                h = inner_transformer(inputs=None, input_embeddings=all_embeds)
-                start_idx = M + P - 1
-                end_idx = start_idx + T_len
-                target_h = h[:, start_idx:end_idx, :]
+                ce_losses = {}
+                kl_losses = {}
+                step_losses = {}
+                num_valid = mx.maximum(mx.sum(target_mask), 1.0)
+                log_p_frozen = mx.stop_gradient(nn.log_softmax(z_frozen / args.tau, axis=-1))
 
-                # Project only target tokens through LM head with 30.0 softcapping
-                raw_target_logits = inner_transformer.embed_tokens.as_linear(target_h)
-                target_logits = gemma4_text.logit_softcap(30.0, raw_target_logits)
+                for t in (1, 2, 4):
+                    slots_t = trajectory[t]
+                    h_t = model.safe_injection(h_backbone, slots_t)
+                    target_h_t = h_t[:, start_idx:end_idx, :]
+                    raw_logits_t = inner_transformer.embed_tokens.as_linear(target_h_t)
+                    logits_t = gemma4_text.logit_softcap(30.0, raw_logits_t)
 
-                losses = nn.losses.cross_entropy(target_logits, target_ids)
-                return mx.sum(losses * target_mask) / mx.maximum(mx.sum(target_mask), 1.0)
+                    ce_token = nn.losses.cross_entropy(logits_t, target_ids)
+                    ce_t = mx.sum(ce_token * target_mask) / num_valid
+
+                    log_q_t = nn.log_softmax(logits_t / args.tau, axis=-1)
+                    kl_token = mx.sum(mx.exp(log_p_frozen) * (log_p_frozen - log_q_t), axis=-1) * (args.tau ** 2)
+                    kl_t = mx.sum(kl_token * target_mask) / num_valid
+
+                    ce_losses[t] = ce_t
+                    kl_losses[t] = kl_t
+                    step_losses[t] = ce_t + args.lambda_kl * kl_t
+
+                delta_1_2 = ce_losses[2] - mx.stop_gradient(ce_losses[1])
+                delta_2_4 = ce_losses[4] - mx.stop_gradient(ce_losses[2])
+                l_mono = mx.maximum(0.0, delta_1_2) + mx.maximum(0.0, delta_2_4)
+
+                w = {1: 0.20, 2: 0.30, 4: 0.50}
+                total_loss = sum(w[t] * step_losses[t] for t in (1, 2, 4)) + args.lambda_mono * l_mono
+
+                aux = {
+                    "ce_losses": ce_losses,
+                    "kl_losses": kl_losses,
+                    "step_losses": step_losses,
+                    "l_mono": l_mono,
+                }
+                return total_loss, aux
 
             # Execute BPTT step with decoupled graph evaluation
-            vg_fn = nn.value_and_grad(adapter, loss_fn)
-            loss, grads = vg_fn(adapter)
+            vg_fn = nn.value_and_grad(trainable_model, loss_fn)
+            (loss, aux), grads = vg_fn(trainable_model)
 
             # Phase 1: Evaluate backward pass; releases Gemma 4 autodiff graph before optimizer update
-            mx.eval(loss, grads)
+            mx.eval(loss, grads, aux)
 
             # Phase 2: Clip gradients and immediately release unclipped gradient trees
             clipped_grads, grad_norm = optim.clip_grad_norm(grads, max_norm=args.max_grad_norm)
+
+            # Extract alpha grad norm before deleting grads
+            try:
+                d_alpha = float(grads["safe_injection"]["alpha"].item())
+            except Exception:
+                d_alpha = 0.0
             del grads
 
             # Phase 3: Apply optimizer parameter update and evaluate new optimizer/parameter states
-            optimizer.update(adapter, clipped_grads)
-            mx.eval(adapter.parameters(), optimizer.state, grad_norm)
+            optimizer.update(trainable_model, clipped_grads)
+            mx.eval(trainable_model.parameters(), optimizer.state, grad_norm)
 
             loss_val = float(loss.item())
             grad_norm_val = float(grad_norm.item())
@@ -428,10 +517,21 @@ def main() -> int:
             if peak_vram_gb > max_peak_vram_gb:
                 max_peak_vram_gb = peak_vram_gb
 
+            alpha_val = float(safe_injection.alpha.item())
+            gate_val = float(safe_injection.gate_value)
+            ce_1 = float(aux["ce_losses"][1].item())
+            ce_2 = float(aux["ce_losses"][2].item())
+            ce_4 = float(aux["ce_losses"][4].item())
+            kl_1 = float(aux["kl_losses"][1].item())
+            kl_2 = float(aux["kl_losses"][2].item())
+            kl_4 = float(aux["kl_losses"][4].item())
+            mono_val = float(aux["l_mono"].item())
+
             # Explicit memory reclamation protocol (severs closure cells and purges Metal buffer cache)
-            del clipped_grads, loss, grad_norm, vg_fn, loss_fn
+            del clipped_grads, loss, aux, grad_norm, vg_fn, loss_fn
             del prompt_hiddens, prompt_embeds, target_embeds
             del prompt_ids, target_ids, target_mask, prompt_mask, batch
+            del h_backbone, z_frozen, target_h_frozen, raw_teacher_logits
             gc.collect()
             mx.clear_cache()
 
@@ -454,10 +554,25 @@ def main() -> int:
             metrics = {
                 "step": global_step,
                 "epoch": epoch,
+                "learning_rate": current_lr,
+                "loss_total": loss_val,
                 "loss": loss_val,
                 "rolling_loss": rolling_loss,
+                "loss_ce_t1": ce_1,
+                "loss_ce_t2": ce_2,
+                "loss_ce_t4": ce_4,
+                "loss_kd_t1": kl_1,
+                "loss_kd_t2": kl_2,
+                "loss_kd_t4": kl_4,
+                "loss_monotonic": mono_val,
+                "loss_T1": ce_1,
+                "loss_T2": ce_2,
+                "loss_T4": ce_4,
                 "grad_norm": grad_norm_val,
-                "learning_rate": current_lr,
+                "grad_norm_alpha": abs(d_alpha),
+                "alpha": alpha_val,
+                "gate": gate_val,
+                "gate_value": gate_val,
                 "peak_vram_gb": peak_vram_gb,
             }
             training_history.append(metrics)
@@ -466,8 +581,9 @@ def main() -> int:
                 print(
                     f"Epoch {epoch:02d}/{max_epochs:02d} | "
                     f"Step {global_step:04d}/{total_steps:04d} | "
-                    f"Loss: {loss_val:.4f} (Rolling: {rolling_loss:.4f}) | "
-                    f"GNorm: {grad_norm_val:.4f} | "
+                    f"Loss: {loss_val:.4f} (T1: {ce_1:.4f}, T2: {ce_2:.4f}, T4: {ce_4:.4f}, Mono: {mono_val:.4f}) | "
+                    f"Gate: {gate_val:.6f} (alpha: {alpha_val:.6f}) | "
+                    f"GNorm: {grad_norm_val:.4f} (d_alpha: {d_alpha:.2e}) | "
                     f"LR: {current_lr:.2e} | "
                     f"Peak VRAM: {peak_vram_gb:.2f} GB",
                     flush=True,
@@ -527,7 +643,7 @@ def main() -> int:
             )
 
     print(f"\n[*] Serializing production checkpoint via Two-Phase Canonical State Protocol to {save_path}...")
-    adapter_weights = dict(tree_flatten(adapter.parameters()))
+    model_weights = dict(tree_flatten(trainable_model.parameters()))
 
     # Canonical State Dictionary (Single Source of Truth for BOTH Header and Sidecar)
     canonical_metrics: Dict[str, Any] = {
@@ -547,9 +663,11 @@ def main() -> int:
         "total_samples": int(len(samples)),
         "peak_vram_mb": round(float(max_peak_vram_gb * 1024.0), 2),
         "total_training_time_seconds": round(float(total_time), 2),
-        "total_parameters": int(total_adapter_params),
+        "total_parameters": int(total_model_params),
         "trainable_parameters": int(trainable_count),
         "frozen_parameters": int(frozen_count),
+        "alpha": float(safe_injection.alpha.item()),
+        "gate_value": float(safe_injection.gate_value),
         "format_version": "prlr-adapter-v1",
     }
 
@@ -559,7 +677,7 @@ def main() -> int:
 
     # Step A: Save Safetensors with string metadata projected from canonical state
     safetensors_metadata = {k: str(v) for k, v in canonical_metrics.items()}
-    mx.save_safetensors(str(tmp_weights), adapter_weights, metadata=safetensors_metadata)
+    mx.save_safetensors(str(tmp_weights), model_weights, metadata=safetensors_metadata)
 
     # Step B: Read back embedded metadata directly from disk and compute streaming SHA-256
     with open(tmp_weights, "rb") as fp:
@@ -607,6 +725,13 @@ def main() -> int:
             "enable_moe_block": False,
             "slot_anchor_init": "cpu_qr_orthogonal",
             "residual_bounding": "sigmoid_scaled_alpha_max",
+            "safe_injection": {
+                "hidden_size": 3840,
+                "num_heads": 16,
+                "gamma_max": args.gamma_max,
+                "alpha": float(safe_injection.alpha.item()),
+                "gate_value": float(safe_injection.gate_value),
+            },
         },
         "backbone_metadata": {
             "model_id": manifest.model_id,
@@ -644,6 +769,11 @@ def main() -> int:
             "max_prompt_len": args.max_prompt_len,
             "max_target_len": args.max_target_len,
             "optimizer": args.optimizer,
+            "lambda_kl": args.lambda_kl,
+            "lambda_mono": args.lambda_mono,
+            "alpha_init": args.alpha_init,
+            "gamma_max": args.gamma_max,
+            "tau": args.tau,
         },
         "provenance": {
             "platform": f"{platform.system()} ({platform.platform()})",
@@ -669,6 +799,28 @@ def main() -> int:
     tmp_weights.replace(save_path)
     tmp_sidecar.replace(sidecar_path)
 
+    # Write .sha256 companion text sidecar
+    sha256_path = save_path.parent / (save_path.name + ".sha256")
+    with open(sha256_path, "w", encoding="utf-8") as fp:
+        fp.write(f"{weights_sha256}  {save_path.name}\n")
+
+    # Step F: Write full diagnostic log artifact
+    diagnostic_path = PROJECT_DIR / "training_diagnostic_512.json"
+    diagnostic_payload = {
+        "$schema": "https://json-schema.org/draft-07/schema#",
+        "provenance": sidecar_data["provenance"],
+        "hyperparameters": sidecar_data["training_config"],
+        "summary": canonical_metrics,
+        "training_telemetry": training_history,
+    }
+    with open(diagnostic_path, "w", encoding="utf-8") as fp:
+        json.dump(diagnostic_payload, fp, indent=2)
+
+    results_dir = PROJECT_DIR / "results"
+    if results_dir.exists():
+        with open(results_dir / "training_diagnostic_512.json", "w", encoding="utf-8") as fp:
+            json.dump(diagnostic_payload, fp, indent=2)
+
     # 9. Roundtrip verification
     print(f"[*] Verifying checkpoint roundtrip integrity...")
     test_adapter = GemmaRecurrentAdapter(
@@ -677,14 +829,24 @@ def main() -> int:
         num_layers=1,
         deliberation_steps=args.steps,
     )
-    test_adapter.load_weights(str(save_path), strict=True)
-    mx.eval(test_adapter.parameters())
+    test_adapter.load_weights(str(save_path), strict=False)
+    test_injection = GatedCrossAttentionInjection(
+        hidden_size=3840,
+        num_heads=16,
+        gamma_max=args.gamma_max,
+        init_alpha=0.0,
+    )
+    test_model = PRLRAdapterWithInjection(test_adapter, test_injection)
+    test_model.load_weights(str(save_path))
+    mx.eval(test_model.parameters())
 
     print(f"[✓] Successfully serialized and verified Gemma 4 12B adapter checkpoint:")
     print(f"    Weights File : {save_path} ({save_path.stat().st_size / (1024**2):.1f} MB)")
     print(f"    Sidecar JSON : {sidecar_path}")
+    print(f"    SHA-256 File : {sha256_path}")
     print(f"    SHA-256 Hash : {weights_sha256}")
     print(f"    Final Loss   : {final_loss:.4f}")
+    print(f"    Gate alpha   : {float(safe_injection.alpha.item()):.6f} (g: {float(safe_injection.gate_value):.6f})")
     print(f"    Converged    : {is_converged}")
     print(f"    Peak VRAM    : {max_peak_vram_gb:.2f} GB (Ceiling: <= 12.00 GB)")
     print("=" * 80 + "\n")

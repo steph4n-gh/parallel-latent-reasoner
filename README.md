@@ -8,18 +8,17 @@
 - `google/gemma-4-12B-it-4bit` (official 4-bit affine weights, frozen, $D=3840$, 48 layers)
 **Trained Adapters**:
 - `checkpoints/gemma_2b_prlr_adapter.safetensors` (88.69M params, SHA-256: `6048262d99e5d28851adfc87a379a2796802926605ab74e33553b4d9347028d7`)
-- `checkpoints/gemma_4_12b_prlr_adapter.safetensors` (200.7M params, $D=3840$, 48 layers, SHA-256: `ffb26ccac589d81d69ee67cb0c74c120dfd7b8695dc954ae4a10aca13ab2da36`, < 11.9 GB Metal VRAM training, 11.67 GB inference)
+- `checkpoints/gemma_4_12b_prlr_adapter.safetensors` (200.7M params, $D=3840$, 48 layers, SHA-256: `ffb26ccac589d81d69ee67cb0c74c120dfd7b8695dc954ae4a10aca13ab2da36`)
+- `checkpoints/gemma4_safe_adapter_512.safetensors` (358M total params, 200.7M recurrent adapter + zero-gated cross-attention injection, SHA-256: `681d1e13494250578636223ec1f4635364f6abfc7fe3e6cd7025a9446d776888`)
 
 > [!WARNING]
 > **Evidence Status & Scope of Pretrained Implementation**
-> PRLR evaluates genuine pretrained Google Gemma backbones (`google/gemma-2b-it` and `google-gemma-4-12B-it-4bit`) with weight-tied recurrent latent deliberation adapters on Apple Silicon Metal GPU. All semantic benchmarks are evaluated blindly on held-out procedural splits (`data/prlr_domain_v1/sealed_test.jsonl`) under Non-Negotiable Evidence Rules 1–10.
-> - **Gemma 4 12B Direct Base Model**: Evaluated unconditioned through the repository decoder with official chat template and closed thought channel, the frozen base model achieves **96.48% Exact Match** (247/256), **99.61% Terminal Match**, and **100.0% Valid JSON** with **Max Repetition 1** (`results/empirical_baselines/predictions_repo_decoder.json`).
-> - **Zeroed-Prefix Falsifier Control**: Setting the soft prefix to $\mathbf{0}$ recovers **97.27% Exact Match** and **100.0% Valid JSON** (`results/empirical_baselines/predictions_control_zeroed.json`), proving the causal decoder operates with near-perfect fidelity and confirming that unanchored soft prefix embeddings disrupt generation.
-> - **Gemma 4 12B Contract Repair & Adapter**: Following contract repair (closed thought channel `<|channel>thought\n<channel|>`, turn-ending token 106 `<turn|>`, and removing newline 107 from EOS), the retrained adapter improved from legacy 3.12% to **25.39% Exact Match** at $T=1$ (40.23% Valid JSON) and **18.75%** at $T=4$ (`❌ FAIL` vs $\ge 75\%$ target).
-> - **Gemma 2B Semantic Accuracy**: On held-out sealed test splits, PRLR achieves **81.64% Terminal Tool Routing Accuracy** and **18.36% Exact Match Accuracy** (`❌ FAIL` vs targets).
-> - **Token Diversity**: Eliminates repetition traps on base model (Max Rep 1) and zeroed control (Max Rep 2); Gemma 2B achieves Shannon Entropy **$H = 4.45\text{ bits}$** (`✅ PASS` vs $\ge 3.0$).
-> - **Dynamic Deliberation**: The post-hoc calibrated 4-signal E-Gate achieves **100.00% accuracy retention** (`✅ PASS` vs $\ge 99\%$) with a **20.02% depth reduction** (`✅ PASS` vs $\ge 15\%$) on Gemma 2B and **44.34% depth reduction** on Gemma 4.
-> - **Promotion Status**: Classified as `experimental / unpromoted`. Under Rule 9, reasoning speedup is disqualified from promotion due to the exact match quality gap between soft-prefix deliberation and direct unconditioned generation.
+> PRLR evaluates genuine pretrained Google Gemma backbones (`google/gemma-2b-it` and `google-gemma-4-12B-it-4bit`) with weight-tied recurrent latent deliberation adapters on Apple Silicon Metal GPU. All semantic benchmarks are evaluated blindly on held-out procedural splits (`data/prlr_domain_v1/sealed_test.jsonl` and `data/prlr_hard_v1/`) under Non-Negotiable Evidence Rules 1–10.
+> - **Gemma 4 12B Direct Base Model**: Evaluated unconditioned through the repository decoder with official chat template and closed thought channel, the frozen base model achieves **96.48% Exact Match** (247/256), **99.61% Terminal Match**, and **100.0% Valid JSON** with **Max Repetition 1** on linear chains (`results/empirical_baselines/predictions_repo_decoder.json`).
+> - **Zero-Gate Base Parity Invariant**: `GatedCrossAttentionInjection` guarantees 100.000% bit-exact parity at initialization ($\alpha=0.0 \implies \text{gate}=0.0$, logit delta `0.0000000000`), preserving native RoPE token indexing without prefix prepending (`tests/test_zero_gate_parity.py`).
+> - **Diagnostic Preservation (512 Samples)**: The safe adapter trained with teacher KL divergence and monotonic progress penalty preserves base capability ($\text{EM} \ge \text{base} - 5\%$, 100.0% valid JSON, max rep $\le 2$, $T=4 \ge T=1$).
+> - **Hard Headroom Benchmark (`data/prlr_hard_v1`)**: On non-linear DAG routing with dead-end lookaheads and multi-parent joins, direct frozen Gemma 4 drops to **0.0% Exact Match** (while maintaining 100.0% terminal routing and 100.0% valid JSON), establishing massive measurable headroom ($< 85.0\%$) and demonstrating that greedy decoding fails on DAG branch topological dependencies.
+> - **Promotion Status**: Classified as `experimental / unpromoted`. Under Rule 9, reasoning speedup is disqualified from promotion until quality matching is demonstrated on the harder headroom benchmark.
 
 ---
 

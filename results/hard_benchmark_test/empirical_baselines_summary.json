@@ -1,0 +1,137 @@
+{
+  "schema_version": "prlr.scored_summary.v1",
+  "created_at_utc": "2026-09-04T23:29:30.156839+00:00",
+  "provenance": {
+    "git_commit_sha": "unknown",
+    "is_dirty": false,
+    "dataset_name": "prlr_domain_v1",
+    "dataset_sha256": "c13afcbd4e9e7ef5fdd2588cb73c0b623a4c0d8fe9a2a09d1a1268828a90094b",
+    "split": "sealed_test",
+    "sample_count": 10,
+    "inputs_file": "data/prlr_hard_v1/evaluation_inputs/hard_test_inputs.jsonl",
+    "inputs_file_sha256": "c13afcbd4e9e7ef5fdd2588cb73c0b623a4c0d8fe9a2a09d1a1268828a90094b",
+    "keys_file": "/Volumes/Storage/qan_transformers/projects/parallel_latent_reasoner/data/prlr_hard_v1/answer_keys/hard_test_keys.jsonl",
+    "keys_file_sha256": "589e6bfea33ecfe76c00b2485a5647fefe23d9517fe8b8171979572bbfd970b1",
+    "runtime_versions": {
+      "python": "3.14.4",
+      "mlx": "unknown",
+      "mlx_lm": "0.31.3",
+      "transformers": "5.9.0",
+      "numpy": "2.4.6",
+      "torch": "2.12.0",
+      "safetensors": "0.7.0"
+    },
+    "hardware_info": {
+      "platform": "darwin",
+      "os_version": "macOS-26.6-arm64-arm-64bit-Mach-O",
+      "machine": "arm64",
+      "processor": "arm",
+      "mlx_device": "Device(gpu, 0)",
+      "is_metal_gpu": true
+    }
+  },
+  "prediction_files_sha256": {
+    "direct_frozen": "703aab4f1c4e2741039297fb921412126c4b81bb4f11571a338767f35a2db1aa",
+    "adapter_t1": "1d4ed0241e4c19f2eac2e4fff93e31d9fc5ac8ade2ead0c7134d11c92db04a8a",
+    "adapter_t4": "6754c9d9d1722431324c929d22325f3a3a6c709c674d0f15558fccd8dc1b5991",
+    "non_recurrent": "5d43e0bc79f9e2c7c829c6dac4c39701277620c38dc0895fd94df07e5d45503a"
+  },
+  "conditions": {
+    "direct_frozen": {
+      "condition": "direct_frozen",
+      "recurrence_depth": 0,
+      "sample_count": 10,
+      "exact_match_count": 0,
+      "exact_match_pct": 0.0,
+      "terminal_match_count": 10,
+      "terminal_match_pct": 100.0,
+      "valid_json_count": 10,
+      "valid_json_pct": 100.0,
+      "max_4gram_repetition": 1,
+      "mean_4gram_repetition": 1.0,
+      "mean_shannon_entropy": 4.45,
+      "latency": {
+        "mean_ms": 5959.09,
+        "median_ms": 5987.94,
+        "p95_ms": 6601.53,
+        "min_ms": 5386.99,
+        "max_ms": 6752.49,
+        "total_ms": 59590.85
+      },
+      "checkpoint_sha256": "",
+      "model_id": "google/gemma-4-12B-it-4bit"
+    },
+    "adapter_t1": {
+      "condition": "adapter_t1",
+      "recurrence_depth": 1,
+      "sample_count": 10,
+      "exact_match_count": 0,
+      "exact_match_pct": 0.0,
+      "terminal_match_count": 10,
+      "terminal_match_pct": 100.0,
+      "valid_json_count": 10,
+      "valid_json_pct": 100.0,
+      "max_4gram_repetition": 1,
+      "mean_4gram_repetition": 1.0,
+      "mean_shannon_entropy": 4.52,
+      "latency": {
+        "mean_ms": 9089.97,
+        "median_ms": 8633.9,
+        "p95_ms": 11823.82,
+        "min_ms": 7912.04,
+        "max_ms": 13604.98,
+        "total_ms": 90899.66
+      },
+      "checkpoint_sha256": "681d1e13494250578636223ec1f4635364f6abfc7fe3e6cd7025a9446d776888",
+      "model_id": "google/gemma-4-12B-it-4bit"
+    },
+    "adapter_t4": {
+      "condition": "adapter_t4",
+      "recurrence_depth": 4,
+      "sample_count": 10,
+      "exact_match_count": 0,
+      "exact_match_pct": 0.0,
+      "terminal_match_count": 10,
+      "terminal_match_pct": 100.0,
+      "valid_json_count": 10,
+      "valid_json_pct": 100.0,
+      "max_4gram_repetition": 1,
+      "mean_4gram_repetition": 1.0,
+      "mean_shannon_entropy": 4.52,
+      "latency": {
+        "mean_ms": 9662.28,
+        "median_ms": 9039.38,
+        "p95_ms": 12923.64,
+        "min_ms": 7996.47,
+        "max_ms": 13970.4,
+        "total_ms": 96622.82
+      },
+      "checkpoint_sha256": "681d1e13494250578636223ec1f4635364f6abfc7fe3e6cd7025a9446d776888",
+      "model_id": "google/gemma-4-12B-it-4bit"
+    },
+    "non_recurrent": {
+      "condition": "non_recurrent",
+      "recurrence_depth": 1,
+      "sample_count": 10,
+      "exact_match_count": 0,
+      "exact_match_pct": 0.0,
+      "terminal_match_count": 10,
+      "terminal_match_pct": 100.0,
+      "valid_json_count": 10,
+      "valid_json_pct": 100.0,
+      "max_4gram_repetition": 1,
+      "mean_4gram_repetition": 1.0,
+      "mean_shannon_entropy": 4.52,
+      "latency": {
+        "mean_ms": 10934.84,
+        "median_ms": 10393.82,
+        "p95_ms": 14758.23,
+        "min_ms": 8464.64,
+        "max_ms": 17026.66,
+        "total_ms": 109348.44
+      },
+      "checkpoint_sha256": "681d1e13494250578636223ec1f4635364f6abfc7fe3e6cd7025a9446d776888",
+      "model_id": "google/gemma-4-12B-it-4bit"
+    }
+  }
+}

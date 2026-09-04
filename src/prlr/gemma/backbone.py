@@ -11,13 +11,22 @@ from typing import Any, Optional, Union
 
 import mlx.core as mx
 import mlx.nn as nn
+from mlx_lm.tokenizer_utils import TokenizerWrapper
 
+from prlr.domain.prompt_format import is_gemma4_tokenizer
 from prlr.gemma.loader import LoadedModel, load_model
 from prlr.manifest import (
     ModelManifest,
     Rule5ViolationError,
     RuleViolationError,
 )
+
+
+class GemmaTokenizerWrapper(TokenizerWrapper):
+    """Wrapper around TokenizerWrapper ensuring __call__ delegation and eos_token_ids configuration."""
+
+    def __call__(self, *args: Any, **kwargs: Any) -> Any:
+        return self._tokenizer(*args, **kwargs)
 
 
 class PretrainedGemmaBackbone(nn.Module):
@@ -58,7 +67,21 @@ class PretrainedGemmaBackbone(nn.Module):
                 allow_gemma_random_init=allow_random_init,
             )
             self.model = loaded.model
-            self.tokenizer = loaded.tokenizer
+            loaded_tok = loaded.tokenizer
+            if loaded_tok is not None:
+                is_g4 = is_gemma4_tokenizer(loaded_tok)
+                stop_ids = {1, 106} if is_g4 else {1, 107}
+                try:
+                    loaded_tok.eos_token_ids = stop_ids
+                except Exception:
+                    pass
+                if isinstance(loaded_tok, TokenizerWrapper):
+                    loaded_tok.eos_token_ids = stop_ids
+                    self.tokenizer = loaded_tok
+                else:
+                    self.tokenizer = GemmaTokenizerWrapper(loaded_tok, eos_token_ids=stop_ids)
+            else:
+                self.tokenizer = None
 
     def encode_prompt_context(
         self,
@@ -264,5 +287,5 @@ class PretrainedGemmaBackbone(nn.Module):
         return self.encode_prompt_context(prompt)
 
 
-__all__ = ["PretrainedGemmaBackbone"]
+__all__ = ["PretrainedGemmaBackbone", "GemmaTokenizerWrapper"]
 

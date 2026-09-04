@@ -14,7 +14,7 @@ from prlr.gemma.adapter import (
 )
 from prlr.gemma.backbone import PretrainedGemmaBackbone
 from prlr.gemma.config import GemmaLatentConfig
-from prlr.gemma.decoder import GemmaCausalPrefixDecoder
+from prlr.gemma.decoder import GatedCrossAttentionInjection, GemmaCausalPrefixDecoder
 from prlr.gemma.loader import LoadedModel, ManifestHashCache, load_model
 from prlr.gemma.ablation import (
     AblationConditionSummary,
@@ -53,6 +53,7 @@ __all__ = [
     "init_orthogonal_slot_anchors",
     "AdapterConfig",
     "GemmaCausalPrefixDecoder",
+    "GatedCrossAttentionInjection",
     "load_model",
     "LoadedModel",
     "ManifestHashCache",

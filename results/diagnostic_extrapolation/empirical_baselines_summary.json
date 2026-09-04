@@ -1,0 +1,62 @@
+{
+  "schema_version": "prlr.scored_summary.v1",
+  "created_at_utc": "2026-09-04T23:07:42.937155+00:00",
+  "provenance": {
+    "git_commit_sha": "unknown",
+    "is_dirty": false,
+    "dataset_name": "prlr_domain_v1",
+    "dataset_sha256": "6b1af73923f8f8ba449a2031184b76b9d5334e9b4b6cb84d1ac12494a3355182",
+    "split": "sealed_test",
+    "sample_count": 20,
+    "inputs_file": "data/prlr_domain_v1/evaluation_inputs/extrapolation_inputs.jsonl",
+    "inputs_file_sha256": "6b1af73923f8f8ba449a2031184b76b9d5334e9b4b6cb84d1ac12494a3355182",
+    "keys_file": "/Volumes/Storage/qan_transformers/projects/parallel_latent_reasoner/data/prlr_domain_v1/answer_keys/extrapolation_keys.jsonl",
+    "keys_file_sha256": "ec1c922b935594899ceea702201807a48d211ef95714643df5c25a61779a1193",
+    "runtime_versions": {
+      "python": "3.14.4",
+      "mlx": "unknown",
+      "mlx_lm": "0.31.3",
+      "transformers": "5.9.0",
+      "numpy": "2.4.6",
+      "torch": "2.12.0",
+      "safetensors": "0.7.0"
+    },
+    "hardware_info": {
+      "platform": "darwin",
+      "os_version": "macOS-26.6-arm64-arm-64bit-Mach-O",
+      "machine": "arm64",
+      "processor": "arm",
+      "mlx_device": "Device(gpu, 0)",
+      "is_metal_gpu": true
+    }
+  },
+  "prediction_files_sha256": {
+    "direct_frozen": "f0685c8ce6a26de574dc4c1d827a77a7b87b93c94543d7c7ad61ad20a3686fe6"
+  },
+  "conditions": {
+    "direct_frozen": {
+      "condition": "direct_frozen",
+      "recurrence_depth": 0,
+      "sample_count": 20,
+      "exact_match_count": 20,
+      "exact_match_pct": 100.0,
+      "terminal_match_count": 20,
+      "terminal_match_pct": 100.0,
+      "valid_json_count": 20,
+      "valid_json_pct": 100.0,
+      "max_4gram_repetition": 1,
+      "mean_4gram_repetition": 1.0,
+      "mean_shannon_entropy": 4.38,
+      "latency": {
+        "mean_ms": 4239.88,
+        "median_ms": 4450.02,
+        "p95_ms": 4792.66,
+        "min_ms": 3364.3,
+        "max_ms": 4882.67,
+        "total_ms": 84797.52
+      },
+      "checkpoint_sha256": "",
+      "model_id": "google/gemma-4-12B-it-4bit"
+    }
+  }
+}

@@ -1,0 +1,623 @@
+{
+  "schema_version": "prlr.bootstrap_analysis.v1",
+  "created_at_utc": "2026-09-04T23:29:30.160618+00:00",
+  "provenance": {
+    "evaluation_dataset": "prlr_domain_v1",
+    "split": "sealed_test",
+    "matched_sample_count": 10,
+    "evaluated_conditions": [
+      "adapter_t1",
+      "adapter_t4",
+      "direct_frozen",
+      "non_recurrent"
+    ],
+    "seed": 42,
+    "num_resamples": 1000
+  },
+  "prediction_files_sha256": {
+    "adapter_t1": "1d4ed0241e4c19f2eac2e4fff93e31d9fc5ac8ade2ead0c7134d11c92db04a8a",
+    "adapter_t4": "6754c9d9d1722431324c929d22325f3a3a6c709c674d0f15558fccd8dc1b5991",
+    "direct_frozen": "703aab4f1c4e2741039297fb921412126c4b81bb4f11571a338767f35a2db1aa",
+    "non_recurrent": "5d43e0bc79f9e2c7c829c6dac4c39701277620c38dc0895fd94df07e5d45503a"
+  },
+  "summary_file_sha256": "ef22e4038278830a5e434f0bef515bd95e4ba52c7030281d1777f006fca343c6",
+  "marginal_statistics": {
+    "adapter_t1": {
+      "condition": "adapter_t1",
+      "sample_count": 10,
+      "exact_match_pct": 0.0,
+      "exact_match_ci_95": [
+        0.0,
+        0.0
+      ],
+      "terminal_match_pct": 100.0,
+      "terminal_match_ci_95": [
+        100.0,
+        100.0
+      ],
+      "valid_json_pct": 100.0,
+      "valid_json_ci_95": [
+        100.0,
+        100.0
+      ],
+      "mean_latency_ms": 9089.97,
+      "median_latency_ms": 8633.9
+    },
+    "adapter_t4": {
+      "condition": "adapter_t4",
+      "sample_count": 10,
+      "exact_match_pct": 0.0,
+      "exact_match_ci_95": [
+        0.0,
+        0.0
+      ],
+      "terminal_match_pct": 100.0,
+      "terminal_match_ci_95": [
+        100.0,
+        100.0
+      ],
+      "valid_json_pct": 100.0,
+      "valid_json_ci_95": [
+        100.0,
+        100.0
+      ],
+      "mean_latency_ms": 9662.28,
+      "median_latency_ms": 9039.38
+    },
+    "direct_frozen": {
+      "condition": "direct_frozen",
+      "sample_count": 10,
+      "exact_match_pct": 0.0,
+      "exact_match_ci_95": [
+        0.0,
+        0.0
+      ],
+      "terminal_match_pct": 100.0,
+      "terminal_match_ci_95": [
+        100.0,
+        100.0
+      ],
+      "valid_json_pct": 100.0,
+      "valid_json_ci_95": [
+        100.0,
+        100.0
+      ],
+      "mean_latency_ms": 5959.09,
+      "median_latency_ms": 5987.94
+    },
+    "non_recurrent": {
+      "condition": "non_recurrent",
+      "sample_count": 10,
+      "exact_match_pct": 0.0,
+      "exact_match_ci_95": [
+        0.0,
+        0.0
+      ],
+      "terminal_match_pct": 100.0,
+      "terminal_match_ci_95": [
+        100.0,
+        100.0
+      ],
+      "valid_json_pct": 100.0,
+      "valid_json_ci_95": [
+        100.0,
+        100.0
+      ],
+      "mean_latency_ms": 10934.84,
+      "median_latency_ms": 10393.82
+    }
+  },
+  "pairwise_comparisons": {
+    "adapter_t1__vs__adapter_t4": {
+      "exact_match": {
+        "condition_a": "adapter_t1",
+        "condition_b": "adapter_t4",
+        "metric_name": "exact_match",
+        "score_a": 0.0,
+        "score_b": 0.0,
+        "delta_point_estimate": 0.0,
+        "delta_pct": 0.0,
+        "ci_95_bca": [
+          0.0,
+          0.0
+        ],
+        "ci_method": "exact_degenerate",
+        "bias_correction_z0": 0.0,
+        "acceleration_a": 0.0,
+        "p_value": 1.0,
+        "p_value_method": "exact_zero_discordant",
+        "sample_count": 10,
+        "discordant_count": 0,
+        "is_statistically_significant": false,
+        "calibrated_verdict": "Exact empirical equivalence observed between adapter_t1 and adapter_t4 on exact_match (Delta = +0.00%, 95% BCa CI [+0.00%, +0.00%], p = 1.0000)."
+      },
+      "terminal_match": {
+        "condition_a": "adapter_t1",
+        "condition_b": "adapter_t4",
+        "metric_name": "terminal_match",
+        "score_a": 1.0,
+        "score_b": 1.0,
+        "delta_point_estimate": 0.0,
+        "delta_pct": 0.0,
+        "ci_95_bca": [
+          0.0,
+          0.0
+        ],
+        "ci_method": "exact_degenerate",
+        "bias_correction_z0": 0.0,
+        "acceleration_a": 0.0,
+        "p_value": 1.0,
+        "p_value_method": "exact_zero_discordant",
+        "sample_count": 10,
+        "discordant_count": 0,
+        "is_statistically_significant": false,
+        "calibrated_verdict": "Exact empirical equivalence observed between adapter_t1 and adapter_t4 on terminal_match (Delta = +0.00%, 95% BCa CI [+0.00%, +0.00%], p = 1.0000)."
+      },
+      "valid_json": {
+        "condition_a": "adapter_t1",
+        "condition_b": "adapter_t4",
+        "metric_name": "valid_json",
+        "score_a": 1.0,
+        "score_b": 1.0,
+        "delta_point_estimate": 0.0,
+        "delta_pct": 0.0,
+        "ci_95_bca": [
+          0.0,
+          0.0
+        ],
+        "ci_method": "exact_degenerate",
+        "bias_correction_z0": 0.0,
+        "acceleration_a": 0.0,
+        "p_value": 1.0,
+        "p_value_method": "exact_zero_discordant",
+        "sample_count": 10,
+        "discordant_count": 0,
+        "is_statistically_significant": false,
+        "calibrated_verdict": "Exact empirical equivalence observed between adapter_t1 and adapter_t4 on valid_json (Delta = +0.00%, 95% BCa CI [+0.00%, +0.00%], p = 1.0000)."
+      }
+    },
+    "adapter_t1__vs__direct_frozen": {
+      "exact_match": {
+        "condition_a": "adapter_t1",
+        "condition_b": "direct_frozen",
+        "metric_name": "exact_match",
+        "score_a": 0.0,
+        "score_b": 0.0,
+        "delta_point_estimate": 0.0,
+        "delta_pct": 0.0,
+        "ci_95_bca": [
+          0.0,
+          0.0
+        ],
+        "ci_method": "exact_degenerate",
+        "bias_correction_z0": 0.0,
+        "acceleration_a": 0.0,
+        "p_value": 1.0,
+        "p_value_method": "exact_zero_discordant",
+        "sample_count": 10,
+        "discordant_count": 0,
+        "is_statistically_significant": false,
+        "calibrated_verdict": "Exact empirical equivalence observed between adapter_t1 and direct_frozen on exact_match (Delta = +0.00%, 95% BCa CI [+0.00%, +0.00%], p = 1.0000)."
+      },
+      "terminal_match": {
+        "condition_a": "adapter_t1",
+        "condition_b": "direct_frozen",
+        "metric_name": "terminal_match",
+        "score_a": 1.0,
+        "score_b": 1.0,
+        "delta_point_estimate": 0.0,
+        "delta_pct": 0.0,
+        "ci_95_bca": [
+          0.0,
+          0.0
+        ],
+        "ci_method": "exact_degenerate",
+        "bias_correction_z0": 0.0,
+        "acceleration_a": 0.0,
+        "p_value": 1.0,
+        "p_value_method": "exact_zero_discordant",
+        "sample_count": 10,
+        "discordant_count": 0,
+        "is_statistically_significant": false,
+        "calibrated_verdict": "Exact empirical equivalence observed between adapter_t1 and direct_frozen on terminal_match (Delta = +0.00%, 95% BCa CI [+0.00%, +0.00%], p = 1.0000)."
+      },
+      "valid_json": {
+        "condition_a": "adapter_t1",
+        "condition_b": "direct_frozen",
+        "metric_name": "valid_json",
+        "score_a": 1.0,
+        "score_b": 1.0,
+        "delta_point_estimate": 0.0,
+        "delta_pct": 0.0,
+        "ci_95_bca": [
+          0.0,
+          0.0
+        ],
+        "ci_method": "exact_degenerate",
+        "bias_correction_z0": 0.0,
+        "acceleration_a": 0.0,
+        "p_value": 1.0,
+        "p_value_method": "exact_zero_discordant",
+        "sample_count": 10,
+        "discordant_count": 0,
+        "is_statistically_significant": false,
+        "calibrated_verdict": "Exact empirical equivalence observed between adapter_t1 and direct_frozen on valid_json (Delta = +0.00%, 95% BCa CI [+0.00%, +0.00%], p = 1.0000)."
+      }
+    },
+    "adapter_t1__vs__non_recurrent": {
+      "exact_match": {
+        "condition_a": "adapter_t1",
+        "condition_b": "non_recurrent",
+        "metric_name": "exact_match",
+        "score_a": 0.0,
+        "score_b": 0.0,
+        "delta_point_estimate": 0.0,
+        "delta_pct": 0.0,
+        "ci_95_bca": [
+          0.0,
+          0.0
+        ],
+        "ci_method": "exact_degenerate",
+        "bias_correction_z0": 0.0,
+        "acceleration_a": 0.0,
+        "p_value": 1.0,
+        "p_value_method": "exact_zero_discordant",
+        "sample_count": 10,
+        "discordant_count": 0,
+        "is_statistically_significant": false,
+        "calibrated_verdict": "Exact empirical equivalence observed between adapter_t1 and non_recurrent on exact_match (Delta = +0.00%, 95% BCa CI [+0.00%, +0.00%], p = 1.0000)."
+      },
+      "terminal_match": {
+        "condition_a": "adapter_t1",
+        "condition_b": "non_recurrent",
+        "metric_name": "terminal_match",
+        "score_a": 1.0,
+        "score_b": 1.0,
+        "delta_point_estimate": 0.0,
+        "delta_pct": 0.0,
+        "ci_95_bca": [
+          0.0,
+          0.0
+        ],
+        "ci_method": "exact_degenerate",
+        "bias_correction_z0": 0.0,
+        "acceleration_a": 0.0,
+        "p_value": 1.0,
+        "p_value_method": "exact_zero_discordant",
+        "sample_count": 10,
+        "discordant_count": 0,
+        "is_statistically_significant": false,
+        "calibrated_verdict": "Exact empirical equivalence observed between adapter_t1 and non_recurrent on terminal_match (Delta = +0.00%, 95% BCa CI [+0.00%, +0.00%], p = 1.0000)."
+      },
+      "valid_json": {
+        "condition_a": "adapter_t1",
+        "condition_b": "non_recurrent",
+        "metric_name": "valid_json",
+        "score_a": 1.0,
+        "score_b": 1.0,
+        "delta_point_estimate": 0.0,
+        "delta_pct": 0.0,
+        "ci_95_bca": [
+          0.0,
+          0.0
+        ],
+        "ci_method": "exact_degenerate",
+        "bias_correction_z0": 0.0,
+        "acceleration_a": 0.0,
+        "p_value": 1.0,
+        "p_value_method": "exact_zero_discordant",
+        "sample_count": 10,
+        "discordant_count": 0,
+        "is_statistically_significant": false,
+        "calibrated_verdict": "Exact empirical equivalence observed between adapter_t1 and non_recurrent on valid_json (Delta = +0.00%, 95% BCa CI [+0.00%, +0.00%], p = 1.0000)."
+      }
+    },
+    "adapter_t4__vs__direct_frozen": {
+      "exact_match": {
+        "condition_a": "adapter_t4",
+        "condition_b": "direct_frozen",
+        "metric_name": "exact_match",
+        "score_a": 0.0,
+        "score_b": 0.0,
+        "delta_point_estimate": 0.0,
+        "delta_pct": 0.0,
+        "ci_95_bca": [
+          0.0,
+          0.0
+        ],
+        "ci_method": "exact_degenerate",
+        "bias_correction_z0": 0.0,
+        "acceleration_a": 0.0,
+        "p_value": 1.0,
+        "p_value_method": "exact_zero_discordant",
+        "sample_count": 10,
+        "discordant_count": 0,
+        "is_statistically_significant": false,
+        "calibrated_verdict": "Exact empirical equivalence observed between adapter_t4 and direct_frozen on exact_match (Delta = +0.00%, 95% BCa CI [+0.00%, +0.00%], p = 1.0000)."
+      },
+      "terminal_match": {
+        "condition_a": "adapter_t4",
+        "condition_b": "direct_frozen",
+        "metric_name": "terminal_match",
+        "score_a": 1.0,
+        "score_b": 1.0,
+        "delta_point_estimate": 0.0,
+        "delta_pct": 0.0,
+        "ci_95_bca": [
+          0.0,
+          0.0
+        ],
+        "ci_method": "exact_degenerate",
+        "bias_correction_z0": 0.0,
+        "acceleration_a": 0.0,
+        "p_value": 1.0,
+        "p_value_method": "exact_zero_discordant",
+        "sample_count": 10,
+        "discordant_count": 0,
+        "is_statistically_significant": false,
+        "calibrated_verdict": "Exact empirical equivalence observed between adapter_t4 and direct_frozen on terminal_match (Delta = +0.00%, 95% BCa CI [+0.00%, +0.00%], p = 1.0000)."
+      },
+      "valid_json": {
+        "condition_a": "adapter_t4",
+        "condition_b": "direct_frozen",
+        "metric_name": "valid_json",
+        "score_a": 1.0,
+        "score_b": 1.0,
+        "delta_point_estimate": 0.0,
+        "delta_pct": 0.0,
+        "ci_95_bca": [
+          0.0,
+          0.0
+        ],
+        "ci_method": "exact_degenerate",
+        "bias_correction_z0": 0.0,
+        "acceleration_a": 0.0,
+        "p_value": 1.0,
+        "p_value_method": "exact_zero_discordant",
+        "sample_count": 10,
+        "discordant_count": 0,
+        "is_statistically_significant": false,
+        "calibrated_verdict": "Exact empirical equivalence observed between adapter_t4 and direct_frozen on valid_json (Delta = +0.00%, 95% BCa CI [+0.00%, +0.00%], p = 1.0000)."
+      }
+    },
+    "adapter_t4__vs__non_recurrent": {
+      "exact_match": {
+        "condition_a": "adapter_t4",
+        "condition_b": "non_recurrent",
+        "metric_name": "exact_match",
+        "score_a": 0.0,
+        "score_b": 0.0,
+        "delta_point_estimate": 0.0,
+        "delta_pct": 0.0,
+        "ci_95_bca": [
+          0.0,
+          0.0
+        ],
+        "ci_method": "exact_degenerate",
+        "bias_correction_z0": 0.0,
+        "acceleration_a": 0.0,
+        "p_value": 1.0,
+        "p_value_method": "exact_zero_discordant",
+        "sample_count": 10,
+        "discordant_count": 0,
+        "is_statistically_significant": false,
+        "calibrated_verdict": "Exact empirical equivalence observed between adapter_t4 and non_recurrent on exact_match (Delta = +0.00%, 95% BCa CI [+0.00%, +0.00%], p = 1.0000)."
+      },
+      "terminal_match": {
+        "condition_a": "adapter_t4",
+        "condition_b": "non_recurrent",
+        "metric_name": "terminal_match",
+        "score_a": 1.0,
+        "score_b": 1.0,
+        "delta_point_estimate": 0.0,
+        "delta_pct": 0.0,
+        "ci_95_bca": [
+          0.0,
+          0.0
+        ],
+        "ci_method": "exact_degenerate",
+        "bias_correction_z0": 0.0,
+        "acceleration_a": 0.0,
+        "p_value": 1.0,
+        "p_value_method": "exact_zero_discordant",
+        "sample_count": 10,
+        "discordant_count": 0,
+        "is_statistically_significant": false,
+        "calibrated_verdict": "Exact empirical equivalence observed between adapter_t4 and non_recurrent on terminal_match (Delta = +0.00%, 95% BCa CI [+0.00%, +0.00%], p = 1.0000)."
+      },
+      "valid_json": {
+        "condition_a": "adapter_t4",
+        "condition_b": "non_recurrent",
+        "metric_name": "valid_json",
+        "score_a": 1.0,
+        "score_b": 1.0,
+        "delta_point_estimate": 0.0,
+        "delta_pct": 0.0,
+        "ci_95_bca": [
+          0.0,
+          0.0
+        ],
+        "ci_method": "exact_degenerate",
+        "bias_correction_z0": 0.0,
+        "acceleration_a": 0.0,
+        "p_value": 1.0,
+        "p_value_method": "exact_zero_discordant",
+        "sample_count": 10,
+        "discordant_count": 0,
+        "is_statistically_significant": false,
+        "calibrated_verdict": "Exact empirical equivalence observed between adapter_t4 and non_recurrent on valid_json (Delta = +0.00%, 95% BCa CI [+0.00%, +0.00%], p = 1.0000)."
+      }
+    },
+    "direct_frozen__vs__non_recurrent": {
+      "exact_match": {
+        "condition_a": "direct_frozen",
+        "condition_b": "non_recurrent",
+        "metric_name": "exact_match",
+        "score_a": 0.0,
+        "score_b": 0.0,
+        "delta_point_estimate": 0.0,
+        "delta_pct": 0.0,
+        "ci_95_bca": [
+          0.0,
+          0.0
+        ],
+        "ci_method": "exact_degenerate",
+        "bias_correction_z0": 0.0,
+        "acceleration_a": 0.0,
+        "p_value": 1.0,
+        "p_value_method": "exact_zero_discordant",
+        "sample_count": 10,
+        "discordant_count": 0,
+        "is_statistically_significant": false,
+        "calibrated_verdict": "Exact empirical equivalence observed between direct_frozen and non_recurrent on exact_match (Delta = +0.00%, 95% BCa CI [+0.00%, +0.00%], p = 1.0000)."
+      },
+      "terminal_match": {
+        "condition_a": "direct_frozen",
+        "condition_b": "non_recurrent",
+        "metric_name": "terminal_match",
+        "score_a": 1.0,
+        "score_b": 1.0,
+        "delta_point_estimate": 0.0,
+        "delta_pct": 0.0,
+        "ci_95_bca": [
+          0.0,
+          0.0
+        ],
+        "ci_method": "exact_degenerate",
+        "bias_correction_z0": 0.0,
+        "acceleration_a": 0.0,
+        "p_value": 1.0,
+        "p_value_method": "exact_zero_discordant",
+        "sample_count": 10,
+        "discordant_count": 0,
+        "is_statistically_significant": false,
+        "calibrated_verdict": "Exact empirical equivalence observed between direct_frozen and non_recurrent on terminal_match (Delta = +0.00%, 95% BCa CI [+0.00%, +0.00%], p = 1.0000)."
+      },
+      "valid_json": {
+        "condition_a": "direct_frozen",
+        "condition_b": "non_recurrent",
+        "metric_name": "valid_json",
+        "score_a": 1.0,
+        "score_b": 1.0,
+        "delta_point_estimate": 0.0,
+        "delta_pct": 0.0,
+        "ci_95_bca": [
+          0.0,
+          0.0
+        ],
+        "ci_method": "exact_degenerate",
+        "bias_correction_z0": 0.0,
+        "acceleration_a": 0.0,
+        "p_value": 1.0,
+        "p_value_method": "exact_zero_discordant",
+        "sample_count": 10,
+        "discordant_count": 0,
+        "is_statistically_significant": false,
+        "calibrated_verdict": "Exact empirical equivalence observed between direct_frozen and non_recurrent on valid_json (Delta = +0.00%, 95% BCa CI [+0.00%, +0.00%], p = 1.0000)."
+      }
+    }
+  },
+  "isolation_analysis": {
+    "C6_recurrent_depth_trajectory": {
+      "exact_match": {
+        "contrast_name": "C6_recurrent_depth_trajectory",
+        "factor_isolated": "Recurrence depth scaling trajectory (T=4 vs T=1)",
+        "condition_a": "adapter_t4",
+        "condition_b": "adapter_t1",
+        "metric_name": "exact_match",
+        "delta_point_estimate": 0.0,
+        "delta_pct": 0.0,
+        "ci_95_bca": [
+          0.0,
+          0.0
+        ],
+        "p_value": 1.0,
+        "is_statistically_significant": false,
+        "scientific_interpretation": "Contrast C6_recurrent_depth_trajectory isolating 'Recurrence depth scaling trajectory (T=4 vs T=1)': Exact empirical equivalence observed between adapter_t4 and adapter_t1 on exact_match (Delta = +0.00%, 95% BCa CI [+0.00%, +0.00%], p = 1.0000)."
+      },
+      "terminal_match": {
+        "contrast_name": "C6_recurrent_depth_trajectory",
+        "factor_isolated": "Recurrence depth scaling trajectory (T=4 vs T=1)",
+        "condition_a": "adapter_t4",
+        "condition_b": "adapter_t1",
+        "metric_name": "terminal_match",
+        "delta_point_estimate": 0.0,
+        "delta_pct": 0.0,
+        "ci_95_bca": [
+          0.0,
+          0.0
+        ],
+        "p_value": 1.0,
+        "is_statistically_significant": false,
+        "scientific_interpretation": "Contrast C6_recurrent_depth_trajectory isolating 'Recurrence depth scaling trajectory (T=4 vs T=1)': Exact empirical equivalence observed between adapter_t4 and adapter_t1 on terminal_match (Delta = +0.00%, 95% BCa CI [+0.00%, +0.00%], p = 1.0000)."
+      },
+      "valid_json": {
+        "contrast_name": "C6_recurrent_depth_trajectory",
+        "factor_isolated": "Recurrence depth scaling trajectory (T=4 vs T=1)",
+        "condition_a": "adapter_t4",
+        "condition_b": "adapter_t1",
+        "metric_name": "valid_json",
+        "delta_point_estimate": 0.0,
+        "delta_pct": 0.0,
+        "ci_95_bca": [
+          0.0,
+          0.0
+        ],
+        "p_value": 1.0,
+        "is_statistically_significant": false,
+        "scientific_interpretation": "Contrast C6_recurrent_depth_trajectory isolating 'Recurrence depth scaling trajectory (T=4 vs T=1)': Exact empirical equivalence observed between adapter_t4 and adapter_t1 on valid_json (Delta = +0.00%, 95% BCa CI [+0.00%, +0.00%], p = 1.0000)."
+      }
+    },
+    "C7_recurrent_parameter_matching": {
+      "exact_match": {
+        "contrast_name": "C7_recurrent_parameter_matching",
+        "factor_isolated": "Recurrent parameter reuse vs single-pass feedforward adapter",
+        "condition_a": "adapter_t4",
+        "condition_b": "non_recurrent",
+        "metric_name": "exact_match",
+        "delta_point_estimate": 0.0,
+        "delta_pct": 0.0,
+        "ci_95_bca": [
+          0.0,
+          0.0
+        ],
+        "p_value": 1.0,
+        "is_statistically_significant": false,
+        "scientific_interpretation": "Contrast C7_recurrent_parameter_matching isolating 'Recurrent parameter reuse vs single-pass feedforward adapter': Exact empirical equivalence observed between adapter_t4 and non_recurrent on exact_match (Delta = +0.00%, 95% BCa CI [+0.00%, +0.00%], p = 1.0000)."
+      },
+      "terminal_match": {
+        "contrast_name": "C7_recurrent_parameter_matching",
+        "factor_isolated": "Recurrent parameter reuse vs single-pass feedforward adapter",
+        "condition_a": "adapter_t4",
+        "condition_b": "non_recurrent",
+        "metric_name": "terminal_match",
+        "delta_point_estimate": 0.0,
+        "delta_pct": 0.0,
+        "ci_95_bca": [
+          0.0,
+          0.0
+        ],
+        "p_value": 1.0,
+        "is_statistically_significant": false,
+        "scientific_interpretation": "Contrast C7_recurrent_parameter_matching isolating 'Recurrent parameter reuse vs single-pass feedforward adapter': Exact empirical equivalence observed between adapter_t4 and non_recurrent on terminal_match (Delta = +0.00%, 95% BCa CI [+0.00%, +0.00%], p = 1.0000)."
+      },
+      "valid_json": {
+        "contrast_name": "C7_recurrent_parameter_matching",
+        "factor_isolated": "Recurrent parameter reuse vs single-pass feedforward adapter",
+        "condition_a": "adapter_t4",
+        "condition_b": "non_recurrent",
+        "metric_name": "valid_json",
+        "delta_point_estimate": 0.0,
+        "delta_pct": 0.0,
+        "ci_95_bca": [
+          0.0,
+          0.0
+        ],
+        "p_value": 1.0,
+        "is_statistically_significant": false,
+        "scientific_interpretation": "Contrast C7_recurrent_parameter_matching isolating 'Recurrent parameter reuse vs single-pass feedforward adapter': Exact empirical equivalence observed between adapter_t4 and non_recurrent on valid_json (Delta = +0.00%, 95% BCa CI [+0.00%, +0.00%], p = 1.0000)."
+      }
+    }
+  },
+  "calibrated_executive_summary": "Paired bootstrap analysis (B=1000) and exact permutation testing completed over 10 matched instances across 4 experimental conditions. RoPE positional shift (+16) demonstrates no statistically significant difference vs base decoder. All condition comparisons are calibrated without uncalibrated claims of proof."
+}
