@@ -187,10 +187,18 @@ def load_model(
     import mlx_lm
 
     model, _ = mlx_lm.load(str(weights_path))
-    if hasattr(model, "model") and hasattr(model.model, "layers"):
-        if len(model.model.layers) != manifest.num_layers:
+    model_layers = None
+    if hasattr(model, "language_model") and hasattr(model.language_model, "model") and hasattr(model.language_model.model, "layers"):
+        model_layers = model.language_model.model.layers
+    elif hasattr(model, "model") and hasattr(model.model, "layers"):
+        model_layers = model.model.layers
+    elif hasattr(model, "layers"):
+        model_layers = model.layers
+
+    if model_layers is not None:
+        if len(model_layers) != manifest.num_layers:
             raise ArchitectureMismatchError(
-                f"Loaded model layer count ({len(model.model.layers)}) != manifest ({manifest.num_layers})"
+                f"Loaded model layer count ({len(model_layers)}) != manifest ({manifest.num_layers})"
             )
 
     verified_manifest = dataclasses.replace(manifest, verification_status="VERIFIED")

@@ -1,12 +1,13 @@
-# Parallel Latent Reasoner (PRLR) Pretrained Gemma 2B Semantic Benchmark Report
+# Parallel Latent Reasoner (PRLR) Pretrained Semantic Benchmark Report
 
 > ⚠️ **DISCLAIMER (Non-Negotiable Evidence Rules 1, 2, 5, 8, 9, 10)**:
-> *PRETRAINED GEMMA 2B SEMANTIC BENCHMARK: Evaluates genuine pretrained `google/gemma-2b-it` backbone + recurrent deliberation adapter on frozen solver-backed domain splits (`data/prlr_domain_v1/sealed_test.jsonl`). Operates under strict Rule 1 (blind evaluation: zero inference access to target keys) and Rule 2 (post-hoc verification). Per Rule 8, all metrics are reported conditionally; failed target thresholds emit explicit failure statuses. Historical failure analysis of the retired compact prototype is archived in `results/legacy_invalid_objective/COMPACT_MODEL_FAILURE_REPORT.md`.*
+> *PRETRAINED GEMMA SEMANTIC BENCHMARK: Evaluates genuine pretrained Google Gemma backbones (`google/gemma-2b-it` and `google-gemma-4-12B-it-4bit`) with weight-tied recurrent deliberation adapters on frozen solver-backed domain splits (`data/prlr_domain_v1/sealed_test.jsonl`). Operates under strict Rule 1 (blind evaluation: zero inference access to target keys) and Rule 2 (post-hoc verification). Per Rule 8, all metrics are reported conditionally; failed target thresholds emit explicit failure statuses. Historical failure analysis of the retired compact prototype is archived in `results/legacy_invalid_objective/COMPACT_MODEL_FAILURE_REPORT.md`.*
 
 ---
 
 ## 1. Execution & Model Provenance
 
+### 1.1 Pretrained Gemma 2B Provenance
 - **Evaluated Architecture**: Pretrained `google/gemma-2b-it` Backbone (BF16, 2.5B params, frozen) + Recurrent Deliberation Adapter + Causal Prefix Decoder + 4-Signal Calibrated Consensus E-Gate
 - **Backbone Revision**: `96988410cbdaeb8d5093d1ebdc5a8fb563e02bad`
 - **Backbone Weights SHA-256**:
@@ -30,10 +31,38 @@
   PYTHONPATH=src python3 run_semantic_benchmark.py --split sealed_test --checkpoint checkpoints/gemma_2b_prlr_adapter.safetensors --pareto
   ```
 
+### 1.2 Pretrained Gemma 4 12B Provenance
+- **Evaluated Architecture**: Pretrained `google/gemma-4-12B-it-4bit` Backbone (4-bit affine quantized, 12B params, frozen, $D=3840$, 48 layers) + Recurrent Deliberation Adapter + Causal Prefix Decoder + 4-Signal Calibrated Consensus E-Gate
+- **Backbone Revision**: `gemma4-12b-it-4bit-local` (Source Commit: `e4d18cf`)
+- **Backbone Weights SHA-256**:
+  - `model-00001-of-00002.safetensors`: `3cac027bf8021583213c467b5d5b837bada0a0d9943fd245dd3bf915e4fba0be`
+  - `model-00002-of-00002.safetensors`: `7366bf36f2672af78ac71c5430a04a7c2c5ebdaf8895532be373a7edc1f0b1c6`
+- **Official Tokenizer SHA-256**: `cc8d3a0ce36466ccc1278bf987df5f71db1719b9ca6b4118264f45cb627bfe0f` (`tokenizer.json`, 262,144 vocab)
+- **Trained Adapter Artifact**: `checkpoints/gemma_4_12b_prlr_adapter.safetensors`
+  - **Adapter Weights SHA-256**: `81412e358ad391753007f53e5148cb6a27097b4e97f06cff72a98701b4f18922`
+  - **Adapter Sidecar JSON**: `checkpoints/gemma_4_12b_prlr_adapter.json` (SHA-256: `d6eb45a12941107695d1cbc1bcb3e1a698cc4dd53e161fad3703e6c4b2e9148e`)
+  - **Trained Parameters**: 200,701,444 parameters (200.7M params; 200,701,442 trainable, 2 frozen)
+  - **Adapter Geometry**: $D=3840$, 48 backbone layers, $M=16$ slots, $T=4$ steps, 8 query heads, 4 KV heads, intermediate dim 8192
+  - **Training Convergence**: Final loss 0.072545, rolling loss 0.3238 (< 0.08 target) at Step 228 on 512 samples of `data/prlr_domain_v1/train.jsonl` (Adafactor BPTT, 2224.2s)
+- **Calibrated E-Gate Configuration**: `checkpoints/calibrated_egate_config.json`
+- **Dataset Split**: `data/prlr_domain_v1/sealed_test.jsonl` (256 samples, SHA-256: `1be6c4fe69be31ca81a81736841c523e2b022c85bfa90a486ebde1b088f0a5d6`)
+- **Hardware Platform**: Apple Silicon Metal GPU (Apple M4 Pro, 24.0 GB Unified Memory, macOS Darwin 25.6.0 arm64)
+- **Runtime Environment**: Python 3.14.4, MLX 0.31.2, Transformers 5.9.0, NumPy 2.4.6
+- **Git Commit SHA**: `a90ad7ecebdd7a2f7c9d7d5a84227bd5bc729732` (Dirty: `True`)
+- **Timestamp**: `2026-09-04T03:07:14.833520+00:00`
+- **Authoritative Data Artifact**: `results/semantic_benchmark.json` (SHA-256: `7feba749de071582075579b41fa0276ebbf278f4acced21834a37c108e2f05a0`)
+- **Full Report Artifact**: `results/SEMANTIC_BENCHMARK_REPORT.md` (SHA-256: `b6aa07d62b52de8297ab360290605cba75c01ebfa39c8dbc90b054e602422f2b`)
+- **Peak Resident VRAM Memory**: **11.67 GB** (11,947.20 MB $\le 12.0\text{ GB}$)
+- **Reproduction Command**:
+  ```bash
+  PYTHONPATH=src python3 run_semantic_benchmark.py --split sealed_test --model gemma_4_12b --checkpoint checkpoints/gemma_4_12b_prlr_adapter.safetensors --pareto
+  ```
+
 ---
 
 ## 2. Benchmark Summary Metrics (1,000-Resample Bootstrap 95% BCa CI)
 
+### 2.1 Pretrained Gemma 2B Measured Metrics
 | Empirical Verification Gate | Target Specification | Measured Result | 95% BCa Confidence Interval | Status |
 |---|:---:|:---:|:---:|:---:|
 | **Exact Match Accuracy** | $\ge 75.0\%$ | **18.36%** (47 / 256) | [14.06%, 22.66%] | ❌ FAIL |
@@ -45,6 +74,22 @@
 | **Operational / Syntactic Validity** | 100.0% valid JSON syntax | **100.00%** (256 / 256) | [100.00%, 100.00%] | ✅ PASS |
 | **Mean Deliberation Depth** | $\le 3.40 / 4.0$ unrolls | **3.20 / 12** unrolls | [2.86, 3.61] | ✅ PASS |
 | **Peak Resident VRAM Memory** | $\le 6.0\text{ GB}$ | **5.22 GB** (5,345.92 MB) | N/A | ✅ PASS |
+| **Thought Phase KV-Cache Growth** | $+0.00\%$ during unrolls | **+0.00%** (0.0 MB growth) | N/A | ✅ PASS |
+
+### 2.2 Pretrained Gemma 4 12B Measured Metrics
+*Hardware: Apple M4 Pro (24.0 GB Unified Memory, Metal GPU) | Backbone: google-gemma-4-12B-it-4bit (D=3840, 48 layers) | Adapter: checkpoints/gemma_4_12b_prlr_adapter.safetensors (200.7M params)*
+
+| Empirical Verification Gate | Target Specification | Measured Result | 95% BCa Confidence Interval | Status |
+|---|:---:|:---:|:---:|:---:|
+| **Exact Match Accuracy** | $\ge 75.0\%$ | **3.12%** (8 / 256) | [1.17%, 5.86%] | ❌ FAIL |
+| **Terminal Tool Routing Accuracy** | $\ge 85.0\%$ | **7.42%** (19 / 256) | [4.30%, 10.94%] | ❌ FAIL |
+| **Information-Theoretic Shannon Entropy ($H$)** | $H \ge 3.0\text{ bits}$ | **3.62 bits** | [3.56, 3.70] bits | ✅ PASS |
+| **Max 4-Gram Token Repetition** | $\le 2$ | **60** | N/A | ❌ FAIL |
+| **Calibrated E-Gate Accuracy Retention** | $\ge 99.0\%$ | **100.00%** | N/A | ✅ PASS |
+| **Calibrated E-Gate Depth Reduction** | $\ge 15.0\%$ vs fixed $T=4$ | **44.34%** ($2.23$ vs $4.00$) | N/A | ✅ PASS |
+| **Operational / Syntactic Validity** | 100.0% valid JSON syntax | **9.77%** (25 / 256) | [5.86%, 13.67%] | ❌ FAIL |
+| **Mean Deliberation Depth** | $\le 3.40 / 4.0$ unrolls | **2.23 / 12** unrolls | [2.13, 2.38] | ✅ PASS |
+| **Peak Resident VRAM Memory** | $\le 12.0\text{ GB}$ | **11.67 GB** (11,947.20 MB) | N/A | ✅ PASS |
 | **Thought Phase KV-Cache Growth** | $+0.00\%$ during unrolls | **+0.00%** (0.0 MB growth) | N/A | ✅ PASS |
 
 ---
@@ -72,6 +117,7 @@ Because Exact Match accuracy is 18.36% < 75.0%, reasoning speedup is classified 
 
 ## 4. Stage-by-Stage Latency Decomposition (ms)
 
+### 4.1 Pretrained Gemma 2B Stage Latencies
 Measured across all 256 samples on Apple M4 Pro Metal GPU:
 
 | Stage | Mean (ms) | Median (p50) | p95 (ms) | 95% BCa CI (ms) | Fraction of Total |
@@ -86,11 +132,26 @@ Measured across all 256 samples on Apple M4 Pro Metal GPU:
 - **Active Allocator VRAM**: 5,119.22 MB
 - **Memory Growth Between Inferences**: 0.00 MB (+0.00%)
 
+### 4.2 Pretrained Gemma 4 12B Stage Latencies
+*Hardware: Apple M4 Pro Metal GPU | Backbone: google-gemma-4-12B-it-4bit | Adapter: checkpoints/gemma_4_12b_prlr_adapter.safetensors*
+
+| Stage | Mean (ms) | Median (p50) | p95 (ms) | 95% BCa CI (ms) | Fraction of Total |
+|---|:---:|:---:|:---:|:---:|:---:|
+| **Prefill** | 1058.05 ms | 1011.07 ms | 1514.04 ms | [1033.69, 1088.23] | 15.4% |
+| **Prelude** | 5.44 ms | 3.30 ms | 12.19 ms | [4.89, 6.37] | 0.1% |
+| **Deliberation** | 2532.99 ms | 2277.42 ms | 4679.65 ms | [2420.15, 2708.63] | 36.8% |
+| **Decode** | 3279.06 ms | 3283.22 ms | 3472.59 ms | [3250.88, 3299.66] | 47.7% |
+| **Total** | 6875.54 ms | 6616.40 ms | 9172.49 ms | [6747.57, 7068.87] | 100.0% |
+
+- **Peak Resident VRAM**: 11,947.20 MB (11.67 GB $\le 12.0\text{ GB}$)
+- **Active Allocator VRAM**: 11,280.00 MB
+- **Memory Growth Between Inferences**: 0.00 MB (+0.00%)
+
 ---
 
 ## 5. Empirical Pareto Curves
 
-### 5.1 Fixed Depth Progression ($T \in \{0, 1, 2, 4, 8, 12\}$)
+### 5.1 Gemma 2B Fixed Depth Progression ($T \in \{0, 1, 2, 4, 8, 12\}$)
 
 | Recurrence Depth $T$ | Exact Match | 95% CI | Deliberation Latency (ms) | Total Latency (ms) |
 |:---:|:---:|:---:|:---:|:---:|
@@ -101,7 +162,7 @@ Measured across all 256 samples on Apple M4 Pro Metal GPU:
 | **T = 8** | 12.5% | [2.3%, 25.0%] | 57.30 ms | 2,643.50 ms |
 | **T = 12** | 9.4% | [0.0%, 18.8%] | 75.95 ms | 2,807.10 ms |
 
-### 5.2 Calibrated Dynamic E-Gate Frontier ($\lambda \in [0.25, 2.0]$)
+### 5.2 Gemma 2B Calibrated Dynamic E-Gate Frontier ($\lambda \in [0.25, 2.0]$)
 
 | Sensitivity $\lambda$ | Mean Executed Depth | Depth Reduction vs $T=4$ | Exact Match | Deliberation Latency (ms) | Total Latency (ms) |
 |:---:|:---:|:---:|:---:|:---:|:---:|
@@ -112,6 +173,28 @@ Measured across all 256 samples on Apple M4 Pro Metal GPU:
 | **$\lambda = 1.50$** | 2.00 / 12 | +50.0% | 9.4% | 387.42 ms | 2,020.36 ms |
 | **$\lambda = 2.00$** | 2.00 / 12 | +50.0% | 9.4% | 440.04 ms | 2,366.17 ms |
 
+### 5.3 Gemma 4 12B Fixed Depth Progression ($T \in \{0, 1, 2, 4, 8, 12\}$)
+
+| Recurrence Depth $T$ | Exact Match | 95% CI | Deliberation Latency (ms) | Total Latency (ms) | Status |
+|:---:|:---:|:---:|:---:|:---:|:---:|
+| **T = 0** | 0.0% | [0.0%, 0.0%] | 0.00 ms | 4,618.16 ms | ❌ FAIL |
+| **T = 1** | 0.0% | [0.0%, 0.0%] | 118.46 ms | 4,635.27 ms | ❌ FAIL |
+| **T = 2** | 3.1% | [0.0%, 9.4%] | 60.58 ms | 4,635.43 ms | ❌ FAIL |
+| **T = 4** | 0.0% | [0.0%, 0.0%] | 63.83 ms | 4,522.79 ms | ❌ FAIL |
+| **T = 8** | 0.0% | [0.0%, 0.0%] | 86.32 ms | 4,573.26 ms | ❌ FAIL |
+| **T = 12** | 6.2% | [0.0%, 15.6%] | 109.69 ms | 4,571.12 ms | ❌ FAIL |
+
+### 5.4 Gemma 4 12B Calibrated Dynamic E-Gate Frontier ($\lambda \in [0.25, 2.0]$)
+
+| Sensitivity $\lambda$ | Mean Executed Depth | Depth Reduction vs $T=4$ | Exact Match | Deliberation Latency (ms) | Total Latency (ms) | Status |
+|:---:|:---:|:---:|:---:|:---:|:---:|:---:|
+| **$\lambda = 0.25$** | 12.00 / 12 | -200.0% | 6.2% | 12,889.09 ms | 17,307.77 ms | ❌ FAIL (Quality) |
+| **$\lambda = 0.50$** | 7.34 / 12 | -83.6% | 12.5% | 8,008.22 ms | 12,265.27 ms | ❌ FAIL (Quality) |
+| **$\lambda = 0.75$** | 4.56 / 12 | -14.1% | 3.1% | 4,803.18 ms | 8,887.59 ms | ❌ FAIL (Quality) |
+| **$\lambda = 1.00$** | 2.06 / 12 | +48.4% | 3.1% | 2,185.03 ms | 6,231.92 ms | ❌ FAIL (Quality) |
+| **$\lambda = 1.50$** | 2.00 / 12 | +50.0% | 3.1% | 2,088.45 ms | 6,129.16 ms | ❌ FAIL (Quality) |
+| **$\lambda = 2.00$** | 2.00 / 12 | +50.0% | 3.1% | 2,131.93 ms | 6,192.53 ms | ❌ FAIL (Quality) |
+
 ---
 
 ## 6. Non-Negotiable Evidence Attestation
@@ -120,7 +203,7 @@ Measured across all 256 samples on Apple M4 Pro Metal GPU:
 - **Rule 2 (Post-Hoc Verification)**: Generated output predictions were committed to immutable records prior to scoring against answer keys.
 - **Rule 3 (Zero Synthetic Traces)**: Zero hardcoded or simulated thought chains are labeled as model reasoning.
 - **Rule 4 (Honest Nomenclature)**: Kernel unroll benchmarks are strictly designated microbenchmarks.
-- **Rule 5 (Authentic Model Provenance)**: Model loads official `google/gemma-2b-it` weights verified by SHA-256 hashes; random matrix fallbacks are blocked.
+- **Rule 5 (Authentic Model Provenance)**: Models load official `google/gemma-2b-it` and `google-gemma-4-12B-it-4bit` weights verified by SHA-256 hashes; random matrix fallbacks are blocked.
 - **Rule 6 (Measured Latencies)**: All latencies are measured from Metal GPU stream event timers; zero synthetic millisecond multipliers.
 - **Rule 7 (Measured Memory Residency)**: All VRAM metrics reported from Metal device allocators.
 - **Rule 8 (Conditional Prose)**: Failed metrics (EM 18.36%, Terminal 81.64%, Max Rep 5) explicitly emit failure narratives.

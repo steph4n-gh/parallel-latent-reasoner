@@ -43,7 +43,7 @@ if not CHECKPOINT_PATH.exists():
         if str(scripts_dir) not in sys.path:
             sys.path.insert(0, str(scripts_dir))
         from download_checkpoint import ensure_checkpoint
-        ensure_checkpoint(target_dir=CHECKPOINT_PATH.parent, quiet=True)
+        ensure_checkpoint(model="gemma_2b", target_dir=CHECKPOINT_PATH.parent, quiet=True)
     except Exception:
         pass
 
@@ -51,6 +51,12 @@ if not CHECKPOINT_PATH.exists():
     pytest.skip(
         f"Production checkpoint {CHECKPOINT_PATH.name} not found. "
         "Run `python scripts/download_checkpoint.py` to download from GitHub release.",
+        allow_module_level=True,
+    )
+
+if not SIDECAR_PATH.exists():
+    pytest.skip(
+        f"Production checkpoint sidecar {SIDECAR_PATH.name} not found.",
         allow_module_level=True,
     )
 

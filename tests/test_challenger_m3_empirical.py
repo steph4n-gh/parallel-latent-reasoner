@@ -46,7 +46,7 @@ if not CHECKPOINT_PATH.exists():
         if str(scripts_dir) not in sys.path:
             sys.path.insert(0, str(scripts_dir))
         from download_checkpoint import ensure_checkpoint
-        ensure_checkpoint(target_dir=CHECKPOINT_PATH.parent, quiet=True)
+        ensure_checkpoint(model="gemma_2b", target_dir=CHECKPOINT_PATH.parent, quiet=True)
     except Exception:
         pass
 
@@ -54,6 +54,12 @@ if not CHECKPOINT_PATH.exists():
     pytest.skip(
         f"Production checkpoint {CHECKPOINT_PATH.name} not found. "
         "Run `python scripts/download_checkpoint.py` to download from GitHub release.",
+        allow_module_level=True,
+    )
+
+if not SIDECAR_PATH.exists():
+    pytest.skip(
+        f"Production checkpoint sidecar {SIDECAR_PATH.name} not found.",
         allow_module_level=True,
     )
 
@@ -79,7 +85,7 @@ def compute_max_4gram_repetition(text: str) -> int:
 @pytest.fixture(scope="module")
 def shared_pipeline() -> PRLRPipeline:
     """Instantiate PRLRPipeline once for empirical verification tests."""
-    return PRLRPipeline()
+    return PRLRPipeline(manifest=ModelManifest.gemma_2b_it(), dim=2048)
 
 
 def test_challenge_1_pipeline_instantiation_and_strict_adapter_loading(shared_pipeline: PRLRPipeline):

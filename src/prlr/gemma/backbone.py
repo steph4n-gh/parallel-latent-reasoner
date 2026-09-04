@@ -117,25 +117,31 @@ class PretrainedGemmaBackbone(nn.Module):
         if input_ids.ndim == 1:
             input_ids = input_ids[None, :]
 
-        inner = getattr(self.model, "model", self.model)
+        if hasattr(self.model, "language_model"):
+            inner = getattr(self.model.language_model, "model", self.model.language_model)
+        else:
+            inner = getattr(self.model, "model", self.model)
+
+        num_layers = getattr(self.manifest, "num_layers", 18)
+        target_layer = layer_idx if layer_idx is not None else num_layers
 
         if (
             hasattr(inner, "layers")
-            and layer_idx is not None
-            and layer_idx < len(inner.layers)
+            and not hasattr(inner, "previous_kvs")
+            and target_layer < len(inner.layers)
         ):
             from mlx_lm.models.base import create_attention_mask
 
-            hidden_size = getattr(inner.args, "hidden_size", 2048)
+            hidden_size = getattr(inner.args, "hidden_size", getattr(self.manifest, "hidden_dimension", 2048))
             h = inner.embed_tokens(input_ids) * (hidden_size ** 0.5)
             mask = create_attention_mask(h, None)
-            for layer in inner.layers[:layer_idx]:
+            for layer in inner.layers[:target_layer]:
                 h = layer(h, mask=mask, cache=None)
             if hasattr(inner, "norm"):
                 h = inner.norm(h)
             return h
 
-        # Full model extraction (layer 18 or final normalized)
+        # Full model extraction
         if callable(inner):
             return inner(input_ids)
         elif hasattr(self.model, "__call__"):
@@ -194,46 +200,60 @@ class PretrainedGemmaBackbone(nn.Module):
         # 4. Contextual hidden extraction
         prompt = "The capital of France is"
         input_ids, _ = self.encode_prompt_context(prompt)
+        num_layers = getattr(self.manifest, "num_layers", 18)
+        expected_dim = getattr(self.manifest, "hidden_dimension", 2048)
         t0 = time.perf_counter()
-        hiddens_18 = self.extract_contextual_hiddens(input_ids, layer_idx=18)
-        mx.eval(hiddens_18)
+        hiddens_top = self.extract_contextual_hiddens(input_ids, layer_idx=num_layers)
+        mx.eval(hiddens_top)
         extract_time_ms = (time.perf_counter() - t0) * 1000.0
 
-        diagnostics["hidden_shape"] = list(hiddens_18.shape)
-        diagnostics["hidden_dtype"] = str(hiddens_18.dtype)
+        diagnostics["hidden_shape"] = list(hiddens_top.shape)
+        diagnostics["hidden_dtype"] = str(hiddens_top.dtype)
         diagnostics["extract_time_ms"] = extract_time_ms
-        diagnostics["has_nan"] = bool(mx.isnan(hiddens_18).any().item())
-        diagnostics["has_inf"] = bool(mx.isinf(hiddens_18).any().item())
+        diagnostics["has_nan"] = bool(mx.isnan(hiddens_top).any().item())
+        diagnostics["has_inf"] = bool(mx.isinf(hiddens_top).any().item())
 
         if diagnostics["has_nan"] or diagnostics["has_inf"]:
             raise RuntimeError("Contextual hidden representations contain NaN or Inf!")
 
-        if hiddens_18.shape[0] != 1 or hiddens_18.shape[2] != 2048:
-            raise RuntimeError(f"Unexpected hidden shape: {hiddens_18.shape}, expected (1, L, 2048)")
+        if hiddens_top.shape[0] != 1 or hiddens_top.shape[2] != expected_dim:
+            raise RuntimeError(f"Unexpected hidden shape: {hiddens_top.shape}, expected (1, L, {expected_dim})")
 
-        # Intermediate layer extraction (layer 12)
-        hiddens_12 = self.extract_contextual_hiddens(input_ids, layer_idx=12)
-        mx.eval(hiddens_12)
-        diagnostics["intermediate_layer_12_shape"] = list(hiddens_12.shape)
+        # Intermediate layer extraction (layer 12 if >= 18 layers)
+        if num_layers >= 18 and not hasattr(self.model, "language_model"):
+            hiddens_12 = self.extract_contextual_hiddens(input_ids, layer_idx=12)
+            mx.eval(hiddens_12)
+            diagnostics["intermediate_layer_12_shape"] = list(hiddens_12.shape)
 
         # 5. Greedy semantic generation baseline
         import mlx_lm
         t0 = time.perf_counter()
+        if hasattr(self.tokenizer, "chat_template") and self.tokenizer.chat_template is not None and "gemma-4" in str(self.manifest.model_id):
+            gen_prompt = self.tokenizer.apply_chat_template(
+                [{"role": "user", "content": "What is the capital of France? Answer in one word."}],
+                tokenize=False,
+                add_generation_prompt=True,
+            )
+            max_toks = 60
+        else:
+            gen_prompt = prompt
+            max_toks = 10
+
         gen_text = mlx_lm.generate(
             self.model,
             self.tokenizer,
-            prompt=prompt,
-            max_tokens=10,
+            prompt=gen_prompt,
+            max_tokens=max_toks,
             verbose=False,
         )
         gen_time_ms = (time.perf_counter() - t0) * 1000.0
         diagnostics["generation_output"] = gen_text
-        diagnostics["generation_time_ms"] = gen_time_ms
-        diagnostics["semantic_passed"] = "Paris" in gen_text
+        diagnostics["gen_time_ms"] = gen_time_ms
 
-        if not diagnostics["semantic_passed"]:
+        if "Paris" not in gen_text:
             raise RuntimeError(f"Baseline semantic completion failed to emit 'Paris': {gen_text}")
 
+        diagnostics["semantic_passed"] = True
         diagnostics["status"] = "HEALTHY"
         return diagnostics
 

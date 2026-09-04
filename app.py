@@ -31,6 +31,23 @@ PRESET_MAP = {f"{tc.id}: [{tc.domain.value.upper()}] {tc.prompt[:60]}...": tc.id
 _GLOBAL_PIPELINE = None
 
 
+def get_metal_peak_memory_mb() -> float:
+    """Retrieve peak Metal GPU memory in megabytes."""
+    if hasattr(mx, "metal") and hasattr(mx.metal, "get_peak_memory"):
+        return float(mx.metal.get_peak_memory() / (1024 * 1024))
+    if hasattr(mx, "get_peak_memory"):
+        return float(mx.get_peak_memory() / (1024 * 1024))
+    return 0.0
+
+
+def reset_metal_peak_memory() -> None:
+    """Reset peak Metal GPU memory counter."""
+    if hasattr(mx, "metal") and hasattr(mx.metal, "reset_peak_memory"):
+        mx.metal.reset_peak_memory()
+    elif hasattr(mx, "reset_peak_memory"):
+        mx.reset_peak_memory()
+
+
 def get_pipeline():
     """Lazily instantiate production PRLRPipeline with trained adapter."""
     global _GLOBAL_PIPELINE
@@ -63,14 +80,17 @@ def run_comparison(
 
     # 1. Initialize PRLR Pipeline
     pipeline = get_pipeline()
+    model_id = getattr(getattr(pipeline, "manifest", None), "model_id", "google/gemma-4-12B-it-4bit")
 
     # 2. Parallel Latent Deliberation (PRLR)
+    reset_metal_peak_memory()
     out = pipeline.deliberate_and_verify(
         prompt=active_prompt,
         max_steps=int(steps_t),
         max_new_tokens=32,
         enable_dynamic_gate=enable_gate,
     )
+    prlr_peak_vram_mb = get_metal_peak_memory_mb()
 
     delib_ms = out.stage_latencies_ms.get("deliberation_ms", 5.0)
     decode_ms = out.stage_latencies_ms.get("decode_ms", 1.0)
@@ -78,10 +98,12 @@ def run_comparison(
     decoded_answer = out.decoded_text.strip()
 
     # 3. Genuine Autoregressive Gemma Baseline (Metal GPU)
+    reset_metal_peak_memory()
     base_res = pipeline.generate_baseline(
         prompt=active_prompt,
         max_new_tokens=32,
     )
+    cot_peak_vram_mb = get_metal_peak_memory_mb()
     cot_thought_stream = base_res.generated_text.strip() or "Standard autoregressive completion"
     cot_latency_ms = base_res.latency_ms
     cot_tokens = len(base_res.tokens) if base_res.tokens else 1
@@ -104,8 +126,9 @@ def run_comparison(
     telemetry_table = "\n".join(telemetry_rows)
 
     left_summary = (
-        f"### Mode 1: Genuine Autoregressive Gemma Baseline\n"
+        f"### Mode 1: Genuine Autoregressive Baseline (`{model_id}`)\n"
         f"- **Measured Latency**: `{cot_latency_ms:.2f} ms`\n"
+        f"- **Peak Metal VRAM**: `{cot_peak_vram_mb:.1f} MB`\n"
         f"- **Tokens Emitted**: `{cot_tokens} tokens`\n"
         f"- **KV-Cache Expansion**: N/A (Linear O(N) Growth)\n"
         f"- **Execution Bound**: Memory-Bandwidth (DRAM weight streaming)\n\n"
@@ -113,8 +136,9 @@ def run_comparison(
     )
 
     right_summary = (
-        f"### Mode 2: Parallel Latent Deliberation (PRLR)\n"
+        f"### Mode 2: Parallel Latent Deliberation (PRLR + `{model_id}`)\n"
         f"- **Deliberation Latency**: `{delib_ms:.2f} ms` (Total with decode: `{total_prlr_ms:.2f} ms`)\n"
+        f"- **Peak Metal VRAM**: `{prlr_peak_vram_mb:.1f} MB`\n"
         f"- **Intermediate Tokens Emitted**: `0` (Zero KV-cache bloat)\n"
         f"- **Deliberation Sweeps Executed**: `T={out.deliberation_steps}/{steps_t}` across `M={slots_m}` slots\n"
         f"- **Reasoning Speedup**: `**{speedup:.1f}x FASTER**`\n"

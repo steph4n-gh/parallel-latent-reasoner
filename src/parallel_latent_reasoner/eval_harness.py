@@ -732,8 +732,13 @@ class LargeGemmaDualEvaluator:
         if self.tokenizer is not None:
             ids = self.tokenizer.encode(text)
             return mx.array([ids], dtype=mx.int32)
-        # Fast character-modulo ASCII tokenization fallback
-        return mx.array([[ord(c) % self.config.vocab_size for c in text]], dtype=mx.int32)
+        if getattr(self.config, "model_family", "") == "compact_test" or getattr(self, "model_name", "") == "compact_test":
+            # Fast character-modulo ASCII tokenization for synthetic compact_test testbed only (prohibited for Gemma under Rule 5)
+            return mx.array([[ord(c) % self.config.vocab_size for c in text]], dtype=mx.int32)
+        raise ValueError(
+            "Cannot tokenize text without loaded official tokenizer. "
+            "Character-modulo fallback (ord(c) % vocab) is strictly prohibited under Rule 5."
+        )
 
     def evaluate_mode_1_ar_cot(
         self,

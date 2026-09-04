@@ -50,7 +50,7 @@ from prlr.gemma.egate import (
 from prlr.manifest import ModelManifest
 
 DISCLAIMER_SEMANTIC = (
-    "PRETRAINED GEMMA 2B SEMANTIC BENCHMARK: Evaluates genuine pretrained google/gemma-2b-it "
+    "PRETRAINED GEMMA SEMANTIC BENCHMARK: Evaluates genuine pretrained Gemma "
     "backbone + recurrent deliberation adapter on frozen solver-backed domain splits. "
     "Operates under strict Rule 1 (blind evaluation) and Rule 2 (post-hoc verification)."
 )
@@ -258,6 +258,42 @@ class SemanticBenchmarkRunner:
                 keys[item["id"]] = item
         return keys
 
+    @property
+    def is_gemma4(self) -> bool:
+        """Check whether the underlying backbone is Gemma 4."""
+        manifest = getattr(self.backbone, "manifest", None)
+        if manifest is not None and ("gemma-4" in getattr(manifest, "model_id", "") or "12b" in getattr(manifest, "model_id", "").lower() or getattr(manifest, "hidden_dimension", 0) == 3840):
+            return True
+        if hasattr(self.backbone, "model") and hasattr(self.backbone.model, "language_model"):
+            return True
+        return False
+
+    def format_prompt(self, raw_prompt: str) -> str:
+        """Format prompt according to backbone architecture requirements.
+
+        For Gemma 4 12B, strictly formats prompts using the official chat template
+        with thought channel:
+        <|turn>user\n{body}<turn|>\n<|turn>model\n<|channel>thought\n
+        """
+        if not self.is_gemma4:
+            return raw_prompt
+
+        if "<start_of_turn>user" in raw_prompt:
+            match = re.search(r"<start_of_turn>user\s*\n(.*?)(?:<end_of_turn>|$)", raw_prompt, re.DOTALL)
+            user_body = match.group(1).strip() if match else raw_prompt.strip()
+            return f"<|turn>user\n{user_body}<turn|>\n<|turn>model\n<|channel>thought\n"
+        elif "<|turn>user" in raw_prompt:
+            if "<|channel>thought" not in raw_prompt:
+                if raw_prompt.endswith("<|turn>model\n"):
+                    return raw_prompt + "<|channel>thought\n"
+                elif raw_prompt.endswith("<|turn>model"):
+                    return raw_prompt + "\n<|channel>thought\n"
+                else:
+                    return raw_prompt + "\n<|channel>thought\n"
+            return raw_prompt
+        else:
+            return f"<|turn>user\n{raw_prompt.strip()}<turn|>\n<|turn>model\n<|channel>thought\n"
+
     def evaluate_sample_with_depth(
         self,
         item: Dict[str, Any],
@@ -265,7 +301,7 @@ class SemanticBenchmarkRunner:
         max_new_tokens: int = 64,
     ) -> Tuple[str, StageLatencyTelemetry, int, str]:
         """Execute inference with fixed recurrence depth T."""
-        prompt = item["prompt"]
+        prompt = self.format_prompt(item["prompt"])
 
         # Stage 1: Prefill
         t0 = time.perf_counter()
@@ -323,7 +359,7 @@ class SemanticBenchmarkRunner:
         max_new_tokens: int = 64,
     ) -> Tuple[str, StageLatencyTelemetry, int, str]:
         """Execute inference with dynamic calibrated E-Gate."""
-        prompt = item["prompt"]
+        prompt = self.format_prompt(item["prompt"])
 
         # Stage 1: Prefill
         t0 = time.perf_counter()
@@ -728,8 +764,9 @@ def generate_markdown_report(data: Dict[str, Any]) -> str:
 
     ent_ci = sm.get("shannon_entropy_ci_95_bca", [0.0, 0.0])
 
+    model_id = meta.get("model_manifest", {}).get("model_id", "Gemma")
     lines = [
-        "# Pretrained Gemma 2B Semantic Benchmark Report",
+        f"# Pretrained {model_id} Semantic Benchmark Report",
         "",
         "> ⚠️ **DISCLAIMER (Non-Negotiable Evidence Rules 1, 2, 5, 8, 9, 10)**:  ",
         f"> *{meta['disclaimer']}*",
@@ -817,7 +854,7 @@ def generate_markdown_report(data: Dict[str, Any]) -> str:
         "## 5. Non-Negotiable Evidence Attestation",
         "- **Rule 1 (Blind Evaluation)**: Programmatically verified that inference functions received zero ground-truth keys.",
         "- **Rule 2 (Post-Hoc Verification)**: Output predictions were sealed prior to scoring against answer keys.",
-        "- **Rule 5 (Verified Model Weights)**: Loaded verified weights from official google/gemma-2b-it repository.",
+        f"- **Rule 5 (Verified Model Weights)**: Loaded verified weights from official {model_id} repository.",
         "- **Rule 8 (Conditional Prose)**: Metric outcomes reported truthfully without affirmative bias.",
         "- **Rule 9 (Speedup & Non-Inferiority)**: Latent deliberation paired with calibrated accuracy retention.",
         "- **Rule 10 (Cryptographic Provenance)**: Machine-readable artifact records commit SHA, hashes, and raw prediction records.",

@@ -5,10 +5,13 @@
 - **Date Created / Sealed**: 2026-09-03
 - **Hardware Platform**: Apple Silicon Metal GPU (`arm64`), macOS Unified Memory Architecture
 - **Git Commit SHA**: `a90ad7ecebdd7a2f7c9d7d5a84227bd5bc729732`
-- **Model Reference**: `google/gemma-2b-it` (Architecture: `GemmaForCausalLM`)
-- **Production Adapter Checkpoint SHA-256**: `6048262d99e5d28851adfc87a379a2796802926605ab74e33553b4d9347028d7`
+- **Model References**:
+  - `google/gemma-2b-it` (Architecture: `GemmaForCausalLM`, BF16)
+  - `google/gemma-4-12B-it-4bit` (Architecture: `Gemma4ForCausalLM`, 4-bit affine, $D=3840$, 48 layers)
+- **Production Adapter Checkpoint SHA-256 (Gemma 2B)**: `6048262d99e5d28851adfc87a379a2796802926605ab74e33553b4d9347028d7`
+- **Production Adapter Checkpoint SHA-256 (Gemma 4 12B)**: `81412e358ad391753007f53e5148cb6a27097b4e97f06cff72a98701b4f18922`
 - **Dataset Manifest SHA-256**: `cdfb10f9cbd3d6d9d8380f901822919362bc4d9928a6a0ad41b1a9dcf8bb6b82`
-- **Semantic Benchmark Artifact SHA-256**: `81f15af40e01980f95aff18e302980a71055bf95b2041622e5be13b15a29c516`
+- **Semantic Benchmark Artifact SHA-256**: `7feba749de071582075579b41fa0276ebbf278f4acced21834a37c108e2f05a0` (`results/semantic_benchmark.json`)
 - **Governing Policies**: `AGENTS.md`, `docs/documentation_policy.md`, Non-Negotiable Evidence Rules 1–10
 
 ---
@@ -25,7 +28,7 @@ No success or promotional prose may be emitted when an associated metric fails i
    - Profile pure tensor recurrence execution ($M$ slots, $T$ steps, $D$ dimensions) on Metal GPU.
    - Strictly forbidden from asserting Chain-of-Thought (CoT), language reasoning, or cognitive speedup claims (Rule 4).
 2. **Track B — Semantic Reasoning Benchmarks**:
-   - Evaluated on matching pretrained backbone (`google/gemma-2b-it`) and frozen solver-backed domain splits (`data/prlr_domain_v1/`).
+   - Evaluated on matching pretrained backbone (`google/gemma-2b-it` or `google-gemma-4-12B-it-4bit`) and frozen solver-backed domain splits (`data/prlr_domain_v1/`).
    - Speedup claims are valid **if and only if** solution quality satisfies the documented non-inferiority criterion:
      $$\text{Accuracy}_{\text{PRLR}} \ge \text{Accuracy}_{\text{direct\_baseline}} - 0.05$$
    - If output accuracy collapses or emits repetitive looping (as occurred in the compact model prototype), reasoning speedup is classified as **DISQUALIFIED**.
@@ -93,6 +96,19 @@ Every active claim MUST map to:
 
 ---
 
+### 2.3 Production Pretrained Gemma 4 12B Claims (Active Implementation: C7 – C12)
+
+| Claim ID | Claim Description | Status / Classification | Architectural Tier | Dataset / Split Scope | Artifact Path | Artifact SHA-256 | Reproduction Command | Enforced Rules | Non-Oracle Status & Audit Notes |
+|:---:|---|:---:|---|---|---|---|---|:---:|---|
+| **C7** | Held-Out Procedural Reasoning Accuracy | **EVIDENCE-BOUND (TARGET FAIL)** | `google/gemma-4-12B-it-4bit` + Adapter (200.7M params) | `data/prlr_domain_v1/sealed_test.jsonl` (256 samples) | `results/semantic_benchmark.json` | `7feba749...` | `PYTHONPATH=src python3 run_semantic_benchmark.py --split sealed_test --model gemma_4_12b --checkpoint checkpoints/gemma_4_12b_prlr_adapter.safetensors --pareto` | R1, R2, R8, R10 | **VERIFIED NON-ORACLE**. Blind evaluation under Rules 1 & 2. Exact Match: 3.12% (target >= 75.0% -> FAIL), Terminal Tool: 7.42% (target >= 85.0% -> FAIL). 95% BCa CI: EM [1.17%, 5.86%], Terminal [4.30%, 10.94%]. Adapter SHA-256: `81412e358ad391753007f53e5148cb6a27097b4e97f06cff72a98701b4f18922`. |
+| **C8** | Latent Deliberation Latency & Metal Memory Ceiling | **EVIDENCE-BOUND (DISQUALIFIED SPEEDUP)** | `google/gemma-4-12B-it-4bit` + Adapter ($M=16, T=4, D=3840$) | Apple M4 Pro Metal GPU Deliberation ($L \le 128$) | `results/semantic_benchmark.json` | `7feba749...` | `PYTHONPATH=src python3 run_semantic_benchmark.py --split sealed_test --model gemma_4_12b --checkpoint checkpoints/gemma_4_12b_prlr_adapter.safetensors` | R4, R6, R7, R9, R10 | **VERIFIED NON-ORACLE**. Measured via MLX Metal timers (Rule 6). Prefill p50: 1011.07 ms, Deliberation p50: 2277.42 ms, Decode p50: 3283.22 ms, Total p50: 6616.40 ms. Peak VRAM: 11.67 GB <= 12.0 GB. Speedup disqualified under Rule 9 due to EM quality gap. |
+| **C9** | Information Entropy & Degeneracy Elimination | **VERIFIED (PASS / MAX REP FAIL)** | `google/gemma-4-12B-it-4bit` + Adapter ($M=16, T=4$) | Emitted token sequences on `sealed_test.jsonl` | `results/semantic_benchmark.json` | `7feba749...` | `PYTHONPATH=src python3 run_semantic_benchmark.py --split sealed_test --model gemma_4_12b --checkpoint checkpoints/gemma_4_12b_prlr_adapter.safetensors` | R3, R8, R10 | **VERIFIED NON-ORACLE**. Shannon Entropy $H = 3.62\text{ bits}$ (target >= 3.0 bits -> PASS). Max 4-gram repetition: 60 (target <= 2 -> FAIL). |
+| **C10** | Autonomous Agent Tool Routing & Schema Validity | **VERIFIED (EXPERIMENTAL)** | `google/gemma-4-12B-it-4bit` + Adapter ($M=16, T=4$) | `mtr_dag_tool_routing` domain (`sealed_test.jsonl`) | `results/semantic_benchmark.json` | `7feba749...` | `PYTHONPATH=src python3 run_semantic_benchmark.py --split sealed_test --model gemma_4_12b --checkpoint checkpoints/gemma_4_12b_prlr_adapter.safetensors` | R1, R2, R8, R10 | **VERIFIED NON-ORACLE**. Tested against deterministic DAG BFS ground truth oracle verifier. Operational validity: 9.77% (25/256 valid JSON). Terminal tool routing: 7.42% (19/256). |
+| **C11** | Authentic Gemma 4 12B Weight Provenance & BPTT Convergence | **VERIFIED (TRAINED CHECKPOINT)** | `google/gemma-4-12B-it-4bit` + `gemma_4_12b_prlr_adapter.safetensors` | Official Google 4-bit weights + SentencePiece tokenizer | `checkpoints/gemma_4_12b_prlr_adapter.json`, `src/prlr/manifest.py` | `d6eb45a1...` | `PYTHONPATH=src pytest tests/test_challenger_m1_gemma4_adapter.py` | R5, R10 | **VERIFIED NON-ORACLE**. Verified by ModelManifest and Rule 5 guardrails. Adapter SHA-256: `81412e358ad391753007f53e5148cb6a27097b4e97f06cff72a98701b4f18922`. Distillation converged to loss 0.072545 < 0.08 at Step 228 on 512 samples. Total params: 200,701,444. |
+| **C12** | Dynamic Consensus E-Gate Compute Scaling | **VERIFIED (PASS)** | `google/gemma-4-12B-it-4bit` + Calibrated E-Gate | `data/prlr_domain_v1/sealed_test.jsonl` | `results/semantic_benchmark.json` | `7feba749...` | `PYTHONPATH=src python3 run_semantic_benchmark.py --split sealed_test --model gemma_4_12b --pareto` | R8, R9, R10 | **VERIFIED NON-ORACLE**. Signals derived strictly from runtime activations. Accuracy retention: 100.00% (PASS vs >= 99.0%). Depth reduction: 44.34% vs fixed T=4 (PASS vs >= 15.0%). Mean executed depth: 2.23 / 12. |
+
+---
+
 ## 3. Independent Verification Protocol
 
 To independently verify the claims ledger:
@@ -112,4 +128,4 @@ PYTHONPATH=src python3 run_semantic_benchmark.py --quick
 python3 scripts/run_prlr_verification.py --quick
 ```
 
-**Acceptance Guarantee**: All 31 claims map directly to executable test fixtures, verified model checkpoints, and reproducible evaluation records. No synthetic traces, simulated latencies, or unverified marketing prose exist in this repository.
+**Acceptance Guarantee**: All 37 claims map directly to executable test fixtures, verified model checkpoints, and reproducible evaluation records. No synthetic traces, simulated latencies, or unverified marketing prose exist in this repository. All in-training capabilities remain strictly unpromoted per Non-Negotiable Evidence Rules 1–10.

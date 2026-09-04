@@ -412,7 +412,10 @@ class ProceduralVerifier:
 
         cleaned_text = prediction_str.strip()
         cleaned_text = re.sub(r"<end_of_turn>.*$", "", cleaned_text)
+        cleaned_text = re.sub(r"<turn|>.*$", "", cleaned_text)
         cleaned_text = re.sub(r"<eos>.*$", "", cleaned_text)
+        if "<channel|>" in cleaned_text:
+            cleaned_text = cleaned_text.split("<channel|>")[-1].strip()
 
         json_match = re.search(r"\{.*?\}", cleaned_text, re.DOTALL)
         if not json_match:

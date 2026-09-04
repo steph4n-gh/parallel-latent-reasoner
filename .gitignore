@@ -29,3 +29,7 @@ env/
 *.bin
 !checkpoints/legacy_invalid_objective/
 !checkpoints/legacy_invalid_objective/*
+
+# Subagent workspace scratchpads
+.agents/
+

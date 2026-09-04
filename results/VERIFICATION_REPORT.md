@@ -1,10 +1,10 @@
 # Parallel Latent Reasoner (PRLR) — Automated E2E Verification Report
 
-**Execution Timestamp**: `2026-09-03T19:37:20.978757+00:00`  
-**Git Commit SHA**: `93fbdc50c1872a699cf04bf867596157f90af822` (Dirty: `True`)  
-**Hardware Platform**: `Apple M4 Pro` (24.0 GB Unified RAM)  
-**Operating System**: `macOS-26.6-arm64-arm-64bit-Mach-O`  
-**Runtime Versions**: Python `3.14.4`, MLX `0.31.2`, Transformers `5.9.0`, NumPy `2.4.6`  
+- **Execution Timestamp**: `2026-09-04T03:11:40.877137+00:00`
+- **Git Commit SHA**: `e4d18cfadaf49a27dbb60efc82a26046960a6ca2` (Dirty: `True`)
+- **Hardware Platform**: `Apple M4 Pro` (24.0 GB Unified RAM)
+- **Operating System**: `macOS-26.6-arm64-arm-64bit-Mach-O`
+- **Runtime Versions**: Python `3.14.4`, MLX `0.31.2`, Transformers `5.9.0`, NumPy `2.4.6`
 
 ---
 
@@ -17,9 +17,9 @@
 | 1_preflight | Environment & Hardware Preflight | Feature Scope | **PASSED** |  |
 | 2_model_manifest | Model Manifest & E-Gate Configuration Integrity | Feature Scope | **PASSED** |  |
 | 3_dataset_integrity | Dataset SHA-256 Integrity (15 files) & Contamination Defense | Feature Scope | **PASSED** |  |
-| 4_ci_guardrails | Consolidated CI Verification Guardrails (Feature 28) | Feature Scope | **PASSED** | 1.64s |
-| 5_test_suite | Full Unit & Integration Test Suite | Feature Scope | **PASSED** | 2.12s |
-| 6_kernel_microbenchmark | Recurrent Kernel Microbenchmark Sanity Run (Feature 26) | Feature Scope | **PASSED** | 498.2 sweeps/s |
+| 4_ci_guardrails | Consolidated CI Verification Guardrails (Feature 28) | Feature Scope | **PASSED** | 1.66s |
+| 5_test_suite | Full Unit & Integration Test Suite | Feature Scope | **PASSED** | 1.89s |
+| 6_kernel_microbenchmark | Recurrent Kernel Microbenchmark Sanity Run (Feature 26) | Feature Scope | **PASSED** | 501.5 sweeps/s |
 | 7_semantic_benchmark | Pretrained Semantic Benchmark & Calibrated E-Gate (Feature 27) | Feature Scope | **PASSED** | retention: 100.0%, depth red: 48.3% |
 
 ---

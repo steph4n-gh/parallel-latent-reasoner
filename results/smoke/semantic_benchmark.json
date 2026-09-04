@@ -2,9 +2,9 @@
   "schema_version": "1.0.0",
   "metadata": {
     "benchmark_type": "prlr_gemma_semantic_benchmark",
-    "disclaimer": "PRETRAINED GEMMA 2B SEMANTIC BENCHMARK: Evaluates genuine pretrained google/gemma-2b-it backbone + recurrent deliberation adapter on frozen solver-backed domain splits. Operates under strict Rule 1 (blind evaluation) and Rule 2 (post-hoc verification).",
-    "command": "run_benchmark.py --quick",
-    "timestamp_utc": "2026-09-03T19:07:18.016027+00:00",
+    "disclaimer": "PRETRAINED GEMMA SEMANTIC BENCHMARK: Evaluates genuine pretrained Gemma backbone + recurrent deliberation adapter on frozen solver-backed domain splits. Operates under strict Rule 1 (blind evaluation) and Rule 2 (post-hoc verification).",
+    "command": "run_semantic_benchmark.py --quick --model gemma_2b",
+    "timestamp_utc": "2026-09-04T01:04:59.516024+00:00",
     "random_seed": 42,
     "git": {
       "commit_sha": "a90ad7ecebdd7a2f7c9d7d5a84227bd5bc729732",
@@ -108,48 +108,48 @@
     "accuracy_retention_pct": 100.0,
     "stage_latencies_ms": {
       "prefill": {
-        "mean": 2455.93,
-        "median_p50": 219.78,
-        "p95": 7876.25,
+        "mean": 437.06,
+        "median_p50": 277.07,
+        "p95": 859.96,
         "ci_95_bca": [
-          178.6757,
-          6976.365
+          238.325,
+          795.9175
         ]
       },
       "prelude": {
-        "mean": 23.6,
-        "median_p50": 0.77,
-        "p95": 78.55,
+        "mean": 18.08,
+        "median_p50": 8.66,
+        "p95": 46.36,
         "ci_95_bca": [
-          0.67,
-          69.4025
+          3.09,
+          42.5675
         ]
       },
       "deliberation": {
-        "mean": 1298.39,
-        "median_p50": 407.29,
-        "p95": 3511.64,
+        "mean": 675.22,
+        "median_p50": 561.35,
+        "p95": 988.79,
         "ci_95_bca": [
-          360.675,
-          3147.2
+          532.285,
+          940.035
         ]
       },
       "decode": {
-        "mean": 1506.21,
-        "median_p50": 1676.7,
-        "p95": 1756.84,
+        "mean": 1962.87,
+        "median_p50": 2184.3,
+        "p95": 2250.49,
         "ci_95_bca": [
-          908.12,
-          1720.0125
+          1223.87,
+          2216.4025
         ]
       },
       "total": {
-        "mean": 5284.14,
-        "median_p50": 2230.82,
-        "p95": 13221.29,
+        "mean": 3093.24,
+        "median_p50": 3048.63,
+        "p95": 4058.32,
         "ci_95_bca": [
-          1823.895,
-          11942.1725
+          2291.745,
+          3939.3375
         ]
       }
     },
@@ -184,11 +184,11 @@
       "executed_depth": 2,
       "exit_reason": "4_signal_consensus",
       "stage_latencies_ms": {
-        "prefill_ms": 9226.08,
-        "prelude_ms": 92.27,
-        "deliberation_ms": 4058.3,
-        "decode_ms": 1763.32,
-        "total_ms": 15139.96
+        "prefill_ms": 956.03,
+        "prelude_ms": 52.06,
+        "deliberation_ms": 1061.92,
+        "decode_ms": 2166.39,
+        "total_ms": 4236.41
       },
       "shannon_entropy": 4.7103,
       "max_4gram_repetition": 2
@@ -214,11 +214,11 @@
       "executed_depth": 2,
       "exit_reason": "4_signal_consensus",
       "stage_latencies_ms": {
-        "prefill_ms": 227.22,
-        "prelude_ms": 0.8,
-        "deliberation_ms": 400.69,
-        "decode_ms": 1720.09,
-        "total_ms": 2348.81
+        "prefill_ms": 238.56,
+        "prelude_ms": 3.24,
+        "deliberation_ms": 548.32,
+        "decode_ms": 2259.01,
+        "total_ms": 3049.14
       },
       "shannon_entropy": 4.4038,
       "max_4gram_repetition": 1
@@ -245,11 +245,11 @@
       "executed_depth": 2,
       "exit_reason": "4_signal_consensus",
       "stage_latencies_ms": {
-        "prefill_ms": 212.34,
-        "prelude_ms": 0.6,
-        "deliberation_ms": 413.9,
-        "decode_ms": 908.12,
-        "total_ms": 1534.97
+        "prefill_ms": 238.09,
+        "prelude_ms": 2.94,
+        "deliberation_ms": 574.38,
+        "decode_ms": 1223.87,
+        "total_ms": 2039.28
       },
       "shannon_entropy": 4.3662,
       "max_4gram_repetition": 1
@@ -274,11 +274,11 @@
       "executed_depth": 2,
       "exit_reason": "4_signal_consensus",
       "stage_latencies_ms": {
-        "prefill_ms": 158.1,
-        "prelude_ms": 0.74,
-        "deliberation_ms": 320.66,
-        "decode_ms": 1633.32,
-        "total_ms": 2112.82
+        "prefill_ms": 315.58,
+        "prelude_ms": 14.09,
+        "deliberation_ms": 516.25,
+        "decode_ms": 2202.2,
+        "total_ms": 3048.12
       },
       "shannon_entropy": 4.6493,
       "max_4gram_repetition": 1

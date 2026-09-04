@@ -72,7 +72,15 @@ def _resolve_project_path(rel_or_abs_path: Union[str, Path]) -> Path:
     if fallback.exists():
         return fallback
 
+    # Check .backup_weights if in checkpoints/
+    p_name = p.name
+    for base in [Path.cwd(), pkg_root, Path("/Volumes/Storage/qan_transformers/projects/parallel_latent_reasoner")]:
+        backup_candidate = base / "checkpoints" / ".backup_weights" / p_name
+        if backup_candidate.exists():
+            return backup_candidate
+
     return p_pkg if not p.is_absolute() else p
+
 
 
 class BaselineResult(tuple):
@@ -165,15 +173,44 @@ class PipelineResult:
 HybridDeliberationResult = PipelineResult
 
 
+def format_prompt_for_backbone(prompt: str, is_gemma4: bool) -> str:
+    """Format prompt according to backbone architecture requirements.
+
+    For Gemma 4 12B, strictly formats prompts using the official chat template
+    with thought channel:
+    <|turn>user\n{body}<turn|>\n<|turn>model\n<|channel>thought\n
+    """
+    if not is_gemma4:
+        return prompt
+
+    if "<start_of_turn>user" in prompt:
+        import re
+        match = re.search(r"<start_of_turn>user\s*\n(.*?)(?:<end_of_turn>|$)", prompt, re.DOTALL)
+        user_body = match.group(1).strip() if match else prompt.strip()
+        return f"<|turn>user\n{user_body}<turn|>\n<|turn>model\n<|channel>thought\n"
+    elif "<|turn>user" in prompt:
+        if "<|channel>thought" not in prompt:
+            if prompt.endswith("<|turn>model\n"):
+                return prompt + "<|channel>thought\n"
+            elif prompt.endswith("<|turn>model"):
+                return prompt + "\n<|channel>thought\n"
+            else:
+                return prompt + "\n<|channel>thought\n"
+        return prompt
+    else:
+        return f"<|turn>user\n{prompt.strip()}<turn|>\n<|turn>model\n<|channel>thought\n"
+
+
 class PRLRPipeline:
-    """Authoritative top-level production pipeline for PRLR with genuine Gemma 2B.
+    """Authoritative top-level production pipeline for PRLR with genuine Gemma 4 12B or Gemma 2B.
 
     Initializes:
-    1. PretrainedGemmaBackbone(manifest=ModelManifest.gemma_2b_it())
+    1. PretrainedGemmaBackbone(manifest=ModelManifest.gemma_4_12b_it()) [graceful fallback to gemma_2b_it()]
     2. Freezes backbone parameters (backbone.freeze())
-    3. GemmaRecurrentAdapter(dim=2048, num_slots=16, num_layers=1)
-    4. Loads checkpoints/gemma_2b_prlr_adapter.safetensors via adapter.load_weights(..., strict=True)
-    5. GemmaCausalPrefixDecoder(backbone=backbone, adapter=adapter)
+    3. GemmaRecurrentAdapter(dim=3840, num_slots=16, num_layers=1) [fallback: dim=2048]
+    4. Loads checkpoints/gemma_4_12b_prlr_adapter.safetensors via adapter.load_weights(..., strict=True)
+       [graceful fallback to checkpoints/gemma_2b_prlr_adapter.safetensors]
+    5. GemmaCausalPrefixDecoder(backbone=backbone, adapter=adapter, prefix_dim=dim, hidden_dim=dim)
     6. GemmaCalibratedEGate loaded with checkpoints/calibrated_egate_config.json
     """
 
@@ -186,7 +223,7 @@ class PRLRPipeline:
         adapter: Optional[GemmaRecurrentAdapter] = None,
         decoder: Optional[GemmaCausalPrefixDecoder] = None,
         egate: Optional[GemmaCalibratedEGate] = None,
-        dim: int = 2048,
+        dim: Optional[int] = None,
         num_slots: int = 16,
         num_layers: int = 1,
         deliberation_steps: int = 4,
@@ -194,16 +231,43 @@ class PRLRPipeline:
         load_trained_adapter: bool = True,
         strict_loading: bool = True,
     ):
-        # 1. Initialize & Freeze Pretrained Backbone
+        # 1. Determine Model Manifest and Dimension (Defaults to Gemma 4 12B with graceful fallback)
+        ckpt_12b = _resolve_project_path("checkpoints/gemma_4_12b_prlr_adapter.safetensors")
+        hub_12b = Path("/Volumes/Storage/huggingface_cache/hub/google-gemma-4-12B-it-4bit")
+        has_12b = ckpt_12b.exists() and hub_12b.exists()
+
         if backbone is not None:
             self.backbone = backbone
             self.manifest = getattr(backbone, "manifest", None)
-        else:
-            self.manifest = manifest if manifest is not None else ModelManifest.gemma_2b_it()
+            if dim is None:
+                dim = getattr(self.manifest, "hidden_dimension", 3840 if has_12b else 2048) if self.manifest else (3840 if has_12b else 2048)
+        elif manifest is not None:
+            self.manifest = manifest
+            if dim is None:
+                dim = manifest.hidden_dimension
             self.backbone = PretrainedGemmaBackbone(
                 manifest=self.manifest,
                 load_weights=load_weights,
             )
+        else:
+            # Neither backbone nor manifest provided: default to 12B, fallback to 2B if 12B not present
+            if dim == 2048 or (adapter_path is not None and "2b" in str(adapter_path)):
+                self.manifest = ModelManifest.gemma_2b_it()
+                dim = 2048
+            elif has_12b or dim == 3840 or (adapter_path is not None and "4_12b" in str(adapter_path)):
+                self.manifest = ModelManifest.gemma_4_12b_it()
+                dim = 3840
+            else:
+                self.manifest = ModelManifest.gemma_2b_it()
+                dim = 2048
+
+            self.backbone = PretrainedGemmaBackbone(
+                manifest=self.manifest,
+                load_weights=load_weights,
+            )
+
+        if dim is None:
+            dim = 3840 if getattr(self.manifest, "hidden_dimension", 2048) == 3840 else 2048
 
         # Ensure backbone parameters are completely frozen
         self.backbone.freeze()
@@ -223,21 +287,34 @@ class PRLRPipeline:
         self.adapter_path: Optional[str] = None
 
         if load_weights and load_trained_adapter:
-            default_adapter_name = "checkpoints/gemma_2b_prlr_adapter.safetensors"
+            if dim == 3840 or (self.manifest and "gemma-4" in getattr(self.manifest, "model_id", "")):
+                default_adapter_name = "checkpoints/gemma_4_12b_prlr_adapter.safetensors"
+                model_key = "gemma_4_12b"
+            else:
+                default_adapter_name = "checkpoints/gemma_2b_prlr_adapter.safetensors"
+                model_key = "gemma_2b"
+
             target_path = _resolve_project_path(adapter_path or default_adapter_name)
             if not target_path.exists() and adapter_path is None:
-                # Attempt to download production checkpoint from GitHub Release
-                try:
-                    import importlib.util
-                    download_script = target_path.parents[1] / "scripts" / "download_checkpoint.py"
-                    if download_script.exists():
-                        spec = importlib.util.spec_from_file_location("download_checkpoint", str(download_script))
-                        if spec and spec.loader:
-                            mod = importlib.util.module_from_spec(spec)
-                            spec.loader.exec_module(mod)
-                            target_path = mod.ensure_checkpoint(target_dir=target_path.parent)
-                except Exception:
-                    pass
+                # Graceful fallback check
+                if model_key == "gemma_4_12b":
+                    candidate_2b = _resolve_project_path("checkpoints/gemma_2b_prlr_adapter.safetensors")
+                    if candidate_2b.exists():
+                        target_path = candidate_2b
+
+                if not target_path.exists():
+                    # Attempt to download production checkpoint from GitHub Release
+                    try:
+                        import importlib.util
+                        download_script = target_path.parents[1] / "scripts" / "download_checkpoint.py"
+                        if download_script.exists():
+                            spec = importlib.util.spec_from_file_location("download_checkpoint", str(download_script))
+                            if spec and spec.loader:
+                                mod = importlib.util.module_from_spec(spec)
+                                spec.loader.exec_module(mod)
+                                target_path = mod.ensure_checkpoint(model=model_key, target_dir=target_path.parent)
+                    except Exception:
+                        pass
 
             if target_path.exists():
                 self.adapter.load_weights(str(target_path), strict=strict_loading)
@@ -250,7 +327,7 @@ class PRLRPipeline:
                     raise FileNotFoundError(
                         f"Production adapter checkpoint not found at {target_path}. "
                         "Run `python scripts/download_checkpoint.py` or download from "
-                        "https://github.com/steph4n-gh/parallel-latent-reasoner/releases/tag/v0.2.0-alpha"
+                        "https://github.com/steph4n-gh/qan-transformers/releases/tag/v0.3.0-alpha"
                     )
         else:
             self.adapter_loaded = False
@@ -264,6 +341,8 @@ class PRLRPipeline:
                 self.decoder = GemmaCausalPrefixDecoder(
                     backbone=self.backbone,
                     adapter=self.adapter,
+                    prefix_dim=dim,
+                    hidden_dim=dim,
                 )
             except TypeError:
                 self.decoder = GemmaCausalPrefixDecoder(backbone=self.backbone)
@@ -294,13 +373,30 @@ class PRLRPipeline:
         self.num_slots = num_slots
         self.deliberation_steps = deliberation_steps
 
+    @property
+    def is_gemma4(self) -> bool:
+        """Return whether the pipeline is configured with a Gemma 4 backbone."""
+        if hasattr(self.backbone, "manifest") and self.backbone.manifest is not None:
+            return "gemma-4" in getattr(self.backbone.manifest, "model_id", "")
+        if self.manifest is not None:
+            return "gemma-4" in getattr(self.manifest, "model_id", "")
+        return self.dim == 3840
+
     @classmethod
     def from_preset(
         cls,
-        preset: str = "gemma_2b",
+        preset: str = "gemma_4_12b",
         **kwargs: Any,
     ) -> PRLRPipeline:
         """Factory preset constructor for backward-compatibility with demo/app."""
+        if preset in ("gemma_4_12b", "gemma_12b"):
+            kwargs.setdefault("dim", 3840)
+            kwargs.setdefault("manifest", ModelManifest.gemma_4_12b_it())
+            kwargs.setdefault("adapter_path", "checkpoints/gemma_4_12b_prlr_adapter.safetensors")
+        elif preset in ("gemma_2b", "gemma"):
+            kwargs.setdefault("dim", 2048)
+            kwargs.setdefault("manifest", ModelManifest.gemma_2b_it())
+            kwargs.setdefault("adapter_path", "checkpoints/gemma_2b_prlr_adapter.safetensors")
         return cls(**kwargs)
 
     def generate(
@@ -330,7 +426,10 @@ class PRLRPipeline:
         # Stage 1: Prefill & Contextual Hidden Extraction
         # ----------------------------------------------------------------------
         t0 = time.perf_counter()
-        if isinstance(prompt, list):
+        if isinstance(prompt, str):
+            formatted_prompt = format_prompt_for_backbone(prompt, self.is_gemma4)
+            prompt_ids, _ = self.backbone.encode_prompt_context(formatted_prompt)
+        elif isinstance(prompt, list):
             prompt_arr = mx.array(prompt, dtype=mx.int32)
             if prompt_arr.ndim == 1:
                 prompt_arr = prompt_arr[None, :]
@@ -494,7 +593,10 @@ class PRLRPipeline:
         Zero deliberation, zero working memory slots. Pure causal prefill and decode.
         """
         t0 = time.perf_counter()
-        if isinstance(prompt, list):
+        if isinstance(prompt, str):
+            formatted_prompt = format_prompt_for_backbone(prompt, self.is_gemma4)
+            prompt_ids, _ = self.backbone.encode_prompt_context(formatted_prompt)
+        elif isinstance(prompt, list):
             prompt_arr = mx.array(prompt, dtype=mx.int32)
             if prompt_arr.ndim == 1:
                 prompt_arr = prompt_arr[None, :]

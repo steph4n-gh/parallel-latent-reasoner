@@ -1,7 +1,7 @@
-# Pretrained Gemma 2B Semantic Benchmark Report
+# Pretrained google/gemma-2b-it Semantic Benchmark Report
 
 > ⚠️ **DISCLAIMER (Non-Negotiable Evidence Rules 1, 2, 5, 8, 9, 10)**:  
-> *PRETRAINED GEMMA 2B SEMANTIC BENCHMARK: Evaluates genuine pretrained google/gemma-2b-it backbone + recurrent deliberation adapter on frozen solver-backed domain splits. Operates under strict Rule 1 (blind evaluation) and Rule 2 (post-hoc verification).*
+> *PRETRAINED GEMMA SEMANTIC BENCHMARK: Evaluates genuine pretrained Gemma backbone + recurrent deliberation adapter on frozen solver-backed domain splits. Operates under strict Rule 1 (blind evaluation) and Rule 2 (post-hoc verification).*
 
 ---
 
@@ -12,7 +12,7 @@
 - **Dataset Split**: `sealed_test` (4 samples)
 - **Hardware**: `Apple M4 Pro` (24.0 GB RAM)
 - **Git Commit**: `a90ad7ecebdd7a2f7c9d7d5a84227bd5bc729732` (Dirty: `True`)
-- **Timestamp**: `2026-09-03T19:07:18.016027+00:00`
+- **Timestamp**: `2026-09-04T01:04:59.516024+00:00`
 
 ---
 
@@ -35,11 +35,11 @@
 
 | Stage | Mean (ms) | Median (p50) | p95 | 95% BCa CI (ms) | Fraction of Total |
 |---|:---:|:---:|:---:|:---:|:---:|
-| **Prefill** | 2455.93 ms | 219.78 ms | 7876.25 ms | [178.68, 6976.36] | 46.5% |
-| **Prelude** | 23.60 ms | 0.77 ms | 78.55 ms | [0.67, 69.40] | 0.4% |
-| **Deliberation** | 1298.39 ms | 407.29 ms | 3511.64 ms | [360.68, 3147.20] | 24.6% |
-| **Decode** | 1506.21 ms | 1676.70 ms | 1756.84 ms | [908.12, 1720.01] | 28.5% |
-| **Total** | 5284.14 ms | 2230.82 ms | 13221.29 ms | [1823.89, 11942.17] | 100.0% |
+| **Prefill** | 437.06 ms | 277.07 ms | 859.96 ms | [238.32, 795.92] | 14.1% |
+| **Prelude** | 18.08 ms | 8.66 ms | 46.36 ms | [3.09, 42.57] | 0.6% |
+| **Deliberation** | 675.22 ms | 561.35 ms | 988.79 ms | [532.28, 940.03] | 21.8% |
+| **Decode** | 1962.87 ms | 2184.30 ms | 2250.49 ms | [1223.87, 2216.40] | 63.5% |
+| **Total** | 3093.24 ms | 3048.63 ms | 4058.32 ms | [2291.74, 3939.34] | 100.0% |
 
 ---
 

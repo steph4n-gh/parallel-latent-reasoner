@@ -1,44 +1,45 @@
-# Guide: Tuning the 3-Signal Dynamic Consensus E-Gate
+# Guide: Tuning the 4-Signal Calibrated Dynamic Consensus E-Gate
 
-The 3-Signal Dynamic Consensus E-Gate monitors continuous latent trajectories in real-time and halts computation as soon as the representation converges, saving up to $83\%$ of compute on simpler inputs.
+The **4-Signal Calibrated Dynamic Consensus E-Gate** monitors continuous latent trajectories in real-time and halts computation as soon as representations stabilize across both geometric and semantic dimensions, saving recurrent compute while retaining full accuracy.
 
-## 1. The 3 Consensus Signals
+## 1. The 4 Calibrated Consensus Signals
 
-$$\text{Halt}(t) = (t \ge T_{\min}) \land \left[ \left( \frac{v(t)}{v(1)} < \tau_v \right) \land \left( \hat{y}^{(t)} == \hat{y}^{(t-1)} \right) \land \left( |\Delta \text{erank}| < \tau_r \right) \right] \lor (t \ge T_{\max})$$
+$$\text{Halt}(t) = (t \ge T_{\min}) \land \left[ \left( v(t) < \tau_v \right) \land \left( H(t) < \tau_e \right) \land \left( m(t) > \tau_m \right) \land \left( |\Delta \text{erank}(t)| < \tau_r \right) \right] \lor (t \ge T_{\max})$$
 
-1. **Velocity Decay Signal**:
-   $$\frac{v(t)}{v(1)} < \tau_v \quad (\text{Default: } \tau_v = 0.10)$$
-   Measures kinetic energy dissipation. Ensures the continuous state has settled near a local minimum.
-2. **Coda Discrete Consensus**:
-   $$\hat{y}^{(t)} == \hat{y}^{(t-1)}$$
-   The discrete solution predicted by the linear readout head remains unchanged between consecutive recurrent passes.
-3. **Effective Rank Plateau**:
-   $$|\text{erank}(S^{(t)}) - \text{erank}(S^{(t-1)})| < \tau_r \quad (\text{Default: } \tau_r = 0.005)$$
-   The spectral Shannon entropy across the singular values of the $M=16$ slots has saturated, indicating that no new orthogonal features are being recruited.
+1. **Kinetic State Velocity Decay**:
+   $$v(t) = \frac{\|S^{(t)} - S^{(t-1)}\|_F}{\max(\|S^{(1)} - S^{(0)}\|_F, 10^{-6})} < \tau_v \quad (\text{Calibrated: } \tau_v = 0.98)$$
+   Measures kinetic energy dissipation in working memory slot representations.
+2. **First-Token Prediction Entropy**:
+   $$H(t) = -\sum_{i} p_i \ln p_i < \tau_e \quad (\text{Calibrated: } \tau_e = 0.65\text{ nats})$$
+   Monitors the information-theoretic uncertainty of top logits directly from latent probe activations.
+3. **Top-1 vs Top-2 Decision Margin**:
+   $$m(t) = z_{(1)} - z_{(2)} > \tau_m \quad (\text{Calibrated: } \tau_m = 2.80)$$
+   Ensures unambiguous hypothesis separation before exiting to causal decode.
+4. **Gram Effective Rank Plateau**:
+   $$\Delta r(t) = |\text{erank}(S^{(t)}) - \text{erank}(S^{(t-1)})| < \tau_r \quad (\text{Calibrated: } \tau_r = 0.006)$$
+   Verifies that the effective rank across memory slots has stabilized, indicating feature recruitment saturation.
 
-## 2. Tuning for Speed vs. Precision
+## 2. Python API Usage
 
 ```python
-from parallel_latent_reasoner import GemmaDeliberationPipeline
+from prlr.pipeline import PRLRPipeline
 
-pipeline = GemmaDeliberationPipeline.from_preset("compact_test")
-
-# AGGRESSIVE EARLY-EXIT (Max speed, for simple triage / classification):
-output = pipeline.generate(
-    prompt="Classify intent: I want to cancel my account",
-    min_steps=1,
-    max_steps=4,
-    tol_rel_vel=0.20,      # Halts earlier at 80% velocity drop
-    tol_erank_delta=0.010,  # Looser rank plateau
+# Initialize production pipeline with verified pretrained weights
+pipeline = PRLRPipeline(
+    deliberation_steps=4,
+    num_slots=16,
 )
 
-# CONSERVATIVE DELIBERATION (Max depth, for multi-constraint planning):
-output = pipeline.generate(
-    prompt="Plan orbital payload under 5 constraints...",
-    min_steps=4,
+# Execute inference with calibrated 4-signal consensus E-gate
+result = pipeline.deliberate_and_verify(
+    prompt="Route request: customer wants refund for order 4201",
     max_steps=12,
-    tol_rel_vel=0.05,      # Requires 95% velocity drop
-    tol_erank_delta=0.002,  # Tight rank plateau
-    patience=2,             # Requires 2 consecutive consensus steps
+    max_new_tokens=64,
+    enable_dynamic_gate=True,
 )
+
+print(f"Decoded Action    : {result.decoded_text}")
+print(f"Executed Steps    : {result.deliberation_steps}")
+print(f"Exit Verdict      : {result.egate_verdict}")
+print(f"Shannon Entropy   : {result.shannon_entropy:.2f} bits")
 ```

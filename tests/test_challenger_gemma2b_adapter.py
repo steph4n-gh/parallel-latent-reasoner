@@ -1,19 +1,15 @@
-"""Empirical Challenger Test Suite for Milestone 1 Production Gemma 4 12B Recurrent Adapter.
+"""Empirical Challenger Test Suite for Backward Compatibility: Gemma 2B Recurrent Adapter.
 
 Empirically verifies:
-1. Production checkpoint file integrity and cryptographic SHA-256 match with sidecar JSON.
-2. Embedded safetensors header metadata agreement with sidecar JSON (anti-forgery defense).
-3. Parameter accounting: 200,701,444 total, 200,701,442 trainable, 2 frozen, across 28 tensors.
-4. Convergence and hardware metrics: final_loss < 0.08, peak_vram_mb <= 12288.0, converged = True.
-5. Strict weight loading (`adapter.load_weights(filepath, strict=True)`) into `GemmaRecurrentAdapter`.
-6. Parameter statistics: non-zero, non-NaN, non-Inf, non-degenerate variance.
-7. Bounded alpha gating parameters (`layers.0.alpha_attn` and `layers.0.alpha_mlp` in [0, 0.5]).
-8. Forward deliberation pass shape: (B, 16, 3840) and bounded numerical representation.
-9. Numerical stability across variable deliberation steps (T=1, 2, 4, 8, 12) with dummy inputs.
-10. Trajectory equivalence: `adapter(hiddens, steps=T) == traj[T]` and monotonic velocity contraction.
-11. Deliberation stability with genuine Gemma 4 12B contextual hidden representations.
-12. Adversarial stress testing (extreme magnitudes, constant inputs, single-token, long-prompt).
-13. Cryptographic tamper resistance: single-bit modification triggers verification failure.
+1. Legacy Gemma 2B checkpoint file integrity and SHA-256 cryptographic match with sidecar JSON.
+2. Embedded safetensors header metadata match with sidecar JSON.
+3. Strict weight loading (`adapter.load_weights(filepath, strict=True)`) into `GemmaRecurrentAdapter`.
+4. Parameter statistics: non-zero, non-NaN, non-Inf, non-degenerate variance for all weight matrices.
+5. Bounded alpha gating parameters (`layers.0.alpha_attn` and `layers.0.alpha_mlp` in [0, 0.5]).
+6. Numerical stability across variable deliberation steps (T=1, 2, 4, 8, 12) with dummy prompt inputs.
+7. Numerical stability across variable deliberation steps (T=1, 2, 4, 8, 12) with genuine pretrained Gemma contextual hidden states.
+8. Trajectory equivalence: `adapter(hiddens, steps=T) == traj[T]` for all T.
+9. Adversarial stress testing (extreme input scales, single-token, long-prompt, constant inputs).
 """
 
 from __future__ import annotations
@@ -29,85 +25,43 @@ from mlx.utils import tree_flatten
 import numpy as np
 import pytest
 
-PROJECT_DIR = Path(__file__).resolve().parent.parent
-SRC_DIR = PROJECT_DIR / "src"
-if str(SRC_DIR) not in sys.path:
-    sys.path.insert(0, str(SRC_DIR))
-
 from prlr.gemma.adapter import GemmaRecurrentAdapter
 from prlr.gemma.backbone import PretrainedGemmaBackbone
 from prlr.manifest import ModelManifest
 
-CHECKPOINT_DIR = PROJECT_DIR / "checkpoints"
-CHECKPOINT_WEIGHTS = CHECKPOINT_DIR / "gemma_4_12b_prlr_adapter.safetensors"
-CHECKPOINT_SIDECAR = CHECKPOINT_DIR / "gemma_4_12b_prlr_adapter.json"
+CHECKPOINT_DIR = Path(__file__).parent.parent / "checkpoints"
+CHECKPOINT_WEIGHTS = CHECKPOINT_DIR / "gemma_2b_prlr_adapter.safetensors"
+CHECKPOINT_SIDECAR = CHECKPOINT_DIR / "gemma_2b_prlr_adapter.json"
 
-EXPECTED_TOTAL_PARAMS = 200_701_444
-EXPECTED_TRAINABLE_PARAMS = 200_701_442
-EXPECTED_FROZEN_PARAMS = 2
-EXPECTED_TENSOR_COUNT = 28
-EXPECTED_TRAINABLE_TENSOR_COUNT = 26
-EXPECTED_DIM = 3840
-
-EXPECTED_KEYS = [
-    "prelude.slot_anchors",
-    "prelude.slot_role_embed",
-    "prelude.context_proj.weight",
-    "prelude.norm.weight",
-    "layers.0.norm1.weight",
-    "layers.0.norm1.mlp_l1.weight",
-    "layers.0.norm1.mlp_l1.bias",
-    "layers.0.norm1.mlp_l2.weight",
-    "layers.0.norm1.mlp_l2.bias",
-    "layers.0.attn.q_proj.weight",
-    "layers.0.attn.k_proj.weight",
-    "layers.0.attn.v_proj.weight",
-    "layers.0.attn.o_proj.weight",
-    "layers.0.attn.k_cross_proj.weight",
-    "layers.0.attn.v_cross_proj.weight",
-    "layers.0.alpha_attn",
-    "layers.0.raw_alpha_attn",
-    "layers.0.norm2.weight",
-    "layers.0.norm2.mlp_l1.weight",
-    "layers.0.norm2.mlp_l1.bias",
-    "layers.0.norm2.mlp_l2.weight",
-    "layers.0.norm2.mlp_l2.bias",
-    "layers.0.mlp.gate_proj.weight",
-    "layers.0.mlp.up_proj.weight",
-    "layers.0.mlp.down_proj.weight",
-    "layers.0.alpha_mlp",
-    "layers.0.raw_alpha_mlp",
-    "out_norm.weight",
-]
+EXPECTED_TOTAL_PARAMS = 88_690_692
+EXPECTED_DIM = 2048
 
 if not CHECKPOINT_WEIGHTS.exists():
     try:
-        scripts_dir = PROJECT_DIR / "scripts"
+        scripts_dir = Path(__file__).parent.parent / "scripts"
         if str(scripts_dir) not in sys.path:
             sys.path.insert(0, str(scripts_dir))
         from download_checkpoint import ensure_checkpoint
-        ensure_checkpoint(model="gemma_4_12b", target_dir=CHECKPOINT_DIR, quiet=True)
+        ensure_checkpoint(model="gemma_2b", target_dir=CHECKPOINT_DIR, quiet=True)
     except Exception:
         pass
 
 if not CHECKPOINT_WEIGHTS.exists():
     pytest.skip(
-        f"Production Gemma 4 12B checkpoint {CHECKPOINT_WEIGHTS.name} not found. "
-        "Run `python train_gemma4_adapter.py` or download from GitHub release.",
+        f"Legacy Gemma 2B checkpoint {CHECKPOINT_WEIGHTS.name} not found. Skipping backward compatibility test.",
         allow_module_level=True,
     )
 
 if not CHECKPOINT_SIDECAR.exists():
     pytest.skip(
-        f"Production Gemma 4 12B sidecar {CHECKPOINT_SIDECAR.name} not found.",
+        f"Legacy Gemma 2B sidecar {CHECKPOINT_SIDECAR.name} not found. Skipping backward compatibility test.",
         allow_module_level=True,
     )
 
 
 @pytest.fixture(scope="module")
 def loaded_adapter() -> GemmaRecurrentAdapter:
-    """Fixture providing a GemmaRecurrentAdapter strictly loaded with Gemma 4 12B production weights."""
-    assert CHECKPOINT_WEIGHTS.exists(), f"Missing weights: {CHECKPOINT_WEIGHTS}"
+    """Fixture providing a GemmaRecurrentAdapter with strictly loaded 2B weights."""
     adapter = GemmaRecurrentAdapter(dim=EXPECTED_DIM, num_slots=16, num_layers=1, deliberation_steps=4)
     adapter.load_weights(str(CHECKPOINT_WEIGHTS), strict=True)
     return adapter
@@ -115,22 +69,19 @@ def loaded_adapter() -> GemmaRecurrentAdapter:
 
 @pytest.fixture(scope="module")
 def pretrained_backbone() -> PretrainedGemmaBackbone:
-    """Fixture providing real PretrainedGemmaBackbone for Gemma 4 12B."""
-    manifest = ModelManifest.gemma_4_12b_it()
+    """Fixture providing real PretrainedGemmaBackbone for Gemma 2B."""
+    manifest = ModelManifest.gemma_2b_it()
     return PretrainedGemmaBackbone(manifest=manifest, load_weights=True)
 
 
 def test_checkpoint_file_and_sidecar_integrity():
-    """Verify production checkpoint exists, SHA-256 matches, and embedded header agrees with sidecar."""
+    """Verify checkpoint exists on disk, cryptographic SHA-256 matches sidecar JSON and header."""
     assert CHECKPOINT_WEIGHTS.exists(), f"Missing weights: {CHECKPOINT_WEIGHTS}"
     assert CHECKPOINT_SIDECAR.exists(), f"Missing sidecar: {CHECKPOINT_SIDECAR}"
 
-    # 1. Compute streaming SHA-256
-    hasher = hashlib.sha256()
     with open(CHECKPOINT_WEIGHTS, "rb") as f:
-        while chunk := f.read(64 * 1024 * 1024):
-            hasher.update(chunk)
-    computed_sha256 = hasher.hexdigest()
+        file_bytes = f.read()
+        computed_sha256 = hashlib.sha256(file_bytes).hexdigest()
 
     with open(CHECKPOINT_SIDECAR, "r", encoding="utf-8") as f:
         sidecar = json.load(f)
@@ -138,60 +89,60 @@ def test_checkpoint_file_and_sidecar_integrity():
     assert sidecar["weights_sha256"] == computed_sha256, (
         f"SHA-256 mismatch: sidecar has {sidecar['weights_sha256']}, computed {computed_sha256}"
     )
-    assert sidecar["weights_file"] == "gemma_4_12b_prlr_adapter.safetensors"
-    assert sidecar["manifest_id"] == "google/gemma-4-12B-it-4bit"
+    assert sidecar["weights_file"] == "gemma_2b_prlr_adapter.safetensors"
+    assert sidecar["backbone_model_id"] == "google/gemma-2b-it"
     assert sidecar["converged"] is True, "Sidecar indicates training did not converge"
-    assert sidecar["final_loss"] < 0.08, f"Final loss {sidecar['final_loss']} not < 0.08"
-    assert sidecar["peak_vram_mb"] <= 12288.0, f"Peak VRAM {sidecar['peak_vram_mb']} MB > 12288.0 MB"
+    assert sidecar["final_loss"] < 0.15, f"Final loss {sidecar['final_loss']} not < 0.15"
     assert sidecar["total_parameters"] == EXPECTED_TOTAL_PARAMS, (
         f"Parameter count mismatch: {sidecar['total_parameters']} != {EXPECTED_TOTAL_PARAMS}"
     )
-    assert sidecar["trainable_parameters"] == EXPECTED_TRAINABLE_PARAMS
-    assert sidecar["frozen_parameters"] == EXPECTED_FROZEN_PARAMS
 
-    # 2. Forensic Header Extraction & Cross-Validation
+    # Header check
     with open(CHECKPOINT_WEIGHTS, "rb") as f:
         header_len = struct.unpack("<Q", f.read(8))[0]
         header = json.loads(f.read(header_len).decode("utf-8"))
-    embedded_meta = header.get("__metadata__", {})
-
-    assert embedded_meta, "Safetensors file is missing embedded __metadata__ header!"
-    if embedded_meta.get("converged", "").lower() != "true":
-        pytest.skip(
-            f"Gemma 4 12B checkpoint is intermediate / training in progress (converged={embedded_meta.get('converged')}, loss={embedded_meta.get('final_loss')}). "
-            "Full convergence verification will run once training completes."
-        )
-    header_loss = float(embedded_meta.get("final_loss", 999.0))
-    assert header_loss < 0.08, f"Embedded header final loss {header_loss} not < 0.08"
-    assert abs(header_loss - float(sidecar["final_loss"])) < 1e-5, (
-        f"Loss discrepancy between header ({header_loss}) and sidecar ({sidecar['final_loss']})"
-    )
-    assert str(embedded_meta.get("final_step")) == str(sidecar["final_step"]), (
-        f"Step discrepancy: header={embedded_meta.get('final_step')}, sidecar={sidecar['final_step']}"
-    )
-    assert str(embedded_meta.get("dim")) == str(EXPECTED_DIM), (
-        f"Dimension discrepancy: header={embedded_meta.get('dim')}, expected {EXPECTED_DIM}"
-    )
+    meta = header.get("__metadata__", {})
+    assert meta.get("converged", "").lower() == "true"
+    assert float(meta.get("final_loss", 999.0)) < 0.15
 
 
 def test_strict_weight_loading(loaded_adapter: GemmaRecurrentAdapter):
-    """Verify strict loading restores all 28 parameter arrays matching 200,701,444 parameter specification."""
+    """Verify strict loading restores all 28 parameter arrays without missing or extra keys."""
     params = dict(tree_flatten(loaded_adapter.parameters()))
-    assert len(params) == EXPECTED_TENSOR_COUNT, f"Expected {EXPECTED_TENSOR_COUNT} tensors, found {len(params)}"
+    assert len(params) == 28, f"Expected 28 parameter tensors, found {len(params)}"
 
-    for key in EXPECTED_KEYS:
+    expected_keys = [
+        "prelude.slot_anchors",
+        "prelude.slot_role_embed",
+        "prelude.context_proj.weight",
+        "prelude.norm.weight",
+        "layers.0.norm1.weight",
+        "layers.0.norm1.mlp_l1.weight",
+        "layers.0.norm1.mlp_l1.bias",
+        "layers.0.norm1.mlp_l2.weight",
+        "layers.0.norm1.mlp_l2.bias",
+        "layers.0.attn.q_proj.weight",
+        "layers.0.attn.k_proj.weight",
+        "layers.0.attn.v_proj.weight",
+        "layers.0.attn.o_proj.weight",
+        "layers.0.attn.k_cross_proj.weight",
+        "layers.0.attn.v_cross_proj.weight",
+        "layers.0.alpha_attn",
+        "layers.0.raw_alpha_attn",
+        "layers.0.norm2.weight",
+        "layers.0.norm2.mlp_l1.weight",
+        "layers.0.norm2.mlp_l1.bias",
+        "layers.0.norm2.mlp_l2.weight",
+        "layers.0.norm2.mlp_l2.bias",
+        "layers.0.mlp.gate_proj.weight",
+        "layers.0.mlp.up_proj.weight",
+        "layers.0.mlp.down_proj.weight",
+        "layers.0.alpha_mlp",
+        "layers.0.raw_alpha_mlp",
+        "out_norm.weight",
+    ]
+    for key in expected_keys:
         assert key in params, f"Missing expected key: {key}"
-
-    total_params = sum(p.size for p in params.values())
-    assert total_params == EXPECTED_TOTAL_PARAMS, f"Expected {EXPECTED_TOTAL_PARAMS} params, got {total_params}"
-
-    trainable_params = dict(tree_flatten(loaded_adapter.trainable_parameters()))
-    assert len(trainable_params) == EXPECTED_TRAINABLE_TENSOR_COUNT
-    trainable_count = sum(p.size for p in trainable_params.values())
-    assert trainable_count == EXPECTED_TRAINABLE_PARAMS
-
-    frozen_keys = set(params.keys()) - set(trainable_params.keys())
-    assert frozen_keys == {"layers.0.alpha_attn", "layers.0.alpha_mlp"}
 
 
 def test_weight_statistics_and_variance(loaded_adapter: GemmaRecurrentAdapter):
@@ -203,6 +154,7 @@ def test_weight_statistics_and_variance(loaded_adapter: GemmaRecurrentAdapter):
         norm = float(mx.linalg.norm(p.flatten()).item())
         assert norm > 0.0, f"Zero weight array in parameter {name}"
 
+        # Check non-degenerate variance on multidimensional projection matrices
         if p.ndim >= 2:
             std = float(mx.sqrt(mx.var(p)).item())
             assert std > 1e-4, f"Degenerate variance in matrix {name}: std={std}"
@@ -216,6 +168,7 @@ def test_alpha_gating_parameters_bounded(loaded_adapter: GemmaRecurrentAdapter):
     assert 0.0 <= alpha_attn <= 0.5, f"alpha_attn={alpha_attn} outside [0, 0.5]"
     assert 0.0 <= alpha_mlp <= 0.5, f"alpha_mlp={alpha_mlp} outside [0, 0.5]"
 
+    # Check effective alphas computed from raw_alpha via sigmoid
     eff_attn = float(
         (loaded_adapter.layers[0].alpha_max * mx.sigmoid(loaded_adapter.layers[0].raw_alpha_attn)).item()
     )
@@ -242,8 +195,13 @@ def test_variable_deliberation_steps_dummy_input(
     assert not mx.isnan(out).any().item(), f"NaN in output at steps={steps}"
     assert not mx.isinf(out).any().item(), f"Inf in output at steps={steps}"
 
+    min_val = float(mx.min(out).item())
+    max_val = float(mx.max(out).item())
     norm_val = float(mx.linalg.norm(out).item())
-    assert 100.0 < norm_val < 700.0, f"Unbounded norm value: {norm_val}"
+
+    assert -10.0 < min_val < 0.0, f"Unbounded min value: {min_val}"
+    assert 0.0 < max_val < 10.0, f"Unbounded max value: {max_val}"
+    assert 100.0 < norm_val < 500.0, f"Unbounded norm value: {norm_val}"
 
 
 def test_trajectory_equivalence_and_velocity_decay(loaded_adapter: GemmaRecurrentAdapter):
@@ -256,7 +214,7 @@ def test_trajectory_equivalence_and_velocity_decay(loaded_adapter: GemmaRecurren
         direct_out = loaded_adapter(dummy_input, steps=t)
         traj_out = traj[t]
         max_diff = float(mx.max(mx.abs(direct_out - traj_out)).item())
-        assert max_diff < 1e-5, f"Trajectory discrepancy at t={t}: max_diff={max_diff}"
+        assert max_diff < 1e-6, f"Trajectory discrepancy at t={t}: max_diff={max_diff}"
 
         st = traj[t]
         st_prev = traj[t - 1]
@@ -269,6 +227,7 @@ def test_trajectory_equivalence_and_velocity_decay(loaded_adapter: GemmaRecurren
     assert velocities[3] < velocities[1], "Velocity did not decay from step 2 to step 4"
     assert velocities[7] < velocities[3], "Velocity did not decay from step 4 to step 8"
     assert velocities[11] < velocities[7], "Velocity did not decay from step 8 to step 12"
+    assert velocities[-1] < 1e-3, f"Velocity at step 12 ({velocities[-1]}) did not converge"
 
 
 @pytest.mark.parametrize("steps", [1, 2, 4, 8, 12])
@@ -277,7 +236,7 @@ def test_variable_deliberation_steps_real_prompt(
     pretrained_backbone: PretrainedGemmaBackbone,
     steps: int,
 ):
-    """Verify forward pass across T in {1, 2, 4, 8, 12} with real Gemma 4 12B contextual hidden representations."""
+    """Verify forward pass across T in {1, 2, 4, 8, 12} with real contextual hidden states."""
     prompt = (
         "<start_of_turn>user\n"
         "Given the tool registry, determine the minimal valid sequence: "
@@ -294,8 +253,15 @@ def test_variable_deliberation_steps_real_prompt(
     assert not mx.isnan(out).any().item(), f"NaN in real prompt output at steps={steps}"
     assert not mx.isinf(out).any().item(), f"Inf in real prompt output at steps={steps}"
 
+    min_val = float(mx.min(out).item())
+    max_val = float(mx.max(out).item())
+    std_val = float(mx.sqrt(mx.var(out)).item())
     norm_val = float(mx.linalg.norm(out).item())
-    assert 150.0 < norm_val < 600.0, f"Real prompt norm outside expected range: {norm_val}"
+
+    assert -8.0 < min_val < 0.0, f"Real prompt min value outside bounds: {min_val}"
+    assert 0.0 < max_val < 8.0, f"Real prompt max value outside bounds: {max_val}"
+    assert 0.9 < std_val < 1.2, f"Real prompt activation std outside normalized range: {std_val}"
+    assert 180.0 < norm_val < 210.0, f"Real prompt norm outside expected range: {norm_val}"
 
 
 def test_adversarial_stress_extreme_inputs(loaded_adapter: GemmaRecurrentAdapter):
@@ -304,7 +270,7 @@ def test_adversarial_stress_extreme_inputs(loaded_adapter: GemmaRecurrentAdapter
         "large_magnitude": mx.random.normal((1, 16, EXPECTED_DIM)) * 1000.0,
         "tiny_magnitude": mx.random.normal((1, 16, EXPECTED_DIM)) * 1e-6,
         "single_token": mx.random.normal((1, 1, EXPECTED_DIM)),
-        "long_sequence": mx.random.normal((1, 256, EXPECTED_DIM)),
+        "long_sequence": mx.random.normal((1, 512, EXPECTED_DIM)),
         "all_constant": mx.ones((1, 16, EXPECTED_DIM)) * 50.0,
     }
 
@@ -315,20 +281,4 @@ def test_adversarial_stress_extreme_inputs(loaded_adapter: GemmaRecurrentAdapter
             assert not mx.isnan(out).any().item(), f"NaN in stress test '{name}' at t={t}"
             assert not mx.isinf(out).any().item(), f"Inf in stress test '{name}' at t={t}"
             norm = float(mx.linalg.norm(out).item())
-            assert 100.0 < norm < 700.0, f"Norm out of bounds in stress test '{name}' at t={t}: {norm}"
-
-
-def test_cryptographic_tamper_detection():
-    """Adversarial security test: verify single-bit modification fails cryptographic verification."""
-    with open(CHECKPOINT_WEIGHTS, "rb") as f:
-        data = bytearray(f.read(1024 * 1024))
-
-    data[1000] ^= 0x01
-    tampered_hash = hashlib.sha256(data).hexdigest()
-
-    with open(CHECKPOINT_SIDECAR, "r", encoding="utf-8") as f:
-        sidecar = json.load(f)
-
-    assert tampered_hash != sidecar["weights_sha256"], (
-        "Single-bit tamper was unexpectedly not detected by SHA-256!"
-    )
+            assert 100.0 < norm < 300.0, f"Norm out of bounds in stress test '{name}' at t={t}: {norm}"

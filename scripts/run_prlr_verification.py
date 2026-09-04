@@ -30,10 +30,7 @@ from typing import Any, Dict, List, Optional, Tuple
 
 # Locate project root and parallel_latent_reasoner directory
 SCRIPT_PATH = Path(__file__).resolve()
-PRLR_DIR = Path("/Volumes/Storage/qan_transformers/projects/parallel_latent_reasoner")
-if not PRLR_DIR.exists():
-    # Fallback to relative discovery
-    PRLR_DIR = SCRIPT_PATH.parents[1] if (SCRIPT_PATH.parents[1] / "pyproject.toml").exists() else SCRIPT_PATH.parent
+PRLR_DIR = SCRIPT_PATH.parents[1] if (SCRIPT_PATH.parents[1] / "pyproject.toml").exists() else SCRIPT_PATH.parent
 
 SRC_DIR = PRLR_DIR / "src"
 if str(SRC_DIR) not in sys.path:
@@ -230,11 +227,8 @@ class PRLRVerificationRunner:
 
     def run_stage_4_ci_guardrails(self) -> bool:
         """Stage 4: Execute automated CI verification guardrails."""
-        self.log("guardrails", "Executing tests/test_ci_guardrails.py...")
-        # Check if test_ci_guardrails exists in tests or agent proposal
+        # Check if test_ci_guardrails exists in tests
         test_path = PRLR_DIR / "tests" / "test_ci_guardrails.py"
-        if not test_path.exists():
-            test_path = Path("/Volumes/Storage/qan_transformers/.agents/teamwork_preview_explorer_m6_2/proposed_test_ci_guardrails.py")
 
         cmd = [sys.executable, "-m", "pytest", str(test_path), "-v"]
         env = os.environ.copy()
@@ -392,11 +386,11 @@ class PRLRVerificationRunner:
         report_lines = [
             "# Parallel Latent Reasoner (PRLR) — Automated E2E Verification Report",
             "",
-            f"**Execution Timestamp**: `{meta['timestamp_utc']}`  ",
-            f"**Git Commit SHA**: `{meta['git_commit']}` (Dirty: `{meta['git_dirty']}`)  ",
-            f"**Hardware Platform**: `{meta.get('cpu_brand', 'Apple Silicon')}` ({meta.get('total_memory_gb', 'N/A')} GB Unified RAM)  ",
-            f"**Operating System**: `{meta['platform']}`  ",
-            f"**Runtime Versions**: Python `{meta['python_version']}`, MLX `{meta.get('mlx_version')}`, Transformers `{meta.get('transformers_version')}`, NumPy `{meta.get('numpy_version')}`  ",
+            f"- **Execution Timestamp**: `{meta['timestamp_utc']}`",
+            f"- **Git Commit SHA**: `{meta['git_commit']}` (Dirty: `{meta['git_dirty']}`)",
+            f"- **Hardware Platform**: `{meta.get('cpu_brand', 'Apple Silicon')}` ({meta.get('total_memory_gb', 'N/A')} GB Unified RAM)",
+            f"- **Operating System**: `{meta['platform']}`",
+            f"- **Runtime Versions**: Python `{meta['python_version']}`, MLX `{meta.get('mlx_version')}`, Transformers `{meta.get('transformers_version')}`, NumPy `{meta.get('numpy_version')}`",
             "",
             "---",
             "",

@@ -35,7 +35,13 @@ from prlr.manifest import ModelManifest
 
 def main() -> int:
     parser = argparse.ArgumentParser(
-        description="Run PRLR Pretrained Gemma 2B Semantic Benchmark (Feature 27)"
+        description="Run PRLR Pretrained Gemma Semantic Benchmark (Feature 27)"
+    )
+    parser.add_argument(
+        "--model",
+        choices=["gemma_4_12b", "gemma_2b"],
+        default="gemma_4_12b",
+        help="Model backbone to benchmark: gemma_4_12b (default, D=3840) or gemma_2b (D=2048).",
     )
     parser.add_argument(
         "--split",
@@ -46,8 +52,8 @@ def main() -> int:
     parser.add_argument(
         "--checkpoint",
         type=Path,
-        default=PROJECT_DIR / "checkpoints" / "gemma_2b_prlr_adapter.safetensors",
-        help="Path to trained adapter weights (.safetensors / .npz) (default: checkpoints/gemma_2b_prlr_adapter.safetensors).",
+        default=None,
+        help="Path to trained adapter weights (.safetensors / .npz) (default auto-selects based on --model).",
     )
     parser.add_argument(
         "--limit",
@@ -91,23 +97,37 @@ def main() -> int:
     if args.output_dir is None:
         args.output_dir = PROJECT_DIR / "results" / "smoke" if args.quick else PROJECT_DIR / "results"
 
+    if args.model == "gemma_4_12b":
+        manifest = ModelManifest.gemma_4_12b_it()
+        dim = 3840
+        default_ckpt = PROJECT_DIR / "checkpoints" / "gemma_4_12b_prlr_adapter.safetensors"
+    else:
+        manifest = ModelManifest.gemma_2b_it()
+        dim = 2048
+        default_ckpt = PROJECT_DIR / "checkpoints" / "gemma_2b_prlr_adapter.safetensors"
+
+    ckpt_path = args.checkpoint if args.checkpoint is not None else default_ckpt
+
     print("=" * 80)
     print("  PARALLEL LATENT REASONER — PRETRAINED SEMANTIC BENCHMARK (FEATURE 27)")
-    print("  Backbone: google/gemma-2b-it | Rules Enforced: 1, 2, 5, 8, 9, 10")
+    print(f"  Backbone: {manifest.model_id} | D={dim} | Vocab={manifest.vocabulary_size}")
+    print("  Rules Enforced: 1, 2, 5, 8, 9, 10")
     print("=" * 80)
     print(f"\n[!] DISCLAIMER: {DISCLAIMER_SEMANTIC}\n")
 
-    manifest = ModelManifest.gemma_2b_it()
-    print("[*] Loading official google/gemma-2b-it backbone and tokenizer...")
+    print(f"[*] Loading official {manifest.model_id} backbone and tokenizer...")
     backbone = PretrainedGemmaBackbone(manifest=manifest, load_weights=True)
 
-    print("[*] Initializing recurrent adapter and causal prefix decoder...")
-    adapter = GemmaRecurrentAdapter(dim=2048, num_slots=16, num_layers=1, deliberation_steps=4)
-    if args.checkpoint and args.checkpoint.exists():
-        print(f"[*] Loading adapter checkpoint from {args.checkpoint}...")
-        adapter.load_weights(str(args.checkpoint))
+    print(f"[*] Initializing recurrent adapter (D={dim}, slots=16, steps=4)...")
+    adapter = GemmaRecurrentAdapter(dim=dim, num_slots=16, num_layers=1, deliberation_steps=4)
+    if ckpt_path and ckpt_path.exists():
+        print(f"[*] Loading adapter checkpoint from {ckpt_path}...")
+        adapter.load_weights(str(ckpt_path))
+    else:
+        print(f"[!] Warning: Adapter checkpoint not found at {ckpt_path}; using initialized adapter.")
 
-    decoder = GemmaCausalPrefixDecoder(backbone=backbone)
+    print(f"[*] Initializing GemmaCausalPrefixDecoder (sliced LM head decoding enabled)...")
+    decoder = GemmaCausalPrefixDecoder(backbone=backbone, prefix_dim=dim, hidden_dim=dim)
     data_dir = PROJECT_DIR / "data" / "prlr_domain_v1"
 
     runner = SemanticBenchmarkRunner(

@@ -258,6 +258,57 @@ class ModelManifest:
         )
 
     @classmethod
+    def gemma_4_12b_it(
+        cls,
+        snapshot_dir: Optional[Union[str, Path]] = None,
+        source_commit: str = "e4d18cf",
+        adapter_hash: Optional[str] = None,
+    ) -> ModelManifest:
+        """Factory method for official google-gemma-4-12B-it-4bit local snapshot."""
+        default_dir = Path("/Volumes/Storage/huggingface_cache/hub/google-gemma-4-12B-it-4bit")
+        base = Path(snapshot_dir) if snapshot_dir is not None else default_dir
+
+        runtime_info = {
+            "python": sys.version.split()[0],
+            "mlx": "0.31.2",
+            "transformers": "5.9.0",
+            "numpy": "2.4.6",
+        }
+
+        weights_hashes = {
+            "model-00001-of-00002.safetensors": "3cac027bf8021583213c467b5d5b837bada0a0d9943fd245dd3bf915e4fba0be",
+            "model-00002-of-00002.safetensors": "7366bf36f2672af78ac71c5430a04a7c2c5ebdaf8895532be373a7edc1f0b1c6",
+        }
+
+        return cls(
+            model_id="google/gemma-4-12B-it-4bit",
+            revision="gemma4-12b-it-4bit-local",
+            architecture="Gemma4ForCausalLM",
+            source_commit=source_commit,
+            is_pretrained=True,
+            random_init=False,
+            quantization="4bit",
+            weights_path=str(base),
+            weights_sha256=weights_hashes,
+            tokenizer_path=str(base / "tokenizer.json"),
+            tokenizer_sha256="cc8d3a0ce36466ccc1278bf987df5f71db1719b9ca6b4118264f45cb627bfe0f",
+            adapter_hash=adapter_hash,
+            vocabulary_size=262144,
+            hidden_dimension=3840,
+            num_layers=48,
+            num_heads=16,
+            head_dimension=256,
+            intermediate_dimension=15360,
+            num_kv_heads=8,
+            max_position_embeddings=131072,
+            bos_token_id=2,
+            eos_token_id=1,
+            pad_token_id=0,
+            runtime_versions=runtime_info,
+            verification_status="UNVERIFIED",
+        )
+
+    @classmethod
     def get_gemma_2b_manifest(
         cls,
         snapshot_dir: Optional[Union[str, Path]] = None,

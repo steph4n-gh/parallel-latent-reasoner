@@ -64,6 +64,7 @@ DOMAIN_ALIASES = {
 }
 
 MODEL_PRESETS = [
+    "gemma_4_12b",
     "gemma_2b",
     "compact_test",
     "gemma_9b",
@@ -81,7 +82,26 @@ DOMAIN_PRESETS_INFO = [
     ("5", "Action & Tool Routing (ATR)", DomainType.ACTION_TOOL_ROUTING, "Zero-shot JSON candidate ranking and argument dispatch"),
 ]
 
-DEFAULT_CHECKPOINT_PATH = Path(__file__).resolve().parent / "checkpoints" / "gemma_2b_prlr_adapter.safetensors"
+DEFAULT_CHECKPOINT_PATH_12B = Path(__file__).resolve().parent / "checkpoints" / "gemma_4_12b_prlr_adapter.safetensors"
+DEFAULT_CHECKPOINT_PATH_2B = Path(__file__).resolve().parent / "checkpoints" / "gemma_2b_prlr_adapter.safetensors"
+DEFAULT_CHECKPOINT_PATH = DEFAULT_CHECKPOINT_PATH_12B if DEFAULT_CHECKPOINT_PATH_12B.exists() else DEFAULT_CHECKPOINT_PATH_2B
+
+
+def get_metal_peak_memory_mb() -> float:
+    """Retrieve peak Metal GPU memory in megabytes."""
+    if hasattr(mx, "metal") and hasattr(mx.metal, "get_peak_memory"):
+        return float(mx.metal.get_peak_memory() / (1024 * 1024))
+    if hasattr(mx, "get_peak_memory"):
+        return float(mx.get_peak_memory() / (1024 * 1024))
+    return 0.0
+
+
+def reset_metal_peak_memory() -> None:
+    """Reset peak Metal GPU memory counter."""
+    if hasattr(mx, "metal") and hasattr(mx.metal, "reset_peak_memory"):
+        mx.metal.reset_peak_memory()
+    elif hasattr(mx, "reset_peak_memory"):
+        mx.reset_peak_memory()
 
 
 def resolve_domain(query: str) -> Optional[DomainType]:
@@ -92,12 +112,12 @@ def resolve_domain(query: str) -> Optional[DomainType]:
 
 def default_trained_flag() -> bool:
     """Check whether default trained adapter checkpoint is present."""
-    return DEFAULT_CHECKPOINT_PATH.exists()
+    return DEFAULT_CHECKPOINT_PATH_12B.exists() or DEFAULT_CHECKPOINT_PATH_2B.exists()
 
 
 def run_prlr_demo_execution(
     prompt: str,
-    preset: str = "gemma_2b",
+    preset: str = "gemma_4_12b",
     adapter_path: Optional[str] = None,
     load_trained_adapter: bool = True,
     num_slots: int = 16,
@@ -111,12 +131,27 @@ def run_prlr_demo_execution(
     """Execute PRLR pipeline with live 3-Signal E-Gate telemetry and grounded answer decoding."""
     effective_load_trained = load_trained_adapter and (adapter_path is not None or num_slots == 16)
 
-    if preset == "gemma_2b":
+    if preset in ("gemma_4_12b", "gemma_12b", "gemma_2b"):
         from prlr.pipeline import PRLRPipeline
-        ckpt = adapter_path or (str(DEFAULT_CHECKPOINT_PATH) if effective_load_trained else None)
+        from prlr.manifest import ModelManifest
+
+        is_12b = preset in ("gemma_4_12b", "gemma_12b")
+        dim = 3840 if is_12b else 2048
+        if is_12b:
+            manifest = ModelManifest.gemma_4_12b_it()
+            default_ckpt = DEFAULT_CHECKPOINT_PATH_12B
+        else:
+            manifest = ModelManifest.gemma_2b_it()
+            default_ckpt = DEFAULT_CHECKPOINT_PATH_2B
+
+        ckpt = adapter_path or (str(default_ckpt) if (effective_load_trained and default_ckpt.exists()) else None)
+
+        reset_metal_peak_memory()
         pipeline = PRLRPipeline(
+            manifest=manifest,
+            dim=dim,
             adapter_path=ckpt,
-            load_trained_adapter=effective_load_trained,
+            load_trained_adapter=effective_load_trained and (ckpt is not None),
             deliberation_steps=num_steps,
             num_slots=num_slots,
         )
@@ -127,9 +162,11 @@ def run_prlr_demo_execution(
             temperature=temperature,
             enable_dynamic_gate=enable_gate,
         )
+        delib_peak_vram_mb = get_metal_peak_memory_mb()
     else:
         from parallel_latent_reasoner.pipeline import PRLRPipeline as LegacyPRLRPipeline
         print(f"\n[!] NOTICE: Executing testbed preset '{preset}'.")
+        reset_metal_peak_memory()
         pipeline = LegacyPRLRPipeline.from_preset(
             preset=preset,
             num_memory_slots=num_slots,
@@ -144,13 +181,15 @@ def run_prlr_demo_execution(
             temperature=temperature,
             enable_dynamic_gate=enable_gate,
         )
+        delib_peak_vram_mb = get_metal_peak_memory_mb()
 
     if mode == "pure_latent":
         out.mode = "pure_latent"
 
     # Display Side-by-Side View
     if show_comparison:
-        if preset == "gemma_2b":
+        if preset in ("gemma_4_12b", "gemma_12b", "gemma_2b"):
+            reset_metal_peak_memory()
             base_res = pipeline.generate_baseline(
                 prompt=prompt,
                 max_new_tokens=max_tokens,
@@ -159,14 +198,11 @@ def run_prlr_demo_execution(
             cot_text = base_res.generated_text
             cot_latency_ms = base_res.latency_ms
             cot_token_count = len(base_res.tokens) if base_res.tokens else max_tokens
-            peak_vram_mb = (
-                float(mx.get_peak_memory() / (1024 * 1024))
-                if hasattr(mx, "get_peak_memory")
-                else 0.0
-            )
+            cot_peak_vram_mb = get_metal_peak_memory_mb()
             delib_latency_ms = out.latency_breakdown.get("deliberation_ms", 5.0)
             decode_latency_ms = out.latency_breakdown.get("decode_ms", 1.0)
         else:
+            reset_metal_peak_memory()
             t0_base = time.perf_counter()
             token_ids = pipeline.encode_prompt(prompt)
             gen_tokens = pipeline.model.generate(
@@ -179,16 +215,12 @@ def run_prlr_demo_execution(
             cot_latency_ms = (time.perf_counter() - t0_base) * 1000.0
             cot_text = pipeline.decode_solution(gen_tokens)
             cot_token_count = gen_tokens.size
-            peak_vram_mb = (
-                float(mx.get_peak_memory() / (1024 * 1024))
-                if hasattr(mx, "get_peak_memory")
-                else 0.0
-            )
+            cot_peak_vram_mb = get_metal_peak_memory_mb()
             delib_latency_ms = out.latency_breakdown.get("deliberation_latency_ms", 5.0)
             decode_latency_ms = out.latency_breakdown.get("coda_decode_latency_ms", 1.0)
 
         class DisplayConfig:
-            def __init__(self, dim=2048, num_heads=8, num_memory_slots=16, deliberation_steps=4):
+            def __init__(self, dim=3840, num_heads=16, num_memory_slots=16, deliberation_steps=4):
                 self.dim = dim
                 self.num_heads = num_heads
                 self.num_memory_slots = num_memory_slots
@@ -206,8 +238,8 @@ def run_prlr_demo_execution(
                 self.exit_reason = getattr(t, "exit_reason", "active")
 
         cfg = DisplayConfig(
-            dim=2048 if preset == "gemma_2b" else getattr(pipeline.config, "dim", 256),
-            num_heads=8,
+            dim=3840 if preset in ("gemma_4_12b", "gemma_12b") else (2048 if preset == "gemma_2b" else getattr(pipeline.config, "dim", 256)),
+            num_heads=16 if preset in ("gemma_4_12b", "gemma_12b") else 8,
             num_memory_slots=num_slots,
             deliberation_steps=num_steps,
         )
@@ -219,10 +251,10 @@ def run_prlr_demo_execution(
             cot_tokens_text=cot_text,
             cot_token_count=cot_token_count,
             cot_latency_ms=cot_latency_ms,
-            cot_peak_vram_mb=peak_vram_mb,
+            cot_peak_vram_mb=cot_peak_vram_mb,
             gate_telemetries=adapted_telems,
             delib_latency_ms=delib_latency_ms,
-            delib_peak_vram_mb=peak_vram_mb,
+            delib_peak_vram_mb=delib_peak_vram_mb,
             decoded_solution=out.decoded_text.strip() or "Verified Grounded Solution",
             decode_latency_ms=decode_latency_ms,
             coda_token_count=max_tokens,
@@ -562,9 +594,9 @@ def main() -> None:
     parser.add_argument(
         "--model",
         type=str,
-        default="gemma_2b",
+        default="gemma_4_12b",
         choices=MODEL_PRESETS,
-        help="Resident scale model configuration architecture (default: gemma_2b).",
+        help="Resident scale model configuration architecture (default: gemma_4_12b).",
     )
     parser.add_argument(
         "--adapter",
