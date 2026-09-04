@@ -267,7 +267,7 @@ def main() -> int:
         samples=samples,
         tokenizer=backbone.tokenizer,
         pad_token_id=0,
-        eos_token_ids=(1, 107),
+        eos_token_ids=(1, 106),
         max_prompt_len=args.max_prompt_len,
         max_target_len=args.max_target_len,
         pretokenize=True,

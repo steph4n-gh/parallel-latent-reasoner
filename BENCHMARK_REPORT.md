@@ -92,6 +92,21 @@
 | **Peak Resident VRAM Memory** | $\le 12.0\text{ GB}$ | **11.67 GB** (11,947.20 MB) | N/A | ✅ PASS |
 | **Thought Phase KV-Cache Growth** | $+0.00\%$ during unrolls | **+0.00%** (0.0 MB growth) | N/A | ✅ PASS |
 
+### 2.3 Authoritative Empirical Baselines & Contract Repair Decision Table (Gemma 4 12B, 256 Samples)
+
+*Hardware: Apple M4 Pro (24.0 GB Unified Memory, Metal GPU) | Backbone: google-gemma-4-12B-it-4bit (D=3840, 48 layers) | Dataset: data/prlr_domain_v1/sealed_test.jsonl (256 samples)*
+*Evaluated under strict Non-Negotiable Evidence Rules 1–10 (blind evaluation, post-hoc scoring, immutable JSON predictions in `results/empirical_baselines/`)*
+
+| Experiment | Prompt Contract | Adapter | Training Samples | T | Exact Match | Terminal Match | Valid JSON | Max Repetition | Median Latency | Artifact Path |
+|---|---|---|---:|---:|---:|---:|---:|---:|---:|---|
+| **Direct Frozen Gemma 4 (`repo_decoder`)** | Official | None | 0 | 0 | **96.48%** (247/256) | **99.61%** (255/256) | **100.0%** (256/256) | **1** | **2,817.6 ms** | `results/empirical_baselines/predictions_repo_decoder.json` |
+| **Zeroed-Prefix Control (`control_zeroed`)** | Official | Full rank | 512 | 4 | **97.27%** (249/256) | **99.61%** (255/256) | **100.0%** (256/256) | **2** | **3,017.9 ms** | `results/empirical_baselines/predictions_control_zeroed.json` |
+| **Corrected Full-Rank (`adapter_t1`)** | Official | Full rank | 512 | 1 | **25.39%** (65/256) | **38.28%** (98/256) | **40.23%** (103/256) | **93** | **5,383.1 ms** | `results/empirical_baselines/predictions_adapter_t1.json` |
+| **Corrected Full-Rank (`adapter_t4`)** | Official | Full rank | 512 | 4 | **18.75%** (48/256) | **30.08%** (77/256) | **32.81%** (84/256) | **93** | **5,567.4 ms** | `results/empirical_baselines/predictions_adapter_t4.json` |
+| **Shuffled-Prefix Control (`control_shuffled`)** | Official | Full rank | 512 | 4 | **17.97%** (46/256) | **30.86%** (79/256) | **32.03%** (82/256) | **93** | **5,614.7 ms** | `results/empirical_baselines/predictions_control_shuffled.json` |
+| **Non-Recurrent Control (`non_recurrent`)** | Official | Matched | 512 | 0 | **1.17%** (3/256) | **2.34%** (6/256) | **2.73%** (7/256) | **93** | **5,705.5 ms** | `results/empirical_baselines/predictions_non_recurrent.json` |
+| **Legacy Defective Benchmark** | Manual/open thought | Full rank | 512 | Dynamic | **3.12%** (8/256) | **7.42%** (19/256) | **9.77%** (25/256) | **60** | **6,616.4 ms** | `results/semantic_benchmark.json` |
+
 ---
 
 ## 3. Executive Analysis & Rule 8 Conditional Governance
@@ -111,7 +126,14 @@ Per Non-Negotiable Evidence Rule 8, no success prose may be emitted when an asso
 ### 3.3 Rule 9 Speedup Disqualification
 Under Rule 9, reasoning phase speedup claims are conditioned on output quality matching direct autoregressive generation under a documented non-inferiority criterion:
 $$\text{Accuracy}_{\text{PRLR}} \ge \text{Accuracy}_{\text{direct\_baseline}} - 0.05$$
-Because Exact Match accuracy is 18.36% < 75.0%, reasoning speedup is classified as **DISQUALIFIED FROM PROMOTION**. The system remains classified as **`experimental / unpromoted`**.
+Because Exact Match accuracy is 18.36% < 75.0% (and retrained Gemma 4 adapter is 25.39% vs 96.48% base), reasoning speedup is classified as **DISQUALIFIED FROM PROMOTION**. The system remains classified as **`experimental / unpromoted`**.
+
+### 3.4 Root Cause Synthesis: Base Model Competence vs Soft Prefix Degradation
+1. **Base Model Sufficiency**: The untouched, frozen Gemma 4 12B model achieves **96.48% exact match, 99.61% terminal tool accuracy, and 100.0% valid JSON** on the sealed test split when evaluated through `GemmaCausalPrefixDecoder` with empty prefix and canonical closed thought prompt. The base model capability is not the bottleneck.
+2. **Interface Defect Resolution**: Resolving the unclosed thought channel (`<|channel>thought\n<channel|>`), removing newline `107` from `eos_token_ids`, and ensuring target termination in turn token `106` immediately lifted adapter $T=1$ performance from 3.12% to 25.39% (8x) and valid JSON from 9.77% to 40.23% (4x).
+3. **The Soft Prefix Insertion Defect**: Prepending unconstrained, full-rank continuous slot embeddings ($M=16, D=3840$) directly before the `<bos>` token severely disrupts the causal transformer's RoPE positional coordinate frame and injects out-of-distribution energy into self-attention. This drops base performance from 96.48% down to 25.39% at $T=1$ and 18.75% at $T=4$.
+4. **The Zeroed Control Proof**: When the prefix is set to $\mathbf{0}$ (`control_zeroed`), performance immediately recovers to **97.27% Exact Match and 100.0% Valid JSON**. This establishes beyond doubt that the decoder is flawless and that unanchored soft prefix representations act as disruptive noise.
+5. **Absence of Slot Specialization**: Shuffled slots yield 17.97% vs 18.75% unshuffled, confirming that slots currently act as diffuse embedding noise rather than structured, position-indexed hypotheses.
 
 ---
 

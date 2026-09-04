@@ -410,10 +410,8 @@ class ProceduralVerifier:
         """
         errors: List[str] = []
 
-        cleaned_text = prediction_str.strip()
-        cleaned_text = re.sub(r"<end_of_turn>.*$", "", cleaned_text)
-        cleaned_text = re.sub(r"<turn|>.*$", "", cleaned_text)
-        cleaned_text = re.sub(r"<eos>.*$", "", cleaned_text)
+        # Extract model turn output before any turn termination or EOS token
+        cleaned_text = re.split(r"<turn\|>|<end_of_turn>|<eos>", prediction_str.strip())[0].strip()
         if "<channel|>" in cleaned_text:
             cleaned_text = cleaned_text.split("<channel|>")[-1].strip()
 

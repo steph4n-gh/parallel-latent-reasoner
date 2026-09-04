@@ -1,0 +1,1552 @@
+{
+  "condition": "adapter_t4",
+  "summary": {
+    "sample_count": 256,
+    "exact_match_pct": 18.75,
+    "terminal_match_pct": 30.08,
+    "valid_json_pct": 32.81,
+    "max_repetition": 93,
+    "mean_repetition": 14.85,
+    "mean_entropy": 3.85,
+    "mean_latency_ms": 5521.59,
+    "median_latency_ms": 5567.44
+  },
+  "predictions": [
+    {
+      "sample_id": "sealed_test_mtr_api_workflow_s300000_k2",
+      "domain": "api_workflow",
+      "generated_text": "{\"e\": [\"billing_meter\", \"cache_reader\", \"audit_logger\", \"policy_gate\"], \"route\": [\"billing_meter\", \"cache_reader\", \"audit_logger\", \"policy_gate\"], \"terminal\": \"audit_logger\"}\n<|channel>_thought_step_by_step_execution_order_analysis_for_json_response_generation_by_val_e_val_e_val_e_val_e",
+      "latency_ms": 6560.74
+    },
+    {
+      "sample_id": "sealed_test_mtr_data_pipeline_s300001_k3",
+      "domain": "data_pipeline",
+      "generated_text": "<|channel>s_p_v_v_v_v_v_v_v_v_v_v_v_v_v_v_v_v_v_v_v_v_v_v_v_v_v_v_v_v_v_v_v_v_v_v_v_v_v_v_v_v_v_v_v_v_v_v",
+      "latency_ms": 5366.93
+    },
+    {
+      "sample_id": "sealed_test_mtr_security_ops_s300002_k4",
+      "domain": "security_ops",
+      "generated_text": "Continue. Please provide the input.\n\n**Input Example:**\nInitial State: [context_tag_300002, network_flows]\nTarget Goal: [blocked_subnet]\n\n**Response Format:**\n```json\n{\n  \"route\": [\"ioc_correlator\", \"endpoint_inspector\", \"quarantine_enforcer\", \"hash_lookup\", \"patch_scheduler\", \"firewall_reconfig\"],\n  \"terminal",
+      "latency_ms": 5561.75
+    },
+    {
+      "sample_id": "sealed_test_mtr_robotics_control_s300003_k2",
+      "domain": "robotics_control",
+      "generated_text": "To achieve the target goal, the required tools must be executed in order of their dependencies.\n\n**Analysis of Execution Order:**\n1.  **Initial State:** `[context_tag_300003, joint_angles]`\n2.  **Collision Checker:** Requires `[joint_angles]` (provided by initial state). Produces `[safe_configuration]`.\n3.  **Trajectory Planner:** Requires `[safe_configuration]` (",
+      "latency_ms": 5134.24
+    },
+    {
+      "sample_id": "sealed_test_mtr_api_workflow_s300004_k3",
+      "domain": "api_workflow",
+      "generated_text": "{\"e\": \"route\": [\"auth_validator\", \"permission_checker\", \"db_reader\", \"billing_meter\", \"permission_checker\", \"db_reader\", \"db_reader\", \"db_reader\", \"db_reader\", \"db_reader\", \"db_reader\", \"db_reader\", \"db_reader\", \"db_reader\", \"db_reader\", \"db_reader\", \"db_reader\", \"db_reader\",",
+      "latency_ms": 5330.79
+    },
+    {
+      "sample_id": "sealed_test_mtr_data_pipeline_s300005_k4",
+      "domain": "data_pipeline",
+      "generated_text": "{\"route\": [\"stream_ingester\", \"null_cleaner\", \"schema_normalizer\", \"feature_extractor\", \"sample_exporter\", \"lineage_tracer\"], \"terminal\": \"feature_matrix\"}<turn|>",
+      "latency_ms": 3971.08
+    },
+    {
+      "sample_id": "sealed_test_mtr_security_ops_s300006_k2",
+      "domain": "security_ops",
+      "generated_text": "{\"route\": [\"firewall_reconfig\", \"incident_publisher\"], \"terminal\": \"incident_publisher\"}<turn|>",
+      "latency_ms": 2764.45
+    },
+    {
+      "sample_id": "sealed_test_mtr_robotics_control_s300007_k3",
+      "domain": "robotics_control",
+      "generated_text": "<|channel>_thought_final_json_key_route_[\"kinematics_solver\", \"obstacle_detector\", \"point_cloud_filter\"]\n_terminal_[\"kinematics_solver\"]\n_initial_state_[\"context_tag_300007\", \"filtered_points\"]\n_goal_[\"joint_angles\"]\n_kinematics_solver_[\"obstacle_map\"]\n_obstacle_detector_[\"voxel_",
+      "latency_ms": 5511.61
+    },
+    {
+      "sample_id": "sealed_test_mtr_api_workflow_s300008_k4",
+      "domain": "api_workflow",
+      "generated_text": "Continue. Show me the JSON object.\n\n```json\n{\n  \"route\": [\n    \"permission_checker\",\n    \"db_reader\",\n    \"risk_evaluator\",\n    \"policy_gate\",\n    \"webhook_emitter\"\n  ],\n  \"terminal\": \"policy_gate\"\n}\n```\n\n*Note: The route above is the shortest path to the goal. If the goal is `approval_decision`,",
+      "latency_ms": 5629.35
+    },
+    {
+      "sample_id": "sealed_test_mtr_data_pipeline_s300009_k2",
+      "domain": "data_pipeline",
+      "generated_text": "To achieve the target goal, the following steps are required:\n1. **`lineage_tracer`**: (Optional/Initial State) Processes the `context_tag_id` (represented by `context_tag_300009`).\n2. **`feature_extractor`**: Processes the `normalized_frame` to produce the `feature_matrix`.\n3. **`model_evaluator`**: Processes the `feature_matrix`",
+      "latency_ms": 5165.97
+    },
+    {
+      "sample_id": "sealed_test_mtr_security_ops_s300010_k3",
+      "domain": "security_ops",
+      "generated_text": "<audio|>.<turn|>",
+      "latency_ms": 2346.37
+    },
+    {
+      "sample_id": "sealed_test_mtr_robotics_control_s300011_k4",
+      "domain": "robotics_control",
+      "generated_text": "{\"route\": [\"lidar_processor\", \"point_cloud_filter\", \"obstacle_detector\", \"kinematics_solver\"], \"terminal\": \"kinematics_solver\"}<turn|>",
+      "latency_ms": 3695.71
+    },
+    {
+      "sample_id": "sealed_test_mtr_api_workflow_s300012_k2",
+      "domain": "api_workflow",
+      "generated_text": "{\"route\": [\"policy_gate\", \"audit_logger\"], \"terminal\": \"audit_logger\"}<turn|>",
+      "latency_ms": 4481.13
+    },
+    {
+      "sample_id": "sealed_test_mtr_data_pipeline_s300013_k3",
+      "domain": "data_pipeline",
+      "generated_text": "{\"route\": [\"stream_ingester\", \"null_cleaner\", \"schema_normalizer\"], \"terminal\": \"schema_normalizer\"}<turn|>",
+      "latency_ms": 3269.62
+    },
+    {
+      "sample_id": "sealed_test_mtr_security_ops_s300014_k4",
+      "domain": "security_ops",
+      "generated_text": "<|channel>.<|channel>_thought_<channel|><|channel>_thought_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#",
+      "latency_ms": 7404.5
+    },
+    {
+      "sample_id": "sealed_test_mtr_robotics_control_s300015_k2",
+      "domain": "robotics_control",
+      "generated_text": "<|channel>_thought_try_to_find_the_path_for_the_goal_motor_commands_from_the_initial_state_provided_in_the_example_given_the_tools_available_for_the_example_provided_in_the_example_given_the_tools_available_for_the_example_given_the_tools_available_for_the_example_given_the_tools_",
+      "latency_ms": 5124.35
+    },
+    {
+      "sample_id": "sealed_test_mtr_api_workflow_s300016_k3",
+      "domain": "api_workflow",
+      "generated_text": "To achieve the target goal, the following steps are required:\n1. **permission_checker**: Uses `user_session` (from initial state) to produce `perm_token`.\n2. **db_reader**: Uses `perm_token` to produce `user_profile`.\n_Note: `db_reader` requires `perm_token` and `user_profile` is the output. However, `risk_evaluator` requires `user_",
+      "latency_ms": 5409.81
+    },
+    {
+      "sample_id": "sealed_test_mtr_data_pipeline_s300017_k4",
+      "domain": "data_pipeline",
+      "generated_text": "<|channel>s_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p",
+      "latency_ms": 5600.81
+    },
+    {
+      "sample_id": "sealed_test_mtr_security_ops_s300018_k2",
+      "domain": "security_ops",
+      "generated_text": "{\"route\": [\"firewall_reconfig\", \"incident_publisher\"], \"terminal\": \"incident_publisher\"}<turn|>",
+      "latency_ms": 3389.01
+    },
+    {
+      "sample_id": "sealed_test_mtr_robotics_control_s300019_k3",
+      "domain": "robotics_control",
+      "generated_text": "To achieve the target goal, the execution order of tools is as follows:\n1. **obstacle_detector**: Processes `voxel_grid` to produce `obstacle_map`.\n2. **kinematics_solver**: Processes `obstacle_map` to produce `joint_angles`.\n3. **collision_checker**: Processes `joint_angles` to produce `safe_configuration`.\n\nThe final tool in this sequence is the `collision_checker`.\n\n```",
+      "latency_ms": 6939.21
+    },
+    {
+      "sample_id": "sealed_test_mtr_api_workflow_s300020_k4",
+      "domain": "api_workflow",
+      "generated_text": "To achieve the target goal, the following steps are required:\n1. **`permission_checker`**: Uses `user_session` (from initial state) to produce `perm_token`.\n2. **`db_reader`**: Uses `perm_token` to produce `user_profile`.\n_Note: `rate_limiter` is available but not required for the goal path._\n3. **`db_reader`**: (Already done",
+      "latency_ms": 7748.61
+    },
+    {
+      "sample_id": "sealed_test_mtr_data_pipeline_s300021_k2",
+      "domain": "data_pipeline",
+      "generated_text": "<|channel>.<|channel>_thought_step_0\n<|channel>_thought_step_1\n<|channel>_thought_step_2\n<|channel>_thought_step_3\n<|channel>_thought_step_4\n<|channel>_thought_step_5\n<|channel>_thought_step_6\n<|channel>_thought_step_7\n<|channel>_thought_step_8\n<|channel>_thought_step_9\n<|channel>_thought_step_10\n<|channel>_thought_step",
+      "latency_ms": 5217.38
+    },
+    {
+      "sample_id": "sealed_test_mtr_security_ops_s300022_k3",
+      "domain": "security_ops",
+      "generated_text": "<|channel>s_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p",
+      "latency_ms": 7516.45
+    },
+    {
+      "sample_id": "sealed_test_mtr_robotics_control_s300023_k4",
+      "domain": "robotics_control",
+      "generated_text": "<|channel>.<|channel>thought<<|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel>.<|channel><|channel><|channel><|channel>",
+      "latency_ms": 5573.14
+    },
+    {
+      "sample_id": "sealed_test_mtr_api_workflow_s300024_k2",
+      "domain": "api_workflow",
+      "generated_text": "<|channel>s_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p",
+      "latency_ms": 5165.27
+    },
+    {
+      "sample_id": "sealed_test_mtr_data_pipeline_s300025_k3",
+      "domain": "data_pipeline",
+      "generated_text": "<|channel>s_p_v_v_v_v_v_v_v_v_v_v_v_v_v_v_v_v_v_v_v_v_v_v_v_v_v_v_v_v_v_v_v_v_v_v_v_v_v_v_v_v_v_v_v_v_v_v",
+      "latency_ms": 5416.3
+    },
+    {
+      "sample_id": "sealed_test_mtr_security_ops_s300026_k4",
+      "domain": "security_ops",
+      "generated_text": "Continue. Please provide the input.\n\n**Example Input:**\nInitial State: [context_tag_300026, network_flows]\nTarget Goal: [blocked_subnet]\n\n**Example Response:**\n```json\n{\n  \"route\": [\"ioc_correlator\", \"hash_lookup\", \"dns_sinkhole\", \"endpoint_inspector\", \"quarantine_enforcer\", \"firewall_reconfig\"],\n  \"",
+      "latency_ms": 5599.28
+    },
+    {
+      "sample_id": "sealed_test_mtr_robotics_control_s300027_k2",
+      "domain": "robotics_control",
+      "generated_text": "<|channel>_thought_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_",
+      "latency_ms": 6922.32
+    },
+    {
+      "sample_id": "sealed_test_mtr_api_workflow_s300028_k3",
+      "domain": "api_workflow",
+      "generated_text": "<|channel>.<|channel>.<|channel>.<|channel>.<|channel>.<|channel>.<|channel>.<|channel>.<|channel>.<|channel>.<|channel>.<|channel>.<|channel>.<|channel>.<|channel>.org.<|image>.org.org.org.org.org.org.org.org.org.org.org.org.org.org.org.org.org.org.org.org.org.org.org.org.org.org.org.org.org.org.org.",
+      "latency_ms": 5380.35
+    },
+    {
+      "sample_id": "sealed_test_mtr_data_pipeline_s300029_k4",
+      "domain": "data_pipeline",
+      "generated_text": "<|channel>.<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.",
+      "latency_ms": 5628.28
+    },
+    {
+      "sample_id": "sealed_test_mtr_security_ops_s300030_k2",
+      "domain": "security_ops",
+      "generated_text": "{\"route\": [\"telemy_parser\", \"ioc_correlator\"], \"terminal\": \"ioc_correlator\"}<turn|>",
+      "latency_ms": 3458.91
+    },
+    {
+      "sample_id": "sealed_test_mtr_robotics_control_s300031_k3",
+      "domain": "robotics_control",
+      "generated_text": "<|channel>thought_^each_step_^initial_state_^[context_tag_300031, voxel_grid]\n^goal_^safe_configuration\n\n^step_1:\n^tool_available_^obstacle_detector_requires_[voxel_grid]\n^initial_state_^[context_tag_300031, voxel_grid]\n^produces_^obstacle_map\n^",
+      "latency_ms": 6590.85
+    },
+    {
+      "sample_id": "sealed_test_mtr_api_workflow_s300032_k4",
+      "domain": "api_workflow",
+      "generated_text": "To achieve the target goal, the system must follow a sequence of tool executions. Each tool's output becomes the next tool's input.\n\n**Execution Sequence:**\n1. `schema_parser` (Input: `raw_payload` $\\rightarrow$ Output: `parsed_request`)\n2_`auth_validator` (Input: `parsed_request` $\\rightarrow$ Output: `user_session`)\n3. `rate_limiter` (",
+      "latency_ms": 6455.62
+    },
+    {
+      "sample_id": "sealed_test_mtr_data_pipeline_s300033_k2",
+      "domain": "data_pipeline",
+      "generated_text": "{\"route\": [\"stream_ingester\", \"null_cleaner\"], \"terminal\": \"null_cleaner\"}<turn|>",
+      "latency_ms": 2811.09
+    },
+    {
+      "sample_id": "sealed_test_mtr_security_ops_s300034_k3",
+      "domain": "security_ops",
+      "generated_text": "{\"route\": [\"ioc_correlator\", \"endpoint_inspector\", \"sandbox_detonator\", \"quarantine_enforcer\"], \"terminal\": \"quarantine_enforcer\"}<turn|>",
+      "latency_ms": 5700.1
+    },
+    {
+      "sample_id": "sealed_test_mtr_robotics_control_s300035_k4",
+      "domain": "robotics_control",
+      "generated_text": "<|channel>_thought_try_to_find_the_best_route_for_the_goal_motor_commands_from_the_initial_state_provided_in_the_json_format_requested_by_the_user_to_be_the_most_efficient_route_for_the_goal_motor_commands_from_the_initial_state_provided_in_the_json_format_requested_by_",
+      "latency_ms": 5561.05
+    },
+    {
+      "sample_id": "sealed_test_mtr_api_workflow_s300036_k2",
+      "domain": "api_workflow",
+      "generated_text": "{\"route\": [\"rate_limiter\", \"billing_meter\", \"schema_parser\", \"auth_validator\"], \"terminal\": \"auth_validator\"}<turn|>",
+      "latency_ms": 3075.71
+    },
+    {
+      "sample_id": "sealed_test_mtr_data_pipeline_s300037_k3",
+      "domain": "data_pipeline",
+      "generated_text": "<|channel>_thought_final_json_output_for_json_key_route_and_terminal_in_json_object_for_json_key_route_and_terminal_in_json_object_for_json_key_route_and_terminal_in_json_object_for_json_key_route_and_terminal_in_json_object_for_json_key_route_and_terminal_in_",
+      "latency_ms": 5481.87
+    },
+    {
+      "sample_id": "sealed_test_mtr_security_ops_s300038_k4",
+      "domain": "security_ops",
+      "generated_text": "<|channel>_telemetry_parser\n_ioc_correlator\n_endpoint_inspector\n_quarantine_enforcer\n_patch_scheduler\n_dns_sinkhole\n_quarantine_enforcer\n_quarantine_enforcer\n_quarantine_enforcer\n_quarantine_enforcer\n_quarantine_enforcer\n_quarantine_enforcer\n_quarantine_enforcer\n_quarantine_enforcer\n_quarantine",
+      "latency_ms": 5885.81
+    },
+    {
+      "sample_id": "sealed_test_mtr_robotics_control_s300039_k2",
+      "domain": "robotics_control",
+      "generated_text": "<|channel>_thought_\n<|channel>_thought_\n<|channel>_thought_\n<|channel>_thought_\n<|channel>_thought_\n<|channel>_thought_\n<|channel>_thought_\n<|channel>_thought_\n<|channel>_thought_\n<|channel>_thought_\n<|channel>_thought_\n<|channel>_thought_\n<|channel>_thought_\n<|channel>_thought_\n<|channel>_thought_\n<|channel>_thought_\n<|channel>_thought_\n<|channel>_thought_\n<|channel>_thought_\n<|channel>",
+      "latency_ms": 5146.35
+    },
+    {
+      "sample_id": "sealed_test_mtr_api_workflow_s300040_k3",
+      "domain": "api_workflow",
+      "generated_text": "{\"route\": [\"db_reader\", \"risk_evaluator\", \"policy_gate\"], \"terminal\": \"policy_gate\"}<turn|>",
+      "latency_ms": 3073.1
+    },
+    {
+      "sample_id": "sealed_test_mtr_data_pipeline_s300041_k4",
+      "domain": "data_pipeline",
+      "generated_text": "<|channel>_thought_try_to_find_the_path_from_initial_state_to_target_goal_using_available_tools_provided_in_the_prompt_example_structure_provided_by_the_user_who_asked_the_question_in_the_format_of_the_example_provided_by_the_user_who_asked_the_question_in_the_format_of_",
+      "latency_ms": 5622.15
+    },
+    {
+      "sample_id": "sealed_test_mtr_security_ops_s300042_k2",
+      "domain": "security_ops",
+      "generated_text": "```json\n{\n  \"route\": [\n    \"telemy_parser\",\n    \"ioc_correlator\"\n  ],\n  \"terminal\": \"ioc_correlator\"\n}\n```\n*(Note: The provided JSON reflects the logical flow of tools. If \"telemy_parser\" was a typo for \"telemy_parser\" or \"telemy_parser\" was not available, the route follows the only path to the",
+      "latency_ms": 5146.75
+    },
+    {
+      "sample_id": "sealed_test_mtr_robotics_control_s300043_k3",
+      "domain": "robotics_control",
+      "generated_text": "{\"route\": [\"point_cloud_filter\", \"obstacle_detector\", \"kinematics_solver\"], \"terminal\": \"kinematics_solver\"}<turn|>",
+      "latency_ms": 4313.89
+    },
+    {
+      "sample_id": "sealed_test_mtr_api_workflow_s300044_k4",
+      "domain": "api_workflow",
+      "generated_text": "{\"route\": [\"auth_validator\", \"permission_checker\", \"db_reader\", \"risk_evaluator\"], \"terminal\": \"risk_evaluator\"}<turn|>",
+      "latency_ms": 3528.55
+    },
+    {
+      "sample_id": "sealed_test_mtr_data_pipeline_s300045_k2",
+      "domain": "data_pipeline",
+      "generated_text": "{\"route\": [\"alert_dispatcher\", \"cold_archiver\"], \"terminal\": \"cold_archiver\"}<turn|>",
+      "latency_ms": 2800.58
+    },
+    {
+      "sample_id": "sealed_test_mtr_security_ops_s300046_k3",
+      "domain": "security_ops",
+      "generated_text": "<|channel>_thought_pro_json_object_keys_route_terminal_initial_state_target_goal_example_output_format_example_output_format_example_output_format_example_output_format_example_output_format_example_output_format_example_output_format_example_output_format_example_output_format_example_output_format_example_output_format_example_output_format_",
+      "latency_ms": 5540.21
+    },
+    {
+      "sample_id": "sealed_test_mtr_robotics_control_s300047_k4",
+      "domain": "robotics_control",
+      "generated_text": "```json\n{\n  \"route\": [\n    \"imu_filter\",\n    \"lidar_processor\",\n    \"point_cloud_filter\",\n    \"thermal_guard\",\n    \"obstacle_detector\",\n    \"kinematics_solver\"\n  ],\n  \"terminal\": \"kinematics_solver\"\n}\n```<turn|>",
+      "latency_ms": 4953.77
+    },
+    {
+      "sample_id": "sealed_test_mtr_api_workflow_s300048_k2",
+      "domain": "api_workflow",
+      "generated_text": "Take<|image>[manual_test_case_1]\n<|channel>_thought_process\n<|channel>_thought_process\n<|channel>_thought_process\n<|channel>_thought_process\n<|channel>_thought_process\n<|channel>_thought_process\n<|channel>_thought_process\n<|channel>_thought_process\n<|channel>_thought_process\n<|channel>_thought_process\n<|channel>_thought_process\n<|channel>_thought_process\n<|channel>_thought_process\n<|channel>_thought_process\n",
+      "latency_ms": 7568.37
+    },
+    {
+      "sample_id": "sealed_test_mtr_data_pipeline_s300049_k3",
+      "domain": "data_pipeline",
+      "generated_text": "{\"route\": [\"model_evaluator\", \"alert_dispatcher\", \"cold_archiver\"], \"terminal\": \"cold_archiver\"}<turn|>",
+      "latency_ms": 3105.38
+    },
+    {
+      "sample_id": "sealed_test_mtr_security_ops_s300050_k4",
+      "domain": "security_ops",
+      "generated_text": "<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s",
+      "latency_ms": 5654.98
+    },
+    {
+      "sample_id": "sealed_test_mtr_robotics_control_s300051_k2",
+      "domain": "robotics_control",
+      "generated_text": "<|channel>_thought_try_to_find_the_path_for_the_goal_joint_angles_from_the_initial_state_provided_in_the_json_object_format_requested_by_the_user_prompt_asking_for_the_json_object_containing_keys_route_and_terminal_for_the_goal_joint_angles_from_the_initial_state_provided_in_",
+      "latency_ms": 5157.09
+    },
+    {
+      "sample_id": "sealed_test_mtr_api_workflow_s300052_k3",
+      "domain": "api_workflow",
+      "generated_text": "{\"e\": [\"db_reader\", \"permission_checker\", \"rate_limiter\", \"webhook_emitter\", \"risk_evaluator\"], \"route\": [\"db_reader\", \"permission_checker\", \"rate_limiter\", \"webhook_limiter\", \"risk_evaluator\"], \"terminal\": \"risk_evaluator\"}\n<|channel>_thought_pro_json_example_not_provided_but_asked_to_be_created_by",
+      "latency_ms": 5349.52
+    },
+    {
+      "sample_id": "sealed_test_mtr_data_pipeline_s300053_k4",
+      "domain": "data_pipeline",
+      "generated_text": "<|channel>s_v_v_v_v_v_v_v_v_v_v_v_v_v_v_v_v_v_v_v_v_v_v_v_v_v_v_v_v_v_v_v_v_v_v_v_v_v_v_v_v_v_v_v_v_v_v_v",
+      "latency_ms": 5758.53
+    },
+    {
+      "sample_id": "sealed_test_mtr_security_ops_s300054_k2",
+      "domain": "security_ops",
+      "generated_text": "To achieve the target goal, the execution order of the tools is as follows:\n\n1.  **telemetry_parser**: Consumes `pcap_stream` (initial state) and produces `network_flows`.\n2.  **ioc_correlator**: Consumes `network_flows` and produces `threat_indicators` (target goal).\n\nThe `hash_lookup` and `sandbox_detonator` are not part of the required path",
+      "latency_ms": 5579.8
+    },
+    {
+      "sample_id": "sealed_test_mtr_robotics_control_s300055_k3",
+      "domain": "robotics_control",
+      "generated_text": "<|channel>_thought_final_json_output_for_the_user_requested_json_object_to_be_provided_as_the_result_of_the_analysis_of_the_initial_state_and_the_available_tools_to_achieve_the_target_goal_from_the_initial_state_as_described_in_the_prompt_for_the_json_object_to_be",
+      "latency_ms": 5403.23
+    },
+    {
+      "sample_id": "sealed_test_mtr_api_workflow_s300056_k4",
+      "domain": "api_workflow",
+      "generated_text": "<|channel>_thought_\n<|channel>_thought_\n<|channel>_thought_\n<|channel>_thought_\n<|channel>_thought_\n<|channel>_thought_\n<|channel>_thought_\n<|channel>_thought_\n<|channel>_thought_\n<|channel>_thought_\n<|channel>_thought_\n<|channel>_thought_\n<|channel>_thought_\n<|channel>_thought_\n<|channel>_thought_\n<|channel>_thought_\n<|channel>_thought_\n<|channel>_thought_\n<|channel>_thought_\n<|channel>",
+      "latency_ms": 5715.01
+    },
+    {
+      "sample_id": "sealed_test_mtr_data_pipeline_s300057_k2",
+      "domain": "data_pipeline",
+      "generated_text": "{\"route\": [\"schema_normalizer\", \"feature_extractor\"], \"terminal\": \"feature_extractor\"}<turn|>",
+      "latency_ms": 4463.31
+    },
+    {
+      "sample_id": "sealed_test_mtr_security_ops_s300058_k3",
+      "domain": "security_ops",
+      "generated_text": "<|channel>s_pcap_stream]\n[host_forensics]\n[host_forensics]\n[host_forensics]\n[host_forensics]\n[host_forensics]\n[host_forensics]\n[host_forensics]\n[host_forensics]\n[host_forensics]\n[host_forensics]\n[host_forensics]\n[host_forensics]\n[host_",
+      "latency_ms": 5796.51
+    },
+    {
+      "sample_id": "sealed_test_mtr_robotics_control_s300059_k4",
+      "domain": "robotics_control",
+      "generated_text": "<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s",
+      "latency_ms": 6122.99
+    },
+    {
+      "sample_id": "sealed_test_mtr_api_workflow_s300060_k2",
+      "domain": "api_workflow",
+      "generated_text": "{\"route\": [\"permission_checker\", \"db_reader\"], \"terminal\": \"db_reader\"}<turn|>",
+      "latency_ms": 3606.46
+    },
+    {
+      "sample_id": "sealed_test_mtr_data_pipeline_s300061_k3",
+      "domain": "data_pipeline",
+      "generated_text": "{\"route\": [\"stream_ingester\", \"null_cleaner\", \"schema_normalizer\"], \"terminal\": \"schema_normalizer\"}<turn|>",
+      "latency_ms": 3297.1
+    },
+    {
+      "sample_id": "sealed_test_mtr_security_ops_s300062_k4",
+      "domain": "security_ops",
+      "generated_text": "<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s",
+      "latency_ms": 8556.59
+    },
+    {
+      "sample_id": "sealed_test_mtr_robotics_control_s300063_k2",
+      "domain": "robotics_control",
+      "generated_text": "To achieve the target goal, the following steps are required:\n1. **`collision_checker`**: Takes `joint_angles` (provided in the initial state) and produces `safe_configuration`.\n2. **`trajectory_planner`**: Takes `safe_configuration` (produced by the previous step) and produces `spline_path` (the target goal).\n\nThe `thermal_guard` and `gps_sync` tools are not part of",
+      "latency_ms": 5135.05
+    },
+    {
+      "sample_id": "sealed_test_mtr_api_workflow_s300064_k3",
+      "domain": "api_workflow",
+      "generated_text": "<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.",
+      "latency_ms": 5365.99
+    },
+    {
+      "sample_id": "sealed_test_mtr_data_pipeline_s300065_k4",
+      "domain": "data_pipeline",
+      "generated_text": "Prepared/Finalized SQL vs. ML.\n\n```json\n{\n  \"route\": [\n    \"null_cleaner\",\n    \"schema_normalizer\",\n    \"feature_extractor\",\n    \"model_evaluator\"\n    ],\n  \"terminal\": \"model_evaluator\"\n}\n```\n\n*Note: The provided tool list contains a \"model_evaluator\" which requires a \"feature_matrix\". The \"feature",
+      "latency_ms": 5650.15
+    },
+    {
+      "sample_id": "sealed_test_mtr_security_ops_s300066_k2",
+      "domain": "security_ops",
+      "generated_text": "{\"e\": \"f0\", \"route\": [\"firewall_reconfig\", \"incident_publisher\"], \"terminal\": \"incident_publisher\"}<turn|>",
+      "latency_ms": 3017.83
+    },
+    {
+      "sample_id": "sealed_test_mtr_robotics_control_s300067_k3",
+      "domain": "robotics_control",
+      "generated_text": "<|channel>_thought_final_json_object_keys_route_terminal_order_correct_tools_list_correct_terminal_name_correct_initial_state_correct_goal_correct_initial_state_correct_goal_correct_initial_state_correct_goal_correct_initial_State_correct_initial_State_correct_initial_State_correct_initial_State_correct_initial_State_correct_initial_State_",
+      "latency_ms": 5712.85
+    },
+    {
+      "sample_id": "sealed_test_mtr_api_workflow_s300068_k4",
+      "domain": "api_workflow",
+      "generated_text": "<|channel>s_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p",
+      "latency_ms": 5533.85
+    },
+    {
+      "sample_id": "sealed_test_mtr_data_pipeline_s300069_k2",
+      "domain": "data_pipeline",
+      "generated_text": "{\"route\": [\"model_evaluator\", \"alert_dispatcher\"], \"terminal\": \"alert_dispatcher\"}<turn|>",
+      "latency_ms": 2764.82
+    },
+    {
+      "sample_id": "sealed_test_mtr_security_ops_s300070_k3",
+      "domain": "security_ops",
+      "generated_text": "{\"route\": [\"dns_sinkhole\", \"ioc_correlator\", \"patch_scheduler\", \"endpoint_inspector\", \"quarantine_enforcer\"], \"terminal\": \"quarantine_enforcer\"}<turn|>",
+      "latency_ms": 4228.94
+    },
+    {
+      "sample_id": "sealed_test_mtr_robotics_control_s300071_k4",
+      "domain": "robotics_control",
+      "generated_text": "<|channel>_thought_try_to_provide_json_object_for_route_and_terminal_keys_in_order_of_execution_order_of_kinematics_solver_trajectory_planner_gps_sync_imu_filter_actuator_controller_collision_checker_kinematics_solver_trajectory_planner_gps_sync_imu_filter_actuator_controller_collision_checker_kinematics_solver_",
+      "latency_ms": 5709.15
+    },
+    {
+      "sample_id": "sealed_test_mtr_api_workflow_s300072_k2",
+      "domain": "api_workflow",
+      "generated_text": "{\"route\": [\"cache_reader\", \"policy_gate\", \"audit_logger\", \"webhook_emitter\"], \"terminal\": \"web_hook_emitter\"}<turn|>",
+      "latency_ms": 4017.32
+    },
+    {
+      "sample_id": "sealed_test_mtr_data_pipeline_s300073_k3",
+      "domain": "data_pipeline",
+      "generated_text": "<|channel>_thought_try_to_find_the_path_from_initial_state_to_target_goal_using_available_tools_provided_in_the_prompt_to_determine_the_minimal_set_of_tools_required_for_execution_order_and_terminal_tool_identification_as_requested_by_the_user_in_the_prompt_to_be_returned_as_a_",
+      "latency_ms": 5400.77
+    },
+    {
+      "sample_id": "sealed_test_mtr_security_ops_s300074_k4",
+      "domain": "security_ops",
+      "generated_text": "{\"route\": [\"telemy_parser\", \"ioc_correlator\", \"endpoint_inspector\", \"quarantine_enforcer\"], \"terminal\": \"quarantine_enforcer\"}<turn|>",
+      "latency_ms": 5342.46
+    },
+    {
+      "sample_id": "sealed_test_mtr_robotics_control_s300075_k2",
+      "domain": "robotics_control",
+      "generated_text": "<|channel>_thought_pro_json_object_keys_route_terminal_split_by_comma_or_space_not_applicable_because_it's_a_json_object_but_the_values_are_list_of_tool_names_in_execution_order_and_the_final_tool_producing_the_goal_from_the_initial_state_provided_in_the_prompt_example_",
+      "latency_ms": 5198.98
+    },
+    {
+      "sample_id": "sealed_test_mtr_api_workflow_s300076_k3",
+      "domain": "api_workflow",
+      "generated_text": "{\"route\": [\"schema_parser\", \"auth_validator\", \"permission_checker\"], \"terminal\": \"permission_checker\"}<turn|>",
+      "latency_ms": 3135.17
+    },
+    {
+      "sample_id": "sealed_test_mtr_data_pipeline_s300077_k4",
+      "domain": "data_pipeline",
+      "generated_text": "<|channel>s_p_v_v_v_v_v_v_v_v_v_v_v_v_v_v_v_v_v_v_v_v_v_v_v_v_v_v_v_v_v_v_v_v_v_v_v_v_v_v_v_v_v_v_v_v_v_v",
+      "latency_ms": 5920.57
+    },
+    {
+      "sample_id": "sealed_test_mtr_security_ops_s300078_k2",
+      "domain": "security_ops",
+      "generated_text": "```json\n{\n  \"route\": [\n    \"ioc_correlator\",\n    \"endpoint_inspector\"\n  ],\n  \"terminal\": \"endpoint_inspector\"\n}\n```\n<|channel>.<turn|>",
+      "latency_ms": 3551.32
+    },
+    {
+      "sample_id": "sealed_test_mtr_robotics_control_s300079_k3",
+      "domain": "robotics_control",
+      "generated_text": "<|channel>_thought_final_json_object_for_route_and_terminal_keys_in_order_of_execution_order_of_tools_to_achieve_the_goal_from_initial_state_provided_in_the_prompt_as_requested_by_the_prompt_as_requested_by_the_prompt_as_requested_by_the_prompt_as_requested_by_the_prompt",
+      "latency_ms": 5429.45
+    },
+    {
+      "sample_id": "sealed_test_mtr_api_workflow_s300080_k4",
+      "domain": "api_workflow",
+      "generated_text": "{\"route\": [\"auth_validator\", \"permission_checker\", \"db_reader\", \"risk_evaluator\"], \"terminal\": \"risk_evaluator\"}<turn|>",
+      "latency_ms": 4094.89
+    },
+    {
+      "sample_id": "sealed_test_mtr_data_pipeline_s300081_k2",
+      "domain": "data_pipeline",
+      "generated_text": "<|channel>s<|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel>O`n`o`o`o`o`o`o`o`o`o`o`o`o`o`o`o`o`o`o`o`o`o`o`o`o`o`o`o`o`o`o`o`",
+      "latency_ms": 5164.56
+    },
+    {
+      "sample_id": "sealed_test_mtr_security_ops_s300082_k3",
+      "domain": "security_ops",
+      "generated_text": "{\"route\": [\"dns_sinkhole\", \"endpoint_inspector\", \"quarantine_enforcer\", \"firewall_reconfig\"], \"terminal\": \"firewall_reconfig\"}<turn|>",
+      "latency_ms": 5402.45
+    },
+    {
+      "sample_id": "sealed_test_mtr_robotics_control_s300083_k4",
+      "domain": "robotics_control",
+      "generated_text": "<|channel>s<|channel><|channel><|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s",
+      "latency_ms": 5592.55
+    },
+    {
+      "sample_id": "sealed_test_mtr_api_workflow_s300084_k2",
+      "domain": "api_workflow",
+      "generated_text": "<|channel>.<|channel>_thought_\n<|channel>.<|channel>_thought_\n<|channel>.<|channel>_thought_\n<|channel>.<|channel>_thought_\n<|channel>.<|channel>_thought_\n<|channel>.<|channel>_thought_\n<|channel>.<|channel>_thought_\n<|channel>.<|channel>_thought_\n<|channel>.<|channel>_thought_\n<|channel>.<|channel>_thought_\n<|channel>.<|channel>_thought_\n<|channel>.<|channel>_thought_\n<|channel>.<|channel>_thought_\n<|channel>.<|channel>_thought",
+      "latency_ms": 6162.32
+    },
+    {
+      "sample_id": "sealed_test_mtr_data_pipeline_s300085_k3",
+      "domain": "data_pipeline",
+      "generated_text": "<|channel>_thought_final_json_object_keys_route_terminal_order_correct_tools_correct_initial_state_correct_goal_correct_terminal_correct_route_correct_terminal_correct_route_correct_terminal_correct_route_correct_terminal_correct_route_correct_terminal_correct_route_correct_terminal_correct_route_correct_terminal_correct_route_correct_terminal_correct_route_",
+      "latency_ms": 5485.83
+    },
+    {
+      "sample_id": "sealed_test_mtr_security_ops_s300086_k4",
+      "domain": "security_ops",
+      "generated_text": "<|channel>.<|channel>_thought_step_0\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n_step_0\n<|channel>.\n<|channel>.\n_step_1\n<|channel>",
+      "latency_ms": 7481.4
+    },
+    {
+      "sample_id": "sealed_test_mtr_robotics_control_s300087_k2",
+      "domain": "robotics_control",
+      "generated_text": "{\"route\": [\"point_cloud_filter\", \"obstacle_detector\"], \"terminal\": \"obstacle_detector\"}<turn|>",
+      "latency_ms": 2792.42
+    },
+    {
+      "sample_id": "sealed_test_mtr_api_workflow_s300088_k3",
+      "domain": "api_workflow",
+      "generated_text": "To achieve the target goal, the following steps are required:\n1. **risk_evaluator**: Takes `user_profile` (from initial state) and produces `risk_score`.\n2. **policy_gate**: Takes `risk_score` and produces `approval_decision`.\n_Note: `billing_meter` and `rate_limiter` are not required for the goal of `audit_receipt`._\n3. **audit_logger",
+      "latency_ms": 5383.22
+    },
+    {
+      "sample_id": "sealed_test_mtr_data_pipeline_s300089_k4",
+      "domain": "data_pipeline",
+      "generated_text": "<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.",
+      "latency_ms": 5693.1
+    },
+    {
+      "sample_id": "sealed_test_mtr_security_ops_s300090_k2",
+      "domain": "security_ops",
+      "generated_text": "{\"route\": [\"ioc_correlator\", \"endpoint_inspector\"], \"terminal\": \"endpoint_inspector\"}<turn|>",
+      "latency_ms": 3308.19
+    },
+    {
+      "sample_id": "sealed_test_mtr_robotics_control_s300091_k3",
+      "domain": "robotics_control",
+      "generated_text": "<|channel>_thought_final_json_object_keys_route_terminal_order_correct_tools_list_correct_terminal_correct_initial_state_correct_goal_correct_order_correct_terminal_correct_initial_state_correct_goal_correct_order_correct_terminal_correct_initial_state_correct_goal_correct_order_correct_terminal_correct_initial_state_correct_goal_correct_order_",
+      "latency_ms": 5394.41
+    },
+    {
+      "sample_id": "sealed_test_mtr_api_workflow_s300092_k4",
+      "domain": "api_workflow",
+      "generated_text": "{\"e\": [\"auth_validator\", \"permission_checker\", \"db_reader\", \"risk_evaluator\", \"web_hook_emitter\"], \"route\": [\"auth_validator\", \"permission_checker\", \"db_reader\", \"risk_evaluator\", \"web_hook_emitter\"], \"terminal\": \"risk_evaluator\"}\n{\"e\": [\"auth_validator\", \"permission_checker\", \"db_reader\", \"risk_evaluator\"],",
+      "latency_ms": 5583.65
+    },
+    {
+      "sample_id": "sealed_test_mtr_data_pipeline_s300093_k2",
+      "domain": "data_pipeline",
+      "generated_text": "{\"route\": [\"model_evaluator\", \"alert_dispatcher\"], \"terminal\": \"alert_dispatcher\"}<turn|>",
+      "latency_ms": 2720.81
+    },
+    {
+      "sample_id": "sealed_test_mtr_security_ops_s300094_k3",
+      "domain": "security_ops",
+      "generated_text": "{\"route\": [\"quarantine_enforcer\", \"fireward_reconfig\", \"incident_publisher\"], \"terminal\": \"incident_publisher\"}<turn|>",
+      "latency_ms": 3295.75
+    },
+    {
+      "sample_id": "sealed_test_mtr_robotics_control_s300095_k4",
+      "domain": "robotics_control",
+      "generated_text": "<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n.\n.\n.\n.\n.",
+      "latency_ms": 5693.96
+    },
+    {
+      "sample_id": "sealed_test_mtr_api_workflow_s300096_k2",
+      "domain": "api_workflow",
+      "generated_text": "<|channel>s_p_r_r_r_r_r_r_r_r_r_r_r_r_r_r_r_r_r_r_r_r_r_r_r_r_r_r_r_r_r_r_r_r_r_r_r_r_r_r_r_r_r_r_r_r_r_r",
+      "latency_ms": 5157.01
+    },
+    {
+      "sample_id": "sealed_test_mtr_data_pipeline_s300097_k3",
+      "domain": "data_pipeline",
+      "generated_text": "{\"route\": [\"feature_extractor\", \"schema_normalizer\", \"null_cleaner\", \"latency_tracker\", \"drift_monitor\"], \"terminal\": \"feature_extractor\"}\n{\"route\": [\"feature_extractor\", \"schema_normalizer\", \"null_cleaner\", \"latency_tracker\", \"drift_monitor\"], \"terminal\": \"feature_extractor\"}\n{\"route\": [\"feature_extractor\", \"schema_normalizer\", \"null_clean",
+      "latency_ms": 5756.81
+    },
+    {
+      "sample_id": "sealed_test_mtr_security_ops_s300098_k4",
+      "domain": "security_ops",
+      "generated_text": "<|channel>.<|channel>_thought_#\n<|channel>_thought_#\n<|channel>_thought_#\n<|channel>_thought_#\n<|channel>_thought_#\n<|channel>_thought_#\n<|channel>_thought_#\n<|channel>_thought_#\n<|channel>_thought_#\n<|channel>_thought_#\n<|channel>_thought_#\n<|channel>_thought_#\n<|channel>_thought_#\n<|channel>_thought_#\n<|channel>_thought_#\n<|channel>__thought",
+      "latency_ms": 6820.98
+    },
+    {
+      "sample_id": "sealed_test_mtr_robotics_control_s300099_k2",
+      "domain": "robotics_control",
+      "generated_text": "<|channel>s_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p",
+      "latency_ms": 6099.56
+    },
+    {
+      "sample_id": "sealed_test_mtr_api_workflow_s300100_k3",
+      "domain": "api_workflow",
+      "generated_text": "<|channel>s_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p",
+      "latency_ms": 5467.31
+    },
+    {
+      "sample_id": "sealed_test_mtr_data_pipeline_s300101_k4",
+      "domain": "data_pipeline",
+      "generated_text": "<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n",
+      "latency_ms": 6950.17
+    },
+    {
+      "sample_id": "sealed_test_mtr_security_ops_s300102_k2",
+      "domain": "security_ops",
+      "generated_text": "{\"route\": [\"endpoint_inspector\", \"quarantine_enforcer\"], \"terminal\": \"quarantine_enforcer\"}<turn|>",
+      "latency_ms": 3385.36
+    },
+    {
+      "sample_id": "sealed_test_mtr_robotics_control_s300103_k3",
+      "domain": "robotics_control",
+      "generated_text": "<audio|>ver, the requested JSON object is provided below.\n\n```json\n{\n  \"route\": [\"point_cloud_filter\", \"obstacle_detector\", \"kinematics_solver\"],\n  \"terminal\": \"kinematics_solver\"\n}\n```\n*Note: The route includes `point_cloud_filter` and `obstacle_detector` to/`kinematics_solver` to/`kinemat_solver` to/`",
+      "latency_ms": 5429.6
+    },
+    {
+      "sample_id": "sealed_test_mtr_api_workflow_s300104_k4",
+      "domain": "api_workflow",
+      "generated_text": "To achieve the target goal, the following steps are required:\n1.  **permission_checker**: Uses `user_session` (from initial state) to produce `perm_token`.\n2_**db_reader**: Uses `perm_token` to produce `user_profile`.\n3.  **risk_evaluator**: Uses `user_profile` to produce `risk_score`.\n4.  **policy_gate**: Uses `risk_",
+      "latency_ms": 5797.96
+    },
+    {
+      "sample_id": "sealed_test_mtr_data_pipeline_s300105_k2",
+      "domain": "data_pipeline",
+      "generated_text": "<|channel>.<|channel>_thought_\n<|channel>_thought_<channel|><|channel>_thought_#<|channel>_thought_#<|channel>_thought_#<|channel>_thought_#<|channel>_thought_#<|channel>_thought_#<|channel>_thought_#<|channel>_thought_#<|channel>_thought_#<|channel>_thought_#<|channel>_thought_#<|channel>_thought_#<|channel>_thought_#<|channel>_thought_#<|channel>_thought_#<|channel>_thought_#<|channel>_thought_",
+      "latency_ms": 5158.37
+    },
+    {
+      "sample_id": "sealed_test_mtr_security_ops_s300106_k3",
+      "domain": "security_ops",
+      "generated_text": "```json\n{\n  \"route\": [\n    \"telemy_parser\",\n    \"ioc_correlator\",\n    \"endpoint_inspector\"\n  ],\n  \"terminal\": \"endpoint_inspector\"\n}\n```<turn|>",
+      "latency_ms": 4462.55
+    },
+    {
+      "sample_id": "sealed_test_mtr_robotics_control_s300107_k4",
+      "domain": "robotics_control",
+      "generated_text": "<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s",
+      "latency_ms": 6754.98
+    },
+    {
+      "sample_id": "sealed_test_mtr_api_workflow_s300108_k2",
+      "domain": "api_workflow",
+      "generated_text": "{\"route\": [\"auth_validator\", \"permission_checker\", \"cache_reader\", \"billing_meter\"], \"terminal\": \"billing_meter\"}<turn|>",
+      "latency_ms": 3056.84
+    },
+    {
+      "sample_id": "sealed_test_mtr_data_pipeline_s300109_k3",
+      "domain": "data_pipeline",
+      "generated_text": "<|channel>_thought_final_json_object_keys_route_terminal_order_execution_order_initial_state_target_goal_schema_normalizer_feature_extractor_null_cleaner_latency_tracker_drift_monitor_all_tools_available_tools_list_initial_state_provided_target_goal_provided_initial_state_provided_all_tools_list_provided_true_all_tools_list_",
+      "latency_ms": 6394.29
+    },
+    {
+      "sample_id": "sealed_test_mtr_security_ops_s300110_k4",
+      "domain": "security_ops",
+      "generated_text": "<|channel>.<|channel>_thought_<channel|><|channel>_thought_process_time=0.5\n<|channel>_thought_process_time=0.5\n<|channel>_thought_process_time=0.5\n<|channel>_thought_process_time=0.5\n<|channel>_thought_process_time=0.5\n<|channel>_thought_process_time=0.5\n<|channel>_thought_process_time=0.5\n<|channel>_thought_process",
+      "latency_ms": 7350.74
+    },
+    {
+      "sample_id": "sealed_test_mtr_robotics_control_s300111_k2",
+      "domain": "robotics_control",
+      "generated_text": "<|channel>s_p_c_v_v_v_v_v_v_v_v_v_v_v_v_v_v_v_v_v_v_v_v_v_v_v_v_v_v_v_v_v_v_v_v_v_v_v_v_v_v_v_v_v_v_v_v_v",
+      "latency_ms": 5127.7
+    },
+    {
+      "sample_id": "sealed_test_mtr_api_workflow_s300112_k3",
+      "domain": "api_workflow",
+      "generated_text": "<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n_\n_\n_\n_\n_\n_\n_\n_\n_\n_\n_\n_\n_\n_\n_\n_\n_\n_\n_\n_\n_\n_\n_\n_\n_\n_\n_\n_\n_\n_\n_\n_\n_\n_\n_\n_\n_\n_",
+      "latency_ms": 5363.36
+    },
+    {
+      "sample_id": "sealed_test_mtr_data_pipeline_s300113_k4",
+      "domain": "data_pipeline",
+      "generated_text": "Teacher'sed.\n<|channel>thought step=1\nInitial State: `[context_tag_300113, raw_records]`\nTarget Goal: `feature_matrix`\n\nAvailable Tools:\n- `schema_normalizer`: `[clean_records]` $\\rightarrow$ `[normalized_frame]`\n- `feature_extractor`: `[normalized_frame]` $\\rightarrow$ `[feature_matrix]`\n- `null_clean",
+      "latency_ms": 5669.85
+    },
+    {
+      "sample_id": "sealed_test_mtr_security_ops_s300114_k2",
+      "domain": "security_ops",
+      "generated_text": "{\"route\": [\"firewall_reconfig\", \"incident_publisher\"], \"terminal\": \"incident_publisher\"}<turn|>",
+      "latency_ms": 2798.65
+    },
+    {
+      "sample_id": "sealed_test_mtr_robotics_control_s300115_k3",
+      "domain": "robotics_control",
+      "generated_text": "<|channel>.<|channel>_thought_\n<|channel>.<|channel>_thought_\n<|channel>.<|channel>_thought_\n<|channel>.<|channel>_thought_\n<|channel>.<|channel>_thought_\n<|channel>.<|channel>_thought_\n<|channel>.<|channel>_thought_\n<|channel>.<|channel>_thought_\n<|channel>.<|channel>_thought_\n<|channel>.<|channel>_thought_\n<|channel>.<|channel>_thought_\n<|channel>.<|channel>_thought_\n<|channel>.<|channel>_thought_\n<|channel>.<|channel>_thought",
+      "latency_ms": 5368.92
+    },
+    {
+      "sample_id": "sealed_test_mtr_api_workflow_s300116_k4",
+      "domain": "api_workflow",
+      "generated_text": "{\"route\": [\"risk_evaluator\", \"permission_checker\", \"cache_reader\", \"db_reader\", \"webhook_emitter\", \"policy_gate\"], \"terminal\": \"policy_gate\"}<turn|>",
+      "latency_ms": 3857.05
+    },
+    {
+      "sample_id": "sealed_test_mtr_data_pipeline_s300117_k2",
+      "domain": "data_pipeline",
+      "generated_text": "{\"route\": [\"alert_dispatcher\", \"cold_archiver\"], \"terminal\": \"cold_archiver\"}<turn|>",
+      "latency_ms": 2796.36
+    },
+    {
+      "sample_id": "sealed_test_mtr_security_ops_s300118_k3",
+      "domain": "security_ops",
+      "generated_text": "Required fieldststststststststststststststststststststststststststststststststststststststststststststststststststststststststststststststststststststststststststststststststststststststststststststststs",
+      "latency_ms": 5969.28
+    },
+    {
+      "sample_id": "sealed_test_mtr_robotics_control_s300119_k4",
+      "domain": "robotics_control",
+      "generated_text": "{\"route\": [\"point_cloud_filter\", \"obstacle_detector\", \"kinematics_solver\", \"lidar_processor\", \"point_cloud_filter\", \"kinematics_solver\", \"point_cloud_filter\", \"point_cloud_filter\", \"point_cloud_filter\", \"point_cloud_filter\", \"point_cloud_filter\", \"point_cloud_filter\", \"point_cloud_filter\", \"point_cloud_",
+      "latency_ms": 5656.61
+    },
+    {
+      "sample_id": "sealed_test_mtr_api_workflow_s300120_k2",
+      "domain": "api_workflow",
+      "generated_text": "{\"e\": \"db_reader\", \"next_e\": \"risk_evaluator\", \"terminal\": \"risk_evaluator\", \"route\": [\"db_reader\", \"risk_evaluator\"], \"terminal\": \"risk_evaluator\"}\n{\"e\": \"db_reader\", \"next_e\": \"risk_evaluator\", \"terminal\": \"risk_evaluator\", \"route\": [\"db_reader\", \"risk_evaluator\"], \"terminal",
+      "latency_ms": 5190.51
+    },
+    {
+      "sample_id": "sealed_test_mtr_data_pipeline_s300121_k3",
+      "domain": "data_pipeline",
+      "generated_text": "<|channel>_thought_\n<|channel>_thought_\n<|channel>_thought_\n<|channel>_thought_\n<|channel>_thought_\n<|channel>_thought_\n<|channel>_thought_\n<|channel>_thought_\n<|channel>_thought_\n<|channel>_thought_\n<|channel>_thought_\n<|channel>_thought_\n<|channel>_thought_\n<|channel>_thought_\n<|channel>_thought_\n<|channel>_thought_\n<|channel>_thought_\n<|channel>_thought_\n<|channel>_thought_\n<|channel>",
+      "latency_ms": 5488.18
+    },
+    {
+      "sample_id": "sealed_test_mtr_security_ops_s300122_k4",
+      "domain": "security_ops",
+      "generated_text": "<|channel>.<|channel>_thought_step_01.\nThe user wants to find the shortest path of tool execution to reach the goal `blocked_subnet` from the initial state `[context_tag_300122, network_flows]`.\n\nInitial State: `[context_tag_300122, network_flows]`\nTarget Goal: `blocked_subnet`\n\nAvailable Tools:\n1. `quarantine_en",
+      "latency_ms": 8717.71
+    },
+    {
+      "sample_id": "sealed_test_mtr_robotics_control_s300123_k2",
+      "domain": "robotics_control",
+      "generated_text": "<|channel>_thought_final_json_object_for_route_and_terminal_keys_in_order_of_execution_order_of_execution_order_of_execution_order_of_execution_order_of_execution_order_of_execution_order_of_execution_order_of_execution_order_of_execution_order_of_execution_order_of_execution_order_of_execution_order_",
+      "latency_ms": 5407.39
+    },
+    {
+      "sample_id": "sealed_test_mtr_api_workflow_s300124_k3",
+      "domain": "api_workflow",
+      "generated_text": "{\"e\": [\"permission_checker\", \"db_reader\", \"risk_evaluator\", \"billing_meter\"], \"route\": [\"permission_checker\", \"db_reader\", \"risk_evaluator\", \"billing_meter\"], \"terminal\": \"billing_meter\" : \"risk_evaluator\" : \"db_reader\" : \"permission_checker\" : \"risk_score\" : \"risk_eval_score\" : \"risk_score\" :",
+      "latency_ms": 5457.18
+    },
+    {
+      "sample_id": "sealed_test_mtr_data_pipeline_s300125_k4",
+      "domain": "data_pipeline",
+      "generated_text": "Teacher_Task_Description:\nInitial State: [context_tag_300125, raw_records]\nTarget Goal: feature_matrix\n\nAvailable Tools:\n- schema_normalizer: [clean_records] -> [normalized_frame]\n- stream_ingester: [raw_records] -> [ingested_batch]\n- feature_extractor: [normalized_frame] -> [feature_matrix]\n- latency_tracker",
+      "latency_ms": 5575.6
+    },
+    {
+      "sample_id": "sealed_test_mtr_security_ops_s300126_k2",
+      "domain": "security_ops",
+      "generated_text": "To achieve the target goal, the execution order of the tools is as follows:\n\n1.  **telemy_parser**: Required to produce `network_flows` from the `pcap_stream`.\n2.  **ioc_correlator**: Required to produce `threat_indicators` from the `network_flows`.\n\nThe final tool in the sequence is the `ioc_correlator`.\n\n```json\n{\n  \"route\": [\"tele",
+      "latency_ms": 6095.29
+    },
+    {
+      "sample_id": "sealed_test_mtr_robotics_control_s300127_k3",
+      "domain": "robotics_control",
+      "generated_text": "<|channel>.<|channel>.<|channel>.<|channel>.<|channel>.<|channel>.<|channel>.<|channel>.<|channel>.<|channel>._\n<|channel>.<|channel>._\n<|channel>._\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n_\n<|channel>.\n_\n_\n_",
+      "latency_ms": 6132.24
+    },
+    {
+      "sample_id": "sealed_test_mtr_api_workflow_s300128_k4",
+      "domain": "api_workflow",
+      "generated_text": "<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n></p>\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n></p>\n<|channel>.\n></p>\n<|channel>.\n></p>\n<|channel>.",
+      "latency_ms": 6350.47
+    },
+    {
+      "sample_id": "sealed_test_mtr_data_pipeline_s300129_k2",
+      "domain": "data_pipeline",
+      "generated_text": "{\"route\": [\"schema_normalizer\", \"feature_extractor\"], \"terminal\": \"feature_extractor\"}<turn|>",
+      "latency_ms": 2753.9
+    },
+    {
+      "sample_id": "sealed_test_mtr_security_ops_s300130_k3",
+      "domain": "security_ops",
+      "generated_text": "<|channel>s_p.json\n<|channel>s_p.json\n<|channel>s_p.json\n<|channel>s_p.json\n<|channel>s_p.json\n<|channel>s_p.json\n<|channel>s_p.json\n<|channel>s_p.json\n<|channel>s_p.json\n<|channel>s_p.json\n<|channel>s_p.json\n<|channel>s_p.json\n<|channel>s_p.json\n<|channel>s_p.",
+      "latency_ms": 6479.53
+    },
+    {
+      "sample_id": "sealed_test_mtr_robotics_control_s300131_k4",
+      "domain": "robotics_control",
+      "generated_text": "<|channel>s_p_v_v_v_v_v_v_v_v_v_v_v_v_v_v_v_v_v_v_v_v_v_v_v_v_v_v_v_v_v_v_v_v_v_v_v_v_v_v_v_v_v_v_v_v_v_v",
+      "latency_ms": 7442.62
+    },
+    {
+      "sample_id": "sealed_test_mtr_api_workflow_s300132_k2",
+      "domain": "api_workflow",
+      "generated_text": "{\"e\": [\"schema_parser\", \"auth_validator\", \"rate_limiter\", \"cache_reader\", \"rate_limiter\"], \"route\": [\"schema_parser\", \"auth_validator\", \"rate_limiter\", \"cache_reader\", \"rate_limiter\"], \"terminal\": \"rate_limiter\"}\n<|channel>_thought_step_by_step_analysis_of_the_json_provided_by_the_user_",
+      "latency_ms": 7145.97
+    },
+    {
+      "sample_id": "sealed_test_mtr_data_pipeline_s300133_k3",
+      "domain": "data_pipeline",
+      "generated_text": "<|channel>_thought_try_to_provide_json_object_for_route_and_terminal_keys_in_execution_order_for_achieving_target_goal_from_initial_state_using_available_tools_provided_in_prompt_for_achieving_target_goal_from_initial_state_using_available_tools_provided_in_prompt_for_achieving_target_goal_from_initial",
+      "latency_ms": 5498.37
+    },
+    {
+      "sample_id": "sealed_test_mtr_security_ops_s300134_k4",
+      "domain": "security_ops",
+      "generated_text": "<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s",
+      "latency_ms": 5749.48
+    },
+    {
+      "sample_id": "sealed_test_mtr_robotics_control_s300135_k2",
+      "domain": "robotics_control",
+      "generated_text": "<|channel>_thought_\n<|channel>_thought_\n<|channel>_thought_\n<|channel>_thought_\n<|channel>_thought_\n<|channel>_thought_\n<|channel>_thought_\n<|channel>_thought_\n<|channel>_thought_\n<|channel>_thought_\n<|channel>_thought_\n<|channel>_thought_\n<|channel>_thought_\n<|channel>_thought_\n<|channel>_thought_\n<|channel>_thought_\n<|channel>_thought_\n<|channel>_thought_\n<|channel>_thought_\n<|channel>",
+      "latency_ms": 5882.17
+    },
+    {
+      "sample_id": "sealed_test_mtr_api_workflow_s300136_k3",
+      "domain": "api_workflow",
+      "generated_text": "```json\n{\n  \"route\": [\n    \"risk_evaluator\",\n    \"policy_gate\",\n    \"audit_logger\"\n  ],\n  \"terminal\": \"audit_logger\"\n}\n```<turn|>",
+      "latency_ms": 4017.04
+    },
+    {
+      "sample_id": "sealed_test_mtr_data_pipeline_s300137_k4",
+      "domain": "data_pipeline",
+      "generated_text": "<|channel>s_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p",
+      "latency_ms": 6168.62
+    },
+    {
+      "sample_id": "sealed_test_mtr_security_ops_s300138_k2",
+      "domain": "security_ops",
+      "generated_text": "Required_Fields:\n- route: [ioc_correlator, endpoint_inspector]\n- terminal: [endpoint_inspector]\n\nResponse:\n```json\n{\n  \"route\": [\"ioc_correlator\", \"endpoint_#_inspector\"],\n  \"terminal\": \"endpoint_#_inspector\"\n}\n```\n*Note: The_#_ represents the_#_ required_#_ for_#_the_#_",
+      "latency_ms": 5466.31
+    },
+    {
+      "sample_id": "sealed_test_mtr_robotics_control_s300139_k3",
+      "domain": "robotics_control",
+      "generated_text": "<|channel>s_p_c_v_v_v_v_v_v_v_v_v_v_v_v_v_v_v_v_v_v_v_v_v_v_v_v_v_v_v_v_v_v_v_v_v_v_v_v_v_v_v_v_v_v_v_v_v",
+      "latency_ms": 5462.36
+    },
+    {
+      "sample_id": "sealed_test_mtr_api_workflow_s300140_k4",
+      "domain": "api_workflow",
+      "generated_text": "Continue. Please provide the JSON object for the route and terminal.\n\n**Note:** I am a language model. I can help you with the logic of the problem.\n\n**Solution Logic:**\n1. `schema_parser` (takes `raw__payload`) $\\rightarrow$ `parsed_request`\n2. `auth_validator` (takes `parsed_request`) $\\rightarrow$ `user_session`\n3. `permission_checker` (takes",
+      "latency_ms": 7728.5
+    },
+    {
+      "sample_id": "sealed_test_mtr_data_pipeline_s300141_k2",
+      "domain": "data_pipeline",
+      "generated_text": "To achieve the target goal, the following steps are required:\n1. **drift_monitor**: Uses the initial state `[context_tag_300141, ingested_batch]` (as `baseline_sp` is not provided, but `ingested_batch` is).\n2. **null_cleaner**: Processes the `[ingested_batch]` toed.\n3. **schema_normalizer**: Processes the `[clean",
+      "latency_ms": 5453.98
+    },
+    {
+      "sample_id": "sealed_test_mtr_security_ops_s300142_k3",
+      "domain": "security_ops",
+      "generated_text": "```json\n{\n  \"route\": [\n    \"quarantine_enforcer\",\n    \"firewall_reconfig\",\n    \"incident_publisher\"\n  ],\n  \"terminal\": \"incident_publisher\"\n}\n```<turn|>",
+      "latency_ms": 4696.06
+    },
+    {
+      "sample_id": "sealed_test_mtr_robotics_control_s300143_k4",
+      "domain": "robotics_control",
+      "generated_text": "<|channel>_thought_pro_json_object_keys_route_terminal_initial_state_point_cloud_raw_target_goal_joint_angles_kinematics_solver_obstacle_detector_point_cloud_filter_kinematics_solver_gps_sync_battery_monitor_kinematics_solver_point_cloud_filter_obstacle_detector_kinematics_solver_point_cloud_raw_kinemat_ics",
+      "latency_ms": 5677.96
+    },
+    {
+      "sample_id": "sealed_test_mtr_api_workflow_s300144_k2",
+      "domain": "api_workflow",
+      "generated_text": "Continue. Show me the JSON object.\n\n```json\n{\n  \"route\": [\"auth_validator\", \"permission_checker\"],\n  \"terminal\": \"permission_checker\"\n}\n```\n\n**Explanation of the route:**\n1.  **`auth_validator`**: Required to produce `user_session`.\n2.  **`permission_checker`**: Required to produce `perm_token` (the target goal). It requires `user",
+      "latency_ms": 6321.25
+    },
+    {
+      "sample_id": "sealed_test_mtr_data_pipeline_s300145_k3",
+      "domain": "data_pipeline",
+      "generated_text": "{\"route\": [\"feature_extractor\", \"model_evaluator\", \"alert_dispatcher\", \"latency_tracker\", \"model_evaluator\"], \"terminal\": \"alert_dispatcher\"}\n{\"route\": [\"feature_extractor\", \"model_evaluator\", \"alert_dispatcher\"], \"terminal\": \"alert_dispatcher\"}\n{\"route\": [\"feature_extractor\", \"model_evaluator\", \"alert_dispatcher\"], \"terminal\": \"alert_dispatcher\"}\n{\"",
+      "latency_ms": 5386.58
+    },
+    {
+      "sample_id": "sealed_test_mtr_security_ops_s300146_k4",
+      "domain": "security_ops",
+      "generated_text": "```json\n{\n  \"route\": [\n    \"ioc_correlator\",\n    \"endpoint_inspector\",\n    \"quarantine_enforcer\",\n    \"firewall_reconfig\",\n    \"dns_sinkhole\"\n  ],\n  \"terminal\": \"firewall_reconfig\"\n}\n```\n*(Note: The prompt asks for the final tool producing the goal. Since `firewall_reconfig` produces `",
+      "latency_ms": 7546.5
+    },
+    {
+      "sample_id": "sealed_test_mtr_robotics_control_s300147_k2",
+      "domain": "robotics_control",
+      "generated_text": "{\"route\": [\"collision_checker\", \"trajectory_planner\"], \"terminal\": \"trajectory_planner\"}<turn|>",
+      "latency_ms": 3935.65
+    },
+    {
+      "sample_id": "sealed_test_mtr_api_workflow_s300148_k3",
+      "domain": "api_workflow",
+      "generated_text": "{\"route\": [\"web_if__if_\"}, \"terminal\": \"db_reader\"}\n{\"route\": [\"web_if__if_\"}, \"terminal\": \"db_reader\"}\n{\"route\": [\"web_if__if_\"}, \"terminal\": \"db_reader\"}\n{\"route\": [\"web_if__if_\"}, \"terminal\": \"db_reader\"}\n{\"route\": [\"web_if__if_\"},",
+      "latency_ms": 5402.78
+    },
+    {
+      "sample_id": "sealed_test_mtr_data_pipeline_s300149_k4",
+      "domain": "data_pipeline",
+      "generated_text": "Continue. Please provide the JSON object for the route and terminal.\n\n**Route Analysis:**\n1. `schema_normalizer` (Input: `clean_records`) $\\rightarrow$ `normalized_frame`\n2. `feature_extractor` (Input: `normalized_frame`) $\\rightarrow$ `feature_matrix`\n3. `model_evaluator` (Input: `feature_matrix`) $\\rightarrow$ `prediction_metrics`\n4. `",
+      "latency_ms": 5690.74
+    },
+    {
+      "sample_id": "sealed_test_mtr_security_ops_s300150_k2",
+      "domain": "security_ops",
+      "generated_text": "{\"route\": [\"hash_lookup\", \"dns_sinkhole\", \"firewall_reconfig\", \"incident_publisher\"], \"terminal\": \"incident_publisher\"}<turn|>",
+      "latency_ms": 4084.69
+    },
+    {
+      "sample_id": "sealed_test_mtr_robotics_control_s300151_k3",
+      "domain": "robotics_control",
+      "generated_text": "<|channel>_thought_try_to_find_the_path_from_initial_state_to_goal_state_using_the_available_tools_provided_in_the_description_of_the_problem_statement_as_the_problem_statement_is_the_only_source_of_truth_for_the_problem_description_as_the_problem_statement_is_the_only_source__of",
+      "latency_ms": 5365.65
+    },
+    {
+      "sample_id": "sealed_test_mtr_api_workflow_s300152_k4",
+      "domain": "api_workflow",
+      "generated_text": "To achieve the target goal, the system must follow a sequence of tool executions. The `db_reader` requires a `perm_token`, which is produced by the `permission_checker`. The `permission_checker` requires the `user_session` provided in the initial state. Once the `db_reader` provides the `user_profile`, the `risk_evaluator` can produce the `risk_score` required by the `policy_gate` to",
+      "latency_ms": 5624.3
+    },
+    {
+      "sample_id": "sealed_test_mtr_data_pipeline_s300153_k2",
+      "domain": "data_pipeline",
+      "generated_text": "{\"route\": [\"sample_exporter\", \"alert_dispatcher\", \"drift_monitor\", \"cold_archiver\"], \"terminal\": \"cold_archiver\"}<turn|>",
+      "latency_ms": 3080.96
+    },
+    {
+      "sample_id": "sealed_test_mtr_security_ops_s300154_k3",
+      "domain": "security_ops",
+      "generated_text": "<|channel>.<|channel>_thought_\n<|channel>.<|channel>_thought_\n<|channel>.<|channel>_thought_\n<|channel>.<|channel>_thought_\n<|channel>.<|channel>_thought_\n<|channel>.<|channel>_thought_\n<|channel>.<|channel>_thought_\n<|channel>.<|channel>_thought_\n<|channel>.<|channel>_thought_\n<|channel>.<|channel>_thought_\n<|channel>.<|channel>_thought_\n<|channel>.<|channel>_thought_\n_\n_\n_\n_\n_\n_\n",
+      "latency_ms": 5536.9
+    },
+    {
+      "sample_id": "sealed_test_mtr_robotics_control_s300155_k4",
+      "domain": "robotics_control",
+      "generated_text": "<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s",
+      "latency_ms": 5706.8
+    },
+    {
+      "sample_id": "sealed_test_mtr_api_workflow_s300156_k2",
+      "domain": "api_workflow",
+      "generated_text": "To achieve the target goal, the system must execute the following tools in order:\n\n1.  **`auth_validator`**: Required to produce `user_session`.\n2.  **`permission_checker`**: Required to produce `perm_token`.\n\nNote: `auth_validator` requires `parsed_request` (available in initial state). `permission_checker` requires `user_session` (produced by `auth_validator`).\n\n```json",
+      "latency_ms": 5380.33
+    },
+    {
+      "sample_id": "sealed_test_mtr_data_pipeline_s300157_k3",
+      "domain": "data_pipeline",
+      "generated_text": "{\"e\": [\"model_evaluator\", \"alert_dispatcher\"], \"terminal\": \"alert_dispatcher\"}<turn|>",
+      "latency_ms": 2981.07
+    },
+    {
+      "sample_id": "sealed_test_mtr_security_ops_s300158_k4",
+      "domain": "security_ops",
+      "generated_text": "<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s",
+      "latency_ms": 7969.67
+    },
+    {
+      "sample_id": "sealed_test_mtr_robotics_control_s300159_k2",
+      "domain": "robotics_control",
+      "generated_text": "<|channel>_thought_pro_json_object_keys_route_terminal_order_execution_order_initial_state_target_goal_all_tools_available_tools_point_cloud_filter_obstacle_detector_battery_monitor_gps_sync_initial_state_context_tag_300159_filtered_points_target_goal_obstacle_map_all_tools_point_cloud_filter_obstacle_detector",
+      "latency_ms": 6552.21
+    },
+    {
+      "sample_id": "sealed_test_mtr_api_workflow_s300160_k3",
+      "domain": "api_workflow",
+      "generated_text": "{\"e\": [\"risk_evaluator\", \"rate_limiter\", \"policy_gate\", \"db_reader\", \"webhook_emitter\"], \"route\": [\"risk_evaluator\", \"rate_limiter\", \"policy_gate\", \"db_reader\", \"webhook_emitter\"], \"terminal\": \"policy_gate\"}\n<|channel>thought:\n<channel|>```json\n{\"route\": [\"db_reader\", \"risk_evaluator\", \"rate_limiter",
+      "latency_ms": 5401.3
+    },
+    {
+      "sample_id": "sealed_test_mtr_data_pipeline_s300161_k4",
+      "domain": "data_pipeline",
+      "generated_text": "<|channel>.<|channel>_thought_<channel|><|channel>_thought_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#",
+      "latency_ms": 5614.19
+    },
+    {
+      "sample_id": "sealed_test_mtr_security_ops_s300162_k2",
+      "domain": "security_ops",
+      "generated_text": "{\"route\": [\"firewall_reconfig\", \"incident_publisher\"], \"terminal\": \"incident_publisher\"}<turn|>",
+      "latency_ms": 2811.58
+    },
+    {
+      "sample_id": "sealed_test_mtr_robotics_control_s300163_k3",
+      "domain": "robotics_control",
+      "generated_text": "<|channel>s_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p",
+      "latency_ms": 5704.19
+    },
+    {
+      "sample_id": "sealed_test_mtr_api_workflow_s300164_k4",
+      "domain": "api_workflow",
+      "generated_text": "{\"e\": [\"policy_gate\", \"risk_evaluator\", \"db_reader\", \"permission_checker\", \"cache_reader\", \"webhook_emitter\"], \"route\": [\"policy_gate\", \"risk_evaluator\", \"db_reader\", \"permission_checker\", \"cache_reader\", \"webhook_emitter\"], \"terminal\": \"policy_gate\"}\n<|channel>_thought_step_by_step_analysis_of_the_json_provided",
+      "latency_ms": 6595.63
+    },
+    {
+      "sample_id": "sealed_test_mtr_data_pipeline_s300165_k2",
+      "domain": "data_pipeline",
+      "generated_text": "<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n_\n<|channel>.\n<|channel>.\n_\n<|channel>.\n_\n_\n_\n_\n_\n_\n_\n_\n_\n_\n_\n_\n_\n_\n_\n_\n_\n_\n_\n_\n_",
+      "latency_ms": 5442.2
+    },
+    {
+      "sample_id": "sealed_test_mtr_security_ops_s300166_k3",
+      "domain": "security_ops",
+      "generated_text": "Required_Fields:\n- [context_tag_300166, network_flows]\n- [threat_indicators]\n- [host_forensics]\n- [isolated_host]\n\nExecution Order:\n1. **ioc_correlator**: [network_flows] $\\rightarrow$ [threat_indicators]\n2. **endpoint_inspector**: [threat_indicators] $\\rightarrow$ [host_forensics]\n3.",
+      "latency_ms": 7511.8
+    },
+    {
+      "sample_id": "sealed_test_mtr_robotics_control_s300167_k4",
+      "domain": "robotics_control",
+      "generated_text": "To achieve the target goal, the execution order of the tools is as follows:\n1. `point_cloud_filter` (produces `voxel_grid`)\n2. `obstacle_detector` (produces `obstacle_map`)\n3. `kinematics_solver` (produces `joint_angles`)\n4. `collision_checker` (produces `safe_configuration`)\n\nThe final tool in this sequence is the `collision_",
+      "latency_ms": 7132.58
+    },
+    {
+      "sample_id": "sealed_test_mtr_api_workflow_s300168_k2",
+      "domain": "api_workflow",
+      "generated_text": "{\"e\": [\"rate_limiter\", \"permission_checker\", \"db_reader\", \"billing_meter\"], \"route\": [\"rate_limiter\", \"permission_checker\", \"db_reader\", \"billing_meter\"], \"terminal\": \"db_reader\"}\n{\"e\": [\"rate_limiter\", \"permission_checker\", \"db_reader\", \"billing_meter\"], \"route\": [\"rate_limiter\", \"permission_checker\", \"",
+      "latency_ms": 6881.18
+    },
+    {
+      "sample_id": "sealed_test_mtr_data_pipeline_s300169_k3",
+      "domain": "data_pipeline",
+      "generated_text": "{\"e\": \"e\", \"route\": [\"schema_normalizer\", \"feature_extractor\", \"model_evaluator\"], \"terminal\": \"model_evaluator\"}\n<|channel>_thought_step_e:\n<|channel>_thought_step_e:\n<|channel>_thought_step_e:\n<|channel>_thought_step_e:\n<|channel>_thought_step_e:\n<|channel>_thought_step_e:\n_thought_step_e",
+      "latency_ms": 5432.72
+    },
+    {
+      "sample_id": "sealed_test_mtr_security_ops_s300170_k4",
+      "domain": "security_ops",
+      "generated_text": "<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s",
+      "latency_ms": 7960.64
+    },
+    {
+      "sample_id": "sealed_test_mtr_robotics_control_s300171_k2",
+      "domain": "robotics_control",
+      "generated_text": "To achieve the target goal, the following steps are required:\n1. `obstacle_detector` (requires `voxel_grid`)\n2. `kinematics_solver` (requires `obstacle_map`)\n\nThe `kinematics_solver` is the final tool in the sequence.\n\n```json\n{\n  \"route\": [\"obstacle_detector\", \"kinematics_solver\"],\n  \"terminal\": \"kinematics_solver\"\n",
+      "latency_ms": 6578.33
+    },
+    {
+      "sample_id": "sealed_test_mtr_api_workflow_s300172_k3",
+      "domain": "api_workflow",
+      "generated_text": "<|channel>thought_min_step_0\n<|channel>_min_step_0\n<|channel>_min_step_0\n<|channel>_min_step_0\n<|channel>_min_step_0\n<|channel>_min_step_0\n<|channel>_min_step_0\n<|channel>_min_step_0\n<|channel>_min_step_0\n<|channel>_min_step_0\n<|channel>_min_step_0\n<|channel>_min_step_0",
+      "latency_ms": 5652.28
+    },
+    {
+      "sample_id": "sealed_test_mtr_data_pipeline_s300173_k4",
+      "domain": "data_pipeline",
+      "generated_text": "<|channel>s_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p",
+      "latency_ms": 6935.72
+    },
+    {
+      "sample_id": "sealed_test_mtr_security_ops_s300174_k2",
+      "domain": "security_ops",
+      "generated_text": "<|channel>s_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p",
+      "latency_ms": 6204.23
+    },
+    {
+      "sample_id": "sealed_test_mtr_robotics_control_s300175_k3",
+      "domain": "robotics_control",
+      "generated_text": "<|channel>s_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p",
+      "latency_ms": 5771.03
+    },
+    {
+      "sample_id": "sealed_test_mtr_api_workflow_s300176_k4",
+      "domain": "api_workflow",
+      "generated_text": "To achieve the target goal, the system must follow a sequence of tool executions. Each tool's output is the next tool's input.\n\n**Execution Sequence:**\n1. `auth_validator` (Input: `parsed_request` $\\rightarrow$ Output: `user_session`)\n2. `permission_checker` (Input: `user_session` $\\rightarrow$ Output: `perm_token`)\n3. `db_reader` (Input",
+      "latency_ms": 7512.13
+    },
+    {
+      "sample_id": "sealed_test_mtr_data_pipeline_s300177_k2",
+      "domain": "data_pipeline",
+      "generated_text": "<|channel>_thought_\n<|channel>_thought_\n<|channel>_thought_\n<|channel>_thought_\n<|channel>_thought_\n<|channel>_thought_\n<|channel>_thought_\n<|channel>_thought_\n<|channel>_thought_\n<|channel>_thought_\n<|channel>_thought_\n<|channel>_thought_\n<|channel>_thought_\n<|channel>_thought_\n<|channel>_thought_\n<|channel>_thought_\n<|channel>_thought_\n<|channel>_thought_\n<|channel>_thought_\n<|channel>",
+      "latency_ms": 5358.1
+    },
+    {
+      "sample_id": "sealed_test_mtr_security_ops_s300178_k3",
+      "domain": "security_ops",
+      "generated_text": "Required_Fields:\n- route: [ioc_correlator, endpoint_inspector, quarantine_enforcer]\n- terminal: [quarantine_enforcer]\n\nNote: The [patch_scheduler] and [quarantine_enforcer] are part of the [quarantine_enforcer] and [patch_scheduler] respectively. The [quarantine_enforcer] requires [host_forensics]. The [endpoint_inspector] provides [host_",
+      "latency_ms": 6368.45
+    },
+    {
+      "sample_id": "sealed_test_mtr_robotics_control_s300179_k4",
+      "domain": "robotics_control",
+      "generated_text": "<|channel>.<|channel>_thought_step_0\n<|channel>._thought_step_1\n<|channel>._thought_step_2\n<|channel>._thought_step_3\n<|channel>._thought_step_3\n<|channel>._thought_step_3\n<|channel>._thought_step_3\n<|channel>._thought_step_3\n<|channel>._thought_step_3\n<|channel>._thought_step_3\n<|channel>._thought_",
+      "latency_ms": 5797.11
+    },
+    {
+      "sample_id": "sealed_test_mtr_api_workflow_s300180_k2",
+      "domain": "api_workflow",
+      "generated_text": "{\"e\": [\"billing_meter\", \"policy_gate\", \"audit_logger\", \"webhook_emitter\"], \"terminal\": \"webhook_emitter\"}<turn|>",
+      "latency_ms": 4511.73
+    },
+    {
+      "sample_id": "sealed_test_mtr_data_pipeline_s300181_k3",
+      "domain": "data_pipeline",
+      "generated_text": "<|channel>_thought_final_step_done_by_model_output_json_object_key_route_list_of_tool_names_in_execution_order_and_terminal_the_final_tool_producing_the_goal_from_the_initial_state_provided_in_the_prompt_example_json_object_key_route_list_of_tool_names_in_execution_order_and_",
+      "latency_ms": 5438.18
+    },
+    {
+      "sample_id": "sealed_test_mtr_security_ops_s300182_k4",
+      "domain": "security_ops",
+      "generated_text": "```json\n{\n    \"route\": [\n        \"telemy_parser\",\n        \"ioc_correl,ator\",\n        \"endpoint_inspector\",\n        \"quarantine_enforcer\"\n    ],\n    \"terminal\": \"quarantine_enforcer\"\n}\n```\n\n*Note: The provided tool list contains \"telemy_parser\" and \"quarantine_enforcer\" as the logical sequence to reach \"isolated_host",
+      "latency_ms": 8602.22
+    },
+    {
+      "sample_id": "sealed_test_mtr_robotics_control_s300183_k2",
+      "domain": "robotics_control",
+      "generated_text": "<|channel>thought_min_step_0\n<|channel>thought_min_step_1\n<|channel>thought_min_step_2\n<|channel>thought_min_step_3\n<|channel>thought_min_step_4\n<|channel>thought_min_step_5\n<|channel>_min_step_6\n<|channel>_min_step_7\n<|channel>_min_step_8\n<|channel>_min_step_9\n<|channel>_min_step_10\n<|channel>",
+      "latency_ms": 5336.5
+    },
+    {
+      "sample_id": "sealed_test_mtr_api_workflow_s300184_k3",
+      "domain": "api_workflow",
+      "generated_text": "{\"route\": [\"schema_parser\", \"auth_validator\", \"permission_checker\"], \"terminal\": \"permission_checker\"}<turn|>",
+      "latency_ms": 3274.78
+    },
+    {
+      "sample_id": "sealed_test_mtr_data_pipeline_s300185_k4",
+      "domain": "data_pipeline",
+      "generated_text": "<|channel>_thought_\u65c5_pro_json_not_found_travel_not_found_travel_not_found_travel_not_found_travel_not_found_travel_not_found_travel_not_found_travel_not_found_travel_not_found_travel_not_found_travel_not_found_travel_not_found_travel_not_found_travel_not_found_travel_not_",
+      "latency_ms": 5869.84
+    },
+    {
+      "sample_id": "sealed_test_mtr_security_ops_s300186_k2",
+      "domain": "security_ops",
+      "generated_text": "{\"route\": [\"ioc_correlator\", \"hash_lookup\", \"endpoint_inspector\", \"sandbox_detonator\"], \"terminal\": \"sandbox_detonator\"}<turn|>",
+      "latency_ms": 4285.57
+    },
+    {
+      "sample_id": "sealed_test_mtr_robotics_control_s300187_k3",
+      "domain": "robotics_control",
+      "generated_text": "<audio|>vermas.json\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n",
+      "latency_ms": 5732.69
+    },
+    {
+      "sample_id": "sealed_test_mtr_api_workflow_s300188_k4",
+      "domain": "api_workflow",
+      "generated_text": "{\"e\": [\"permission_checker\", \"db_reader\", \"risk_evaluator\", \"policy_gate\"], \"route\": [\"permission_checker\", \"db_reader\", \"risk_evaluator\", \"policy_gate\"], \"terminal\": \"policy_gate\"}<turn|>",
+      "latency_ms": 6384.08
+    },
+    {
+      "sample_id": "sealed_test_mtr_data_pipeline_s300189_k2",
+      "domain": "data_pipeline",
+      "generated_text": "<|channel>_thought_\n<|channel>_thought_\n<|channel>_thought_\n<|channel>_thought_\n<|channel>_thought_\n<|channel>_thought_\n<|channel>_thought_\n<|channel>_thought_\n<|channel>_thought_\n<|channel>_thought_\n<|channel>_thought_\n<|channel>_thought_\n<|channel>_thought_\n<|channel>_thought_\n<|channel>_thought_\n<|channel>_thought_\n<|channel>_thought_\n<|channel>_thought_\n<|channel>_thought_\n<|channel>",
+      "latency_ms": 5866.56
+    },
+    {
+      "sample_id": "sealed_test_mtr_security_ops_s300190_k3",
+      "domain": "security_ops",
+      "generated_text": "Required Task: Determine the minimal set of tools to achieve the target goal.\n\nInitial State: [context_tag_300190, network_flows]\nTarget Goal: isolated_host\n\nAvailable Tools:\n- ioc_correlator: requires [network_flows], produces [threat_indicators]\n- endpoint_inspector: requires [threat_indicators], produces [host_forensics]\n- sandbox_detonator: requires [",
+      "latency_ms": 7222.0
+    },
+    {
+      "sample_id": "sealed_test_mtr_robotics_control_s300191_k4",
+      "domain": "robotics_control",
+      "generated_text": "UNLURID_TESSERACT_TESSERACT_TESSERACT_TESSERACT_TESSERACT_TESSERACT_TESSERACT_TESSERACT_TESSERACT_TESSERACT_TESSERACT_TESSERACT_TESSERACT_TESSERACT_TESSERACT_TESSERACT_TESSERACT_TESSERACT_T",
+      "latency_ms": 5622.01
+    },
+    {
+      "sample_id": "sealed_test_mtr_api_workflow_s300192_k2",
+      "domain": "api_workflow",
+      "generated_text": "{\"route\": [\"auth_validator\", \"permission_checker\"], \"terminal\": \"permission_checker\"}<turn|>",
+      "latency_ms": 4539.62
+    },
+    {
+      "sample_id": "sealed_test_mtr_data_pipeline_s300193_k3",
+      "domain": "data_pipeline",
+      "generated_text": "<|channel>_thought_pro_step_by_step_execution_order_analysis_for_json_output_generation_for_json_key_route_and_terminal_values_in_json_object_format_for_json_key_route_and_terminal_values_in_json_object_format_for_json_key_route_and_terminal_values_in_json_object_format_for_json_",
+      "latency_ms": 6845.1
+    },
+    {
+      "sample_id": "sealed_test_mtr_security_ops_s300194_k4",
+      "domain": "security_ops",
+      "generated_text": "<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s",
+      "latency_ms": 8766.2
+    },
+    {
+      "sample_id": "sealed_test_mtr_robotics_control_s300195_k2",
+      "domain": "robotics_control",
+      "generated_text": "<|channel>thought^\n<|channel>_thought_<|channel>#^<|channel>#^<|channel>#^<|channel>#^<|channel>#^<|channel>#^<|channel>#^<|channel>#^<|channel>#^<|channel>#^<|channel>#^<|channel>#^<|channel>#^<|channel>#^<|channel>#^<|channel>#^<|channel>#^<|channel>#^<|channel>#^<|channel>#^<|channel>#^<|channel>#^<|channel>#^<|channel>#^<|channel>#^<|channel>#^<|channel>#^<|channel>#^<|channel>#^<|channel>",
+      "latency_ms": 5763.23
+    },
+    {
+      "sample_id": "sealed_test_mtr_api_workflow_s300196_k3",
+      "domain": "api_workflow",
+      "generated_text": "To achieve the target goal, the following steps are required:\n1. **permission_checker**: Uses `user_session` (from initial state) to produce `perm_token`.\n2. **db_reader**: Uses `perm_token` to produce `user_profile`.\n3. **risk_evaluator**: Uses `user_profile` to produce `risk_score`.\n\nThe `risk_score` is the final goal.\n\n```json",
+      "latency_ms": 5542.38
+    },
+    {
+      "sample_id": "sealed_test_mtr_data_pipeline_s300197_k4",
+      "domain": "data_pipeline",
+      "generated_text": "{\"route\": [\"null_cleaner\", \"schema_normalizer\", \"feature_extractor\", \"model_evaluator\"], \"terminal\": \"model_evaluator\"}<turn|>",
+      "latency_ms": 3616.82
+    },
+    {
+      "sample_id": "sealed_test_mtr_security_ops_s300198_k2",
+      "domain": "security_ops",
+      "generated_text": "{\"route\": [\"ioc_correlator\", \"endpoint_inspector\"], \"terminal\": \"endpoint_inspector\"}<turn|>",
+      "latency_ms": 3476.63
+    },
+    {
+      "sample_id": "sealed_test_mtr_robotics_control_s300199_k3",
+      "domain": "robotics_control",
+      "generated_text": "To achieve the target goal, the following sequence of tools is required:\n1. **kinematics_solver**: (Input: `obstacle_map`, Output: `joint_angles`)\n2. **collision_checker**: (Input: `joint_angles`, Output: `safe_configuration`)\n3. **trajectory_planner**: (Input: `safe_configuration`, Output: `spline_path`)\n\nNote: `gps_sync` and `",
+      "latency_ms": 7708.6
+    },
+    {
+      "sample_id": "sealed_test_mtr_api_workflow_s300200_k4",
+      "domain": "api_workflow",
+      "generated_text": "<|channel>s_p_r_p_r_p_r_p_r_p_r_p_r_p_r_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p",
+      "latency_ms": 5688.46
+    },
+    {
+      "sample_id": "sealed_test_mtr_data_pipeline_s300201_k2",
+      "domain": "data_pipeline",
+      "generated_text": "{\"route\": [\"model_evaluator\", \"alert_dispatcher\"], \"terminal\": \"alert_dispatcher\"}<turn|>",
+      "latency_ms": 2810.73
+    },
+    {
+      "sample_id": "sealed_test_mtr_security_ops_s300202_k3",
+      "domain": "security_ops",
+      "generated_text": "Required fieldststststststststststststststststststststststststststststststststststststststststststststststststststststststststststststststststststststststststststststststststststststststststststststststs",
+      "latency_ms": 7735.2
+    },
+    {
+      "sample_id": "sealed_test_mtr_robotics_control_s300203_k4",
+      "domain": "robotics_control",
+      "generated_text": "<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.",
+      "latency_ms": 6826.47
+    },
+    {
+      "sample_id": "sealed_test_mtr_api_workflow_s300204_k2",
+      "domain": "api_workflow",
+      "generated_text": "Take that, -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --",
+      "latency_ms": 7833.06
+    },
+    {
+      "sample_id": "sealed_test_mtr_data_pipeline_s300205_k3",
+      "domain": "data_pipeline",
+      "generated_text": "{\"route\": [\"model_evaluator\", \"latency_tracker\", \"lineage_tracker\", \"alert_dispatcher\", \"cold_archiver\"], \"terminal\": \"cold_archiver\"}<turn|>",
+      "latency_ms": 3703.04
+    },
+    {
+      "sample_id": "sealed_test_mtr_security_ops_s300206_k4",
+      "domain": "security_ops",
+      "generated_text": "<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n",
+      "latency_ms": 7593.23
+    },
+    {
+      "sample_id": "sealed_test_mtr_robotics_control_s300207_k2",
+      "domain": "robotics_control",
+      "generated_text": "<|channel>.<|channel>_thought_\n<|channel>.<|channel>_thought_\n<|channel>.<|channel>_thought_\n<|channel>.<|channel>_thought_\n<|channel>.<|channel>_thought_\n<|channel>.<|channel>_thought_\n<|channel>.<|channel>_thought_\n<|channel>.<|channel>_thought_\n<|channel>.<|channel>_thought_\n<|channel>.<|channel>_thought_\n<|channel>.<|channel>_thought_\n<|channel>._thought_\n<|channel>._thought_\n<|channel>._thought_\n<|channel>",
+      "latency_ms": 5343.31
+    },
+    {
+      "sample_id": "sealed_test_mtr_api_workflow_s300208_k3",
+      "domain": "api_workflow",
+      "generated_text": "{\"route\": [\"schema_parser\", \"auth_validator\", \"permission_checker\", \"rate_limiter\", \"billing_meter\", \"auth_validator\", \"schema_parser\", \"auth_validator\", \"permission_checker\", \"rate_limiter\", \"billing_meter\", \"auth_validator\", \"schema_parser\", \"auth_validator\", \"permission_checker\", \"rate_limiter\", \"billing_meter\", \"auth_validator\",",
+      "latency_ms": 6230.2
+    },
+    {
+      "sample_id": "sealed_test_mtr_data_pipeline_s300209_k4",
+      "domain": "data_pipeline",
+      "generated_text": "<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.",
+      "latency_ms": 6636.92
+    },
+    {
+      "sample_id": "sealed_test_mtr_security_ops_s300210_k2",
+      "domain": "security_ops",
+      "generated_text": "{\"route\": [\"quarantine_enforcer\", \"hash_lookup\", \"firewall_reconfig\"], \"terminal\": \"firewall_reconfig\"}<turn|>",
+      "latency_ms": 3232.84
+    },
+    {
+      "sample_id": "sealed_test_mtr_robotics_control_s300211_k3",
+      "domain": "robotics_control",
+      "generated_text": "<|channel>.<|channel>_thought_\n<|channel>_thought_\n<|channel>_thought_\n<|channel>_thought_\n<|channel>_thought_\n<|channel>_thought_\n<|channel>_thought_\n<|channel>_thought_\n<|channel>_thought_\n<|channel>_thought_\n<|channel>_thought_\n<|channel>_thought_\n<|channel>_thought_\n<|channel>_thought_\n<|channel>_thought_\n<|channel>_thought_\n<|channel>_thought_\n<|channel>_thought_\n<|channel>_thought_",
+      "latency_ms": 6346.79
+    },
+    {
+      "sample_id": "sealed_test_mtr_api_workflow_s300212_k4",
+      "domain": "api_workflow",
+      "generated_text": "<|channel>thought_010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010",
+      "latency_ms": 6726.65
+    },
+    {
+      "sample_id": "sealed_test_mtr_data_pipeline_s300213_k2",
+      "domain": "data_pipeline",
+      "generated_text": "{\"route\": [\"model_evaluator\", \"lineage_tracer\", \"drift_monitor\", \"feature_extractor\"], \"terminal\": \"model_evaluator\"}<turn|>",
+      "latency_ms": 3296.4
+    },
+    {
+      "sample_id": "sealed_test_mtr_security_ops_s300214_k3",
+      "domain": "security_ops",
+      "generated_text": "Required_Fields: [route, terminal]\nOutput_Format: JSON\n\n```json\n{\n  \"route\": [\n    \"endpoint_inspector\",\n    \"quarantine_enforcer\",\n    \"firewall_reconfig\"\n  ],\n  \"terminal\": \"firewall_reconfig\"\n}\n```<turn|>",
+      "latency_ms": 7378.76
+    },
+    {
+      "sample_id": "sealed_test_mtr_robotics_control_s300215_k4",
+      "domain": "robotics_control",
+      "generated_text": "<audio|>. The.<turn|>",
+      "latency_ms": 2721.95
+    },
+    {
+      "sample_id": "sealed_test_mtr_api_workflow_s300216_k2",
+      "domain": "api_workflow",
+      "generated_text": "To achieve the target goal, the following steps are required:\n1. `permission_checker` (Initial State: `[context_tag_300216, user_session]`)\n2. `billing_meter` (Requires: `[billing_id]`, but `[context_tag_300216]` is the ID, and `user_session` is the session)\n3. `db_reader`",
+      "latency_ms": 6995.5
+    },
+    {
+      "sample_id": "sealed_test_mtr_data_pipeline_s300217_k3",
+      "domain": "data_pipeline",
+      "generated_text": "{\"route\": [\"model_evaluator\", \"alert_dispatcher\", \"terminal\": \"alert_dispatcher\", \"terminal\": \"alert_dispatcher\", \"terminal\": \"alert_dispatcher\", \"terminal\": \"alert_dispatcher\", \"terminal\": \"alert_dispatcher\", \"terminal\": \"alert_dispatcher\", \"terminal\": \"alert_dispatcher\", \"terminal\": \"alert_dispatcher\", \"terminal\": \"alert_dispatcher\", \"terminal\": \"alert_Dispatcher\", \"terminal",
+      "latency_ms": 5466.41
+    },
+    {
+      "sample_id": "sealed_test_mtr_security_ops_s300218_k4",
+      "domain": "security_ops",
+      "generated_text": "<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s",
+      "latency_ms": 7639.34
+    },
+    {
+      "sample_id": "sealed_test_mtr_robotics_control_s300219_k2",
+      "domain": "robotics_control",
+      "generated_text": "{\"route\": [\"lidar_processor\", \"point_cloud_filter\"], \"terminal\": \"point_cloud_filter\"}<turn|>",
+      "latency_ms": 3845.97
+    },
+    {
+      "sample_id": "sealed_test_mtr_api_workflow_s300220_k3",
+      "domain": "api_workflow",
+      "generated_text": "<|channel>_thought_pro_json_object_keys_route_terminal_initial_state_perm_token_db_reader_user_profile_risk_evaluator_risk_score_policy_gate_approval_decision_terminal_approval_decision_final_goal_approval_decision_approval_decision_approval_decision_approval_decision_approval_decision_approval_decision_approval_decision_approval_decision_approval_decision_approval",
+      "latency_ms": 5639.19
+    },
+    {
+      "sample_id": "sealed_test_mtr_data_pipeline_s300221_k4",
+      "domain": "data_pipeline",
+      "generated_text": "```json\n{\n  \"route\": [\n    \"null_cleaner\",\n    \"schema_normalizer\",\n    \"feature_extractor\",\n    \"model_evaluator\"\n  ],\n  \"terminal\": \"model_evaluator\"\n}\n```<turn|>",
+      "latency_ms": 4663.06
+    },
+    {
+      "sample_id": "sealed_test_mtr_security_ops_s300222_k2",
+      "domain": "security_ops",
+      "generated_text": "<|channel>thought_ds_enforcer: requires [host_forensics], produces [isolated_host]\ndns_sinkhole: requires [sinkhole_ip], produces [filtered_dns]\nendpoint_inspector: requires [threat_indicators], produces [host_forensics]\nhash_lookup: requires [artifact_hash], produces [known_bad_hashes]\n\nInitial State: [context_tag_300222, threat_indicators",
+      "latency_ms": 5472.44
+    },
+    {
+      "sample_id": "sealed_test_mtr_robotics_control_s300223_k3",
+      "domain": "robotics_control",
+      "generated_text": "<|channel>thought_min_val_kinematics_solver_obstacle_map_kinematics_solver_joint_angles_collision_checker_safe_configuration_trajectory_planner_spline_path_trajectory_planner_spline_path_trajectory_planner_spline_path_trajectory_planner_spline_path_trajectory_planner_spline_path_trajectory_planner_spline_path_trajectory_planner_spline_",
+      "latency_ms": 6486.14
+    },
+    {
+      "sample_id": "sealed_test_mtr_api_workflow_s300224_k4",
+      "domain": "api_workflow",
+      "generated_text": "{\"route\": [\"schema_parser\", \"auth_validator\", \"rate_limiter\", \"permission_checker\", \"db_reader\"], \"terminal\": \"db_reader\"}<turn|>",
+      "latency_ms": 4467.11
+    },
+    {
+      "sample_id": "sealed_test_mtr_data_pipeline_s300225_k2",
+      "domain": "data_pipeline",
+      "generated_text": "<|channel>s_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p",
+      "latency_ms": 5239.72
+    },
+    {
+      "sample_id": "sealed_test_mtr_security_ops_s300226_k3",
+      "domain": "security_ops",
+      "generated_text": "<|channel>.<|channel>_thought_<channel|><|channel>_<|channel>_<|channel>_<|channel>_<|channel>_<|channel>_<|channel>_<|channel>_<|channel>_<|channel>_<|channel>_<|channel>_<|channel>_<|channel>_<|channel>_<|channel>_<|channel>_<|channel>_<|channel>_<|channel>_<|channel>_<|channel>_<|channel>_<|channel>_<|channel>_<|channel>_<|channel>_<|channel>_<|channel>_<|channel>_<|channel>_<|channel>_<|channel>_<|channel>_<|channel>_<|channel>_<|channel>_<|channel>_<|channel>_<|channel>_<|channel>_<|channel>_<|channel>_<|channel>_<|channel>",
+      "latency_ms": 6790.22
+    },
+    {
+      "sample_id": "sealed_test_mtr_robotics_control_s300227_k4",
+      "domain": "robotics_control",
+      "generated_text": "<|channel>s_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p",
+      "latency_ms": 5883.67
+    },
+    {
+      "sample_id": "sealed_test_mtr_api_workflow_s300228_k2",
+      "domain": "api_workflow",
+      "generated_text": "{\"route\": [\"rate_limiter\", \"auth_validator\", \"permission_checker\", \"cache_reader\"], \"terminal\": \"cache_reader\"}<turn|>",
+      "latency_ms": 4687.93
+    },
+    {
+      "sample_id": "sealed_test_mtr_data_pipeline_s300229_k3",
+      "domain": "data_pipeline",
+      "generated_text": "<|channel>_thought_final_json_object_keys_route_terminal_json_object_keys_route_terminal_json_object_keys_route_terminal_json_object_keys_route_terminal_json_object_keys_route_terminal_json_object_keys_route_terminal_json_object_keys_route_terminal_json_object_keys_route_terminal_json_object_keys_route_terminal_",
+      "latency_ms": 5957.34
+    },
+    {
+      "sample_id": "sealed_test_mtr_security_ops_s300230_k4",
+      "domain": "security_ops",
+      "generated_text": "<|channel>s_pcap_stream\n<|channel>thought\n<channel|><|channel>thought\n<channel|><|channel>thought\n<channel|><|channel>thought\n<channel|><|channel>thought\n<channel|><|channel>thought\n<channel|><|channel>thought\n<channel|><|channel>thought\n<channel|><|channel>thought\n<channel|><|channel>thought\n<channel|><|channel>thought\n<channel|><|channel>thought\n<channel|><|channel>thought\n<channel|><|channel>thought\n<channel|><|channel>thought\n<channel|><|channel>thought\n<channel|><|channel>thought\n<channel|><|channel>thought\n<channel|><|channel>thought\n<channel|><|channel>thought\n<channel|><|channel>thought\n<channel|><|channel>thought\n<channel|>",
+      "latency_ms": 8487.97
+    },
+    {
+      "sample_id": "sealed_test_mtr_robotics_control_s300231_k2",
+      "domain": "robotics_control",
+      "generated_text": "{\"route\": [\"kinematics_solver\", \"obstacle_detector\", \"thermal_guard\", \"gps_sync\"], \"terminal\": \"kinematics_solver\"}<turn|>",
+      "latency_ms": 4867.52
+    },
+    {
+      "sample_id": "sealed_test_mtr_api_workflow_s300232_k3",
+      "domain": "api_workflow",
+      "generated_text": "{\"route\": [\"risk_evaluator\", \"policy_gate\", \"rate_limiter\", \"audit_logger\"], \"terminal\": \"audit_logger\"}<turn|>",
+      "latency_ms": 5806.21
+    },
+    {
+      "sample_id": "sealed_test_mtr_data_pipeline_s300233_k4",
+      "domain": "data_pipeline",
+      "generated_text": "<|channel>thought^#<||<|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel>",
+      "latency_ms": 6787.45
+    },
+    {
+      "sample_id": "sealed_test_mtr_security_ops_s300234_k2",
+      "domain": "security_ops",
+      "generated_text": "<|channel>.<|channel>_thought_\n<|channel>.  _thought_\n<|channel>.  _thought_\n<|channel>.  _thought_\n<|channel>.  _thought_\n<|channel>.  _thought_\n<|channel>.  _thought_\n<|channel>.  _thought_\n<|channel>.  _thought_\n<|channel>.  _thought_\n<|channel>.  _thought_\n<|channel>.  _thought_\n<|channel>.  _thought_\n<|channel>.  _thought",
+      "latency_ms": 8863.47
+    },
+    {
+      "sample_id": "sealed_test_mtr_robotics_control_s300235_k3",
+      "domain": "robotics_control",
+      "generated_text": "To achieve the target goal of `motor_commands` from the initial state, the following sequence of tools is required:\n\n1.  **`collision_checker`**: Takes `joint_angles` (provided in initial state) and produces `safe_configuration`.\n2_**`collision_checker`** (Note: `thermal_guard` and `gps_sync` are not part of the path).\n3.  **`trajectory_planner`**:",
+      "latency_ms": 5938.57
+    },
+    {
+      "sample_id": "sealed_test_mtr_api_workflow_s300236_k4",
+      "domain": "api_workflow",
+      "generated_text": "<audio|>^| | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | |",
+      "latency_ms": 8891.94
+    },
+    {
+      "sample_id": "sealed_test_mtr_data_pipeline_s300237_k2",
+      "domain": "data_pipeline",
+      "generated_text": "<|channel>_thought_\n<|channel>_<|channel>_<|channel>_<|channel>_<|channel>_<|channel>_<|channel>_<|channel>_<|channel>_<|channel>_<|channel>_<|channel>_<|channel>_<|channel>_<|channel>_<|channel>_<|channel>_<|channel>_<|channel>_<|channel>_<|channel>_<|channel>_<|channel>_<|channel>_<|channel>_<|channel>_<|channel>_<|channel>_<|channel>_<|channel>_<|channel>_<|channel>_<|channel>_<|channel>_<|channel>_<|channel>_<|channel>_<|channel>_<|channel>_<|channel>_<|channel>_<|channel>_<|channel>_<|channel>_<|channel>_<|channel>",
+      "latency_ms": 5799.61
+    },
+    {
+      "sample_id": "sealed_test_mtr_security_ops_s300238_k3",
+      "domain": "security_ops",
+      "generated_text": "{\"e\": \"telemetry_parser\", \"route\": [\"telemetry_parser\", \"ioc_correlator\", \"endpoint_inspector\"], \"terminal\": \"endpoint_inspector\"}<turn|>",
+      "latency_ms": 5907.41
+    },
+    {
+      "sample_id": "sealed_test_mtr_robotics_control_s300239_k4",
+      "domain": "robotics_control",
+      "generated_text": "<|channel>s_pres_ms_ms_ms_ms_ms_ms_ms_ms_ms_ms_ms_ms_ms_ms_ms_ms_ms_ms_ms_ms_ms_ms_ms_ms_ms_ms_ms_ms_ms_ms_ms_ms_ms_ms_ms_ms_ms_ms_ms_ms_ms_ms_ms_ms_ms_ms",
+      "latency_ms": 8548.8
+    },
+    {
+      "sample_id": "sealed_test_mtr_api_workflow_s300240_k2",
+      "domain": "api_workflow",
+      "generated_text": "{\"e\": [\"schema_parser\", \"auth_validator\"], \"terminal\": \"auth_validator\" \\u1e8e\\u1e8e\\u1e8e\\u1e8e\\u1e8e\\u1e8e\\u1e8e\\u1e8e\\u1e8e\\u1e8e\\u1e8e\\u1e8e\\u1",
+      "latency_ms": 6826.04
+    },
+    {
+      "sample_id": "sealed_test_mtr_data_pipeline_s300241_k3",
+      "domain": "data_pipeline",
+      "generated_text": "<|channel>_thought_pro_json_schema_not_found_but_not_required_for_this_task_but_good_to_keep_in_mind_for_future_tasks_not_applicable_here_but_good_to_keep_in_mind_for_future_tasks_not_applicable_here_but_good_to_keep_in_mind_for_future_tasks_not_applicable_",
+      "latency_ms": 5514.87
+    },
+    {
+      "sample_id": "sealed_test_mtr_security_ops_s300242_k4",
+      "domain": "security_ops",
+      "generated_text": "Continue. There<image|>.\nThe.\nThe.\nThe.\nThe.\nThe.\nThe.\nThe.\nThe.\nThe.\nThe.\nThe.\nThe.\nThe.\nThe.\nThe.\nThe.\nThe.\nThe.\nThe.\nThe.\nThe.\nThe.\nThe.\nThe.\nThe.\nThe.\nThe.\nThe.\nThe.\nThe.\n",
+      "latency_ms": 7832.95
+    },
+    {
+      "sample_id": "sealed_test_mtr_robotics_control_s300243_k2",
+      "domain": "robotics_control",
+      "generated_text": "<|channel>.<|channel>_thought_step_num_0\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n",
+      "latency_ms": 7259.57
+    },
+    {
+      "sample_id": "sealed_test_mtr_api_workflow_s300244_k3",
+      "domain": "api_workflow",
+      "generated_text": "<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.",
+      "latency_ms": 7633.83
+    },
+    {
+      "sample_id": "sealed_test_mtr_data_pipeline_s300245_k4",
+      "domain": "data_pipeline",
+      "generated_text": "<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.",
+      "latency_ms": 5588.08
+    },
+    {
+      "sample_id": "sealed_test_mtr_security_ops_s300246_k2",
+      "domain": "security_ops",
+      "generated_text": "{\"route\": [\"firewall_reconfig\", \"incident_publisher\"], \"terminal\": \"incident_publisher\"}<turn|>",
+      "latency_ms": 2892.93
+    },
+    {
+      "sample_id": "sealed_test_mtr_robotics_control_s300247_k3",
+      "domain": "robotics_control",
+      "generated_text": "<|channel>s_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p_p",
+      "latency_ms": 5367.03
+    },
+    {
+      "sample_id": "sealed_test_mtr_api_workflow_s300248_k4",
+      "domain": "api_workflow",
+      "generated_text": "{\"route\": [\"auth_validator\", \"permission_checker\", \"db_reader\", \"risk_evaluator\"], \"terminal\": \"risk_evaluator\"}<turn|>",
+      "latency_ms": 6317.15
+    },
+    {
+      "sample_id": "sealed_test_mtr_data_pipeline_s300249_k2",
+      "domain": "data_pipeline",
+      "generated_text": "{\"route\": [\"model_evaluator\", \"alert_dispatcher\"], \"terminal\": \"alert_dispatcher\"}<turn|>",
+      "latency_ms": 2814.04
+    },
+    {
+      "sample_id": "sealed_test_mtr_security_ops_s300250_k3",
+      "domain": "security_ops",
+      "generated_text": "Required_Fields: [context_tag_300250, network_flows]\nTarget_Goal: isolated_host\n\nAvailable Tools:\n- hash_lookup: requires [artifact_hash], produces [known_bad_hashes]\n- ioc_correlator: requires [network_flows], produces [threat_indicators]\n- endpoint_inspector: requires [threat_indicators], produces [host_forensics]\n- quarantine_",
+      "latency_ms": 7981.85
+    },
+    {
+      "sample_id": "sealed_test_mtr_robotics_control_s300251_k4",
+      "domain": "robotics_control",
+      "generated_text": "<|channel>s_<|channel>s_<|channel>s_<|channel>s_<|channel>s_<|channel>s_<|channel>s_<|channel>s_<|channel>s_<|channel>s_<|channel>s_<|channel>s_<|channel>s_<|channel>s_<|channel>s_<|channel>s_<|channel>s_<|channel>s_<|channel>s_<|channel>s_<|channel>s_<|channel>s_<|channel>s_<|channel>s_<|channel>s_<|channel>s_<|channel>s_<|channel>s_<|channel>s_<|channel>s_<|channel>s_<|channel>s_",
+      "latency_ms": 5940.9
+    },
+    {
+      "sample_id": "sealed_test_mtr_api_workflow_s300252_k2",
+      "domain": "api_workflow",
+      "generated_text": "To achieve the target goal, the followings_route_is_required_to_be_executed_in_order_as_the_initial_state_is_provided_as_the_initial_state_of_the_current_state_of_the_current_state_of_the_current_state_of_the_current_state_of_the_current_state_of_the_current_state_of_",
+      "latency_ms": 6937.23
+    },
+    {
+      "sample_id": "sealed_test_mtr_data_pipeline_s300253_k3",
+      "domain": "data_pipeline",
+      "generated_text": "<|channel>_not_found_not_found_not_found_not_found_not_found_not_found_not_found_not_found_not_found_not_found_not_found_not_found_not_found_not_found_not_found_not_found_not_found_not_found_not_found_not_found_not_found_not_found_not_found_not_",
+      "latency_ms": 5662.14
+    },
+    {
+      "sample_id": "sealed_test_mtr_security_ops_s300254_k4",
+      "domain": "security_ops",
+      "generated_text": "<|channel>s<|channel><|channel><|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s<|channel>s",
+      "latency_ms": 8489.8
+    },
+    {
+      "sample_id": "sealed_test_mtr_robotics_control_s300255_k2",
+      "domain": "robotics_control",
+      "generated_text": "To achieve the target goal, the required tools must be executed in order of their dependencies.\n\n**Analysis of Dependencies:**\n1.  **Goal:** `joint_angles` (produced by `kinematics_solver`)\n2.  **Required for Goal:** `kinemat_solver` requires `obstacle_map`.\n3.  **Required for `obstacle_map`:** `obstacle_map` is produced by `obstacle__` (which requires",
+      "latency_ms": 5436.91
+    }
+  ]
+}

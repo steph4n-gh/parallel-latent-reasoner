@@ -1,0 +1,1552 @@
+{
+  "condition": "repo_decoder",
+  "summary": {
+    "sample_count": 256,
+    "exact_match_pct": 96.48,
+    "terminal_match_pct": 99.61,
+    "valid_json_pct": 100.0,
+    "max_repetition": 1,
+    "mean_repetition": 1.0,
+    "mean_entropy": 4.44,
+    "mean_latency_ms": 2838.56,
+    "median_latency_ms": 2817.6
+  },
+  "predictions": [
+    {
+      "sample_id": "sealed_test_mtr_api_workflow_s300000_k2",
+      "domain": "api_workflow",
+      "generated_text": "```json\n{\n  \"route\": [\n    \"policy_gate\",\n    \"audit_logger\"\n  ],\n  \"terminal\": \"audit_logger\"\n}\n```<turn|>",
+      "latency_ms": 3080.82
+    },
+    {
+      "sample_id": "sealed_test_mtr_data_pipeline_s300001_k3",
+      "domain": "data_pipeline",
+      "generated_text": "```json\n{\n  \"route\": [\n    \"schema_normalizer\",\n    \"feature_extractor\",\n    \"model_evaluator\"\n  ],\n  \"terminal\": \"model_evaluator\"\n}\n```<turn|>",
+      "latency_ms": 2769.23
+    },
+    {
+      "sample_id": "sealed_test_mtr_security_ops_s300002_k4",
+      "domain": "security_ops",
+      "generated_text": "```json\n{\n  \"route\": [\n    \"ioc_correlator\",\n    \"endpoint_inspector\",\n    \"quarantine_enforcer\",\n    \"firewall_reconfig\"\n  ],\n  \"terminal\": \"firewall_reconfig\"\n}\n```<turn|>",
+      "latency_ms": 3173.72
+    },
+    {
+      "sample_id": "sealed_test_mtr_robotics_control_s300003_k2",
+      "domain": "robotics_control",
+      "generated_text": "```json\n{\n  \"route\": [\n    \"collision_checker\",\n    \"trajectory_planner\"\n  ],\n  \"terminal\": \"trajectory_planner\"\n}\n```<turn|>",
+      "latency_ms": 2303.84
+    },
+    {
+      "sample_id": "sealed_test_mtr_api_workflow_s300004_k3",
+      "domain": "api_workflow",
+      "generated_text": "```json\n{\n  \"route\": [\n    \"auth_validator\",\n    \"permission_checker\",\n    \"db_reader\"\n  ],\n  \"terminal\": \"db_reader\"\n}\n```<turn|>",
+      "latency_ms": 2599.11
+    },
+    {
+      "sample_id": "sealed_test_mtr_data_pipeline_s300005_k4",
+      "domain": "data_pipeline",
+      "generated_text": "```json\n{\n  \"route\": [\n    \"stream_ingester\",\n    \"null_cleaner\",\n    \"schema_normalizer\",\n    \"feature_extractor\"\n  ],\n  \"terminal\": \"feature_extractor\"\n}\n```<turn|>",
+      "latency_ms": 3062.28
+    },
+    {
+      "sample_id": "sealed_test_mtr_security_ops_s300006_k2",
+      "domain": "security_ops",
+      "generated_text": "```json\n{\n  \"route\": [\n    \"firewall_reconfig\",\n    \"incident_publisher\"\n  ],\n  \"terminal\": \"incident_publisher\"\n}\n```<turn|>",
+      "latency_ms": 2373.04
+    },
+    {
+      "sample_id": "sealed_test_mtr_robotics_control_s300007_k3",
+      "domain": "robotics_control",
+      "generated_text": "```json\n{\n  \"route\": [\n    \"point_cloud_filter\",\n    \"obstacle_detector\",\n    \"kinematics_solver\"\n  ],\n  \"terminal\": \"kinematics_solver\"\n}\n```<turn|>",
+      "latency_ms": 2858.86
+    },
+    {
+      "sample_id": "sealed_test_mtr_api_workflow_s300008_k4",
+      "domain": "api_workflow",
+      "generated_text": "```json\n{\n  \"route\": [\n    \"permission_checker\",\n    \"db_reader\",\n    \"risk_evaluator\",\n    \"policy_gate\"\n  ],\n  \"terminal\": \"policy_gate\"\n}\n```<turn|>",
+      "latency_ms": 2976.21
+    },
+    {
+      "sample_id": "sealed_test_mtr_data_pipeline_s300009_k2",
+      "domain": "data_pipeline",
+      "generated_text": "```json\n{\n  \"route\": [\n    \"feature_extractor\",\n    \"model_evaluator\"\n  ],\n  \"terminal\": \"model_evaluator\"\n}\n```<turn|>",
+      "latency_ms": 2379.91
+    },
+    {
+      "sample_id": "sealed_test_mtr_security_ops_s300010_k3",
+      "domain": "security_ops",
+      "generated_text": "```json\n{\n  \"route\": [\n    \"telemetry_parser\",\n    \"ioc_correlator\",\n    \"endpoint_inspector\"\n  ],\n  \"terminal\": \"endpoint_inspector\"\n}\n```<turn|>",
+      "latency_ms": 2765.22
+    },
+    {
+      "sample_id": "sealed_test_mtr_robotics_control_s300011_k4",
+      "domain": "robotics_control",
+      "generated_text": "```json\n{\n  \"route\": [\n    \"lidar_processor\",\n    \"point_cloud_filter\",\n    \"obstacle_detector\",\n    \"kinematics_solver\"\n  ],\n  \"terminal\": \"kinematics_solver\"\n}\n```<turn|>",
+      "latency_ms": 3135.38
+    },
+    {
+      "sample_id": "sealed_test_mtr_api_workflow_s300012_k2",
+      "domain": "api_workflow",
+      "generated_text": "```json\n{\n  \"route\": [\n    \"policy_gate\",\n    \"audit_logger\"\n  ],\n  \"terminal\": \"audit_logger\"\n}\n```<turn|>",
+      "latency_ms": 2333.64
+    },
+    {
+      "sample_id": "sealed_test_mtr_data_pipeline_s300013_k3",
+      "domain": "data_pipeline",
+      "generated_text": "```json\n{\n  \"route\": [\n    \"stream_ingester\",\n    \"null_cleaner\",\n    \"schema_normalizer\"\n  ],\n  \"terminal\": \"schema_normalizer\"\n}\n```<turn|>",
+      "latency_ms": 2817.92
+    },
+    {
+      "sample_id": "sealed_test_mtr_security_ops_s300014_k4",
+      "domain": "security_ops",
+      "generated_text": "```json\n{\n  \"route\": [\n    \"ioc_correlator\",\n    \"endpoint_inspector\",\n    \"quarantine_enforcer\",\n    \"firewall_reconfig\"\n  ],\n  \"terminal\": \"firewall_reconfig\"\n}\n```<turn|>",
+      "latency_ms": 3180.05
+    },
+    {
+      "sample_id": "sealed_test_mtr_robotics_control_s300015_k2",
+      "domain": "robotics_control",
+      "generated_text": "```json\n{\n  \"route\": [\n    \"trajectory_planner\",\n    \"actuator_controller\"\n  ],\n  \"terminal\": \"actuator_controller\"\n}\n```<turn|>",
+      "latency_ms": 2378.52
+    },
+    {
+      "sample_id": "sealed_test_mtr_api_workflow_s300016_k3",
+      "domain": "api_workflow",
+      "generated_text": "```json\n{\n  \"route\": [\n    \"permission_checker\",\n    \"db_reader\",\n    \"risk_evaluator\"\n  ],\n  \"terminal\": \"risk_evaluator\"\n}\n```<turn|>",
+      "latency_ms": 2671.66
+    },
+    {
+      "sample_id": "sealed_test_mtr_data_pipeline_s300017_k4",
+      "domain": "data_pipeline",
+      "generated_text": "```json\n{\n  \"route\": [\n    \"stream_ingester\",\n    \"null_cleaner\",\n    \"schema_normalizer\",\n    \"feature_extractor\"\n  ],\n  \"terminal\": \"feature_extractor\"\n}\n```<turn|>",
+      "latency_ms": 3033.47
+    },
+    {
+      "sample_id": "sealed_test_mtr_security_ops_s300018_k2",
+      "domain": "security_ops",
+      "generated_text": "```json\n{\n  \"route\": [\n    \"firewall_reconfig\",\n    \"incident_publisher\"\n  ],\n  \"terminal\": \"incident_publisher\"\n}\n```<turn|>",
+      "latency_ms": 2387.72
+    },
+    {
+      "sample_id": "sealed_test_mtr_robotics_control_s300019_k3",
+      "domain": "robotics_control",
+      "generated_text": "```json\n{\n  \"route\": [\n    \"obstacle_detector\",\n    \"kinematics_solver\",\n    \"collision_checker\"\n  ],\n  \"terminal\": \"collision_checker\"\n}\n```<turn|>",
+      "latency_ms": 2814.17
+    },
+    {
+      "sample_id": "sealed_test_mtr_api_workflow_s300020_k4",
+      "domain": "api_workflow",
+      "generated_text": "```json\n{\n  \"route\": [\n    \"permission_checker\",\n    \"db_reader\",\n    \"risk_evaluator\",\n    \"policy_gate\"\n  ],\n  \"terminal\": \"policy_gate\"\n}\n```<turn|>",
+      "latency_ms": 3037.7
+    },
+    {
+      "sample_id": "sealed_test_mtr_data_pipeline_s300021_k2",
+      "domain": "data_pipeline",
+      "generated_text": "```json\n{\n  \"route\": [\n    \"stream_ingester\",\n    \"null_cleaner\"\n  ],\n  \"terminal\": \"null_cleaner\"\n}\n```<turn|>",
+      "latency_ms": 2426.46
+    },
+    {
+      "sample_id": "sealed_test_mtr_security_ops_s300022_k3",
+      "domain": "security_ops",
+      "generated_text": "```json\n{\n  \"route\": [\n    \"endpoint_inspector\",\n    \"quarantine_enforcer\",\n    \"firewall_reconfig\"\n  ],\n  \"terminal\": \"firewall_reconfig\"\n}\n```<turn|>",
+      "latency_ms": 2923.48
+    },
+    {
+      "sample_id": "sealed_test_mtr_robotics_control_s300023_k4",
+      "domain": "robotics_control",
+      "generated_text": "```json\n{\n  \"route\": [\n    \"lidar_processor\",\n    \"point_cloud_filter\",\n    \"obstacle_detector\",\n    \"kinematics_solver\"\n  ],\n  \"terminal\": \"kinematics_solver\"\n}\n```<turn|>",
+      "latency_ms": 3173.74
+    },
+    {
+      "sample_id": "sealed_test_mtr_api_workflow_s300024_k2",
+      "domain": "api_workflow",
+      "generated_text": "```json\n{\n  \"route\": [\n    \"risk_evaluator\",\n    \"policy_gate\"\n  ],\n  \"terminal\": \"policy_gate\"\n}\n```<turn|>",
+      "latency_ms": 2357.69
+    },
+    {
+      "sample_id": "sealed_test_mtr_data_pipeline_s300025_k3",
+      "domain": "data_pipeline",
+      "generated_text": "```json\n{\n  \"route\": [\n    \"feature_extractor\",\n    \"model_evaluator\",\n    \"alert_dispatcher\"\n  ],\n  \"terminal\": \"alert_dispatcher\"\n}\n```<turn|>",
+      "latency_ms": 2754.54
+    },
+    {
+      "sample_id": "sealed_test_mtr_security_ops_s300026_k4",
+      "domain": "security_ops",
+      "generated_text": "```json\n{\n  \"route\": [\n    \"ioc_correlator\",\n    \"endpoint_inspector\",\n    \"quarantine_enforcer\",\n    \"firewall_reconfig\"\n  ],\n  \"terminal\": \"firewall_reconfig\"\n}\n```<turn|>",
+      "latency_ms": 3192.77
+    },
+    {
+      "sample_id": "sealed_test_mtr_robotics_control_s300027_k2",
+      "domain": "robotics_control",
+      "generated_text": "```json\n{\n  \"route\": [\n    \"collision_checker\",\n    \"trajectory_planner\"\n  ],\n  \"terminal\": \"trajectory_planner\"\n}\n```<turn|>",
+      "latency_ms": 2326.73
+    },
+    {
+      "sample_id": "sealed_test_mtr_api_workflow_s300028_k3",
+      "domain": "api_workflow",
+      "generated_text": "```json\n{\n  \"route\": [\n    \"auth_validator\",\n    \"permission_checker\",\n    \"db_reader\"\n  ],\n  \"terminal\": \"db_reader\"\n}\n```<turn|>",
+      "latency_ms": 2616.83
+    },
+    {
+      "sample_id": "sealed_test_mtr_data_pipeline_s300029_k4",
+      "domain": "data_pipeline",
+      "generated_text": "```json\n{\n  \"route\": [\n    \"feature_extractor\",\n    \"model_evaluator\",\n    \"alert_dispatcher\",\n    \"cold_archiver\"\n  ],\n  \"terminal\": \"cold_archiver\"\n}\n```<turn|>",
+      "latency_ms": 3074.6
+    },
+    {
+      "sample_id": "sealed_test_mtr_security_ops_s300030_k2",
+      "domain": "security_ops",
+      "generated_text": "```json\n{\n  \"route\": [\n    \"telemetry_parser\",\n    \"ioc_correlator\"\n  ],\n  \"terminal\": \"ioc_correlator\"\n}\n```<turn|>",
+      "latency_ms": 2537.9
+    },
+    {
+      "sample_id": "sealed_test_mtr_robotics_control_s300031_k3",
+      "domain": "robotics_control",
+      "generated_text": "```json\n{\n  \"route\": [\n    \"obstacle_detector\",\n    \"kinematics_solver\",\n    \"collision_checker\"\n  ],\n  \"terminal\": \"collision_checker\"\n}\n```<turn|>",
+      "latency_ms": 2666.43
+    },
+    {
+      "sample_id": "sealed_test_mtr_api_workflow_s300032_k4",
+      "domain": "api_workflow",
+      "generated_text": "```json\n{\n  \"route\": [\n    \"rate_limiter\",\n    \"schema_parser\",\n    \"auth_validator\",\n    \"permission_checker\",\n    \"db_reader\"\n  ],\n  \"terminal\": \"db_reader\"\n}\n```<turn|>",
+      "latency_ms": 3201.02
+    },
+    {
+      "sample_id": "sealed_test_mtr_data_pipeline_s300033_k2",
+      "domain": "data_pipeline",
+      "generated_text": "```json\n{\n  \"route\": [\n    \"stream_ingester\",\n    \"null_cleaner\"\n  ],\n  \"terminal\": \"null_cleaner\"\n}\n```<turn|>",
+      "latency_ms": 2419.59
+    },
+    {
+      "sample_id": "sealed_test_mtr_security_ops_s300034_k3",
+      "domain": "security_ops",
+      "generated_text": "```json\n{\n  \"route\": [\n    \"ioc_correlator\",\n    \"endpoint_inspector\",\n    \"quarantine_enforcer\"\n  ],\n  \"terminal\": \"quarantine_enforcer\"\n}\n```<turn|>",
+      "latency_ms": 2906.87
+    },
+    {
+      "sample_id": "sealed_test_mtr_robotics_control_s300035_k4",
+      "domain": "robotics_control",
+      "generated_text": "```json\n{\n  \"route\": [\n    \"kinematics_solver\",\n    \"collision_checker\",\n    \"trajectory_planner\",\n    \"actuator_controller\"\n  ],\n  \"terminal\": \"actuator_controller\"\n}\n```<turn|>",
+      "latency_ms": 3053.12
+    },
+    {
+      "sample_id": "sealed_test_mtr_api_workflow_s300036_k2",
+      "domain": "api_workflow",
+      "generated_text": "```json\n{\n  \"route\": [\n    \"schema_parser\",\n    \"auth_validator\"\n  ],\n  \"terminal\": \"auth_validator\"\n}\n```<turn|>",
+      "latency_ms": 2316.13
+    },
+    {
+      "sample_id": "sealed_test_mtr_data_pipeline_s300037_k3",
+      "domain": "data_pipeline",
+      "generated_text": "```json\n{\n  \"route\": [\n    \"schema_normalizer\",\n    \"feature_extractor\",\n    \"model_evaluator\"\n  ],\n  \"terminal\": \"model_evaluator\"\n}\n```<turn|>",
+      "latency_ms": 2799.34
+    },
+    {
+      "sample_id": "sealed_test_mtr_security_ops_s300038_k4",
+      "domain": "security_ops",
+      "generated_text": "```json\n{\n  \"route\": [\n    \"telemetry_parser\",\n    \"ioc_correlator\",\n    \"endpoint_inspector\",\n    \"quarantine_enforcer\"\n  ],\n  \"terminal\": \"quarantine_enforcer\"\n}\n```<turn|>",
+      "latency_ms": 3220.89
+    },
+    {
+      "sample_id": "sealed_test_mtr_robotics_control_s300039_k2",
+      "domain": "robotics_control",
+      "generated_text": "```json\n{\n  \"route\": [\n    \"point_cloud_filter\",\n    \"obstacle_detector\"\n  ],\n  \"terminal\": \"obstacle_detector\"\n}\n```<turn|>",
+      "latency_ms": 2387.4
+    },
+    {
+      "sample_id": "sealed_test_mtr_api_workflow_s300040_k3",
+      "domain": "api_workflow",
+      "generated_text": "```json\n{\n  \"route\": [\n    \"db_reader\",\n    \"risk_evaluator\",\n    \"policy_gate\"\n  ],\n  \"terminal\": \"policy_gate\"\n}\n```<turn|>",
+      "latency_ms": 2632.87
+    },
+    {
+      "sample_id": "sealed_test_mtr_data_pipeline_s300041_k4",
+      "domain": "data_pipeline",
+      "generated_text": "```json\n{\n  \"route\": [\n    \"schema_normalizer\",\n    \"feature_uator\",\n    \"model_evaluator\",\n    \"alert_dispatcher\"\n  ],\n  \"terminal\": \"alert_dispatcher\"\n}\n```\n\nWait, I see a slight typo in the tool name in my thought process (\"feature_uator\" vs \"feature_extractor\"). Let me provide the corrected JSON.\n\n```json\n{",
+      "latency_ms": 4238.67
+    },
+    {
+      "sample_id": "sealed_test_mtr_security_ops_s300042_k2",
+      "domain": "security_ops",
+      "generated_text": "```json\n{\n  \"route\": [\n    \"telemetry_parser\",\n    \"ioc_correlator\"\n  ],\n  \"terminal\": \"ioc_correlator\"\n}\n```<turn|>",
+      "latency_ms": 2487.3
+    },
+    {
+      "sample_id": "sealed_test_mtr_robotics_control_s300043_k3",
+      "domain": "robotics_control",
+      "generated_text": "```json\n{\n  \"route\": [\n    \"point_cloud_filter\",\n    \"obstacle_detector\",\n    \"kinematics_solver\"\n  ],\n  \"terminal\": \"kinematics_solver\"\n}\n```<turn|>",
+      "latency_ms": 2883.72
+    },
+    {
+      "sample_id": "sealed_test_mtr_api_workflow_s300044_k4",
+      "domain": "api_workflow",
+      "generated_text": "```json\n{\n  \"route\": [\n    \"auth_validator\",\n    \"permission_checker\",\n    \"db_reader\",\n    \"risk_evaluator\"\n  ],\n  \"terminal\": \"risk_evaluator\"\n}\n```<turn|>",
+      "latency_ms": 2989.81
+    },
+    {
+      "sample_id": "sealed_test_mtr_data_pipeline_s300045_k2",
+      "domain": "data_pipeline",
+      "generated_text": "```json\n{\n  \"route\": [\n    \"alert_dispatcher\",\n    \"cold_archiver\"\n  ],\n  \"terminal\": \"cold_archiver\"\n}\n```<turn|>",
+      "latency_ms": 2379.48
+    },
+    {
+      "sample_id": "sealed_test_mtr_security_ops_s300046_k3",
+      "domain": "security_ops",
+      "generated_text": "```json\n{\n  \"route\": [\n    \"quarantine_enforcer\",\n    \"firewall_reconfig\",\n    \"incident_publisher\"\n  ],\n  \"terminal\": \"incident_publisher\"\n}\n```<turn|>",
+      "latency_ms": 2834.42
+    },
+    {
+      "sample_id": "sealed_test_mtr_robotics_control_s300047_k4",
+      "domain": "robotics_control",
+      "generated_text": "```json\n{\n  \"route\": [\n    \"lidar_processor\",\n    \"point_cloud_filter\",\n    \"obstacle_detector\",\n    \"kinematics_solver\"\n  ],\n  \"terminal\": \"kinematics_solver\"\n}\n```<turn|>",
+      "latency_ms": 3149.35
+    },
+    {
+      "sample_id": "sealed_test_mtr_api_workflow_s300048_k2",
+      "domain": "api_workflow",
+      "generated_text": "```json\n{\n  \"route\": [\n    \"risk_evaluator\",\n    \"policy_gate\"\n  ],\n  \"terminal\": \"policy_gate\"\n}\n```<turn|>",
+      "latency_ms": 2360.53
+    },
+    {
+      "sample_id": "sealed_test_mtr_data_pipeline_s300049_k3",
+      "domain": "data_pipeline",
+      "generated_text": "```json\n{\n  \"route\": [\n    \"model_evaluator\",\n    \"alert_dispatcher\",\n    \"cold_archiver\"\n  ],\n  \"terminal\": \"cold_archiver\"\n}\n```<turn|>",
+      "latency_ms": 2640.78
+    },
+    {
+      "sample_id": "sealed_test_mtr_security_ops_s300050_k4",
+      "domain": "security_ops",
+      "generated_text": "```json\n{\n  \"route\": [\n    \"telemetry_parser\",\n    \"ioc_correlator\",\n    \"endpoint_inspector\",\n    \"quarantine_enforcer\"\n  ],\n  \"terminal\": \"quarantine_enforcer\"\n}\n```<turn|>",
+      "latency_ms": 3162.24
+    },
+    {
+      "sample_id": "sealed_test_mtr_robotics_control_s300051_k2",
+      "domain": "robotics_control",
+      "generated_text": "```json\n{\n  \"route\": [\n    \"obstacle_detector\",\n    \"kinematics_solver\"\n  ],\n  \"terminal\": \"kinematics_solver\"\n}\n```<turn|>",
+      "latency_ms": 2486.77
+    },
+    {
+      "sample_id": "sealed_test_mtr_api_workflow_s300052_k3",
+      "domain": "api_workflow",
+      "generated_text": "```json\n{\n  \"route\": [\n    \"permission_checker\",\n    \"db_reader\",\n    \"risk_evaluator\"\n  ],\n  \"terminal\": \"risk_evaluator\"\n}\n```<turn|>",
+      "latency_ms": 2703.54
+    },
+    {
+      "sample_id": "sealed_test_mtr_data_pipeline_s300053_k4",
+      "domain": "data_pipeline",
+      "generated_text": "```json\n{\n  \"route\": [\n    \"null_cleaner\",\n    \"schema_normalizer\",\n    \"feature_extractor\",\n    \"model_evaluator\"\n  ],\n  \"terminal\": \"model_evaluator\"\n}\n```<turn|>",
+      "latency_ms": 3621.59
+    },
+    {
+      "sample_id": "sealed_test_mtr_security_ops_s300054_k2",
+      "domain": "security_ops",
+      "generated_text": "```json\n{\n  \"route\": [\n    \"telemetry_parser\",\n    \"ioc_correlator\"\n  ],\n  \"terminal\": \"ioc_correlator\"\n}\n```<turn|>",
+      "latency_ms": 2481.94
+    },
+    {
+      "sample_id": "sealed_test_mtr_robotics_control_s300055_k3",
+      "domain": "robotics_control",
+      "generated_text": "```json\n{\n  \"route\": [\n    \"collision_checker\",\n    \"trajectory_planner\",\n    \"actuator_controller\"\n  ],\n  \"terminal\": \"actuator_controller\"\n}\n```<turn|>",
+      "latency_ms": 2745.78
+    },
+    {
+      "sample_id": "sealed_test_mtr_api_workflow_s300056_k4",
+      "domain": "api_workflow",
+      "generated_text": "```json\n{\n  \"route\": [\n    \"permission_checker\",\n    \"db_reader\",\n    \"risk_evaluator\",\n    \"policy_gate\"\n  ],\n  \"terminal\": \"policy_gate\"\n}\n```<turn|>",
+      "latency_ms": 2974.68
+    },
+    {
+      "sample_id": "sealed_test_mtr_data_pipeline_s300057_k2",
+      "domain": "data_pipeline",
+      "generated_text": "```json\n{\n  \"route\": [\n    \"schema_normalizer\",\n    \"feature_extractor\"\n  ],\n  \"terminal\": \"feature_extractor\"\n}\n```<turn|>",
+      "latency_ms": 2345.04
+    },
+    {
+      "sample_id": "sealed_test_mtr_security_ops_s300058_k3",
+      "domain": "security_ops",
+      "generated_text": "```json\n{\n  \"route\": [\n    \"telemetry_parser\",\n    \"ioc_correlator\",\n    \"endpoint_inspector\"\n  ],\n  \"terminal\": \"endpoint_inspector\"\n}\n```<turn|>",
+      "latency_ms": 2781.55
+    },
+    {
+      "sample_id": "sealed_test_mtr_robotics_control_s300059_k4",
+      "domain": "robotics_control",
+      "generated_text": "```json\n{\n  \"route\": [\n    \"obstacle_detector\",\n    \"kinematics_solver\",\n    \"collision_checker\",\n    \"trajectory_planner\"\n  ],\n  \"terminal\": \"trajectory_planner\"\n}\n```<turn|>",
+      "latency_ms": 3040.05
+    },
+    {
+      "sample_id": "sealed_test_mtr_api_workflow_s300060_k2",
+      "domain": "api_workflow",
+      "generated_text": "```json\n{\n  \"route\": [\n    \"permission_checker\",\n    \"db_reader\"\n  ],\n  \"terminal\": \"db_reader\"\n}\n```<turn|>",
+      "latency_ms": 2936.04
+    },
+    {
+      "sample_id": "sealed_test_mtr_data_pipeline_s300061_k3",
+      "domain": "data_pipeline",
+      "generated_text": "```json\n{\n  \"route\": [\n    \"stream_ingester\",\n    \"null_cleaner\",\n    \"schema_normalizer\"\n  ],\n  \"terminal\": \"schema_normalizer\"\n}\n```<turn|>",
+      "latency_ms": 2853.53
+    },
+    {
+      "sample_id": "sealed_test_mtr_security_ops_s300062_k4",
+      "domain": "security_ops",
+      "generated_text": "```json\n{\n  \"route\": [\n    \"endpoint_inspector\",\n    \"quarantine_enforcer\",\n    \"firewall_reconfig\",\n    \"incident_publisher\"\n  ],\n  \"terminal\": \"incident_publisher\"\n}\n```<turn|>",
+      "latency_ms": 3085.93
+    },
+    {
+      "sample_id": "sealed_test_mtr_robotics_control_s300063_k2",
+      "domain": "robotics_control",
+      "generated_text": "```json\n{\n  \"route\": [\n    \"collision_checker\",\n    \"trajectory_planner\"\n  ],\n  \"terminal\": \"trajectory_planner\"\n}\n```<turn|>",
+      "latency_ms": 2330.03
+    },
+    {
+      "sample_id": "sealed_test_mtr_api_workflow_s300064_k3",
+      "domain": "api_workflow",
+      "generated_text": "```json\n{\n  \"route\": [\n    \"schema_parser\",\n    \"auth_validator\",\n    \"permission_checker\"\n  ],\n  \"terminal\": \"permission_checker\"\n}\n```<turn|>",
+      "latency_ms": 2606.41
+    },
+    {
+      "sample_id": "sealed_test_mtr_data_pipeline_s300065_k4",
+      "domain": "data_pipeline",
+      "generated_text": "```json\n{\n  \"route\": [\n    \"null_cleaner\",\n    \"schema_normalizer\",\n    \"feature_extractor\",\n    \"model_evaluator\"\n  ],\n  \"terminal\": \"model_evaluator\"\n}\n```<turn|>",
+      "latency_ms": 3147.53
+    },
+    {
+      "sample_id": "sealed_test_mtr_security_ops_s300066_k2",
+      "domain": "security_ops",
+      "generated_text": "```json\n{\n  \"route\": [\n    \"firewall_reconfig\",\n    \"incident_publisher\"\n  ],\n  \"terminal\": \"incident_publisher\"\n}\n```<turn|>",
+      "latency_ms": 2821.06
+    },
+    {
+      "sample_id": "sealed_test_mtr_robotics_control_s300067_k3",
+      "domain": "robotics_control",
+      "generated_text": "```json\n{\n  \"route\": [\n    \"collision_checker\",\n    \"trajectory_planner\",\n    \"actuator_controller\"\n  ],\n  \"terminal\": \"actuator_controller\"\n}\n```<turn|>",
+      "latency_ms": 2625.56
+    },
+    {
+      "sample_id": "sealed_test_mtr_api_workflow_s300068_k4",
+      "domain": "api_workflow",
+      "generated_text": "```json\n{\n  \"route\": [\n    \"db_reader\",\n    \"risk_evaluator\",\n    \"policy_gate\",\n    \"audit_logger\"\n  ],\n  \"terminal\": \"audit_logger\"\n}\n```<turn|>",
+      "latency_ms": 2962.0
+    },
+    {
+      "sample_id": "sealed_test_mtr_data_pipeline_s300069_k2",
+      "domain": "data_pipeline",
+      "generated_text": "```json\n{\n  \"route\": [\n    \"model_evaluator\",\n    \"alert_dispatcher\"\n  ],\n  \"terminal\": \"alert_dispatcher\"\n}\n```<turn|>",
+      "latency_ms": 2349.81
+    },
+    {
+      "sample_id": "sealed_test_mtr_security_ops_s300070_k3",
+      "domain": "security_ops",
+      "generated_text": "```json\n{\n  \"route\": [\n    \"ioc_correlator\",\n    \"endpoint_inspector\",\n    \"quarantine_enforcer\"\n  ],\n  \"terminal\": \"quarantine_enforcer\"\n}\n```<turn|>",
+      "latency_ms": 2906.01
+    },
+    {
+      "sample_id": "sealed_test_mtr_robotics_control_s300071_k4",
+      "domain": "robotics_control",
+      "generated_text": "```json\n{\n  \"route\": [\n    \"kinematics_solver\",\n    \"collision_checker\",\n    \"trajectory_planner\",\n    \"actuator_controller\"\n  ],\n  \"terminal\": \"actuator_controller\"\n}\n```<turn|>",
+      "latency_ms": 3061.14
+    },
+    {
+      "sample_id": "sealed_test_mtr_api_workflow_s300072_k2",
+      "domain": "api_workflow",
+      "generated_text": "```json\n{\n  \"route\": [\n    \"policy_gate\",\n    \"audit_logger\"\n  ],\n  \"terminal\": \"audit_logger\"\n}\n```<turn|>",
+      "latency_ms": 2329.89
+    },
+    {
+      "sample_id": "sealed_test_mtr_data_pipeline_s300073_k3",
+      "domain": "data_pipeline",
+      "generated_text": "```json\n{\n  \"route\": [\n    \"schema_normalizer\",\n    \"feature_extractor\",\n    \"model_evaluator\"\n  ],\n  \"terminal\": \"model_evaluator\"\n}\n```<turn|>",
+      "latency_ms": 3202.05
+    },
+    {
+      "sample_id": "sealed_test_mtr_security_ops_s300074_k4",
+      "domain": "security_ops",
+      "generated_text": "```json\n{\n  \"route\": [\n    \"telemetry_parser\",\n    \"ioc_correlator\",\n    \"endpoint_inspector\",\n    \"quarantine_enforcer\"\n  ],\n  \"terminal\": \"quarantine_enforcer\"\n}\n```<turn|>",
+      "latency_ms": 3145.07
+    },
+    {
+      "sample_id": "sealed_test_mtr_robotics_control_s300075_k2",
+      "domain": "robotics_control",
+      "generated_text": "```json\n{\n  \"route\": [\n    \"collision_checker\",\n    \"trajectory_planner\"\n  ],\n  \"terminal\": \"trajectory_planner\"\n}\n```<turn|>",
+      "latency_ms": 2391.68
+    },
+    {
+      "sample_id": "sealed_test_mtr_api_workflow_s300076_k3",
+      "domain": "api_workflow",
+      "generated_text": "```json\n{\n  \"route\": [\n    \"schema_parser\",\n    \"auth_validator\",\n    \"permission_checker\"\n  ],\n  \"terminal\": \"permission_checker\"\n}\n```<turn|>",
+      "latency_ms": 2600.07
+    },
+    {
+      "sample_id": "sealed_test_mtr_data_pipeline_s300077_k4",
+      "domain": "data_pipeline",
+      "generated_text": "```json\n{\n  \"route\": [\n    \"schema_normalizer\",\n    \"feature_extractor\",\n    \"model_evaluator\",\n    \"alert_dispatcher\"\n  ],\n  \"terminal\": \"alert_dispatcher\"\n}\n```<turn|>",
+      "latency_ms": 3028.57
+    },
+    {
+      "sample_id": "sealed_test_mtr_security_ops_s300078_k2",
+      "domain": "security_ops",
+      "generated_text": "```json\n{\n  \"route\": [\n    \"ioc_correlator\",\n    \"endpoint_inspector\"\n  ],\n  \"terminal\": \"endpoint_inspector\"\n}\n```<turn|>",
+      "latency_ms": 2394.71
+    },
+    {
+      "sample_id": "sealed_test_mtr_robotics_control_s300079_k3",
+      "domain": "robotics_control",
+      "generated_text": "```json\n{\n  \"route\": [\n    \"kinematics_solver\",\n    \"collision_checker\",\n    \"trajectory_planner\"\n  ],\n  \"terminal\": \"trajectory_planner\"\n}\n```<turn|>",
+      "latency_ms": 2759.91
+    },
+    {
+      "sample_id": "sealed_test_mtr_api_workflow_s300080_k4",
+      "domain": "api_workflow",
+      "generated_text": "```json\n{\n  \"route\": [\n    \"auth_validator\",\n    \"permission_checker\",\n    \"db_reader\",\n    \"risk_evaluator\"\n  ],\n  \"terminal\": \"risk_evaluator\"\n}\n```<turn|>",
+      "latency_ms": 3010.77
+    },
+    {
+      "sample_id": "sealed_test_mtr_data_pipeline_s300081_k2",
+      "domain": "data_pipeline",
+      "generated_text": "```json\n{\n  \"route\": [\n    \"schema_normalizer\",\n    \"feature_extractor\"\n  ],\n  \"terminal\": \"feature_extractor\"\n}\n```<turn|>",
+      "latency_ms": 3019.78
+    },
+    {
+      "sample_id": "sealed_test_mtr_security_ops_s300082_k3",
+      "domain": "security_ops",
+      "generated_text": "```json\n{\n  \"route\": [\n    \"endpoint_inspector\",\n    \"quarantine_enforcer\",\n    \"firewall_reconfig\"\n  ],\n  \"terminal\": \"firewall_reconfig\"\n}\n```<turn|>",
+      "latency_ms": 2894.44
+    },
+    {
+      "sample_id": "sealed_test_mtr_robotics_control_s300083_k4",
+      "domain": "robotics_control",
+      "generated_text": "```json\n{\n  \"route\": [\n    \"lidar_processor\",\n    \"point_cloud_filter\",\n    \"obstacle_detector\",\n    \"kinematics_solver\"\n  ],\n  \"terminal\": \"kinematics_solver\"\n}\n```<turn|>",
+      "latency_ms": 3158.41
+    },
+    {
+      "sample_id": "sealed_test_mtr_api_workflow_s300084_k2",
+      "domain": "api_workflow",
+      "generated_text": "```json\n{\n  \"route\": [\n    \"policy_gate\",\n    \"audit_logger\"\n  ],\n  \"terminal\": \"audit_logger\"\n}\n```<turn|>",
+      "latency_ms": 2322.0
+    },
+    {
+      "sample_id": "sealed_test_mtr_data_pipeline_s300085_k3",
+      "domain": "data_pipeline",
+      "generated_text": "```json\n{\n  \"route\": [\n    \"null_cleaner\",\n    \"schema_normalizer\",\n    \"feature_extractor\"\n  ],\n  \"terminal\": \"feature_extractor\"\n}\n```<turn|>",
+      "latency_ms": 2742.78
+    },
+    {
+      "sample_id": "sealed_test_mtr_security_ops_s300086_k4",
+      "domain": "security_ops",
+      "generated_text": "```json\n{\n  \"route\": [\n    \"endpoint_inspector\",\n    \"quarantine_enforcer\",\n    \"firewall_reconfig\",\n    \"incident_publisher\"\n  ],\n  \"terminal\": \"incident_publisher\"\n}\n```<turn|>",
+      "latency_ms": 3049.82
+    },
+    {
+      "sample_id": "sealed_test_mtr_robotics_control_s300087_k2",
+      "domain": "robotics_control",
+      "generated_text": "```json\n{\n  \"route\": [\n    \"point_cloud_filter\",\n    \"obstacle_detector\"\n  ],\n  \"terminal\": \"obstacle_detector\"\n}\n```<turn|>",
+      "latency_ms": 2417.41
+    },
+    {
+      "sample_id": "sealed_test_mtr_api_workflow_s300088_k3",
+      "domain": "api_workflow",
+      "generated_text": "```json\n{\n  \"route\": [\n    \"risk_evaluator\",\n    \"policy_gate\",\n    \"audit_logger\"\n  ],\n  \"terminal\": \"audit_logger\"\n}\n```<turn|>",
+      "latency_ms": 2624.12
+    },
+    {
+      "sample_id": "sealed_test_mtr_data_pipeline_s300089_k4",
+      "domain": "data_pipeline",
+      "generated_text": "```json\n{\n  \"route\": [\n    \"stream_ingester\",\n    \"null_cleaner\",\n    \"schema_normalizer\",\n    \"feature_extractor\"\n  ],\n  \"terminal\": \"feature_extractor\"\n}\n```<turn|>",
+      "latency_ms": 3035.06
+    },
+    {
+      "sample_id": "sealed_test_mtr_security_ops_s300090_k2",
+      "domain": "security_ops",
+      "generated_text": "```json\n{\n  \"route\": [\n    \"ioc_correlator\",\n    \"endpoint_inspector\"\n  ],\n  \"terminal\": \"endpoint_inspector\"\n}\n```<turn|>",
+      "latency_ms": 2401.13
+    },
+    {
+      "sample_id": "sealed_test_mtr_robotics_control_s300091_k3",
+      "domain": "robotics_control",
+      "generated_text": "```json\n{\n  \"route\": [\n    \"kinematics_solver\",\n    \"collision_checker\",\n    \"trajectory_planner\"\n  ],\n  \"terminal\": \"trajectory_planner\"\n}\n```<turn|>",
+      "latency_ms": 2748.73
+    },
+    {
+      "sample_id": "sealed_test_mtr_api_workflow_s300092_k4",
+      "domain": "api_workflow",
+      "generated_text": "```json\n{\n  \"route\": [\n    \"auth_validator\",\n    \"permission_checker\",\n    \"db_reader\",\n    \"risk_evaluator\"\n  ],\n  \"terminal\": \"risk_evaluator\"\n}\n```<turn|>",
+      "latency_ms": 2988.98
+    },
+    {
+      "sample_id": "sealed_test_mtr_data_pipeline_s300093_k2",
+      "domain": "data_pipeline",
+      "generated_text": "```json\n{\n  \"route\": [\n    \"model_evaluator\",\n    \"alert_dispatcher\"\n  ],\n  \"terminal\": \"alert_dispatcher\"\n}\n```<turn|>",
+      "latency_ms": 2349.81
+    },
+    {
+      "sample_id": "sealed_test_mtr_security_ops_s300094_k3",
+      "domain": "security_ops",
+      "generated_text": "```json\n{\n  \"route\": [\n    \"quarantine_enforcer\",\n    \"firewall_reconfig\",\n    \"incident_publisher\"\n  ],\n  \"terminal\": \"incident_publisher\"\n}\n```<turn|>",
+      "latency_ms": 2873.13
+    },
+    {
+      "sample_id": "sealed_test_mtr_robotics_control_s300095_k4",
+      "domain": "robotics_control",
+      "generated_text": "```json\n{\n  \"route\": [\n    \"lidar_processor\",\n    \"point_cloud_filter\",\n    \"obstacle_detector\",\n    \"kinematics_solver\"\n  ],\n  \"terminal\": \"kinematics_solver\"\n}\n```<turn|>",
+      "latency_ms": 3989.4
+    },
+    {
+      "sample_id": "sealed_test_mtr_api_workflow_s300096_k2",
+      "domain": "api_workflow",
+      "generated_text": "```json\n{\n  \"route\": [\n    \"db_reader\",\n    \"risk_evaluator\"\n  ],\n  \"terminal\": \"risk_evaluator\"\n}\n```<turn|>",
+      "latency_ms": 2454.66
+    },
+    {
+      "sample_id": "sealed_test_mtr_data_pipeline_s300097_k3",
+      "domain": "data_pipeline",
+      "generated_text": "```json\n{\n  \"route\": [\n    \"null_cleaner\",\n    \"schema_normalizer\",\n    \"feature_extractor\"\n  ],\n  \"terminal\": \"feature_extractor\"\n}\n```<turn|>",
+      "latency_ms": 2739.73
+    },
+    {
+      "sample_id": "sealed_test_mtr_security_ops_s300098_k4",
+      "domain": "security_ops",
+      "generated_text": "```json\n{\n  \"route\": [\n    \"ioc_correlator\",\n    \"endpoint_inspector\",\n    \"quarantine_enforcer\",\n    \"firewall_reconfig\"\n  ],\n  \"terminal\": \"firewall_reconfig\"\n}\n```<turn|>",
+      "latency_ms": 3182.15
+    },
+    {
+      "sample_id": "sealed_test_mtr_robotics_control_s300099_k2",
+      "domain": "robotics_control",
+      "generated_text": "```json\n{\n  \"route\": [\n    \"collision_checker\",\n    \"trajectory_planner\"\n  ],\n  \"terminal\": \"trajectory_planner\"\n}\n```<turn|>",
+      "latency_ms": 2327.7
+    },
+    {
+      "sample_id": "sealed_test_mtr_api_workflow_s300100_k3",
+      "domain": "api_workflow",
+      "generated_text": "```json\n{\n  \"route\": [\n    \"risk_evaluator\",\n    \"policy_gate\",\n    \"audit_logger\"\n  ],\n  \"terminal\": \"audit_logger\"\n}\n```<turn|>",
+      "latency_ms": 2685.81
+    },
+    {
+      "sample_id": "sealed_test_mtr_data_pipeline_s300101_k4",
+      "domain": "data_pipeline",
+      "generated_text": "```json\n{\n  \"route\": [\n    \"schema_normalizer\",\n    \"feature_extractor\",\n    \"model_evaluator\",\n    \"alert_dispatcher\"\n  ],\n  \"terminal\": \"alert_dispatcher\"\n}\n```<turn|>",
+      "latency_ms": 2996.19
+    },
+    {
+      "sample_id": "sealed_test_mtr_security_ops_s300102_k2",
+      "domain": "security_ops",
+      "generated_text": "```json\n{\n  \"route\": [\n    \"endpoint_inspector\",\n    \"quarantine_enforcer\"\n  ],\n  \"terminal\": \"quarantine_enforcer\"\n}\n```<turn|>",
+      "latency_ms": 2471.84
+    },
+    {
+      "sample_id": "sealed_test_mtr_robotics_control_s300103_k3",
+      "domain": "robotics_control",
+      "generated_text": "```json\n{\n  \"route\": [\n    \"point_cloud_filter\",\n    \"obstacle_detector\",\n    \"kinematics_solver\"\n  ],\n  \"terminal\": \"kinematics_solver\"\n}\n```<turn|>",
+      "latency_ms": 2876.41
+    },
+    {
+      "sample_id": "sealed_test_mtr_api_workflow_s300104_k4",
+      "domain": "api_workflow",
+      "generated_text": "```json\n{\n  \"route\": [\n    \"permission_checker\",\n    \"db_reader\",\n    \"risk_evaluator\",\n    \"policy_gate\"\n  ],\n  \"terminal\": \"policy_gate\"\n}\n```<turn|>",
+      "latency_ms": 2959.39
+    },
+    {
+      "sample_id": "sealed_test_mtr_data_pipeline_s300105_k2",
+      "domain": "data_pipeline",
+      "generated_text": "```json\n{\n  \"route\": [\n    \"null_cleaner\",\n    \"schema_normalizer\"\n  ],\n  \"terminal\": \"schema_normalizer\"\n}\n```<turn|>",
+      "latency_ms": 2448.14
+    },
+    {
+      "sample_id": "sealed_test_mtr_security_ops_s300106_k3",
+      "domain": "security_ops",
+      "generated_text": "```json\n{\n  \"route\": [\n    \"telemetry_parser\",\n    \"ioc_correlator\",\n    \"endpoint_inspector\"\n  ],\n  \"terminal\": \"endpoint_inspector\"\n}\n```<turn|>",
+      "latency_ms": 2827.37
+    },
+    {
+      "sample_id": "sealed_test_mtr_robotics_control_s300107_k4",
+      "domain": "robotics_control",
+      "generated_text": "```json\n{\n  \"route\": [\n    \"obstacle_detector\",\n    \"kinematics_solver\",\n    \"collision_checker\",\n    \"trajectory_planner\"\n  ],\n  \"terminal\": \"trajectory_planner\"\n}\n```<turn|>",
+      "latency_ms": 3047.06
+    },
+    {
+      "sample_id": "sealed_test_mtr_api_workflow_s300108_k2",
+      "domain": "api_workflow",
+      "generated_text": "```json\n{\n  \"route\": [\n    \"auth_validator\",\n    \"permission_checker\"\n  ],\n  \"terminal\": \"permission_checker\"\n}\n```<turn|>",
+      "latency_ms": 2316.61
+    },
+    {
+      "sample_id": "sealed_test_mtr_data_pipeline_s300109_k3",
+      "domain": "data_pipeline",
+      "generated_text": "```json\n{\n  \"route\": [\n    \"null_cleaner\",\n    \"schema_normalizer\",\n    \"feature_extractor\"\n  ],\n  \"terminal\": \"feature_extractor\"\n}\n```<turn|>",
+      "latency_ms": 2815.84
+    },
+    {
+      "sample_id": "sealed_test_mtr_security_ops_s300110_k4",
+      "domain": "security_ops",
+      "generated_text": "```json\n{\n  \"route\": [\n    \"endpoint_inspector\",\n    \"quarantine_enforcer\",\n    \"firewall_reconfig\",\n    \"incident_publisher\"\n  ],\n  \"terminal\": \"incident_publisher\"\n}\n```<turn|>",
+      "latency_ms": 3050.21
+    },
+    {
+      "sample_id": "sealed_test_mtr_robotics_control_s300111_k2",
+      "domain": "robotics_control",
+      "generated_text": "```json\n{\n  \"route\": [\n    \"lidar_processor\",\n    \"point_cloud_filter\"\n  ],\n  \"terminal\": \"point_cloud_filter\"\n}\n```<turn|>",
+      "latency_ms": 3098.57
+    },
+    {
+      "sample_id": "sealed_test_mtr_api_workflow_s300112_k3",
+      "domain": "api_workflow",
+      "generated_text": "```json\n{\n  \"route\": [\n    \"auth_validator\",\n    \"permission_checker\",\n    \"db_reader\"\n  ],\n  \"terminal\": \"db_reader\"\n}\n```<turn|>",
+      "latency_ms": 3076.37
+    },
+    {
+      "sample_id": "sealed_test_mtr_data_pipeline_s300113_k4",
+      "domain": "data_pipeline",
+      "generated_text": "```json\n{\n  \"route\": [\n    \"stream_ingester\",\n    \"null_cleaner\",\n    \"schema_normalizer\",\n    \"feature_extractor\"\n  ],\n  \"terminal\": \"feature_extractor\"\n}\n```<turn|>",
+      "latency_ms": 3094.53
+    },
+    {
+      "sample_id": "sealed_test_mtr_security_ops_s300114_k2",
+      "domain": "security_ops",
+      "generated_text": "```json\n{\n  \"route\": [\n    \"firewall_reconfig\",\n    \"incident_publisher\"\n  ],\n  \"terminal\": \"incident_publisher\"\n}\n```<turn|>",
+      "latency_ms": 2404.46
+    },
+    {
+      "sample_id": "sealed_test_mtr_robotics_control_s300115_k3",
+      "domain": "robotics_control",
+      "generated_text": "```json\n{\n  \"route\": [\n    \"obstacle_detector\",\n    \"kinematics_solver\",\n    \"collision_checker\"\n  ],\n  \"terminal\": \"collision_checker\"\n}\n```<turn|>",
+      "latency_ms": 2698.45
+    },
+    {
+      "sample_id": "sealed_test_mtr_api_workflow_s300116_k4",
+      "domain": "api_workflow",
+      "generated_text": "```json\n{\n  \"route\": [\n    \"permission_checker\",\n    \"db_reader\",\n    \"risk_evaluator\",\n    \"policy_gate\"\n  ],\n  \"terminal\": \"policy_gate\"\n}\n```<turn|>",
+      "latency_ms": 2977.16
+    },
+    {
+      "sample_id": "sealed_test_mtr_data_pipeline_s300117_k2",
+      "domain": "data_pipeline",
+      "generated_text": "```json\n{\n  \"route\": [\n    \"alert_dispatcher\",\n    \"cold_archiver\"\n  ],\n  \"terminal\": \"cold_archiver\"\n}\n```<turn|>",
+      "latency_ms": 2386.83
+    },
+    {
+      "sample_id": "sealed_test_mtr_security_ops_s300118_k3",
+      "domain": "security_ops",
+      "generated_text": "```json\n{\n  \"route\": [\n    \"ioc_correlator\",\n    \"endpoint_inspector\",\n    \"quarantine_enforcer\"\n  ],\n  \"terminal\": \"quarantine_enforcer\"\n}\n```<turn|>",
+      "latency_ms": 2936.95
+    },
+    {
+      "sample_id": "sealed_test_mtr_robotics_control_s300119_k4",
+      "domain": "robotics_control",
+      "generated_text": "```json\n{\n  \"route\": [\n    \"lidar_processor\",\n    \"point_cloud_filter\",\n    \"obstacle_detector\",\n    \"kinematics_solver\"\n  ],\n  \"terminal\": \"kinematics_solver\"\n}\n```<turn|>",
+      "latency_ms": 3175.46
+    },
+    {
+      "sample_id": "sealed_test_mtr_api_workflow_s300120_k2",
+      "domain": "api_workflow",
+      "generated_text": "```json\n{\n  \"route\": [\n    \"db_reader\",\n    \"risk_evaluator\"\n  ],\n  \"terminal\": \"risk_evaluator\"\n}\n```<turn|>",
+      "latency_ms": 2408.93
+    },
+    {
+      "sample_id": "sealed_test_mtr_data_pipeline_s300121_k3",
+      "domain": "data_pipeline",
+      "generated_text": "```json\n{\n  \"route\": [\n    \"stream_ingester\",\n    \"null_cleaner\",\n    \"schema_normalizer\"\n  ],\n  \"terminal\": \"schema_normalizer\"\n}\n```<turn|>",
+      "latency_ms": 3008.98
+    },
+    {
+      "sample_id": "sealed_test_mtr_security_ops_s300122_k4",
+      "domain": "security_ops",
+      "generated_text": "```json\n{\n  \"route\": [\n    \"ioc_correlator\",\n    \"hash_lookup\",\n    \"endpoint_inspector\",\n    \"quarantine_enforcer\",\n    \"firewall_reconfig\"\n  ],\n  \"terminal\": \"firewall_reconfig\"\n}\n```\n\n**Wait, let's re-evaluate the dependencies based on the provided tool list:**\n1. `ioc_cor",
+      "latency_ms": 4238.53
+    },
+    {
+      "sample_id": "sealed_test_mtr_robotics_control_s300123_k2",
+      "domain": "robotics_control",
+      "generated_text": "```json\n{\n  \"route\": [\n    \"kinematics_solver\",\n    \"collision_checker\"\n  ],\n  \"terminal\": \"collision_checker\"\n}\n```<turn|>",
+      "latency_ms": 2387.07
+    },
+    {
+      "sample_id": "sealed_test_mtr_api_workflow_s300124_k3",
+      "domain": "api_workflow",
+      "generated_text": "```json\n{\n  \"route\": [\n    \"permission_checker\",\n    \"db_reader\",\n    \"risk_evaluator\"\n  ],\n  \"terminal\": \"risk_evaluator\"\n}\n```<turn|>",
+      "latency_ms": 2670.61
+    },
+    {
+      "sample_id": "sealed_test_mtr_data_pipeline_s300125_k4",
+      "domain": "data_pipeline",
+      "generated_text": "```json\n{\n  \"route\": [\n    \"stream_ingester\",\n    \"null_cleaner\",\n    \"schema_normalizer\",\n    \"feature_extractor\"\n  ],\n  \"terminal\": \"feature_extractor\"\n}\n```<turn|>",
+      "latency_ms": 3016.45
+    },
+    {
+      "sample_id": "sealed_test_mtr_security_ops_s300126_k2",
+      "domain": "security_ops",
+      "generated_text": "```json\n{\n  \"route\": [\n    \"telemetry_parser\",\n    \"ioc_correlator\"\n  ],\n  \"terminal\": \"ioc_correlator\"\n}\n```<turn|>",
+      "latency_ms": 2512.83
+    },
+    {
+      "sample_id": "sealed_test_mtr_robotics_control_s300127_k3",
+      "domain": "robotics_control",
+      "generated_text": "```json\n{\n  \"route\": [\n    \"lidar_processor\",\n    \"point_cloud_filter\",\n    \"obstacle_detector\"\n  ],\n  \"terminal\": \"obstacle_detector\"\n}\n```<turn|>",
+      "latency_ms": 2782.02
+    },
+    {
+      "sample_id": "sealed_test_mtr_api_workflow_s300128_k4",
+      "domain": "api_workflow",
+      "generated_text": "```json\n{\n  \"route\": [\n    \"schema_parser\",\n    \"auth_validator\",\n    \"permission_checker\",\n    \"db_reader\"\n  ],\n  \"terminal\": \"db_reader\"\n}\n```<turn|>",
+      "latency_ms": 2920.04
+    },
+    {
+      "sample_id": "sealed_test_mtr_data_pipeline_s300129_k2",
+      "domain": "data_pipeline",
+      "generated_text": "```json\n{\n  \"route\": [\n    \"schema_normalizer\",\n    \"feature_extractor\"\n  ],\n  \"terminal\": \"feature_extractor\"\n}\n```<turn|>",
+      "latency_ms": 2817.27
+    },
+    {
+      "sample_id": "sealed_test_mtr_security_ops_s300130_k3",
+      "domain": "security_ops",
+      "generated_text": "```json\n{\n  \"route\": [\n    \"telemetry_parser\",\n    \"ioc_correlator\",\n    \"endpoint_inspector\"\n  ],\n  \"terminal\": \"endpoint_inspector\"\n}\n```<turn|>",
+      "latency_ms": 2802.37
+    },
+    {
+      "sample_id": "sealed_test_mtr_robotics_control_s300131_k4",
+      "domain": "robotics_control",
+      "generated_text": "```json\n{\n  \"route\": [\n    \"obstacle_detector\",\n    \"kinematics_solver\",\n    \"collision_checker\",\n    \"trajectory_planner\"\n  ],\n  \"terminal\": \"trajectory_planner\"\n}\n```<turn|>",
+      "latency_ms": 3064.9
+    },
+    {
+      "sample_id": "sealed_test_mtr_api_workflow_s300132_k2",
+      "domain": "api_workflow",
+      "generated_text": "```json\n{\n  \"route\": [\n    \"schema_parser\",\n    \"auth_validator\"\n  ],\n  \"terminal\": \"auth_validator\"\n}\n```<turn|>",
+      "latency_ms": 2313.35
+    },
+    {
+      "sample_id": "sealed_test_mtr_data_pipeline_s300133_k3",
+      "domain": "data_pipeline",
+      "generated_text": "```json\n{\n  \"route\": [\n    \"schema_normalizer\",\n    \"feature_extractor\",\n    \"model_evaluator\"\n  ],\n  \"terminal\": \"model_evaluator\"\n}\n```<turn|>",
+      "latency_ms": 2793.65
+    },
+    {
+      "sample_id": "sealed_test_mtr_security_ops_s300134_k4",
+      "domain": "security_ops",
+      "generated_text": "```json\n{\n  \"route\": [\n    \"telemetry_parser\",\n    \"ioc_correlator\",\n    \"endpoint_inspector\",\n    \"quarantine_enforcer\"\n  ],\n  \"terminal\": \"quarantine_enforcer\"\n}\n```<turn|>",
+      "latency_ms": 3877.25
+    },
+    {
+      "sample_id": "sealed_test_mtr_robotics_control_s300135_k2",
+      "domain": "robotics_control",
+      "generated_text": "```json\n{\n  \"route\": [\n    \"point_cloud_filter\",\n    \"obstacle_detector\"\n  ],\n  \"terminal\": \"obstacle_detector\"\n}\n```<turn|>",
+      "latency_ms": 2382.39
+    },
+    {
+      "sample_id": "sealed_test_mtr_api_workflow_s300136_k3",
+      "domain": "api_workflow",
+      "generated_text": "```json\n{\n  \"route\": [\n    \"risk_evaluator\",\n    \"policy_gate\",\n    \"audit_logger\"\n  ],\n  \"terminal\": \"audit_logger\"\n}\n```<turn|>",
+      "latency_ms": 2631.73
+    },
+    {
+      "sample_id": "sealed_test_mtr_data_pipeline_s300137_k4",
+      "domain": "data_pipeline",
+      "generated_text": "```json\n{\n  \"route\": [\n    \"schema_normalizer\",\n    \"feature_extractor\",\n    \"model_evaluator\",\n    \"alert_dispatcher\"\n  ],\n  \"terminal\": \"alert_dispatcher\"\n}\n```<turn|>",
+      "latency_ms": 3558.33
+    },
+    {
+      "sample_id": "sealed_test_mtr_security_ops_s300138_k2",
+      "domain": "security_ops",
+      "generated_text": "```json\n{\n  \"route\": [\n    \"ioc_correlator\",\n    \"endpoint_inspector\"\n  ],\n  \"terminal\": \"endpoint_inspector\"\n}\n```<turn|>",
+      "latency_ms": 2381.78
+    },
+    {
+      "sample_id": "sealed_test_mtr_robotics_control_s300139_k3",
+      "domain": "robotics_control",
+      "generated_text": "```json\n{\n  \"route\": [\n    \"lidar_processor\",\n    \"point_cloud_filter\",\n    \"obstacle_detector\"\n  ],\n  \"terminal\": \"obstacle_detector\"\n}\n```<turn|>",
+      "latency_ms": 2803.84
+    },
+    {
+      "sample_id": "sealed_test_mtr_api_workflow_s300140_k4",
+      "domain": "api_workflow",
+      "generated_text": "```json\n{\n  \"route\": [\n    \"schema_parser\",\n    \"auth_validator\",\n    \"permission_checker\",\n    \"db_reader\"\n  ],\n  \"terminal\": \"db_reader\"\n}\n```<turn|>",
+      "latency_ms": 2909.91
+    },
+    {
+      "sample_id": "sealed_test_mtr_data_pipeline_s300141_k2",
+      "domain": "data_pipeline",
+      "generated_text": "```json\n{\n  \"route\": [\n    \"null_cleaner\",\n    \"schema_normalizer\"\n  ],\n  \"terminal\": \"schema_normalizer\"\n}\n```<turn|>",
+      "latency_ms": 2890.64
+    },
+    {
+      "sample_id": "sealed_test_mtr_security_ops_s300142_k3",
+      "domain": "security_ops",
+      "generated_text": "```json\n{\n  \"route\": [\n    \"quarantine_enforcer\",\n    \"firewall_reconfig\",\n    \"incident_publisher\"\n  ],\n  \"terminal\": \"incident_publisher\"\n}\n```<turn|>",
+      "latency_ms": 4114.36
+    },
+    {
+      "sample_id": "sealed_test_mtr_robotics_control_s300143_k4",
+      "domain": "robotics_control",
+      "generated_text": "```json\n{\n  \"route\": [\n    \"lidar_processor\",\n    \"point_cloud_filter\",\n    \"obstacle_detector\",\n    \"kinematics_solver\"\n  ],\n  \"terminal\": \"kinematics_solver\"\n}\n```<turn|>",
+      "latency_ms": 3159.11
+    },
+    {
+      "sample_id": "sealed_test_mtr_api_workflow_s300144_k2",
+      "domain": "api_workflow",
+      "generated_text": "```json\n{\n  \"route\": [\n    \"auth_validator\",\n    \"permission_checker\"\n  ],\n  \"terminal\": \"permission_checker\"\n}\n```<turn|>",
+      "latency_ms": 2320.78
+    },
+    {
+      "sample_id": "sealed_test_mtr_data_pipeline_s300145_k3",
+      "domain": "data_pipeline",
+      "generated_text": "```json\n{\n  \"route\": [\n    \"feature_extractor\",\n    \"model_evaluator\",\n    \"alert_dispatcher\"\n  ],\n  \"terminal\": \"alert_dispatcher\"\n}\n```<turn|>",
+      "latency_ms": 2641.21
+    },
+    {
+      "sample_id": "sealed_test_mtr_security_ops_s300146_k4",
+      "domain": "security_ops",
+      "generated_text": "```json\n{\n  \"route\": [\n    \"ioc_correlator\",\n    \"endpoint_inspector\",\n    \"quarantine_enforcer\",\n    \"firewall_reconfig\"\n  ],\n  \"terminal\": \"firewall_reconfig\"\n}\n```<turn|>",
+      "latency_ms": 3179.51
+    },
+    {
+      "sample_id": "sealed_test_mtr_robotics_control_s300147_k2",
+      "domain": "robotics_control",
+      "generated_text": "```json\n{\n  \"route\": [\n    \"collision_checker\",\n    \"trajectory_planner\"\n  ],\n  \"terminal\": \"trajectory_planner\"\n}\n```<turn|>",
+      "latency_ms": 2369.97
+    },
+    {
+      "sample_id": "sealed_test_mtr_api_workflow_s300148_k3",
+      "domain": "api_workflow",
+      "generated_text": "```json\n{\n  \"route\": [\n    \"auth_validator\",\n    \"permission_checker\",\n    \"db_reader\"\n  ],\n  \"terminal\": \"db_reader\"\n}\n```<turn|>",
+      "latency_ms": 2624.89
+    },
+    {
+      "sample_id": "sealed_test_mtr_data_pipeline_s300149_k4",
+      "domain": "data_pipeline",
+      "generated_text": "```json\n{\n  \"route\": [\n    \"schema_normalizer\",\n    \"feature_uator\",\n    \"model_evaluator\",\n    \"alert_dispatcher\"\n  ],\n  \"terminal\": \"alert_dispatcher\"\n}\n```\n\nWait, looking at the tool names provided in the registry:\n1. `schema_normalizer` (Input: `clean_records` -> Output: `normalized_frame`)\n",
+      "latency_ms": 4328.86
+    },
+    {
+      "sample_id": "sealed_test_mtr_security_ops_s300150_k2",
+      "domain": "security_ops",
+      "generated_text": "```json\n{\n  \"route\": [\n    \"firewall_reconfig\",\n    \"incident_publisher\"\n  ],\n  \"terminal\": \"incident_publisher\"\n}\n```<turn|>",
+      "latency_ms": 2389.28
+    },
+    {
+      "sample_id": "sealed_test_mtr_robotics_control_s300151_k3",
+      "domain": "robotics_control",
+      "generated_text": "```json\n{\n  \"route\": [\n    \"obstacle_detector\",\n    \"kinematics_solver\",\n    \"collision_checker\"\n  ],\n  \"terminal\": \"collision_checker\"\n}\n```<turn|>",
+      "latency_ms": 2657.97
+    },
+    {
+      "sample_id": "sealed_test_mtr_api_workflow_s300152_k4",
+      "domain": "api_workflow",
+      "generated_text": "```json\n{\n  \"route\": [\n    \"permission_checker\",\n    \"db_reader\",\n    \"risk_evaluator\",\n    \"policy_gate\"\n  ],\n  \"terminal\": \"policy_gate\"\n}\n```<turn|>",
+      "latency_ms": 2953.18
+    },
+    {
+      "sample_id": "sealed_test_mtr_data_pipeline_s300153_k2",
+      "domain": "data_pipeline",
+      "generated_text": "```json\n{\n  \"route\": [\n    \"alert_dispatcher\",\n    \"cold_archiver\"\n  ],\n  \"terminal\": \"cold_archiver\"\n}\n```<turn|>",
+      "latency_ms": 2390.64
+    },
+    {
+      "sample_id": "sealed_test_mtr_security_ops_s300154_k3",
+      "domain": "security_ops",
+      "generated_text": "```json\n{\n  \"route\": [\n    \"ioc_correlator\",\n    \"endpoint_inspector\",\n    \"quarantine_enforcer\"\n  ],\n  \"terminal\": \"quarantine_enforcer\"\n}\n```<turn|>",
+      "latency_ms": 2987.71
+    },
+    {
+      "sample_id": "sealed_test_mtr_robotics_control_s300155_k4",
+      "domain": "robotics_control",
+      "generated_text": "```json\n{\n  \"route\": [\n    \"kinematics_solver\",\n    \"collision_checker\",\n    \"trajectory_planner\",\n    \"actuator_controller\"\n  ],\n  \"terminal\": \"actuator_controller\"\n}\n```<turn|>",
+      "latency_ms": 3597.54
+    },
+    {
+      "sample_id": "sealed_test_mtr_api_workflow_s300156_k2",
+      "domain": "api_workflow",
+      "generated_text": "```json\n{\n  \"route\": [\n    \"auth_validator\",\n    \"permission_checker\"\n  ],\n  \"terminal\": \"permission_checker\"\n}\n```<turn|>",
+      "latency_ms": 2310.45
+    },
+    {
+      "sample_id": "sealed_test_mtr_data_pipeline_s300157_k3",
+      "domain": "data_pipeline",
+      "generated_text": "```json\n{\n  \"route\": [\n    \"feature_extractor\",\n    \"model_evaluator\",\n    \"alert_dispatcher\"\n  ],\n  \"terminal\": \"alert_dispatcher\"\n}\n```<turn|>",
+      "latency_ms": 2633.76
+    },
+    {
+      "sample_id": "sealed_test_mtr_security_ops_s300158_k4",
+      "domain": "security_ops",
+      "generated_text": "```json\n{\n  \"route\": [\n    \"telemetry_parser\",\n    \"ioc_correlator\",\n    \"endpoint_inspector\",\n    \"quarantine_enforcer\"\n  ],\n  \"terminal\": \"quarantine_enforcer\"\n}\n```<turn|>",
+      "latency_ms": 3155.12
+    },
+    {
+      "sample_id": "sealed_test_mtr_robotics_control_s300159_k2",
+      "domain": "robotics_control",
+      "generated_text": "```json\n{\n  \"route\": [\n    \"point_cloud_filter\",\n    \"obstacle_detector\"\n  ],\n  \"terminal\": \"obstacle_detector\"\n}\n```<turn|>",
+      "latency_ms": 2385.8
+    },
+    {
+      "sample_id": "sealed_test_mtr_api_workflow_s300160_k3",
+      "domain": "api_workflow",
+      "generated_text": "```json\n{\n  \"route\": [\n    \"db_reader\",\n    \"risk_evaluator\",\n    \"policy_gate\"\n  ],\n  \"terminal\": \"policy_gate\"\n}\n```<turn|>",
+      "latency_ms": 2628.27
+    },
+    {
+      "sample_id": "sealed_test_mtr_data_pipeline_s300161_k4",
+      "domain": "data_pipeline",
+      "generated_text": "```json\n{\n  \"route\": [\n    \"feature_extractor\",\n    \"model_evaluator\",\n    \"alert_dispatcher\",\n    \"cold_archiver\"\n  ],\n  \"terminal\": \"cold_archiver\"\n}\n```<turn|>",
+      "latency_ms": 3593.48
+    },
+    {
+      "sample_id": "sealed_test_mtr_security_ops_s300162_k2",
+      "domain": "security_ops",
+      "generated_text": "```json\n{\n  \"route\": [\n    \"firewall_reconfig\",\n    \"incident_publisher\"\n  ],\n  \"terminal\": \"incident_publisher\"\n}\n```<turn|>",
+      "latency_ms": 2412.45
+    },
+    {
+      "sample_id": "sealed_test_mtr_robotics_control_s300163_k3",
+      "domain": "robotics_control",
+      "generated_text": "```json\n{\n  \"route\": [\n    \"point_cloud_filter\",\n    \"obstacle_detector\",\n    \"kinematics_solver\"\n  ],\n  \"terminal\": \"kinematics_solver\"\n}\n```<turn|>",
+      "latency_ms": 2879.6
+    },
+    {
+      "sample_id": "sealed_test_mtr_api_workflow_s300164_k4",
+      "domain": "api_workflow",
+      "generated_text": "```json\n{\n  \"route\": [\n    \"permission_checker\",\n    \"db_reader\",\n    \"risk_evaluator\",\n    \"policy_gate\"\n  ],\n  \"terminal\": \"policy_gate\"\n}\n```<turn|>",
+      "latency_ms": 2945.91
+    },
+    {
+      "sample_id": "sealed_test_mtr_data_pipeline_s300165_k2",
+      "domain": "data_pipeline",
+      "generated_text": "```json\n{\n  \"route\": [\n    \"null_cleaner\",\n    \"schema_normalizer\"\n  ],\n  \"terminal\": \"schema_normalizer\"\n}\n```<turn|>",
+      "latency_ms": 2417.42
+    },
+    {
+      "sample_id": "sealed_test_mtr_security_ops_s300166_k3",
+      "domain": "security_ops",
+      "generated_text": "```json\n{\n  \"route\": [\n    \"ioc_correlator\",\n    \"endpoint_inspector\",\n    \"quarantine_enforcer\"\n  ],\n  \"terminal\": \"quarantine_enforcer\"\n}\n```<turn|>",
+      "latency_ms": 2891.43
+    },
+    {
+      "sample_id": "sealed_test_mtr_robotics_control_s300167_k4",
+      "domain": "robotics_control",
+      "generated_text": "```json\n{\n  \"route\": [\n    \"point_cloud_filter\",\n    \"obstacle_detector\",\n    \"kinematics_solver\",\n    \"collision_checker\"\n  ],\n  \"terminal\": \"collision_checker\"\n}\n```<turn|>",
+      "latency_ms": 3118.24
+    },
+    {
+      "sample_id": "sealed_test_mtr_api_workflow_s300168_k2",
+      "domain": "api_workflow",
+      "generated_text": "```json\n{\n  \"route\": [\n    \"permission_checker\",\n    \"db_reader\"\n  ],\n  \"terminal\": \"db_reader\"\n}\n```<turn|>",
+      "latency_ms": 2314.07
+    },
+    {
+      "sample_id": "sealed_test_mtr_data_pipeline_s300169_k3",
+      "domain": "data_pipeline",
+      "generated_text": "```json\n{\n  \"route\": [\n    \"schema_normalizer\",\n    \"feature_extractor\",\n    \"model_evaluator\"\n  ],\n  \"terminal\": \"model_evaluator\"\n}\n```<turn|>",
+      "latency_ms": 2703.08
+    },
+    {
+      "sample_id": "sealed_test_mtr_security_ops_s300170_k4",
+      "domain": "security_ops",
+      "generated_text": "```json\n{\n  \"route\": [\n    \"telemetry_parser\",\n    \"ioc_correlator\",\n    \"endpoint_inspector\",\n    \"quarantine_enforcer\"\n  ],\n  \"terminal\": \"quarantine_enforcer\"\n}\n```<turn|>",
+      "latency_ms": 3142.75
+    },
+    {
+      "sample_id": "sealed_test_mtr_robotics_control_s300171_k2",
+      "domain": "robotics_control",
+      "generated_text": "```json\n{\n  \"route\": [\n    \"obstacle_detector\",\n    \"kinematics_solver\"\n  ],\n  \"terminal\": \"kinematics_solver\"\n}\n```<turn|>",
+      "latency_ms": 2441.57
+    },
+    {
+      "sample_id": "sealed_test_mtr_api_workflow_s300172_k3",
+      "domain": "api_workflow",
+      "generated_text": "```json\n{\n  \"route\": [\n    \"risk_evaluator\",\n    \"policy_gate\",\n    \"audit_logger\"\n  ],\n  \"terminal\": \"audit_logger\"\n}\n```<turn|>",
+      "latency_ms": 2625.07
+    },
+    {
+      "sample_id": "sealed_test_mtr_data_pipeline_s300173_k4",
+      "domain": "data_pipeline",
+      "generated_text": "```json\n{\n  \"route\": [\n    \"schema_normalizer\",\n    \"feature_uator\",\n    \"model_evaluator\",\n    \"alert_dispatcher\"\n  ],\n  \"terminal\": \"alert_dispatcher\"\n}\n```\n\nWait, I see a slight typo in the tool name in my thought process (\"feature_uator\" vs \"feature_extractor\"). Let me provide the corrected JSON.\n\n```json\n{",
+      "latency_ms": 4239.09
+    },
+    {
+      "sample_id": "sealed_test_mtr_security_ops_s300174_k2",
+      "domain": "security_ops",
+      "generated_text": "```json\n{\n  \"route\": [\n    \"endpoint_inspector\",\n    \"quarantine_enforcer\"\n  ],\n  \"terminal\": \"quarantine_enforcer\"\n}\n```<turn|>",
+      "latency_ms": 2461.29
+    },
+    {
+      "sample_id": "sealed_test_mtr_robotics_control_s300175_k3",
+      "domain": "robotics_control",
+      "generated_text": "```json\n{\n  \"route\": [\n    \"collision_checker\",\n    \"trajectory_planner\",\n    \"actuator_controller\"\n  ],\n  \"terminal\": \"actuator_controller\"\n}\n```<turn|>",
+      "latency_ms": 3309.09
+    },
+    {
+      "sample_id": "sealed_test_mtr_api_workflow_s300176_k4",
+      "domain": "api_workflow",
+      "generated_text": "```json\n{\n  \"route\": [\n    \"auth_validator\",\n    \"permission_checker\",\n    \"db_reader\",\n    \"risk_evaluator\"\n  ],\n  \"terminal\": \"risk_evaluator\"\n}\n```<turn|>",
+      "latency_ms": 3051.86
+    },
+    {
+      "sample_id": "sealed_test_mtr_data_pipeline_s300177_k2",
+      "domain": "data_pipeline",
+      "generated_text": "```json\n{\n  \"route\": [\n    \"null_cleaner\",\n    \"schema_normalizer\"\n  ],\n  \"terminal\": \"schema_normalizer\"\n}\n```<turn|>",
+      "latency_ms": 2922.07
+    },
+    {
+      "sample_id": "sealed_test_mtr_security_ops_s300178_k3",
+      "domain": "security_ops",
+      "generated_text": "```json\n{\n  \"route\": [\n    \"ioc_correlator\",\n    \"endpoint_inspector\",\n    \"quarantine_enforcer\"\n  ],\n  \"terminal\": \"quarantine_enforcer\"\n}\n```<turn|>",
+      "latency_ms": 2934.74
+    },
+    {
+      "sample_id": "sealed_test_mtr_robotics_control_s300179_k4",
+      "domain": "robotics_control",
+      "generated_text": "```json\n{\n  \"route\": [\n    \"kinematics_solver\",\n    \"collision_checker\",\n    \"trajectory_planner\",\n    \"actuator_controller\"\n  ],\n  \"terminal\": \"actuator_controller\"\n}\n```<turn|>",
+      "latency_ms": 3107.19
+    },
+    {
+      "sample_id": "sealed_test_mtr_api_workflow_s300180_k2",
+      "domain": "api_workflow",
+      "generated_text": "```json\n{\n  \"route\": [\n    \"policy_gate\",\n    \"audit_logger\"\n  ],\n  \"terminal\": \"audit_logger\"\n}\n```<turn|>",
+      "latency_ms": 2692.95
+    },
+    {
+      "sample_id": "sealed_test_mtr_data_pipeline_s300181_k3",
+      "domain": "data_pipeline",
+      "generated_text": "```json\n{\n  \"route\": [\n    \"feature_extractor\",\n    \"model_evaluator\",\n    \"alert_dispatcher\"\n  ],\n  \"terminal\": \"alert_dispatcher\"\n}\n```<turn|>",
+      "latency_ms": 3157.04
+    },
+    {
+      "sample_id": "sealed_test_mtr_security_ops_s300182_k4",
+      "domain": "security_ops",
+      "generated_text": "```json\n{\n  \"route\": [\n    \"telemetry_parser\",\n    \"ioc_correlator\",\n    \"endpoint_inspector\",\n    \"quarantine_enforcer\"\n  ],\n  \"terminal\": \"quarantine_enforcer\"\n}\n```<turn|>",
+      "latency_ms": 3141.66
+    },
+    {
+      "sample_id": "sealed_test_mtr_robotics_control_s300183_k2",
+      "domain": "robotics_control",
+      "generated_text": "```json\n{\n  \"route\": [\n    \"trajectory_planner\",\n    \"actuator_controller\"\n  ],\n  \"terminal\": \"actuator_controller\"\n}\n```<turn|>",
+      "latency_ms": 2443.96
+    },
+    {
+      "sample_id": "sealed_test_mtr_api_workflow_s300184_k3",
+      "domain": "api_workflow",
+      "generated_text": "```json\n{\n  \"route\": [\n    \"schema_parser\",\n    \"auth_validator\",\n    \"permission_checker\"\n  ],\n  \"terminal\": \"permission_checker\"\n}\n```<turn|>",
+      "latency_ms": 3091.67
+    },
+    {
+      "sample_id": "sealed_test_mtr_data_pipeline_s300185_k4",
+      "domain": "data_pipeline",
+      "generated_text": "```json\n{\n  \"route\": [\n    \"feature_extractor\",\n    \"model_evaluator\",\n    \"alert_dispatcher\",\n    \"cold_archiver\"\n  ],\n  \"terminal\": \"cold_archiver\"\n}\n```<turn|>",
+      "latency_ms": 3113.96
+    },
+    {
+      "sample_id": "sealed_test_mtr_security_ops_s300186_k2",
+      "domain": "security_ops",
+      "generated_text": "```json\n{\n  \"route\": [\n    \"ioc_correlator\",\n    \"endpoint_identifier\"\n  ],\n  \"terminal\": \"endpoint_inspector\"\n}\n```\n\n**Correction/Refinement Note:**\nBased on the logic provided in the prompt:\n1. `network_flows` is provided.\n2. `ioc_correlator` requires `network_flows` $\\rightarrow$ produces `threat_indicators",
+      "latency_ms": 4073.11
+    },
+    {
+      "sample_id": "sealed_test_mtr_robotics_control_s300187_k3",
+      "domain": "robotics_control",
+      "generated_text": "```json\n{\n  \"route\": [\n    \"kinematics_solver\",\n    \"collision_checker\",\n    \"trajectory_planner\"\n  ],\n  \"terminal\": \"trajectory_planner\"\n}\n```<turn|>",
+      "latency_ms": 2749.68
+    },
+    {
+      "sample_id": "sealed_test_mtr_api_workflow_s300188_k4",
+      "domain": "api_workflow",
+      "generated_text": "```json\n{\n  \"route\": [\n    \"permission_checker\",\n    \"db_reader\",\n    \"risk_evaluator\",\n    \"policy_gate\"\n  ],\n  \"terminal\": \"policy_gate\"\n}\n```<turn|>",
+      "latency_ms": 3016.54
+    },
+    {
+      "sample_id": "sealed_test_mtr_data_pipeline_s300189_k2",
+      "domain": "data_pipeline",
+      "generated_text": "```json\n{\n  \"route\": [\n    \"null_cleaner\",\n    \"schema_normalizer\"\n  ],\n  \"terminal\": \"schema_normalizer\"\n}\n```<turn|>",
+      "latency_ms": 2435.95
+    },
+    {
+      "sample_id": "sealed_test_mtr_security_ops_s300190_k3",
+      "domain": "security_ops",
+      "generated_text": "```json\n{\n  \"route\": [\n    \"ioc_correlator\",\n    \"endpoint_inspector\",\n    \"quarantine_enforcer\"\n  ],\n  \"terminal\": \"quarantine_enforcer\"\n}\n```<turn|>",
+      "latency_ms": 2951.09
+    },
+    {
+      "sample_id": "sealed_test_mtr_robotics_control_s300191_k4",
+      "domain": "robotics_control",
+      "generated_text": "```json\n{\n  \"route\": [\n    \"kinematics_solver\",\n    \"collision_checker\",\n    \"trajectory_planner\",\n    \"actuator_controller\"\n  ],\n  \"terminal\": \"actuator_controller\"\n}\n```<turn|>",
+      "latency_ms": 3055.57
+    },
+    {
+      "sample_id": "sealed_test_mtr_api_workflow_s300192_k2",
+      "domain": "api_workflow",
+      "generated_text": "```json\n{\n  \"route\": [\n    \"auth_validator\",\n    \"permission_checker\"\n  ],\n  \"terminal\": \"permission_checker\"\n}\n```<turn|>",
+      "latency_ms": 2318.02
+    },
+    {
+      "sample_id": "sealed_test_mtr_data_pipeline_s300193_k3",
+      "domain": "data_pipeline",
+      "generated_text": "```json\n{\n  \"route\": [\n    \"feature_extractor\",\n    \"model_evaluator\",\n    \"alert_dispatcher\"\n  ],\n  \"terminal\": \"alert_dispatcher\"\n}\n```<turn|>",
+      "latency_ms": 2705.61
+    },
+    {
+      "sample_id": "sealed_test_mtr_security_ops_s300194_k4",
+      "domain": "security_ops",
+      "generated_text": "```json\n{\n  \"route\": [\n    \"telemetry_parser\",\n    \"ioc_correlator\",\n    \"endpoint_inspector\",\n    \"quarantine_enforcer\"\n  ],\n  \"terminal\": \"quarantine_enforcer\"\n}\n```<turn|>",
+      "latency_ms": 3144.33
+    },
+    {
+      "sample_id": "sealed_test_mtr_robotics_control_s300195_k2",
+      "domain": "robotics_control",
+      "generated_text": "```json\n{\n  \"route\": [\n    \"collision_checker\",\n    \"trajectory_planner\"\n  ],\n  \"terminal\": \"trajectory_planner\"\n}\n```<turn|>",
+      "latency_ms": 2350.56
+    },
+    {
+      "sample_id": "sealed_test_mtr_api_workflow_s300196_k3",
+      "domain": "api_workflow",
+      "generated_text": "```json\n{\n  \"route\": [\n    \"permission_checker\",\n    \"db_reader\",\n    \"risk_evaluator\"\n  ],\n  \"terminal\": \"risk_evaluator\"\n}\n```<turn|>",
+      "latency_ms": 2732.12
+    },
+    {
+      "sample_id": "sealed_test_mtr_data_pipeline_s300197_k4",
+      "domain": "data_pipeline",
+      "generated_text": "```json\n{\n  \"route\": [\n    \"null_cleaner\",\n    \"schema_normalizer\",\n    \"feature_extractor\",\n    \"model_evaluator\"\n  ],\n  \"terminal\": \"model_evaluator\"\n}\n```<turn|>",
+      "latency_ms": 3070.95
+    },
+    {
+      "sample_id": "sealed_test_mtr_security_ops_s300198_k2",
+      "domain": "security_ops",
+      "generated_text": "```json\n{\n  \"route\": [\n    \"ioc_correlator\",\n    \"endpoint_inspector\"\n  ],\n  \"terminal\": \"endpoint_inspector\"\n}\n```<turn|>",
+      "latency_ms": 2391.02
+    },
+    {
+      "sample_id": "sealed_test_mtr_robotics_control_s300199_k3",
+      "domain": "robotics_control",
+      "generated_text": "```json\n{\n  \"route\": [\n    \"kinematics_solver\",\n    \"collision_checker\",\n    \"trajectory_planner\"\n  ],\n  \"terminal\": \"trajectory_planner\"\n}\n```<turn|>",
+      "latency_ms": 2752.16
+    },
+    {
+      "sample_id": "sealed_test_mtr_api_workflow_s300200_k4",
+      "domain": "api_workflow",
+      "generated_text": "```json\n{\n  \"route\": [\n    \"auth_validator\",\n    \"permission_checker\",\n    \"db_reader\",\n    \"risk_evaluator\"\n  ],\n  \"terminal\": \"risk_evaluator\"\n}\n```<turn|>",
+      "latency_ms": 3001.92
+    },
+    {
+      "sample_id": "sealed_test_mtr_data_pipeline_s300201_k2",
+      "domain": "data_pipeline",
+      "generated_text": "```json\n{\n  \"route\": [\n    \"model_evaluator\",\n    \"alert_dispatcher\"\n  ],\n  \"terminal\": \"alert_dispatcher\"\n}\n```<turn|>",
+      "latency_ms": 2365.15
+    },
+    {
+      "sample_id": "sealed_test_mtr_security_ops_s300202_k3",
+      "domain": "security_ops",
+      "generated_text": "```json\n{\n  \"route\": [\n    \"ioc_correlator\",\n    \"endpoint_inspector\",\n    \"quarantine_enforcer\"\n  ],\n  \"terminal\": \"quarantine_enforcer\"\n}\n```<turn|>",
+      "latency_ms": 2946.25
+    },
+    {
+      "sample_id": "sealed_test_mtr_robotics_control_s300203_k4",
+      "domain": "robotics_control",
+      "generated_text": "```json\n{\n  \"route\": [\n    \"obstacle_detector\",\n    \"kinematics_solver\",\n    \"collision_checker\",\n    \"trajectory_planner\"\n  ],\n  \"terminal\": \"trajectory_planner\"\n}\n```<turn|>",
+      "latency_ms": 3000.86
+    },
+    {
+      "sample_id": "sealed_test_mtr_api_workflow_s300204_k2",
+      "domain": "api_workflow",
+      "generated_text": "```json\n{\n  \"route\": [\n    \"permission_checker\",\n    \"db_reader\"\n  ],\n  \"terminal\": \"db_reader\"\n}\n```<turn|>",
+      "latency_ms": 2325.45
+    },
+    {
+      "sample_id": "sealed_test_mtr_data_pipeline_s300205_k3",
+      "domain": "data_pipeline",
+      "generated_text": "```json\n{\n  \"route\": [\n    \"model_evaluator\",\n    \"alert_printer\",\n    \"cold_archiver\"\n  ],\n  \"terminal\": \"cold_archiver\"\n}\n```\n\n**Correction Note:** Based on the provided tool list, the correct sequence to reach `archive_receipt` is:\n1. `model_evaluator` (requires `feature_matrix`, produces `prediction_metrics",
+      "latency_ms": 4223.67
+    },
+    {
+      "sample_id": "sealed_test_mtr_security_ops_s300206_k4",
+      "domain": "security_ops",
+      "generated_text": "```json\n{\n  \"route\": [\n    \"ioc_correlator\",\n    \"endpoint_inspector\",\n    \"quarantine_enforcer\",\n    \"firewall_reconfig\"\n  ],\n  \"terminal\": \"firewall_reconfig\"\n}\n```<turn|>",
+      "latency_ms": 3195.99
+    },
+    {
+      "sample_id": "sealed_test_mtr_robotics_control_s300207_k2",
+      "domain": "robotics_control",
+      "generated_text": "```json\n{\n  \"route\": [\n    \"lidar_processor\",\n    \"point_cloud_filter\"\n  ],\n  \"terminal\": \"point_cloud_filter\"\n}\n```<turn|>",
+      "latency_ms": 3083.57
+    },
+    {
+      "sample_id": "sealed_test_mtr_api_workflow_s300208_k3",
+      "domain": "api_workflow",
+      "generated_text": "```json\n{\n  \"route\": [\n    \"schema_parser\",\n    \"auth_validator\",\n    \"permission_checker\"\n  ],\n  \"terminal\": \"permission_checker\"\n}\n```<turn|>",
+      "latency_ms": 2589.58
+    },
+    {
+      "sample_id": "sealed_test_mtr_data_pipeline_s300209_k4",
+      "domain": "data_pipeline",
+      "generated_text": "```json\n{\n  \"route\": [\n    \"feature_extractor\",\n    \"model_evaluator\",\n    \"alert_dispatcher\",\n    \"cold_archiver\"\n  ],\n  \"terminal\": \"cold_archiver\"\n}\n```<turn|>",
+      "latency_ms": 3041.89
+    },
+    {
+      "sample_id": "sealed_test_mtr_security_ops_s300210_k2",
+      "domain": "security_ops",
+      "generated_text": "```json\n{\n  \"route\": [\n    \"quarantine_enforcer\",\n    \"firewall_reconfig\"\n  ],\n  \"terminal\": \"firewall_reconfig\"\n}\n```<turn|>",
+      "latency_ms": 2541.51
+    },
+    {
+      "sample_id": "sealed_test_mtr_robotics_control_s300211_k3",
+      "domain": "robotics_control",
+      "generated_text": "```json\n{\n  \"route\": [\n    \"lidar_processor\",\n    \"point_cloud_filter\",\n    \"obstacle_detector\"\n  ],\n  \"terminal\": \"obstacle_detector\"\n}\n```<turn|>",
+      "latency_ms": 3353.15
+    },
+    {
+      "sample_id": "sealed_test_mtr_api_workflow_s300212_k4",
+      "domain": "api_workflow",
+      "generated_text": "```json\n{\n  \"route\": [\n    \"db_reader\",\n    \"risk_evaluator\",\n    \"policy_gate\",\n    \"audit_logger\"\n  ],\n  \"terminal\": \"audit_logger\"\n}\n```<turn|>",
+      "latency_ms": 2958.81
+    },
+    {
+      "sample_id": "sealed_test_mtr_data_pipeline_s300213_k2",
+      "domain": "data_pipeline",
+      "generated_text": "```json\n{\n  \"route\": [\n    \"feature_extractor\",\n    \"model_evaluator\"\n  ],\n  \"terminal\": \"model_evaluator\"\n}\n```<turn|>",
+      "latency_ms": 2381.19
+    },
+    {
+      "sample_id": "sealed_test_mtr_security_ops_s300214_k3",
+      "domain": "security_ops",
+      "generated_text": "```json\n{\n  \"route\": [\n    \"endpoint_inspector\",\n    \"quarantine_enforcer\",\n    \"firewall_reconfig\"\n  ],\n  \"terminal\": \"firewall_reconfig\"\n}\n```<turn|>",
+      "latency_ms": 2901.64
+    },
+    {
+      "sample_id": "sealed_test_mtr_robotics_control_s300215_k4",
+      "domain": "robotics_control",
+      "generated_text": "```json\n{\n  \"route\": [\n    \"point_cloud_filter\",\n    \"obstacle_detector\",\n    \"kinematics_solver\",\n    \"collision_checker\"\n  ],\n  \"terminal\": \"collision_checker\"\n}\n```<turn|>",
+      "latency_ms": 3071.89
+    },
+    {
+      "sample_id": "sealed_test_mtr_api_workflow_s300216_k2",
+      "domain": "api_workflow",
+      "generated_text": "```json\n{\n  \"route\": [\n    \"permission_checker\",\n    \"db_reader\"\n  ],\n  \"terminal\": \"db_reader\"\n}\n```<turn|>",
+      "latency_ms": 2326.32
+    },
+    {
+      "sample_id": "sealed_test_mtr_data_pipeline_s300217_k3",
+      "domain": "data_pipeline",
+      "generated_text": "```json\n{\n  \"route\": [\n    \"feature_extractor\",\n    \"model_evaluator\",\n    \"alert_dispatcher\"\n  ],\n  \"terminal\": \"alert_dispatcher\"\n}\n```<turn|>",
+      "latency_ms": 2648.46
+    },
+    {
+      "sample_id": "sealed_test_mtr_security_ops_s300218_k4",
+      "domain": "security_ops",
+      "generated_text": "```json\n{\n  \"route\": [\n    \"telemetry_parser\",\n    \"ioc_correlator\",\n    \"endpoint_inspector\",\n    \"quarantine_enforcer\"\n  ],\n  \"terminal\": \"quarantine_enforcer\"\n}\n```<turn|>",
+      "latency_ms": 3137.09
+    },
+    {
+      "sample_id": "sealed_test_mtr_robotics_control_s300219_k2",
+      "domain": "robotics_control",
+      "generated_text": "```json\n{\n  \"route\": [\n    \"lidar_processor\",\n    \"point_cloud_filter\"\n  ],\n  \"terminal\": \"point_cloud_filter\"\n}\n```<turn|>",
+      "latency_ms": 2478.41
+    },
+    {
+      "sample_id": "sealed_test_mtr_api_workflow_s300220_k3",
+      "domain": "api_workflow",
+      "generated_text": "```json\n{\n  \"route\": [\n    \"db_reader\",\n    \"risk_evaluator\",\n    \"policy_gate\"\n  ],\n  \"terminal\": \"policy_gate\"\n}\n```<turn|>",
+      "latency_ms": 2622.52
+    },
+    {
+      "sample_id": "sealed_test_mtr_data_pipeline_s300221_k4",
+      "domain": "data_pipeline",
+      "generated_text": "```json\n{\n  \"route\": [\n    \"null_cleaner\",\n    \"schema_normalizer\",\n    \"feature_extractor\",\n    \"model_evaluator\"\n  ],\n  \"terminal\": \"model_evaluator\"\n}\n```<turn|>",
+      "latency_ms": 3105.87
+    },
+    {
+      "sample_id": "sealed_test_mtr_security_ops_s300222_k2",
+      "domain": "security_ops",
+      "generated_text": "```json\n{\n  \"route\": [\n    \"endpoint_inspector\",\n    \"quarantine_enforcer\"\n  ],\n  \"terminal\": \"quarantine_4enforcer\"\n}\n```\n\nWait, looking at the logic:\n1. `threat_indicators` is provided.\n2. `endpoint_inspector` requires `threat_indicators` $\\rightarrow$ produces `host_forensics`.\n3. `quarantine_",
+      "latency_ms": 4095.79
+    },
+    {
+      "sample_id": "sealed_test_mtr_robotics_control_s300223_k3",
+      "domain": "robotics_control",
+      "generated_text": "```json\n{\n  \"route\": [\n    \"kinematics_solver\",\n    \"collision_checker\",\n    \"trajectory_planner\"\n  ],\n  \"terminal\": \"trajectory_planner\"\n}\n```<turn|>",
+      "latency_ms": 2762.57
+    },
+    {
+      "sample_id": "sealed_test_mtr_api_workflow_s300224_k4",
+      "domain": "api_workflow",
+      "generated_text": "```json\n{\n  \"route\": [\n    \"schema_parser\",\n    \"auth_validator\",\n    \"permission_checker\",\n    \"db_reader\"\n  ],\n  \"terminal\": \"db_reader\"\n}\n```<turn|>",
+      "latency_ms": 2940.55
+    },
+    {
+      "sample_id": "sealed_test_mtr_data_pipeline_s300225_k2",
+      "domain": "data_pipeline",
+      "generated_text": "```json\n{\n  \"route\": [\n    \"schema_normalizer\",\n    \"feature_extractor\"\n  ],\n  \"terminal\": \"feature_extractor\"\n}\n```<turn|>",
+      "latency_ms": 2355.23
+    },
+    {
+      "sample_id": "sealed_test_mtr_security_ops_s300226_k3",
+      "domain": "security_ops",
+      "generated_text": "```json\n{\n  \"route\": [\n    \"telemetry_parser\",\n    \"ioc_correlator\",\n    \"endpoint_inspector\"\n  ],\n  \"terminal\": \"endpoint_inspector\"\n}\n```<turn|>",
+      "latency_ms": 2781.72
+    },
+    {
+      "sample_id": "sealed_test_mtr_robotics_control_s300227_k4",
+      "domain": "robotics_control",
+      "generated_text": "```json\n{\n  \"route\": [\n    \"obstacle_detector\",\n    \"kinematics_solver\",\n    \"collision_checker\",\n    \"trajectory_planner\"\n  ],\n  \"terminal\": \"trajectory_planner\"\n}\n```<turn|>",
+      "latency_ms": 3076.28
+    },
+    {
+      "sample_id": "sealed_test_mtr_api_workflow_s300228_k2",
+      "domain": "api_workflow",
+      "generated_text": "```json\n{\n  \"route\": [\n    \"auth_validator\",\n    \"permission_checker\"\n  ],\n  \"terminal\": \"permission_checker\"\n}\n```<turn|>",
+      "latency_ms": 2327.55
+    },
+    {
+      "sample_id": "sealed_test_mtr_data_pipeline_s300229_k3",
+      "domain": "data_pipeline",
+      "generated_text": "```json\n{\n  \"route\": [\n    \"stream_ingester\",\n    \"null_cleaner\",\n    \"schema_normalizer\"\n  ],\n  \"terminal\": \"schema_normalizer\"\n}\n```<turn|>",
+      "latency_ms": 2953.58
+    },
+    {
+      "sample_id": "sealed_test_mtr_security_ops_s300230_k4",
+      "domain": "security_ops",
+      "generated_text": "```json\n{\n  \"route\": [\n    \"telemetry_parser\",\n    \"ioc_correlator\",\n    \"endpoint_inspector\",\n    \"quarantine_enforcer\"\n  ],\n  \"terminal\": \"quarantine_enforcer\"\n}\n```<turn|>",
+      "latency_ms": 3139.77
+    },
+    {
+      "sample_id": "sealed_test_mtr_robotics_control_s300231_k2",
+      "domain": "robotics_control",
+      "generated_text": "```json\n{\n  \"route\": [\n    \"obstacle_detector\",\n    \"kinematics_solver\"\n  ],\n  \"terminal\": \"kinematics_solver\"\n}\n```<turn|>",
+      "latency_ms": 2500.46
+    },
+    {
+      "sample_id": "sealed_test_mtr_api_workflow_s300232_k3",
+      "domain": "api_workflow",
+      "generated_text": "```json\n{\n  \"route\": [\n    \"risk_evaluator\",\n    \"policy_gate\",\n    \"audit_logger\"\n  ],\n  \"terminal\": \"audit_logger\"\n}\n```<turn|>",
+      "latency_ms": 2670.12
+    },
+    {
+      "sample_id": "sealed_test_mtr_data_pipeline_s300233_k4",
+      "domain": "data_pipeline",
+      "generated_text": "```json\n{\n  \"route\": [\n    \"model_evaluator\",\n    \"alert_dispatcher\",\n    \"cold_archiver\"\n  ],\n  \"terminal\": \"cold_archiver\"\n}\n```\n\n**Wait, let's re-evaluate the dependencies based on the provided tools:**\n1. `feature_extractor` requires `normalized_frame` (Available) $\\rightarrow$ produces `feature_matrix`.\n",
+      "latency_ms": 4853.47
+    },
+    {
+      "sample_id": "sealed_test_mtr_security_ops_s300234_k2",
+      "domain": "security_ops",
+      "generated_text": "```json\n{\n  \"route\": [\n    \"quarantine_enforcer\",\n    \"firewall_reconfig\"\n  ],\n  \"terminal\": \"firewall_reconfig\"\n}\n```<turn|>",
+      "latency_ms": 2551.4
+    },
+    {
+      "sample_id": "sealed_test_mtr_robotics_control_s300235_k3",
+      "domain": "robotics_control",
+      "generated_text": "```json\n{\n  \"route\": [\n    \"collision_checker\",\n    \"trajectory_planner\",\n    \"actuator_controller\"\n  ],\n  \"terminal\": \"actuator_controller\"\n}\n```<turn|>",
+      "latency_ms": 3154.61
+    },
+    {
+      "sample_id": "sealed_test_mtr_api_workflow_s300236_k4",
+      "domain": "api_workflow",
+      "generated_text": "```json\n{\n  \"route\": [\n    \"permission_checker\",\n    \"db_reader\",\n    \"risk_evaluator\",\n    \"policy_gate\"\n  ],\n  \"terminal\": \"policy_gate\"\n}\n```<turn|>",
+      "latency_ms": 2982.68
+    },
+    {
+      "sample_id": "sealed_test_mtr_data_pipeline_s300237_k2",
+      "domain": "data_pipeline",
+      "generated_text": "```json\n{\n  \"route\": [\n    \"feature_extractor\",\n    \"model_evaluator\"\n  ],\n  \"terminal\": \"model_evaluator\"\n}\n```<turn|>",
+      "latency_ms": 2389.82
+    },
+    {
+      "sample_id": "sealed_test_mtr_security_ops_s300238_k3",
+      "domain": "security_ops",
+      "generated_text": "```json\n{\n  \"route\": [\n    \"telemetry_parser\",\n    \"ioc_correlator\",\n    \"endpoint_inspector\"\n  ],\n  \"terminal\": \"endpoint_inspector\"\n}\n```<turn|>",
+      "latency_ms": 2798.8
+    },
+    {
+      "sample_id": "sealed_test_mtr_robotics_control_s300239_k4",
+      "domain": "robotics_control",
+      "generated_text": "```json\n{\n  \"route\": [\n    \"obstacle_detector\",\n    \"kinematics_solver\",\n    \"collision_checker\",\n    \"trajectory_planner\"\n  ],\n  \"terminal\": \"trajectory_planner\"\n}\n```<turn|>",
+      "latency_ms": 3078.83
+    },
+    {
+      "sample_id": "sealed_test_mtr_api_workflow_s300240_k2",
+      "domain": "api_workflow",
+      "generated_text": "```json\n{\n  \"route\": [\n    \"schema_parser\",\n    \"auth_validator\"\n  ],\n  \"terminal\": \"auth_validator\"\n}\n```<turn|>",
+      "latency_ms": 2324.55
+    },
+    {
+      "sample_id": "sealed_test_mtr_data_pipeline_s300241_k3",
+      "domain": "data_pipeline",
+      "generated_text": "```json\n{\n  \"route\": [\n    \"null_cleaner\",\n    \"schema_normalizer\",\n    \"feature_extractor\"\n  ],\n  \"terminal\": \"feature_extractor\"\n}\n```<turn|>",
+      "latency_ms": 2748.1
+    },
+    {
+      "sample_id": "sealed_test_mtr_security_ops_s300242_k4",
+      "domain": "security_ops",
+      "generated_text": "```json\n{\n  \"route\": [\n    \"telemetry_parser\",\n    \"ioc_correlator\",\n    \"endpoint_inspector\",\n    \"quarantine_enforcer\"\n  ],\n  \"terminal\": \"quarantine_enforcer\"\n}\n```<turn|>",
+      "latency_ms": 3150.18
+    },
+    {
+      "sample_id": "sealed_test_mtr_robotics_control_s300243_k2",
+      "domain": "robotics_control",
+      "generated_text": "```json\n{\n  \"route\": [\n    \"kinematics_solver\",\n    \"collision_checker\"\n  ],\n  \"terminal\": \"collision_checker\"\n}\n```<turn|>",
+      "latency_ms": 2385.96
+    },
+    {
+      "sample_id": "sealed_test_mtr_api_workflow_s300244_k3",
+      "domain": "api_workflow",
+      "generated_text": "```json\n{\n  \"route\": [\n    \"risk_evaluator\",\n    \"policy_gate\",\n    \"audit_logger\"\n  ],\n  \"terminal\": \"audit_logger\"\n}\n```<turn|>",
+      "latency_ms": 2640.02
+    },
+    {
+      "sample_id": "sealed_test_mtr_data_pipeline_s300245_k4",
+      "domain": "data_pipeline",
+      "generated_text": "```json\n{\n  \"route\": [\n    \"null_cleaner\",\n    \"schema_normalizer\",\n    \"feature_extractor\",\n    \"model_evaluator\"\n  ],\n  \"terminal\": \"model_evaluator\"\n}\n```<turn|>",
+      "latency_ms": 3085.97
+    },
+    {
+      "sample_id": "sealed_test_mtr_security_ops_s300246_k2",
+      "domain": "security_ops",
+      "generated_text": "```json\n{\n  \"route\": [\n    \"firewall_reconfig\",\n    \"incident_publisher\"\n  ],\n  \"terminal\": \"incident_publisher\"\n}\n```<turn|>",
+      "latency_ms": 2397.87
+    },
+    {
+      "sample_id": "sealed_test_mtr_robotics_control_s300247_k3",
+      "domain": "robotics_control",
+      "generated_text": "```json\n{\n  \"route\": [\n    \"collision_checker\",\n    \"trajectory_planner\",\n    \"actuator_controller\"\n  ],\n  \"terminal\": \"actuator_controller\"\n}\n```<turn|>",
+      "latency_ms": 2686.38
+    },
+    {
+      "sample_id": "sealed_test_mtr_api_workflow_s300248_k4",
+      "domain": "api_workflow",
+      "generated_text": "```json\n{\n  \"route\": [\n    \"auth_validator\",\n    \"permission_checker\",\n    \"db_reader\",\n    \"risk_evaluator\"\n  ],\n  \"terminal\": \"risk_evaluator\"\n}\n```<turn|>",
+      "latency_ms": 2994.81
+    },
+    {
+      "sample_id": "sealed_test_mtr_data_pipeline_s300249_k2",
+      "domain": "data_pipeline",
+      "generated_text": "```json\n{\n  \"route\": [\n    \"model_evaluator\",\n    \"alert_dispatcher\"\n  ],\n  \"terminal\": \"alert_dispatcher\"\n}\n```<turn|>",
+      "latency_ms": 2345.54
+    },
+    {
+      "sample_id": "sealed_test_mtr_security_ops_s300250_k3",
+      "domain": "security_ops",
+      "generated_text": "```json\n{\n  \"route\": [\n    \"ioc_correlator\",\n    \"endpoint_inspector\",\n    \"quarantine_enforcer\"\n  ],\n  \"terminal\": \"quarantine_enforcer\"\n}\n```<turn|>",
+      "latency_ms": 2950.61
+    },
+    {
+      "sample_id": "sealed_test_mtr_robotics_control_s300251_k4",
+      "domain": "robotics_control",
+      "generated_text": "```json\n{\n  \"route\": [\n    \"kinematics_solver\",\n    \"collision_checker\",\n    \"trajectory_planner\",\n    \"actuator_controller\"\n  ],\n  \"terminal\": \"actuator_controller\"\n}\n```<turn|>",
+      "latency_ms": 3047.43
+    },
+    {
+      "sample_id": "sealed_test_mtr_api_workflow_s300252_k2",
+      "domain": "api_workflow",
+      "generated_text": "```json\n{\n  \"route\": [\n    \"policy_gate\",\n    \"audit_logger\"\n  ],\n  \"terminal\": \"audit_logger\"\n}\n```<turn|>",
+      "latency_ms": 2321.91
+    },
+    {
+      "sample_id": "sealed_test_mtr_data_pipeline_s300253_k3",
+      "domain": "data_pipeline",
+      "generated_text": "```json\n{\n  \"route\": [\n    \"stream_ingester\",\n    \"null_cleaner\",\n    \"schema_normalizer\"\n  ],\n  \"terminal\": \"schema_normalizer\"\n}\n```<turn|>",
+      "latency_ms": 2829.53
+    },
+    {
+      "sample_id": "sealed_test_mtr_security_ops_s300254_k4",
+      "domain": "security_ops",
+      "generated_text": "```json\n{\n  \"route\": [\n    \"endpoint_inspector\",\n    \"quarantine_enforcer\",\n    \"firewall_reconfig\",\n    \"incident_publisher\"\n  ],\n  \"terminal\": \"incident_publisher\"\n}\n```<turn|>",
+      "latency_ms": 3059.56
+    },
+    {
+      "sample_id": "sealed_test_mtr_robotics_control_s300255_k2",
+      "domain": "robotics_control",
+      "generated_text": "```json\n{\n  \"route\": [\n    \"obstacle_detector\",\n    \"kinematics_solver\"\n  ],\n  \"terminal\": \"kinematics_solver\"\n}\n```<turn|>",
+      "latency_ms": 2450.72
+    }
+  ]
+}

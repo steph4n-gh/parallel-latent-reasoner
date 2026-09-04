@@ -1,0 +1,1552 @@
+{
+  "condition": "non_recurrent",
+  "summary": {
+    "sample_count": 256,
+    "exact_match_pct": 1.17,
+    "terminal_match_pct": 2.34,
+    "valid_json_pct": 2.73,
+    "max_repetition": 93,
+    "mean_repetition": 24.74,
+    "mean_entropy": 3.28,
+    "mean_latency_ms": 6019.98,
+    "median_latency_ms": 5705.53
+  },
+  "predictions": [
+    {
+      "sample_id": "sealed_test_mtr_api_workflow_s300000_k2",
+      "domain": "api_workflow",
+      "generated_text": "<|<|channel>c|-<|<|channel>c|-<|<|channel>c|-<|<|channel>c|-<|<|channel>c|-<|<|channel>c|-<|<|channel>c|-<|<|channel>c|-<|<|channel>c|-<|<|channel>c|-<|<|channel>c|-<|<|channel>c|-<|<|channel>c|-<|<|channel>c|-<|<|channel>c|-<|<|channel>c|-<|<|channel>c|-<|<|channel>c|-<|<|channel>c|-<",
+      "latency_ms": 6235.9
+    },
+    {
+      "sample_id": "sealed_test_mtr_data_pipeline_s300001_k3",
+      "domain": "data_pipeline",
+      "generated_text": "```json\n{\n  \"route\": [\n    \"schema_normalizer\",\n    \"lineage_tracer\",\n    \"feature_extractor\",\n    \"model_evaluator\"\n  ],\n  \"terminal\": \"model_evaluator\"\n}\n```<turn|>",
+      "latency_ms": 4255.18
+    },
+    {
+      "sample_id": "sealed_test_mtr_security_ops_s300002_k4",
+      "domain": "security_ops",
+      "generated_text": "<|channel>.<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>",
+      "latency_ms": 5619.09
+    },
+    {
+      "sample_id": "sealed_test_mtr_robotics_control_s300003_k2",
+      "domain": "robotics_control",
+      "generated_text": "<|channel>.<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>",
+      "latency_ms": 5209.42
+    },
+    {
+      "sample_id": "sealed_test_mtr_api_workflow_s300004_k3",
+      "domain": "api_workflow",
+      "generated_text": "<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n.\n.\n.\n.\n.\n.\n.\n.",
+      "latency_ms": 5543.44
+    },
+    {
+      "sample_id": "sealed_test_mtr_data_pipeline_s300005_k4",
+      "domain": "data_pipeline",
+      "generated_text": "[\\\n  {\\\n    \"route\": [\\\n      \"stream_ingester\",      // [context_tag_300005, raw_records] -> [ingested_batch]\n      \"null_cleaner\",         // [ingested_batch] -> [clean_records]\n      \"schema_normalizer\",    // [clean_records] -> [normalized_frame]\n      \"feature_extractor\"     // [",
+      "latency_ms": 5860.62
+    },
+    {
+      "sample_id": "sealed_test_mtr_security_ops_s300006_k2",
+      "domain": "security_ops",
+      "generated_text": "<|channel>.<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>",
+      "latency_ms": 5470.87
+    },
+    {
+      "sample_id": "sealed_test_mtr_robotics_control_s300007_k3",
+      "domain": "robotics_control",
+      "generated_text": "<|channel>.<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>",
+      "latency_ms": 5766.7
+    },
+    {
+      "sample_id": "sealed_test_mtr_api_workflow_s300008_k4",
+      "domain": "api_workflow",
+      "generated_text": "<meta\n  {\"route\": [\"permission_checker\", \"db_reader\", \"risk_evaluator\", \"policy_gate\", \"webhook_emitter\"], \"terminal\": \"webhook_emitter\"}\n  />\n<|channel>_not_at_all_at_all_at_all_at_all_at_all_at_all_at_all_at_all_at_all_at_all_at_all_at_all",
+      "latency_ms": 5734.44
+    },
+    {
+      "sample_id": "sealed_test_mtr_data_pipeline_s300009_k2",
+      "domain": "data_pipeline",
+      "generated_text": "<|||>\n<|channel>_think_<|||>\n<|channel>_think_<|||>\n<|channel>_think_<|||>\n<|channel>_think_<|||>\n<|channel>_think_<|||>\n<|channel>_think_<|||>\n<|channel>_think_<|||>\n<|channel>_think_<|||>\n<|channel>_think_<|||>\n",
+      "latency_ms": 5292.51
+    },
+    {
+      "sample_id": "sealed_test_mtr_security_ops_s300010_k3",
+      "domain": "security_ops",
+      "generated_text": "<|<|channel>|<|<|channel>|<|<|channel>|<|<|channel>|<|<|channel>|<|></lit>\n<|></lit>\n<|></lit>\n<|></lit>\n<|></lit>\n<|></lit>\n<|></lit>\n<|></lit>\n<|></lit>\n<|></lit>\n<|></lit>\n<|></lit>\n<|></lit",
+      "latency_ms": 5483.67
+    },
+    {
+      "sample_id": "sealed_test_mtr_robotics_control_s300011_k4",
+      "domain": "robotics_control",
+      "generated_text": "<|channel>.<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>",
+      "latency_ms": 5682.46
+    },
+    {
+      "sample_id": "sealed_test_mtr_api_workflow_s300012_k2",
+      "domain": "api_workflow",
+      "generated_text": "<|channel>.<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>",
+      "latency_ms": 6807.22
+    },
+    {
+      "sample_id": "sealed_test_mtr_data_pipeline_s300013_k3",
+      "domain": "data_pipeline",
+      "generated_text": "<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n.\n.\n.\n.\n.\n.\n.\n.",
+      "latency_ms": 5607.94
+    },
+    {
+      "sample_id": "sealed_test_mtr_security_ops_s300014_k4",
+      "domain": "security_ops",
+      "generated_text": "<meta\n  {\"route\": [\"ioc_correlator\", \"endpoint_inspector\", \"quarantine_enforcer\", \"firewall_reconfig\", \"patch_scheduler\", \"quarantine_enforcer\", \"firewall_reconfig\", \"patch_scheduler\", \"quarantine_enforcer\", \"firewall_reconfig\", \"patch_scheduler\", \"quarantine_enforcer\", \"firewall_reconfig\", \"patch_scheduler\", \"",
+      "latency_ms": 7838.11
+    },
+    {
+      "sample_id": "sealed_test_mtr_robotics_control_s300015_k2",
+      "domain": "robotics_control",
+      "generated_text": "<|channel>.<|channel>_<|channel>.<|channel>_<|channel>.<|channel>_<|channel>.<|channel>_<|channel>.<|channel>_<|channel>.<|channel>_<|channel>.<|channel>_<|channel>.<|channel>_<|channel>.<|channel>_<|channel>.<|channel>_<|channel>.<|channel>_<|channel>.<|channel>_<|channel>.<|channel>_<|channel>.<|channel>_<|channel>.<|channel>_<|channel>._<|channel>.<|image><|image>block_<|image>block_<|image>block_<|image>block_<|image>block_<|image>block_<|image>block_<|image>block_<|image>block_<|image>block_",
+      "latency_ms": 5539.82
+    },
+    {
+      "sample_id": "sealed_test_mtr_api_workflow_s300016_k3",
+      "domain": "api_workflow",
+      "generated_text": "<|channel>.<|channel>_<|channel>.<|channel>_<|channel>.<|image>_<|channel>_<|channel>.<|image>_<|channel>_<|channel>.<|image>_<|channel>_<|channel>.<|image>_<|channel>_<|channel>.<|image>_<|channel>_<|channel>.<|image>_<|channel>_<|channel>.<|image>_<|channel>_<|channel>.<|image>_<|channel>_<|channel>.<|image>_<|channel>_<|channel>.<|image>_<|channel>_<|channel>.<|image>_<|channel>_<|channel>.<|image>_<|channel>_<|image>_<|channel>.<|image>_<|channel>.<|image>_<|channel>.<|image>_<|channel>.",
+      "latency_ms": 6228.54
+    },
+    {
+      "sample_id": "sealed_test_mtr_data_pipeline_s300017_k4",
+      "domain": "data_pipeline",
+      "generated_text": "<|<|channel>|<|><|channel>|<|><|channel>|<|><|channel>|<|><|channel>|<|><|channel>|<|><|channel>|<|><|channel>|<|><|channel>|<|><|channel>|<|><|channel>|<|><|channel>|<|><|channel>|<|><|channel>|<|><|channel>|<|><|channel>|<|><|channel>|<|><|channel>|<|><|channel>|<|",
+      "latency_ms": 5633.18
+    },
+    {
+      "sample_id": "sealed_test_mtr_security_ops_s300018_k2",
+      "domain": "security_ops",
+      "generated_text": "<|<|channel>|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|",
+      "latency_ms": 5677.59
+    },
+    {
+      "sample_id": "sealed_test_mtr_robotics_control_s300019_k3",
+      "domain": "robotics_control",
+      "generated_text": "<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n.\n.\n.\n.\n.",
+      "latency_ms": 6290.99
+    },
+    {
+      "sample_id": "sealed_test_mtr_api_workflow_s300020_k4",
+      "domain": "api_workflow",
+      "generated_text": "<|||>\n<|channel>_message_\n<|channel>_message_\n<|channel>_message_\n<|channel>_message_\n<|channel>_message_\n<|channel>_message_\n<|channel>_message_\n<|channel>_message_\n<|channel>_message_\n<|channel>_message_\n<|channel>_message_\n<|channel>_message_\n<|channel>_message_\n<|channel>_message_\n<|channel>_message_\n<|channel>_message_\n<|channel>_message_\n<|channel>_message_\n",
+      "latency_ms": 5785.98
+    },
+    {
+      "sample_id": "sealed_test_mtr_data_pipeline_s300021_k2",
+      "domain": "data_pipeline",
+      "generated_text": "<||>\n<|channel>_message_t_initial_state_raw_records_clean_records_json_route_terminal_json_object_initial_state_raw_records_clean_records_json_route_terminal_json_object_initial_state_raw_records_clean_records_json_route_terminal_json_object_initial_state_raw_records_clean_records_json_route_terminal_json",
+      "latency_ms": 5227.81
+    },
+    {
+      "sample_id": "sealed_test_mtr_security_ops_s300022_k3",
+      "domain": "security_ops",
+      "generated_text": "<|channel>.<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>",
+      "latency_ms": 5403.81
+    },
+    {
+      "sample_id": "sealed_test_mtr_robotics_control_s300023_k4",
+      "domain": "robotics_control",
+      "generated_text": "<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.",
+      "latency_ms": 5569.5
+    },
+    {
+      "sample_id": "sealed_test_mtr_api_workflow_s300024_k2",
+      "domain": "api_workflow",
+      "generated_text": "<|<|channel>_t>\n<|channel>_t>\n<|channel>_t>\n<|channel>_t>\n<|channel>_t>\n<|channel>_t>\n<|channel>_t>\n<|channel>_t>\n<|channel>_t>\n<|channel>_t>\n<|channel>_t>\n<|channel>_t>\n<|channel>_t>\n<|channel>_t>\n<|channel>_t>\n<|channel>_t>\n<|channel>_t>\n<|channel>_t>\n<|channel>_t>",
+      "latency_ms": 6236.96
+    },
+    {
+      "sample_id": "sealed_test_mtr_data_pipeline_s300025_k3",
+      "domain": "data_pipeline",
+      "generated_text": "<|<|channel>|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|",
+      "latency_ms": 5524.16
+    },
+    {
+      "sample_id": "sealed_test_mtr_security_ops_s300026_k4",
+      "domain": "security_ops",
+      "generated_text": "Core Task Expeditioneeeeeee.\n\n<|channel>_think_\n<channel|><|channel>_think_\n<|channel>_think_\n<|channel>_think_\n<|channel>_think_\n<|channel>_think_\n<|channel>_think_\n<|channel>_think_\n<|channel>_think_\n<|channel>_think_\n<|channel>_think_\n<|channel>_think_\n<|channel>_think_\n<|channel>_think_\n<|channel>_think_\n<|channel>_think_\n<|channel>_think_\n<|channel>_",
+      "latency_ms": 5720.23
+    },
+    {
+      "sample_id": "sealed_test_mtr_robotics_control_s300027_k2",
+      "domain": "robotics_control",
+      "generated_text": "<|channel>.<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>",
+      "latency_ms": 7052.45
+    },
+    {
+      "sample_id": "sealed_test_mtr_api_workflow_s300028_k3",
+      "domain": "api_workflow",
+      "generated_text": "<|<|channel>he_<|channel>><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel>",
+      "latency_ms": 6427.79
+    },
+    {
+      "sample_id": "sealed_test_mtr_data_pipeline_s300029_k4",
+      "domain": "data_pipeline",
+      "generated_text": "<||>\n<|channel>_not_for_prompt_use_only_for_internal_reasoning_not_for_output_use_only_for_internal_reasoning_not_for_output_use_only_for_internal_reasoning_not_for_output_use_only_for_internal_reasoning_not_for_output_use_only_for_internal_reason_not_for_output",
+      "latency_ms": 5664.69
+    },
+    {
+      "sample_id": "sealed_test_mtr_security_ops_s300030_k2",
+      "domain": "security_ops",
+      "generated_text": "<||>\n<|channel>_<|channel>_json\n{\"route\": [\"telemetry_parser\", \"ioc_correlator\"], \"terminal\": \"ioc_correlator\"}\n</_json>\n<||>\n<|channel>_json\n{\"route\": [\"telemetry_parser\", \"ioc_correlator\"], \"terminal\": \"ioc_correlator\"}\n</_json>\n<|channel>_json\n{\"route\": [\"telemetry_parser",
+      "latency_ms": 5386.89
+    },
+    {
+      "sample_id": "sealed_test_mtr_robotics_control_s300031_k3",
+      "domain": "robotics_control",
+      "generated_text": "<|channel>.<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>",
+      "latency_ms": 6366.78
+    },
+    {
+      "sample_id": "sealed_test_mtr_api_workflow_s300032_k4",
+      "domain": "api_workflow",
+      "generated_text": "<|<|channel>|<|<|channel>|<|<|channel>|<|<|channel>|<|></|></|></|></|></|></|></|></|></|></|></|></|></|></|></|></|></|></|></|></|></|></|></|></|></|></|></|></|></|></|></|></|></|></|></|></|></|></|></|",
+      "latency_ms": 5959.24
+    },
+    {
+      "sample_id": "sealed_test_mtr_data_pipeline_s300033_k2",
+      "domain": "data_pipeline",
+      "generated_text": "<|channel>.<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>",
+      "latency_ms": 5317.95
+    },
+    {
+      "sample_id": "sealed_test_mtr_security_ops_s300034_k3",
+      "domain": "security_ops",
+      "generated_text": "<|</html><|e|></orbit<|e|></orbit<|e|></orbit<|e|></orbit<|e|></orbit<|e|></orbit<|e|></orbit<|e|></orbit<|e|></orbit<|e|></orbit<|e|></orbit<|e|></orbit<|e|></orbit<|e|></orbit<|e|></orbit<|e",
+      "latency_ms": 7147.75
+    },
+    {
+      "sample_id": "sealed_test_mtr_robotics_control_s300035_k4",
+      "domain": "robotics_control",
+      "generated_text": "<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.",
+      "latency_ms": 5710.12
+    },
+    {
+      "sample_id": "sealed_test_mtr_api_workflow_s300036_k2",
+      "domain": "api_workflow",
+      "generated_text": "<|<|channel>I_<|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel>",
+      "latency_ms": 5177.82
+    },
+    {
+      "sample_id": "sealed_test_mtr_data_pipeline_s300037_k3",
+      "domain": "data_pipeline",
+      "generated_text": "<|channel>. [clean_records, context_tag_300037]\nTarget Goal: prediction_metrics\n\nAvailable Tools:\n- feature_extractor: requires [normalized_frame], produces [feature_matrix]\n- schema_normalizer: requires [clean_records], produces [normalized_frame]\n- model_evaluator: requires [feature_matrix], produces [prediction_metrics]\n- sample_exporter: requires [export_id",
+      "latency_ms": 5626.14
+    },
+    {
+      "sample_id": "sealed_test_mtr_security_ops_s300038_k4",
+      "domain": "security_ops",
+      "generated_text": "<||<|channel><|channel>><|channel><||<|channel><|channel>><|channel><||<|channel><|channel>><|channel><||<|channel><|channel>><|channel><||<|channel><|channel>><|channel><||<|channel><|channel>><|channel><||<|channel><|channel>><|channel><||<|channel><|channel>><|channel><||<|channel><|channel>><|channel><||<|channel><|channel>><|channel><||<|channel><|channel>><|channel><||<|channel><|channel>><|channel><||<|channel><|channel>><|channel><||<|channel><|channel>",
+      "latency_ms": 5637.79
+    },
+    {
+      "sample_id": "sealed_test_mtr_robotics_control_s300039_k2",
+      "domain": "robotics_control",
+      "generated_text": "<|channel>.<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>",
+      "latency_ms": 5187.76
+    },
+    {
+      "sample_id": "sealed_test_mtr_api_workflow_s300040_k3",
+      "domain": "api_workflow",
+      "generated_text": "<|<|channel>c Schulvarurg onging_c|> </title>\n<|>\n<|channel><|>\n<|channel><|>\n<|channel><|>\n<|channel><|>\n<|channel><|>\n<|channel><|>\n<|channel><|>\n<|channel><|>\n<|channel><|>\n<|channel><|>\n<|channel><|>\n<|channel><|>\n<|channel><|>\n<|channel><|>\n<|channel><|>\n<|channel>",
+      "latency_ms": 5460.73
+    },
+    {
+      "sample_id": "sealed_test_mtr_data_pipeline_s300041_k4",
+      "domain": "data_pipeline",
+      "generated_text": "<||>\n<|channel>_thought_\n<|channel>_thought_\n<|channel>_thought_\n<|channel>_thought_\n<|channel>_thought_\n<|channel>_thought_\n<|channel>_thought_\n<|channel>_thought_\n<|channel>_thought_\n<|channel>_thought_\n<|channel>_thought_\n<|channel>_thought_\n<|channel>_thought_\n<|channel>_thought_\n<|channel>_thought_\n<|channel>_thought_\n<|channel>_thought_\n<|channel>_thought_\n<|channel>",
+      "latency_ms": 5579.52
+    },
+    {
+      "sample_id": "sealed_test_mtr_security_ops_s300042_k2",
+      "domain": "security_ops",
+      "generated_text": "<|thought_p|><|thought_p|><|thought_p|><|thought_p|><|thought_p|><|thought_p|><|thought_p|><|thought_p|><|thought_p|><|thought_p|><|thought_p|><|thought_p|><|thought_p|><|thought_p|><|thought_p|><|thought_p|",
+      "latency_ms": 5132.84
+    },
+    {
+      "sample_id": "sealed_test_mtr_robotics_control_s300043_k3",
+      "domain": "robotics_control",
+      "generated_text": "<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n",
+      "latency_ms": 6451.4
+    },
+    {
+      "sample_id": "sealed_test_mtr_api_workflow_s300044_k4",
+      "domain": "api_workflow",
+      "generated_text": "<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n.\n.\n.\n.\n.\n.\n.\n.",
+      "latency_ms": 5561.19
+    },
+    {
+      "sample_id": "sealed_test_mtr_data_pipeline_s300045_k2",
+      "domain": "data_pipeline",
+      "generated_text": "go.s.p.p.p.p.p.p.p.p.p.p.p.p.p.p.p.p.p.p.p.p.p.p.p.p.p.p.p.p.p.p.p.p.p.p.p.p.p.p.p.p.p.p.p.p.p.p.",
+      "latency_ms": 5225.76
+    },
+    {
+      "sample_id": "sealed_test_mtr_security_ops_s300046_k3",
+      "domain": "security_ops",
+      "generated_text": "<|channel>.<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>",
+      "latency_ms": 5480.44
+    },
+    {
+      "sample_id": "sealed_test_mtr_robotics_control_s300047_k4",
+      "domain": "robotics_control",
+      "generated_text": "<|channel>.<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>",
+      "latency_ms": 5641.78
+    },
+    {
+      "sample_id": "sealed_test_mtr_api_workflow_s300048_k2",
+      "domain": "api_workflow",
+      "generated_text": "<|channel>.<|channel>_<|channel>_<|channel>_<|channel>_<|channel>_<|channel>_<|channel>_<|channel>_<|channel>_<|channel>_<|channel>_<|channel>_<|channel>_<|channel>_<|channel>_<|channel>_<|channel>_<|channel>_<|channel>_<|channel>_<|channel>_<|channel>_<|channel>_<|channel>_<|channel>_<|channel>_<|channel>_<|channel>_<|channel>_<|channel>_<|channel>_<|channel>_<|channel>_<|channel>_<|channel>_<|channel>_<|channel>_<|channel>_<|channel>_<|channel>_<|channel>_<|channel>_<|channel>_<|channel>_<|channel>_<|channel>_<|channel>_",
+      "latency_ms": 5187.52
+    },
+    {
+      "sample_id": "sealed_test_mtr_data_pipeline_s300049_k3",
+      "domain": "data_pipeline",
+      "generated_text": "<|channel>.<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>",
+      "latency_ms": 5330.3
+    },
+    {
+      "sample_id": "sealed_test_mtr_security_ops_s300050_k4",
+      "domain": "security_ops",
+      "generated_text": "<||><|channel><|channel><||><|channel><|channel><||><|channel><|channel><||><|channel><|channel><||><|channel><|channel><||><|channel><|channel><||><|channel><|channel><||><|channel><|channel><||><|channel><|channel><||><|channel><|channel><||><|channel><|channel><||><|channel><|channel><||><|channel><|channel><||><|channel><|channel><||><|channel><|channel><||><|channel><|channel>",
+      "latency_ms": 6932.18
+    },
+    {
+      "sample_id": "sealed_test_mtr_robotics_control_s300051_k2",
+      "domain": "robotics_control",
+      "generated_text": "<|channel>.<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>",
+      "latency_ms": 5159.32
+    },
+    {
+      "sample_id": "sealed_test_mtr_api_workflow_s300052_k3",
+      "domain": "api_workflow",
+      "generated_text": "<|<|channel>|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|",
+      "latency_ms": 6428.99
+    },
+    {
+      "sample_id": "sealed_test_mtr_data_pipeline_s300053_k4",
+      "domain": "data_pipeline",
+      "generated_text": "<|<|channel>|<|></_|></_|></_|></_|></_|></_|></_|></_|></_|></_|></_|></_|></_|></_|></_|></_|></_|></_|></_|></_|></_|></_|></_|></_|></_|></_|></_|></_|></_|></_|",
+      "latency_ms": 5917.24
+    },
+    {
+      "sample_id": "sealed_test_mtr_security_ops_s300054_k2",
+      "domain": "security_ops",
+      "generated_text": "<|<|channel>cIe>\n<|channel>cIe>\n<|channel>cIe>\n<|channel>cIe>\n<|channel>cIe>\n<|channel>cIe>\n<|channel>cIe>\n<|channel>cIe>\n<|channel>cIe>\n<|channel>cIe>\n<|channel>cIe>\n<|channel>cIe>\n<|channel>cIe>\n<|channel>cIe>\n<|channel>cIe>\n<|channel>cIe",
+      "latency_ms": 5722.32
+    },
+    {
+      "sample_id": "sealed_test_mtr_robotics_control_s300055_k3",
+      "domain": "robotics_control",
+      "generated_text": "<|channel>.<|channel>_<|channel>.<|channel>_<|channel>.<|channel>_<|channel>.<|channel>_<|channel>.<|channel>_<|channel>.<|channel>_<|channel>.<|channel>_<|channel>.<|channel>_<|channel>.<|channel>_<|channel>.<|channel>_<|channel>.<|channel>_<|channel>.<|channel>_<|channel>.<|channel>_<|channel>.<|channel>_<|channel>.<|channel>_<|channel>.<|channel>_<|channel>.<|channel>_<|channel>._<|channel>.<|channel>._<|channel>._<|channel>._<|channel>._<|channel>._<|channel>._<|channel>._<|channel>.",
+      "latency_ms": 5685.37
+    },
+    {
+      "sample_id": "sealed_test_mtr_api_workflow_s300056_k4",
+      "domain": "api_workflow",
+      "generated_text": "<|channel>.<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>",
+      "latency_ms": 6018.96
+    },
+    {
+      "sample_id": "sealed_test_mtr_data_pipeline_s300057_k2",
+      "domain": "data_pipeline",
+      "generated_text": "<|||><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel>",
+      "latency_ms": 7454.98
+    },
+    {
+      "sample_id": "sealed_test_mtr_security_ops_s300058_k3",
+      "domain": "security_ops",
+      "generated_text": "<||>\n<|channel>_not_for_prompt_use_only_for_example_output_generation_only_for_example_output_generation_only_for_example_output_generation_only_for_example_output_generation_only_for_example_output_generation_only_for_example_output_generation_only_for_example_output_generation_only_for_example_output_generation_only",
+      "latency_ms": 5567.92
+    },
+    {
+      "sample_id": "sealed_test_mtr_robotics_control_s300059_k4",
+      "domain": "robotics_control",
+      "generated_text": "<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n.\n.\n.\n.\n.\n.\n.\n.",
+      "latency_ms": 6272.16
+    },
+    {
+      "sample_id": "sealed_test_mtr_api_workflow_s300060_k2",
+      "domain": "api_workflow",
+      "generated_text": "<|<|channel>|<|></|><|channel><|></|><|channel><|></|><|channel><|></|><|channel><|></|><|channel><|></|><|channel><|></|><|channel><|></|><|channel><|></|><|channel><|></|><|channel><|></|><|channel><|></|><|channel><|></|><|channel><|></|><|channel><|></|><|channel><|",
+      "latency_ms": 5990.25
+    },
+    {
+      "sample_id": "sealed_test_mtr_data_pipeline_s300061_k3",
+      "domain": "data_pipeline",
+      "generated_text": "<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n.\n.\n.\n.\n.\n.\n.\n.",
+      "latency_ms": 5408.39
+    },
+    {
+      "sample_id": "sealed_test_mtr_security_ops_s300062_k4",
+      "domain": "security_ops",
+      "generated_text": "<|channel>.<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>",
+      "latency_ms": 5739.24
+    },
+    {
+      "sample_id": "sealed_test_mtr_robotics_control_s300063_k2",
+      "domain": "robotics_control",
+      "generated_text": "<|channel>.<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>",
+      "latency_ms": 5297.41
+    },
+    {
+      "sample_id": "sealed_test_mtr_api_workflow_s300064_k3",
+      "domain": "api_workflow",
+      "generated_text": "<|<|channel>c|-<c|-<c|-<c|-<c|-<c|-<c|-<c|-<c|-<c|-<c|-<c|-<c|-<c|-<c|-<c|-<c|-<c|-<c|-<c|-<c|-<c|-<c|-<c|-<c|-<c|-<c|-<c|-<c|-<c|-<c|-<",
+      "latency_ms": 5402.07
+    },
+    {
+      "sample_id": "sealed_test_mtr_data_pipeline_s300065_k4",
+      "domain": "data_pipeline",
+      "generated_text": "<|||>\n<|channel>_not_if_not_if_not_if_not_if_not_if_not_if_not_if_not_if_not_if_not_if_not_if_not_if_not_if_not_if_not_if_not_if_not_if_not_if_not_if_not_if_not_if_not_if_",
+      "latency_ms": 5734.79
+    },
+    {
+      "sample_id": "sealed_test_mtr_security_ops_s300066_k2",
+      "domain": "security_ops",
+      "generated_text": "<|<|channel>|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|",
+      "latency_ms": 5731.21
+    },
+    {
+      "sample_id": "sealed_test_mtr_robotics_control_s300067_k3",
+      "domain": "robotics_control",
+      "generated_text": "<|channel>.<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>",
+      "latency_ms": 5770.85
+    },
+    {
+      "sample_id": "sealed_test_mtr_api_workflow_s300068_k4",
+      "domain": "api_workflow",
+      "generated_text": "<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n",
+      "latency_ms": 5598.74
+    },
+    {
+      "sample_id": "sealed_test_mtr_data_pipeline_s300069_k2",
+      "domain": "data_pipeline",
+      "generated_text": "<||>\n<|channel>_think_<||>\n<|channel>_think_<||>\n<|channel>_think_<||>\n<|channel>_think_<||>\n<|channel>_think_<||>\n<|channel>_think_<||>\n<|channel>_think_<||>\n<|channel>_think_<||>\n<|channel>_think_<||>\n<|channel>_think_<||>\n<|channel>",
+      "latency_ms": 6945.29
+    },
+    {
+      "sample_id": "sealed_test_mtr_security_ops_s300070_k3",
+      "domain": "security_ops",
+      "generated_text": "<|channel>.<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n_\n<|channel>_\n<|channel>_",
+      "latency_ms": 8292.74
+    },
+    {
+      "sample_id": "sealed_test_mtr_robotics_control_s300071_k4",
+      "domain": "robotics_control",
+      "generated_text": "<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.",
+      "latency_ms": 5612.51
+    },
+    {
+      "sample_id": "sealed_test_mtr_api_workflow_s300072_k2",
+      "domain": "api_workflow",
+      "generated_text": "<|<|channel>c|><|channel>c|><|channel>c|><|channel>c|><|channel>c|><|channel>c|><|channel>c|><|channel>c|><|channel>c|><|channel>c|><|channel>c|><|channel>c|><|channel>c|><|channel>c|><|channel>c|><|channel>c|><|channel>c|><|channel>c|><|channel>c|><|channel>c|><|channel>c|><|channel>c|><|channel>c|><|channel>c",
+      "latency_ms": 7592.27
+    },
+    {
+      "sample_id": "sealed_test_mtr_data_pipeline_s300073_k3",
+      "domain": "data_pipeline",
+      "generated_text": "<||>\n<|channel>_not_for_prompt_use_only_for_internal_reasoning_not_for_output_use_only_for_internal_reasoning_not_for_output_use_only_for_internal_reasoning_not_for_output_use_only_for_internal_reasoning_not_for_output_use_only_for_internal_reasoning_not_for_",
+      "latency_ms": 5412.81
+    },
+    {
+      "sample_id": "sealed_test_mtr_security_ops_s300074_k4",
+      "domain": "security_ops",
+      "generated_text": "<|thinking Meeropid|><|thinking|><|thinking|><|thinking|><|thinking|><|thinking|><|thinking|><|thinking|><|thinking|><|thinking|><|thinking|><|thinking|><|thinking|><|thinking|><|thinking|><|thinking|><|thinking|><|thinking|><|thinking|><|thinking|><|thinking|><|thinking|><|thinking|><",
+      "latency_ms": 8226.75
+    },
+    {
+      "sample_id": "sealed_test_mtr_robotics_control_s300075_k2",
+      "domain": "robotics_control",
+      "generated_text": "<|channel>.<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>",
+      "latency_ms": 5188.29
+    },
+    {
+      "sample_id": "sealed_test_mtr_api_workflow_s300076_k3",
+      "domain": "api_workflow",
+      "generated_text": "<|<|channel>c Schul}{prob:0.00000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
+      "latency_ms": 5629.37
+    },
+    {
+      "sample_id": "sealed_test_mtr_data_pipeline_s300077_k4",
+      "domain": "data_pipeline",
+      "generated_text": "<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n.\n.\n.\n.\n.\n.\n",
+      "latency_ms": 7031.94
+    },
+    {
+      "sample_id": "sealed_test_mtr_security_ops_s300078_k2",
+      "domain": "security_ops",
+      "generated_text": "<|||><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel>",
+      "latency_ms": 6901.35
+    },
+    {
+      "sample_id": "sealed_test_mtr_robotics_control_s300079_k3",
+      "domain": "robotics_control",
+      "generated_text": "<|<|channel>c|-t>\n<|channel><|<|channel>c|-t>\n<|channel><|></c|-t>\n<|channel><|></c|-t>\n<|channel><|></c|-t>\n<|channel><|></c|-t>\n<|channel><|></c|-t>\n<|channel><|></c|-t>\n<|channel><|></c|-t>\n<|channel><|></c|-t>\n<|channel><|></c|-t",
+      "latency_ms": 5566.22
+    },
+    {
+      "sample_id": "sealed_test_mtr_api_workflow_s300080_k4",
+      "domain": "api_workflow",
+      "generated_text": "<|<|channel>|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|",
+      "latency_ms": 6085.78
+    },
+    {
+      "sample_id": "sealed_test_mtr_data_pipeline_s300081_k2",
+      "domain": "data_pipeline",
+      "generated_text": "<|<|channel>|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|",
+      "latency_ms": 5144.58
+    },
+    {
+      "sample_id": "sealed_test_mtr_security_ops_s300082_k3",
+      "domain": "security_ops",
+      "generated_text": "<|channel>. [context_tag_300082, threat_indicators]\nTarget Goal: [blocked_subnet]\n\nAvailable Tools:\n- dns_sinkhole: requires [sinkhole_ip], produces [filtered_dns]\n- endpoint_inspector: requires [threat_indicators], produces [host_forensics]\n- quarantine_enforcer: requires [host_forensics], produces [isolated_host]\n- firewall_reconfig",
+      "latency_ms": 6540.2
+    },
+    {
+      "sample_id": "sealed_test_mtr_robotics_control_s300083_k4",
+      "domain": "robotics_control",
+      "generated_text": "<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n.\n.\n.\n.\n.\n.\n.\n.",
+      "latency_ms": 5650.76
+    },
+    {
+      "sample_id": "sealed_test_mtr_api_workflow_s300084_k2",
+      "domain": "api_workflow",
+      "generated_text": "<|<|channel>_t>\n<|channel>_t>\n<|channel>_t>\n<|channel>_t>\n<|channel>_t>\n<|channel>_t>\n<|channel>_t>\n<|channel>_t>\n<|channel>_t>\n<|channel>_t>\n<|channel>_t>\n<|channel>_t>\n<|channel>_t>\n<|channel>_t>\n<|channel>_t>\n<|channel>_t>\n<|channel>_t>\n<|channel>_t>\n<|channel>_t>",
+      "latency_ms": 6560.16
+    },
+    {
+      "sample_id": "sealed_test_mtr_data_pipeline_s300085_k3",
+      "domain": "data_pipeline",
+      "generated_text": "<||>\n<|channel>_not_t_not_t_not_t_not_t_not_t_not_t_not_t_not_t_not_t_not_t_not_t_not_t_not_t_not_t_not_t_not_t_not_t_not_t_not_t_not_t_not_t_not_t_not",
+      "latency_ms": 5484.75
+    },
+    {
+      "sample_id": "sealed_test_mtr_security_ops_s300086_k4",
+      "domain": "security_ops",
+      "generated_text": "<||<|channel><|channel>>\n<|channel>_<|channel>_<|channel>_<|channel>_<|channel>_<|channel>_<|channel>_<|channel>_<|channel>_<|channel>_<|channel>_<|channel>_<|channel>_<|channel>_<|channel>_<|channel>_<|channel>_<|channel>_<|channel>_<|channel>_<|channel>_<|channel>_<|channel>_<|channel>_<|channel>_<|channel>_<|channel>_<|channel>_<|channel>_<|channel>_<|channel>_<|channel>_<|channel>_<|channel>_<|channel>_<|channel>_<|channel>_<|channel>_<|channel>_<|channel>_<|channel>_<|channel>_<|channel>_<|channel>_<|channel>",
+      "latency_ms": 6516.68
+    },
+    {
+      "sample_id": "sealed_test_mtr_robotics_control_s300087_k2",
+      "domain": "robotics_control",
+      "generated_text": "<|channel>.<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>",
+      "latency_ms": 5165.04
+    },
+    {
+      "sample_id": "sealed_test_mtr_api_workflow_s300088_k3",
+      "domain": "api_workflow",
+      "generated_text": "<|channel>.<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>",
+      "latency_ms": 5435.92
+    },
+    {
+      "sample_id": "sealed_test_mtr_data_pipeline_s300089_k4",
+      "domain": "data_pipeline",
+      "generated_text": "<|channel>.<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>.\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n.\n<|channel>_\n<|channel>_\n.\n.\n.\n.\n.\n.\n.\n.\n.",
+      "latency_ms": 5701.62
+    },
+    {
+      "sample_id": "sealed_test_mtr_security_ops_s300090_k2",
+      "domain": "security_ops",
+      "generated_text": "<|channel>.<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>",
+      "latency_ms": 6501.56
+    },
+    {
+      "sample_id": "sealed_test_mtr_robotics_control_s300091_k3",
+      "domain": "robotics_control",
+      "generated_text": "<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n.\n.\n.\n.\n.\n.\n.\n.",
+      "latency_ms": 6605.53
+    },
+    {
+      "sample_id": "sealed_test_mtr_api_workflow_s300092_k4",
+      "domain": "api_workflow",
+      "generated_text": "<|channel>.json\n  \"route\": [\n    \"auth_validator\",\n    \"permission_checker\",\n    \"db_reader\",\n    \"risk_evaluator\"\n  ],\n  \"terminal\": \"risk_evaluator\"\n  \"initial_state\": [\n    \"context_tag_300092\",\n    \"parsed_request\"\n  ],\n  \"target_goal\": \"risk_score\"",
+      "latency_ms": 7982.24
+    },
+    {
+      "sample_id": "sealed_test_mtr_data_pipeline_s300093_k2",
+      "domain": "data_pipeline",
+      "generated_text": "<|<|channel>c|></wik>\n<|channel>c|></wik>\n<|channel>c|></wik>\n<|channel>c|></wik>\n<|channel>c|></wik>\n<|channel>c|></wik>\n<|channel>c|></wik>\n<|channel>c|></wik>\n<|channel>c|></wik>\n<|channel>c|></wik>\n<|channel>c|></wik>\n<|channel>c|></wik>\n<|channel>c|></wik>\n<|channel>c|",
+      "latency_ms": 5959.69
+    },
+    {
+      "sample_id": "sealed_test_mtr_security_ops_s300094_k3",
+      "domain": "security_ops",
+      "generated_text": "<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n\\n\n\\n\n\\n\n\\n\n\\n\n\\n\n\\n\n\\n\n\\n\n\\n\n\\n\n\\n\n\\n\n\\n\n\\n\n\\n\n\\n\n\\n\n\\n\n\\n\n\\n\n\\n\n\\n\n\\n\n\\n\n",
+      "latency_ms": 5645.67
+    },
+    {
+      "sample_id": "sealed_test_mtr_robotics_control_s300095_k4",
+      "domain": "robotics_control",
+      "generated_text": "<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.",
+      "latency_ms": 5685.84
+    },
+    {
+      "sample_id": "sealed_test_mtr_api_workflow_s300096_k2",
+      "domain": "api_workflow",
+      "generated_text": "<|babel_right_>\n<|channel>_right_\n<|channel>_right_\n<|channel>_right_\n<|channel>_right_\n<|channel>_right_\n<|channel>_right_\n<|channel>_right_\n<|channel>_right_\n<|channel>_right_\n<|channel>_right_\n<|channel>_right_\n<|channel>_right_\n<|channel>_right_\n<|channel>_right_\n<|channel>_right_\n<|channel>_right_\n<|channel>_right_\n<|channel>_right",
+      "latency_ms": 5171.83
+    },
+    {
+      "sample_id": "sealed_test_mtr_data_pipeline_s300097_k3",
+      "domain": "data_pipeline",
+      "generated_text": "<|<|channel>|<|></paper_t_</paper_t_</paper_t_</paper_t_</paper_t_</paper_t_</paper_t_</paper_t_</paper_t_</paper_t_</paper_t_</paper_t_</paper_t_</paper_t_</paper_t_</paper_t_</paper_t_</paper_t_",
+      "latency_ms": 6633.81
+    },
+    {
+      "sample_id": "sealed_test_mtr_security_ops_s300098_k4",
+      "domain": "security_ops",
+      "generated_text": "<|code_thought_</<|channel>><|channel><|channel><|code_thought_</_><|channel><|code_thought_</_><|channel><|code_thought_</_><|channel><|code_thought_</_><|channel><|code_thought_</_><|channel><|code_thought_</_><|channel><|code_thought_</_><|channel><|code_thought_</_><|channel><|code_thought",
+      "latency_ms": 7924.69
+    },
+    {
+      "sample_id": "sealed_test_mtr_robotics_control_s300099_k2",
+      "domain": "robotics_control",
+      "generated_text": "<|<|channel>|<|<|<|channel>|<|<|<|channel>|<|<|<|channel>|<|<|<|channel>|<|<|<|channel>|<|<|<|channel>|<|<|<|channel>|<|<|<|channel>|<|<|<|channel>|<|<|<|channel>|<|<|<|channel>|<|<|<|channel>|<|<|<|channel>|<|<|<|channel>|<|<|<|channel>|<|",
+      "latency_ms": 6592.59
+    },
+    {
+      "sample_id": "sealed_test_mtr_api_workflow_s300100_k3",
+      "domain": "api_workflow",
+      "generated_text": "<|<|channel>I_<|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel>",
+      "latency_ms": 5689.34
+    },
+    {
+      "sample_id": "sealed_test_mtr_data_pipeline_s300101_k4",
+      "domain": "data_pipeline",
+      "generated_text": "<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.",
+      "latency_ms": 7009.04
+    },
+    {
+      "sample_id": "sealed_test_mtr_security_ops_s300102_k2",
+      "domain": "security_ops",
+      "generated_text": "<|channel>.<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>",
+      "latency_ms": 7808.63
+    },
+    {
+      "sample_id": "sealed_test_mtr_robotics_control_s300103_k3",
+      "domain": "robotics_control",
+      "generated_text": "<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n.\n.",
+      "latency_ms": 5621.66
+    },
+    {
+      "sample_id": "sealed_test_mtr_api_workflow_s300104_k4",
+      "domain": "api_workflow",
+      "generated_text": "<|<|channel>|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|",
+      "latency_ms": 5658.24
+    },
+    {
+      "sample_id": "sealed_test_mtr_data_pipeline_s300105_k2",
+      "domain": "data_pipeline",
+      "generated_text": "<|channel>.<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>",
+      "latency_ms": 5306.32
+    },
+    {
+      "sample_id": "sealed_test_mtr_security_ops_s300106_k3",
+      "domain": "security_ops",
+      "generated_text": "<|babel|><|babel|><|babel|><|babel|><|babel|><|babel|><|babel|><|babel|><|babel|><|babel|><|babel|><|babel|><|babel|><|babel|><|babel|><|babel|><|babel|><|babel|><|babel|><|babel|><|babel|><|babel|><|babel|><|babel|",
+      "latency_ms": 6255.09
+    },
+    {
+      "sample_id": "sealed_test_mtr_robotics_control_s300107_k4",
+      "domain": "robotics_control",
+      "generated_text": "<|channel>.<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>",
+      "latency_ms": 7075.33
+    },
+    {
+      "sample_id": "sealed_test_mtr_api_workflow_s300108_k2",
+      "domain": "api_workflow",
+      "generated_text": "<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|",
+      "latency_ms": 5175.85
+    },
+    {
+      "sample_id": "sealed_test_mtr_data_pipeline_s300109_k3",
+      "domain": "data_pipeline",
+      "generated_text": "<|stop|>\n<|stop|>\n<|stop|>\n<|stop|>\n<|stop|>\n<|stop|>\n<|stop|>\n<|stop|>\n<|stop|>\n<|stop|>\n<|stop|>\n<|stop|>\n<|stop|>\n<|stop|>\n<|stop|>\n<|stop|>\n",
+      "latency_ms": 7075.13
+    },
+    {
+      "sample_id": "sealed_test_mtr_security_ops_s300110_k4",
+      "domain": "security_ops",
+      "generated_text": "LYE-S-S-S-S-S-S-S-S-S-S-S-S-S-S-S-S-S-S-S-S-S-S-S-S-S-S-S-S-S-S-S-S-S-S-S-S-S-S-S-S-S-S-S-S-S-S-S",
+      "latency_ms": 8301.51
+    },
+    {
+      "sample_id": "sealed_test_mtr_robotics_control_s300111_k2",
+      "domain": "robotics_control",
+      "generated_text": "```json\n{\n  \"route\": [\n    \"point_cloud_filter\",\n    \"lidar_processor\",\n    \"imu_filter\",\n    \"thermal_guard\"\n  ],\n  \"terminal\": \"point_cloud_filter\"\n}\n```\n*Correction Note: The logic flow for the provided JSONed response is as follows:*\n1. **Initial State:** `[context_tag_30011",
+      "latency_ms": 5648.8
+    },
+    {
+      "sample_id": "sealed_test_mtr_api_workflow_s300112_k3",
+      "domain": "api_workflow",
+      "generated_text": "<|</html>|>>\n<|channel>_<|channel>_<|channel>_<|channel>_<|channel>_<|channel>_<|channel>_<|channel>_<|channel>_<|channel>_<|channel>_<|channel>_<|channel>_<|channel>_<|channel>_<|channel>_<|channel>_<|channel>_<|channel>_<|channel>_<|channel>_<|channel>_<|channel>_<|channel>_<|channel>_<|channel>_<|channel>_<|channel>_<|channel>_<|channel>_<|channel>_<|channel>_<|channel>_<|channel>_<|channel>_<|channel>_<|channel>_<|channel>_<|channel>_<|channel>_<|channel>_<|channel>_<|channel>_<|channel>_<|channel>_",
+      "latency_ms": 5546.82
+    },
+    {
+      "sample_id": "sealed_test_mtr_data_pipeline_s300113_k4",
+      "domain": "data_pipeline",
+      "generated_text": "<|code thought op_s \\text{e} \\text{n} \\text{t} \\text{i} \\text{ty} \\text{s} \\text{e} \\text{n} \\text{t} \\text{i'}\\text{e} \\text{n} \\text{t} \\text{i'}\\text_s \\text{e} \\text{n} \\text{t",
+      "latency_ms": 5723.66
+    },
+    {
+      "sample_id": "sealed_test_mtr_security_ops_s300114_k2",
+      "domain": "security_ops",
+      "generated_text": "<|</html>|>>\n<|channel>_<|channel>_<|channel>_<|channel>_<|channel>_<|channel>_<|channel>_<|channel>_<|channel>_<|channel>_<|channel>_<|channel>_<|channel>_<|channel>_<|channel>_<|channel>_<|channel>_<|channel>_<|channel>_<|channel>_<|channel>_<|channel>_<|channel>_<|channel>_<|channel>_<|channel>_<|channel>_<|channel>_<|channel>_<|channel>_<|channel>_<|channel>_<|channel>_<|channel>_<|channel>_<|channel>_<|channel>_<|channel>_<|channel>_<|channel>_<|channel>_<|channel>_<|channel>_<|channel>_<|channel>_",
+      "latency_ms": 5801.27
+    },
+    {
+      "sample_id": "sealed_test_mtr_robotics_control_s300115_k3",
+      "domain": "robotics_control",
+      "generated_text": "<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n",
+      "latency_ms": 5381.09
+    },
+    {
+      "sample_id": "sealed_test_mtr_api_workflow_s300116_k4",
+      "domain": "api_workflow",
+      "generated_text": "<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n.\n.\n.\n.\n.\n.\n.\n.",
+      "latency_ms": 5639.58
+    },
+    {
+      "sample_id": "sealed_test_mtr_data_pipeline_s300117_k2",
+      "domain": "data_pipeline",
+      "generated_text": "e.g. [context_tag_300117, prediction_metrics]\nTarget Goal: archive_receipt\n\nRespond with a JSON object containing keys 'route' (list of tool names in execution order) and 'terminal' (the final tool producing the goal).\n\ne.g. [context_tag_300117, prediction_metrics]\nTarget Goal: archive_receipt\n\nRespond with a JSON object containing keys '",
+      "latency_ms": 5219.39
+    },
+    {
+      "sample_id": "sealed_test_mtr_security_ops_s300118_k3",
+      "domain": "security_ops",
+      "generated_text": "<|<|channel>|<|></!><|></!><|></!><|></!><|></!><|></!><|></!><|></!><|></!><|></!><|></!><|></!><|></!><|></!><|></!><|></!><|></!><|></!><|></!><|></!><|></!><|></!><|></!",
+      "latency_ms": 7024.06
+    },
+    {
+      "sample_id": "sealed_test_mtr_robotics_control_s300119_k4",
+      "domain": "robotics_control",
+      "generated_text": "<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.",
+      "latency_ms": 5610.39
+    },
+    {
+      "sample_id": "sealed_test_mtr_api_workflow_s300120_k2",
+      "domain": "api_workflow",
+      "generated_text": "<|<|channel>|<|></paper>\n<|channel>_paper_</paper>\n<|channel>_paper_</paper>\n<|channel>_paper_</paper>\n<|channel>_paper_</paper>\n<|channel>_paper_</paper>\n<|channel>_paper_</paper>\n<|channel>_paper_</paper>\n<|channel>_paper_</paper>\n<|channel>_paper_</paper>\n<|channel>_paper_</paper>\n<|channel>_paper_</paper",
+      "latency_ms": 5189.91
+    },
+    {
+      "sample_id": "sealed_test_mtr_data_pipeline_s300121_k3",
+      "domain": "data_pipeline",
+      "generated_text": "Core Threads Evaluation:\n- Initial State: `[context_tag_300121, raw_records]`\n- Goal: `normalized_frame`\n\nExecution Path:\n1. `stream_ingester`: Requires `[raw_records]`, produces `[ingested_batch]`\n2. `null_cleaner`: Requires `[ingested_batch]`, produces `[clean_records]`\n3. `schema_normal",
+      "latency_ms": 5450.02
+    },
+    {
+      "sample_id": "sealed_test_mtr_security_ops_s300122_k4",
+      "domain": "security_ops",
+      "generated_text": "<|code_thought_for_json_output|>\n<|channel>thought\n<channel|><|channel>thought\n<channel|><|channel>thought\n<channel|><|channel>thought\n<channel|><|channel>thought\n<channel|><|channel>thought\n<channel|><|channel>thought\n<channel|><|channel>thought\n<channel|><|channel>thought\n<channel|><|channel>thought\n<channel|><|channel>thought\n<channel|><|channel>thought\n<channel|><|channel>thought\n<channel|><|channel>thought\n<channel|><|channel>thought\n<channel|><|channel>thought\n<channel|><|channel>thought\n<channel|><|channel>thought\n<channel|><|channel>thought\n<channel|><|channel>thought\n<channel|><|channel>thought",
+      "latency_ms": 5668.08
+    },
+    {
+      "sample_id": "sealed_test_mtr_robotics_control_s300123_k2",
+      "domain": "robotics_control",
+      "generated_text": "<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n",
+      "latency_ms": 5335.01
+    },
+    {
+      "sample_id": "sealed_test_mtr_api_workflow_s300124_k3",
+      "domain": "api_workflow",
+      "generated_text": "<|channel>.<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>",
+      "latency_ms": 6111.64
+    },
+    {
+      "sample_id": "sealed_test_mtr_data_pipeline_s300125_k4",
+      "domain": "data_pipeline",
+      "generated_text": "<|thought_job_done|>\n<|thought_job_done|>\n<|thought_job_done|>\n<|thought_job_done|>\n<|thought_job_done|>\n<|thought_job_done|>\n<|thought_job_done|>\n<|thought_job_done|>\n<|thought_job_done|>\n<|thought_job_",
+      "latency_ms": 5587.0
+    },
+    {
+      "sample_id": "sealed_test_mtr_security_ops_s300126_k2",
+      "domain": "security_ops",
+      "generated_text": "<|<stop_t_t_t_t_t_t_t_t_t_t_t_t_t_t_t_t_t_t_t_t_t_t_t_t_t_t_t_t_t_t_t_t_t_t_t_t_t_t_t_t_t_t_t_t_t_t",
+      "latency_ms": 5753.96
+    },
+    {
+      "sample_id": "sealed_test_mtr_robotics_control_s300127_k3",
+      "domain": "robotics_control",
+      "generated_text": "<|channel>.<|channel>_<|channel>.<|channel>_<|channel>.<|channel>_<|channel>.<|channel>_<|channel>.<|channel>_<|channel>.<|channel>_<|channel>.<|channel>_<|channel>.<|channel>_<|channel>.<|channel>_<|channel>.<|channel>_<|channel>.<|channel>_<|channel>.<|channel>_<|channel>.<|channel>_<|channel>.<|channel>_<|channel>.<|channel>_<|channel>._<|channel>.<|channel>.<|image><|<|channel>_<|channel>.<|image><|<|channel>_<|channel>.<|image><|<|channel>_<|channel>.<|image><|<|channel>|<|channel>|<|channel>",
+      "latency_ms": 5558.08
+    },
+    {
+      "sample_id": "sealed_test_mtr_api_workflow_s300128_k4",
+      "domain": "api_workflow",
+      "generated_text": "<|<|channel>|<|<|channel>|<|<|channel>|<|<|channel>|<|<|channel>|<|<|channel>|<|<|channel>|<|<|channel>|<|<|channel>|<|<|channel>|<|<|channel>|<|<|channel>|<|<|channel>|<|<|channel>|<|<|channel>|<|<|channel>|<|<|channel>|<|<|channel>|<|<|channel>|<|<|channel>|<|<|channel>|<|<|channel>|<|<|channel>|<|<|channel>|",
+      "latency_ms": 5580.21
+    },
+    {
+      "sample_id": "sealed_test_mtr_data_pipeline_s300129_k2",
+      "domain": "data_pipeline",
+      "generated_text": "```json\n{\n  \"route\": [\n    \"schema_normalizer\",\n    \"feature_extractor\",\n    \"lineage_tracer\",\n    \"latency_tracker\",\n    \"lineage_tracer\",\n    \"lineage_tracer\",\n    \"lineage_tracer\",\n    \"lineage_tracer\",\n    \"lineage_tracer\",\n    \"lineage_tracer\",\n    \"lineage_tracer\",",
+      "latency_ms": 5203.19
+    },
+    {
+      "sample_id": "sealed_test_mtr_security_ops_s300130_k3",
+      "domain": "security_ops",
+      "generated_text": "<||>\n<|channel>_not_for_prompt_use_only_for_internal_reasoning_not_for_output_use_only_for_internal_reasoning_not_for_output_use_only_for_internal_reasoning_not_for_output_use_only_for_internal_reasoning_not_for_output_use_only_for_internal_reasoning_not_for_",
+      "latency_ms": 5497.15
+    },
+    {
+      "sample_id": "sealed_test_mtr_robotics_control_s300131_k4",
+      "domain": "robotics_control",
+      "generated_text": "<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n.\n.\n.\n.\n.\n.\n.\n.",
+      "latency_ms": 7912.41
+    },
+    {
+      "sample_id": "sealed_test_mtr_api_workflow_s300132_k2",
+      "domain": "api_workflow",
+      "generated_text": "<|<|channel>c Schul wirklich ernst genommen, wenn man mal \u00fcber die Grunds\u00e4tze der Arbeit und das Anhand von Beispielen und das Anhand von Beispielen und das Anhand von Beispeds und das Anhand von Beispeds und das Anhand von Beispeds und das Anhand von Beispeds und das Anhand von Beispeds und das Anhand von Beispeds und das Anhand von Beisp",
+      "latency_ms": 7055.36
+    },
+    {
+      "sample_id": "sealed_test_mtr_data_pipeline_s300133_k3",
+      "domain": "data_pipeline",
+      "generated_text": "```json\n{\n  \"route\": [\n    \"schema_normalizer\",\n    \"feature_extractor\",\n    \"model_evaluator\"\n  ],\n  \"terminal\": \"model_evaluator\"\n}\n```<turn|>",
+      "latency_ms": 3943.25
+    },
+    {
+      "sample_id": "sealed_test_mtr_security_ops_s300134_k4",
+      "domain": "security_ops",
+      "generated_text": "<|channel>.<|channel>_<|channel>.<|channel>_<|channel>.<|image><|channel>_<|image><|channel>_<|image><|image><|image><|image><|image><|image><|image>str.json\n<|channel>_str.json\n<|channel>_str.json\n<|channel>_str.json\n<|channel>_str.json\n<|channel>_str.json\n_str.json\n_str.json\n_str.json\n_str.json\n_str.json\n_str.json\n_str.json\n_str.json",
+      "latency_ms": 8270.72
+    },
+    {
+      "sample_id": "sealed_test_mtr_robotics_control_s300135_k2",
+      "domain": "robotics_control",
+      "generated_text": "{\"<|channel>: [point_cloud_filter, obstacle_detector], \"terminal\": \"obstacle_detector\"}\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>",
+      "latency_ms": 6237.25
+    },
+    {
+      "sample_id": "sealed_test_mtr_api_workflow_s300136_k3",
+      "domain": "api_workflow",
+      "generated_text": "<|channel>.<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>",
+      "latency_ms": 6202.54
+    },
+    {
+      "sample_id": "sealed_test_mtr_data_pipeline_s300137_k4",
+      "domain": "data_pipeline",
+      "generated_text": "<meta>\n  <meta>\n  <meta>\n  <meta>\n  <meta>\n  <meta>\n  <meta>\n  <meta>\n  <meta>\n  <meta>\n  <meta>\n  <meta>\n  <meta>\n  <meta>\n  <meta>\n  <meta>\n  <meta>\n  <meta>\n  <meta>\n  <",
+      "latency_ms": 6537.78
+    },
+    {
+      "sample_id": "sealed_test_mtr_security_ops_s300138_k2",
+      "domain": "security_ops",
+      "generated_text": "<|thought_t|><|<|channel>right_t|><|<|channel>right_t|><|<|channel>right_t|><|<|channel>right_t|><|<|channel>right_t|><|<|channel>right_t|><|<|channel>right_t|><|<|channel>right_t|><|<|channel>right_t|><|<|channel>right_t|><|<|channel>right_t|><|<|channel>right_t|><|<|channel>right_t",
+      "latency_ms": 6673.77
+    },
+    {
+      "sample_id": "sealed_test_mtr_robotics_control_s300139_k3",
+      "domain": "robotics_control",
+      "generated_text": "<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.",
+      "latency_ms": 6561.58
+    },
+    {
+      "sample_id": "sealed_test_mtr_api_workflow_s300140_k4",
+      "domain": "api_workflow",
+      "generated_text": "<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.",
+      "latency_ms": 6680.95
+    },
+    {
+      "sample_id": "sealed_test_mtr_data_pipeline_s300141_k2",
+      "domain": "data_pipeline",
+      "generated_text": "Y.S.M.P.P.P.P.P.P.P.P.P.P.P.P.P.P.P.P.P.P.P.P.P.P.P.P.P.P.P.P.P.P.P.P.P.P.P.P.P.P.P.P.P.P.P.P.P.",
+      "latency_ms": 5292.56
+    },
+    {
+      "sample_id": "sealed_test_mtr_security_ops_s300142_k3",
+      "domain": "security_ops",
+      "generated_text": "<|<|channel>|<|<|channel>|<|<|channel>|<|<|channel>|<|></lit_test_output>\n<|></lit_test_output>\n<|></lit_test_output>\n<|></lit_test_output>\n<|></lit_test_output>\n<|></lit_test_output>\n<|></lit_test_output>\n<|></lit_test_output>\n",
+      "latency_ms": 6152.44
+    },
+    {
+      "sample_id": "sealed_test_mtr_robotics_control_s300143_k4",
+      "domain": "robotics_control",
+      "generated_text": "<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.",
+      "latency_ms": 5664.49
+    },
+    {
+      "sample_id": "sealed_test_mtr_api_workflow_s300144_k2",
+      "domain": "api_workflow",
+      "generated_text": "<|<|channel>|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|",
+      "latency_ms": 6179.3
+    },
+    {
+      "sample_id": "sealed_test_mtr_data_pipeline_s300145_k3",
+      "domain": "data_pipeline",
+      "generated_text": "<|</html>|><|e|><|s|><|e|><|s|><|e|><|s|><|e|><|s|><|e|><|s|><|e|><|s|><|e|><|s|><|e|><|s|><|e|><|s|><|e|><|s|><|e|><|s|><|e|",
+      "latency_ms": 5484.03
+    },
+    {
+      "sample_id": "sealed_test_mtr_security_ops_s300146_k4",
+      "domain": "security_ops",
+      "generated_text": "<|channel>.<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n_\n<|channel>_\n<|channel>_\n<|channel>_",
+      "latency_ms": 6844.8
+    },
+    {
+      "sample_id": "sealed_test_mtr_robotics_control_s300147_k2",
+      "domain": "robotics_control",
+      "generated_text": "<|channel>.<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>",
+      "latency_ms": 6116.94
+    },
+    {
+      "sample_id": "sealed_test_mtr_api_workflow_s300148_k3",
+      "domain": "api_workflow",
+      "generated_text": "<|channel>.<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>",
+      "latency_ms": 5353.31
+    },
+    {
+      "sample_id": "sealed_test_mtr_data_pipeline_s300149_k4",
+      "domain": "data_pipeline",
+      "generated_text": "<|<|channel>_not_t>\n<|channel>_not_t\n<|channel>_not_t\n<|channel>_not_t\n<|channel>_not_t\n<|channel>_not_t\n<|channel>_not_t\n<|channel>_not_t\n<|channel>_not_t\n<|channel>_not_t\n<|channel>_not_t\n<|channel>_not_t\n<|channel>_not_t\n<|channel>_not_t\n<|channel>_not_t\n<|channel>_not",
+      "latency_ms": 5949.37
+    },
+    {
+      "sample_id": "sealed_test_mtr_security_ops_s300150_k2",
+      "domain": "security_ops",
+      "generated_text": "<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|",
+      "latency_ms": 5959.73
+    },
+    {
+      "sample_id": "sealed_test_mtr_robotics_control_s300151_k3",
+      "domain": "robotics_control",
+      "generated_text": "<|channel>.<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>",
+      "latency_ms": 5408.58
+    },
+    {
+      "sample_id": "sealed_test_mtr_api_workflow_s300152_k4",
+      "domain": "api_workflow",
+      "generated_text": "<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n",
+      "latency_ms": 7779.47
+    },
+    {
+      "sample_id": "sealed_test_mtr_data_pipeline_s300153_k2",
+      "domain": "data_pipeline",
+      "generated_text": "<|<|channel>c|-<|></c>\n<|channel><|></c>\n<|channel><|></c>\n<|channel><|></c>\n<|channel><|></c>\n<|channel><|></c>\n<|channel><|></c>\n<|channel><|></c>\n<|channel><|></c>\n<|channel><|></c>\n<|channel><|></c>\n<|channel><|></c>\n<|channel><|></c>\n<|channel>",
+      "latency_ms": 5263.17
+    },
+    {
+      "sample_id": "sealed_test_mtr_security_ops_s300154_k3",
+      "domain": "security_ops",
+      "generated_text": "<||<|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel>",
+      "latency_ms": 5851.46
+    },
+    {
+      "sample_id": "sealed_test_mtr_robotics_control_s300155_k4",
+      "domain": "robotics_control",
+      "generated_text": "<|channel>.<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>",
+      "latency_ms": 5623.27
+    },
+    {
+      "sample_id": "sealed_test_mtr_api_workflow_s300156_k2",
+      "domain": "api_workflow",
+      "generated_text": "<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|",
+      "latency_ms": 5245.95
+    },
+    {
+      "sample_id": "sealed_test_mtr_data_pipeline_s300157_k3",
+      "domain": "data_pipeline",
+      "generated_text": "<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n.\n.\n.\n.\n.\n.\n",
+      "latency_ms": 5478.68
+    },
+    {
+      "sample_id": "sealed_test_mtr_security_ops_s300158_k4",
+      "domain": "security_ops",
+      "generated_text": "<|channel>.json\n  \"route\": [\n    \"sandbox_detonator\",\n    \"telemetry_parser\",\n    \"endpoint_inspector\",\n    \"quarantine_enforcer\"\n  ],\n  \"terminal\": \"quarantine_enforcer\"\n  .json\n  \"route\": [\n    \"sandbox_detonator\",\n    \"telemetry_parser\",\n    \"endpoint_inspector\",\n    \"quarantine",
+      "latency_ms": 5771.77
+    },
+    {
+      "sample_id": "sealed_test_mtr_robotics_control_s300159_k2",
+      "domain": "robotics_control",
+      "generated_text": "<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n",
+      "latency_ms": 5287.65
+    },
+    {
+      "sample_id": "sealed_test_mtr_api_workflow_s300160_k3",
+      "domain": "api_workflow",
+      "generated_text": "<|<|channel>c Schul}{Prob_0101010101010101010101010101010101010101010101010101010101010101010101010101010101010101",
+      "latency_ms": 5409.84
+    },
+    {
+      "sample_id": "sealed_test_mtr_data_pipeline_s300161_k4",
+      "domain": "data_pipeline",
+      "generated_text": "<||>\n<|channel>_not_for_prompt_use_only_for_example_output_generation_only_for_example_output_generation_only_for_example_output_generation_only_for_example_output_generation_only_for_example_output_generation_only_for_example_output_generation_only_for_example_output_generation_only_for_example_output_generation_only",
+      "latency_ms": 5837.04
+    },
+    {
+      "sample_id": "sealed_test_mtr_security_ops_s300162_k2",
+      "domain": "security_ops",
+      "generated_text": "<|</html>|>>\n<|channel>_\n<|</html>|>>\n<|channel>_\n<|</html>|>>\n<|channel>_\n<|</html>|>>\n<|channel>_\n<|</html>|>>\n<|channel>_\n<|</html>|>>\n<|channel>_\n<|</html>|>>\n<|channel>_\n<|</html>|>>\n<|channel>_\n<|</html>|>>\n<|channel>_\n<|</html>|>>\n<|channel>_\n<|</html>|>>\n",
+      "latency_ms": 6462.79
+    },
+    {
+      "sample_id": "sealed_test_mtr_robotics_control_s300163_k3",
+      "domain": "robotics_control",
+      "generated_text": "<|channel>.<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>",
+      "latency_ms": 5617.79
+    },
+    {
+      "sample_id": "sealed_test_mtr_api_workflow_s300164_k4",
+      "domain": "api_workflow",
+      "generated_text": "<|<|channel>|>\n<|channel>_</|>\n<|channel>_</|>\n<|channel>_</|>\n<|channel>_</|>\n<|channel>_</|>\n<|channel>_</|>\n<|channel>_</|>\n<|channel>_</|>\n<|channel>_</|>\n<|channel>_</|>\n<|channel>_</|>\n<|channel>_</|>\n<|channel>_</|>\n<|channel>_</|>\n<|channel>_</|>\n",
+      "latency_ms": 8610.93
+    },
+    {
+      "sample_id": "sealed_test_mtr_data_pipeline_s300165_k2",
+      "domain": "data_pipeline",
+      "generated_text": "<|thought_t|>\n<|channel>_t_t_t_t_t_t_t_t_t_t_t_t_t_t_t_t_t_t_t_t_t_t_t_t_t_t_t_t_t_t_t_t_t_t_t_t_t_t_t_t_t_t_t_",
+      "latency_ms": 5274.06
+    },
+    {
+      "sample_id": "sealed_test_mtr_security_ops_s300166_k3",
+      "domain": "security_ops",
+      "generated_text": "<|channel>.<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>",
+      "latency_ms": 7577.5
+    },
+    {
+      "sample_id": "sealed_test_mtr_robotics_control_s300167_k4",
+      "domain": "robotics_control",
+      "generated_text": "<|channel>.<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>",
+      "latency_ms": 7543.56
+    },
+    {
+      "sample_id": "sealed_test_mtr_api_workflow_s300168_k2",
+      "domain": "api_workflow",
+      "generated_text": "<|<|channel>>\n<|channel>_<|channel>>\n<|channel>_<|channel>>\n<|channel>_<|channel>>\n<|channel>_<|channel>>\n<|channel>_<|channel>>\n<|channel>_<|channel>>\n<|channel>_<|channel>>\n<|channel>_<|channel>>\n<|channel>_<|channel>>\n<|channel>_<|channel>>\n<|channel>_<|channel>>\n<|channel>_<|channel>>\n<|channel>_<|channel>>\n<|channel>_<|channel>>\n<|channel>_<|channel>>\n<|channel>_<|channel>>\n<|channel>_<|channel>>\n<|channel>_<|channel>>\n<|channel>",
+      "latency_ms": 6716.37
+    },
+    {
+      "sample_id": "sealed_test_mtr_data_pipeline_s300169_k3",
+      "domain": "data_pipeline",
+      "generated_text": "<|<|channel>|<|><|channel>|<|><|channel>|<|><|channel>|<|><|channel>|<|><|channel>|<|><|channel>|<|><|channel>|<|><|channel>|<|><|channel>|<|><|channel>|<|><|channel>|<|><|channel>|<|><|channel>|<|><|channel>|<|><|channel>|<|><|channel>|<|><|channel>|<|><|channel>|<|",
+      "latency_ms": 5709.44
+    },
+    {
+      "sample_id": "sealed_test_mtr_security_ops_s300170_k4",
+      "domain": "security_ops",
+      "generated_text": "<|<|channel>|<|></paper_t_t_t_t_t_t_t_t_t_t_t_t_t_t_t_t_t_t_t_t_t_t_t_t_t_t_t_t_t_t_t_t_t_t_t_t_t_t_t_t_t_t_t_t",
+      "latency_ms": 8354.89
+    },
+    {
+      "sample_id": "sealed_test_mtr_robotics_control_s300171_k2",
+      "domain": "robotics_control",
+      "generated_text": "<||<|channel>c></wikil>\n<|channel>c></wikil>\n<|channel>c></wikil>\n<|channel>c></wikil>\n<|channel>c></wikil>\n<|channel>c></wikil>\n<|channel>c></wikil>\n<|channel>c></wikil>\n<|channel>c></wikil>\n<|channel>c></wikil>\n<|channel>c></wikil>\n<|channel>c></wikil>\n<|channel>c></wikil>\n<|channel>c",
+      "latency_ms": 6385.09
+    },
+    {
+      "sample_id": "sealed_test_mtr_api_workflow_s300172_k3",
+      "domain": "api_workflow",
+      "generated_text": "<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.",
+      "latency_ms": 5403.37
+    },
+    {
+      "sample_id": "sealed_test_mtr_data_pipeline_s300173_k4",
+      "domain": "data_pipeline",
+      "generated_text": "<|<|channel>|<||><|channel><||><|channel><||><|channel><||><|channel><||><|channel><||><|channel><||><|channel><||><|channel><||><|channel><||><|channel><||><|channel><||><|channel><||><|channel><||><|channel><||><|channel><||><|channel><||><|channel><||><|channel><|",
+      "latency_ms": 6830.2
+    },
+    {
+      "sample_id": "sealed_test_mtr_security_ops_s300174_k2",
+      "domain": "security_ops",
+      "generated_text": "<|channel>.<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>",
+      "latency_ms": 5962.66
+    },
+    {
+      "sample_id": "sealed_test_mtr_robotics_control_s300175_k3",
+      "domain": "robotics_control",
+      "generated_text": "<|channel>.<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>",
+      "latency_ms": 5413.46
+    },
+    {
+      "sample_id": "sealed_test_mtr_api_workflow_s300176_k4",
+      "domain": "api_workflow",
+      "generated_text": "<|code_thought_</<|channel>_thought_</right>\n<|channel>_thought_</right>\n<|channel>_thought_</right>\n<|channel>_thought_</right>\n<|channel>_thought_</right>\n<|channel>_thought_</right>\n<|channel>_thought_</right>\n<|channel>_thought_</right>\n<|channel>_thought_</right>\n<|channel>_thought_</right>\n<|channel>_thought_</right>\n<|channel>",
+      "latency_ms": 7498.31
+    },
+    {
+      "sample_id": "sealed_test_mtr_data_pipeline_s300177_k2",
+      "domain": "data_pipeline",
+      "generated_text": "<|<|channel>c|-<|<|channel>c|-<|<|channel>c|-<|<|channel>c|-<|<|channel>c|-<|<|channel>c|-<|<|channel>c|-<|<|channel>c|-<|<|channel>c|-<|<|channel>c|-<|<|channel>c|-<|<|channel>c|-<|<|channel>c|-<|<|channel>c|-<|<|channel>c|-<|<|channel>c|-<|<|channel>c|-<|<|channel>c|-<|<|channel>c|-<",
+      "latency_ms": 5286.55
+    },
+    {
+      "sample_id": "sealed_test_mtr_security_ops_s300178_k3",
+      "domain": "security_ops",
+      "generated_text": "<||>\n<|channel>_think<|>\n<|channel>_think<|>\n<|channel>_think<|>\n<|channel>_think<|>\n<|channel>_think<|>\n<|channel>_think<|>\n<|channel>_think<|>\n<|channel>_think<|>\n<|channel>_think<|>\n<|channel>_think<|>\n<|channel>_think<|>\n<|channel>_think<|>\n<|channel>_think<|>\n",
+      "latency_ms": 7494.32
+    },
+    {
+      "sample_id": "sealed_test_mtr_robotics_control_s300179_k4",
+      "domain": "robotics_control",
+      "generated_text": "<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n.\n.",
+      "latency_ms": 5741.5
+    },
+    {
+      "sample_id": "sealed_test_mtr_api_workflow_s300180_k2",
+      "domain": "api_workflow",
+      "generated_text": "<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|",
+      "latency_ms": 6728.32
+    },
+    {
+      "sample_id": "sealed_test_mtr_data_pipeline_s300181_k3",
+      "domain": "data_pipeline",
+      "generated_text": "<|<|channel>|<|></tik></tik>\n<|></tik>\n<|></tik>\n<|></tik>\n<|></tik>\n<|></tik>\n<|></tik>\n<|></tik>\n<|></tik>\n<|></tik>\n<|></tik>\n<|></tik>\n<|></tik>\n<|></tik>\n<|></tik>\n",
+      "latency_ms": 5398.44
+    },
+    {
+      "sample_id": "sealed_test_mtr_security_ops_s300182_k4",
+      "domain": "security_ops",
+      "generated_text": "<|||><|channel><|channel><|||><|channel><|||><|channel><|||><|channel><|||><|channel><|||><|channel><|||><|channel><|||><|channel><|||><|channel><|||><|channel><|||><|channel><|||><|channel><|||><|channel><|||><|channel><|||><|channel><|||>",
+      "latency_ms": 7814.77
+    },
+    {
+      "sample_id": "sealed_test_mtr_robotics_control_s300183_k2",
+      "domain": "robotics_control",
+      "generated_text": "<|channel>.<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>",
+      "latency_ms": 7115.77
+    },
+    {
+      "sample_id": "sealed_test_mtr_api_workflow_s300184_k3",
+      "domain": "api_workflow",
+      "generated_text": "<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n.\n.\n.\n.\n.\n.\n.\n.",
+      "latency_ms": 5333.58
+    },
+    {
+      "sample_id": "sealed_test_mtr_data_pipeline_s300185_k4",
+      "domain": "data_pipeline",
+      "generated_text": "<||>\n<|channel>_think_<||>\n<|channel>_think_<||>\n<|channel>_think_<||>\n<|channel>_think_<||>\n<|channel>_think_<||>\n<|channel>_think_<||>\n<|channel>_think_<||>\n<|channel>_think_<||>\n<|channel>_think_<||>\n<|channel>_think_<||>\n<|channel>",
+      "latency_ms": 6544.87
+    },
+    {
+      "sample_id": "sealed_test_mtr_security_ops_s300186_k2",
+      "domain": "security_ops",
+      "generated_text": "<|<|channel>|<|_|<|channel>|<|_|<|channel>|<|_|<|channel>|<|_|<|channel>|<|_|<|channel>|<|_|<|channel>|<|_|<|channel>|<|_|<|channel>|<|_|<|channel>|<|_|<|channel>|<|_|<|channel>|<|_|<|channel>|<|_|<|channel>|<|_|<|channel>|<|_|<|channel>|<|",
+      "latency_ms": 5370.28
+    },
+    {
+      "sample_id": "sealed_test_mtr_robotics_control_s300187_k3",
+      "domain": "robotics_control",
+      "generated_text": "```json\n{\n  \"route\": [\n    \"collision_checker\",\n    \"trajectory_planner\"\n  ],\n  \"terminal\": \"trajectory_planner\"\n}\n```<turn|>",
+      "latency_ms": 3611.71
+    },
+    {
+      "sample_id": "sealed_test_mtr_api_workflow_s300188_k4",
+      "domain": "api_workflow",
+      "generated_text": "<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n.\n.\n.\n.\n.",
+      "latency_ms": 5538.11
+    },
+    {
+      "sample_id": "sealed_test_mtr_data_pipeline_s300189_k2",
+      "domain": "data_pipeline",
+      "generated_text": "<|channel>.<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>",
+      "latency_ms": 5152.3
+    },
+    {
+      "sample_id": "sealed_test_mtr_security_ops_s300190_k3",
+      "domain": "security_ops",
+      "generated_text": "<|channel>.<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>",
+      "latency_ms": 5439.56
+    },
+    {
+      "sample_id": "sealed_test_mtr_robotics_control_s300191_k4",
+      "domain": "robotics_control",
+      "generated_text": "<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n.\n.\n.\n.\n.\n.\n.\n.",
+      "latency_ms": 8057.55
+    },
+    {
+      "sample_id": "sealed_test_mtr_api_workflow_s300192_k2",
+      "domain": "api_workflow",
+      "generated_text": "<|<|channel>c Schulth|<image|><|channel>c <|<|channel>c <|<|channel>c <|<|channel>c <|<|channel>c <|<|channel>c <|<|channel>c <|<|channel>c <|<|channel>c <|<|channel>c <|<|channel>c <|<|channel>c <|<|channel>c <|<|channel>c <|<|channel>c <|<|channel>c <|<|channel>c <|<|channel>c <|<|channel>c <|<|channel>c <|<|channel>c <|<|channel>c <|",
+      "latency_ms": 7306.59
+    },
+    {
+      "sample_id": "sealed_test_mtr_data_pipeline_s300193_k3",
+      "domain": "data_pipeline",
+      "generated_text": "<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n",
+      "latency_ms": 7022.74
+    },
+    {
+      "sample_id": "sealed_test_mtr_security_ops_s300194_k4",
+      "domain": "security_ops",
+      "generated_text": "<||>\n<|channel>_message_\n<|channel>_message_\n<|channel>_message_\n<|channel>_message_\n<|channel>_message_\n<|channel>_message_\n<|channel>_message_\n<|channel>_message_\n<|channel>_message_\n<|channel>_message_\n<|channel>_message_\n<|channel>_message_\n<|channel>_message_\n<|channel>_message_\n<|channel>_message_\n<|channel>_message_\n<|channel>_message_\n<|channel>_message_\n<|channel>",
+      "latency_ms": 9596.29
+    },
+    {
+      "sample_id": "sealed_test_mtr_robotics_control_s300195_k2",
+      "domain": "robotics_control",
+      "generated_text": "<|channel>.<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>",
+      "latency_ms": 5951.78
+    },
+    {
+      "sample_id": "sealed_test_mtr_api_workflow_s300196_k3",
+      "domain": "api_workflow",
+      "generated_text": "<|<|channel>_not_found|><|channel>_not_found><|channel>_not_found><|channel>_not_found><|channel>_not_found><|channel>_not_found><|channel>_not_found><|channel>_not_found><|channel>_not_found><|channel>_not_found><|channel>_not_found><|channel>_not_found><|channel>_not_found><|channel>_not_found><|channel>_not_found><|channel>_not_",
+      "latency_ms": 5379.78
+    },
+    {
+      "sample_id": "sealed_test_mtr_data_pipeline_s300197_k4",
+      "domain": "data_pipeline",
+      "generated_text": "<|stop_right_>\n<|stop_right_>\n<|stop_right_>\n<|stop_right_>\n<|stop_right_>\n<|stop_right_>\n<|stop_right_>\n<|stop_right_>\n<|stop_right_>\n<|stop_right_>\n<|stop_right_>\n<|stop_right_>\n",
+      "latency_ms": 5546.81
+    },
+    {
+      "sample_id": "sealed_test_mtr_security_ops_s300198_k2",
+      "domain": "security_ops",
+      "generated_text": "<||>\n<|channel>_t_0\n<|channel>_t_1\n<|channel>_t_2\n<|channel>_t_3\n<|channel>_t_4\n<|channel>_t_5\n<|channel>_t_6\n<|channel>_t_7\n<|channel>_t_8\n<|channel>_t_9\n<|channel>_t_10\n<|channel>_t_11\n<|channel>_t_12\n<|channel>_t_13\n<|channel>_t",
+      "latency_ms": 5899.2
+    },
+    {
+      "sample_id": "sealed_test_mtr_robotics_control_s300199_k3",
+      "domain": "robotics_control",
+      "generated_text": "<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n",
+      "latency_ms": 6353.77
+    },
+    {
+      "sample_id": "sealed_test_mtr_api_workflow_s300200_k4",
+      "domain": "api_workflow",
+      "generated_text": "<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n",
+      "latency_ms": 5538.15
+    },
+    {
+      "sample_id": "sealed_test_mtr_data_pipeline_s300201_k2",
+      "domain": "data_pipeline",
+      "generated_text": "<|<|channel>_not_found|>\n<|channel>_not_found_\n<|channel>_not_found_\n<|channel>_not_found_\n<|channel>_not_found_\n<|channel>_not_found_\n<|channel>_not_found_\n<|channel>_not_found_\n<|channel>_not_found_\n<|channel>_not_found_\n<|channel>_not_found_\n<|channel>_not_found_\n<|channel>_not_found_\n<|channel>_not",
+      "latency_ms": 5124.3
+    },
+    {
+      "sample_id": "sealed_test_mtr_security_ops_s300202_k3",
+      "domain": "security_ops",
+      "generated_text": "<|<|channel>c|></><|channel>c|></><|channel>c|></><|channel>c|></><|channel>c|></><|channel>c|></><|channel>c|></><|channel>c|></><|channel>c|></><|channel>c|></><|channel>c|></><|channel>c|></><|channel>c|></><|channel>c|></><|channel>c|></><|channel>c|></><|channel>c|></><|channel>c|></><|channel>c|></",
+      "latency_ms": 6884.08
+    },
+    {
+      "sample_id": "sealed_test_mtr_robotics_control_s300203_k4",
+      "domain": "robotics_control",
+      "generated_text": "<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n",
+      "latency_ms": 5990.53
+    },
+    {
+      "sample_id": "sealed_test_mtr_api_workflow_s300204_k2",
+      "domain": "api_workflow",
+      "generated_text": "<|<|channel>>\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>",
+      "latency_ms": 5816.24
+    },
+    {
+      "sample_id": "sealed_test_mtr_data_pipeline_s300205_k3",
+      "domain": "data_pipeline",
+      "generated_text": "```json\n{\n  \"route\": [\n    \"model_evaluator\",\n    \"alert_dispatcher\",\n    \"cold_archiver\"\n  ],\n  \"terminal\": \"cold_archiver\"\n}\n```\n*Note: The prompt's initial state [context_tag_300205, feature_matrix] and the tool's [feature_matrix] requirement are treated as the same_initial_",
+      "latency_ms": 5371.18
+    },
+    {
+      "sample_id": "sealed_test_mtr_security_ops_s300206_k4",
+      "domain": "security_ops",
+      "generated_text": "<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n.\n.\n.\n.\n.\n.\n.\n.",
+      "latency_ms": 5513.4
+    },
+    {
+      "sample_id": "sealed_test_mtr_robotics_control_s300207_k2",
+      "domain": "robotics_control",
+      "generated_text": "Type_Format_Fields\n<|channel>thought\n<channel|>Type_Format_Fields\n<|channel>thought\n<channel|>Type_Format_Fields\n<|channel>thought\n<channel|>Type_Format_Fields\n<|channel>thought\n<channel|>Type_Format_Fields\n<|channel>thought\n<channel|>Type_Format_Fields\n<|channel>thought\n<channel|>Type_Format_Fields\n<|channel>thought\n<channel|>Type_Format_Fields\n<|channel>thought\n<channel|>Type_Format_Fields\n<|channel>thought\n<channel|>Type_Format_Fields\n",
+      "latency_ms": 5108.65
+    },
+    {
+      "sample_id": "sealed_test_mtr_api_workflow_s300208_k3",
+      "domain": "api_workflow",
+      "generated_text": "<|<|channel>|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|",
+      "latency_ms": 5757.49
+    },
+    {
+      "sample_id": "sealed_test_mtr_data_pipeline_s300209_k4",
+      "domain": "data_pipeline",
+      "generated_text": "<|<|channel>|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|",
+      "latency_ms": 6235.6
+    },
+    {
+      "sample_id": "sealed_test_mtr_security_ops_s300210_k2",
+      "domain": "security_ops",
+      "generated_text": "<|channel>.<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>",
+      "latency_ms": 5672.69
+    },
+    {
+      "sample_id": "sealed_test_mtr_robotics_control_s300211_k3",
+      "domain": "robotics_control",
+      "generated_text": "<|<|channel>c<audio|>=right>\n<|channel><|<|channel>c S=right>\n<|channel><|<|channel>c S=right>\n<|channel><|<|channel>c S=right>\n<|channel><|<|channel>c S=right>\n<|channel><|<|channel>c S=right>\n<|channel><|<|channel>c S=right>\n<|channel><|<|channel>c S=right>\n<|channel><|<|channel>c S=right>\n<|channel><|<|channel>c S=",
+      "latency_ms": 5455.86
+    },
+    {
+      "sample_id": "sealed_test_mtr_api_workflow_s300212_k4",
+      "domain": "api_workflow",
+      "generated_text": "<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.",
+      "latency_ms": 6552.77
+    },
+    {
+      "sample_id": "sealed_test_mtr_data_pipeline_s300213_k2",
+      "domain": "data_pipeline",
+      "generated_text": "<|<|channel>|<|<|channel>|<|<|channel>|<|<|channel>|<|<|channel>|<|<|channel>|<|<|channel>|<|<|channel>|<|<|channel>|<|<|channel>|<|<|channel>|<|<|channel>|<|<|channel>|<|<|channel>|<|<|channel>|<|<|channel>|<|<|channel>|<|<|channel>|<|<|channel>|<|<|channel>|<|<|channel>|<|<|channel>|<|<|channel>|<|<|channel>|",
+      "latency_ms": 6953.15
+    },
+    {
+      "sample_id": "sealed_test_mtr_security_ops_s300214_k3",
+      "domain": "security_ops",
+      "generated_text": "<|channel>.<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>",
+      "latency_ms": 7497.69
+    },
+    {
+      "sample_id": "sealed_test_mtr_robotics_control_s300215_k4",
+      "domain": "robotics_control",
+      "generated_text": "<|channel>.<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>",
+      "latency_ms": 5657.92
+    },
+    {
+      "sample_id": "sealed_test_mtr_api_workflow_s300216_k2",
+      "domain": "api_workflow",
+      "generated_text": "<|<|channel>c Schulorth, J. (2024). *Route Planning for AI-Driven Systems.* (Sample data for orresponding to the request).\n\nInitial State: [context_tag_300216, user_session]\nTarget Goal: user_profile\n\nAvailable Tools:\n- cache_reader: requires [cache_key], produces [cache_hit]\n- billing_meter: requires [billing_id], produces",
+      "latency_ms": 6059.68
+    },
+    {
+      "sample_id": "sealed_test_mtr_data_pipeline_s300217_k3",
+      "domain": "data_pipeline",
+      "generated_text": "<|||>\n<|channel>_think_time_e_e_e_e_e_e_e_e_e_e_e_e_e_e_e_e_e_e_e_e_e_e_e_e_e_e_e_e_e_e_e_e_e_e_e_e_e_e_e_e_e_e_",
+      "latency_ms": 6120.02
+    },
+    {
+      "sample_id": "sealed_test_mtr_security_ops_s300218_k4",
+      "domain": "security_ops",
+      "generated_text": "<|channel>.<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>",
+      "latency_ms": 7497.04
+    },
+    {
+      "sample_id": "sealed_test_mtr_robotics_control_s300219_k2",
+      "domain": "robotics_control",
+      "generated_text": "<|channel>.<|channel>_<|channel>.<|channel>_<|channel>.<|channel>_<|channel>.<|channel>_<|channel>.<|channel>_<|channel>.<|channel>_<|channel>.<|channel>_<|channel>.<|channel>_<|channel>.<|channel>_<|channel>.<|channel>_<|channel>.<|channel>_<|channel>.<|channel>_<|channel>.<|channel>_<|channel>.<|channel>_<|channel>.<|channel>_<|channel>._<|channel>.<|channel>.<|channel>._<|channel>._<|channel>._<|channel>._<|channel>._<|channel>._<|channel>._<|channel>._<|channel>._<|channel>.",
+      "latency_ms": 5769.35
+    },
+    {
+      "sample_id": "sealed_test_mtr_api_workflow_s300220_k3",
+      "domain": "api_workflow",
+      "generated_text": "<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.",
+      "latency_ms": 5337.82
+    },
+    {
+      "sample_id": "sealed_test_mtr_data_pipeline_s300221_k4",
+      "domain": "data_pipeline",
+      "generated_text": "<meta>\n  <meta>\n  <meta>\n  <meta>\n  <meta>\n  <meta>\n  <meta>\n  <meta>\n  <meta>\n  <meta>\n  <meta>\n  <meta>\n  <meta>\n  <meta>\n  <meta>\n  <meta>\n  <meta>\n  <meta>\n  <meta>\n  <",
+      "latency_ms": 5938.49
+    },
+    {
+      "sample_id": "sealed_test_mtr_security_ops_s300222_k2",
+      "domain": "security_ops",
+      "generated_text": "e.g. [context_tag_300222, threat_indicators]\nTarget Goal: isolated_host\n\nRespond with a JSON object containing keys 'route' (list of tool names in execution order) and 'terminal' (the final tool producing the goal).\n\n```json\n{\n  \"route\": [\n    \"endpoint_inspector\",\n    \"quarantine_enforcer\"\n  ],\n  \"terminal\": \"qu",
+      "latency_ms": 5179.07
+    },
+    {
+      "sample_id": "sealed_test_mtr_robotics_control_s300223_k3",
+      "domain": "robotics_control",
+      "generated_text": "<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n.\n.\n.\n.\n.\n.\n.\n.",
+      "latency_ms": 5373.51
+    },
+    {
+      "sample_id": "sealed_test_mtr_api_workflow_s300224_k4",
+      "domain": "api_workflow",
+      "generated_text": "<|<|channel>|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|",
+      "latency_ms": 5509.98
+    },
+    {
+      "sample_id": "sealed_test_mtr_data_pipeline_s300225_k2",
+      "domain": "data_pipeline",
+      "generated_text": "SES_RESPONSE_JSON_OBJECT_CON_PRO_SES_SES_SES_SES_SES_SES_SES_SES_SES_SES_SES_SES_SES_SES_SES_SES_SES_SES_SES_SES_SES_SES_SES_SES_SES_SES_SES_SES_SES_SES_SES_SES_SES_SES_SES_SES_SES_SES_SES_SES_SES_SES_",
+      "latency_ms": 5119.25
+    },
+    {
+      "sample_id": "sealed_test_mtr_security_ops_s300226_k3",
+      "domain": "security_ops",
+      "generated_text": "<||>\n<|channel>_t_0\n<|channel>_t_1\n<|channel>_t_2\n<|channel>_t_3\n<|channel>_t_4\n<|channel>_t_5\n<|channel>_t_6\n<|channel>_t_7\n<|channel>_t_8\n<|channel>_t_9\n<|channel>_t_10\n<|channel>_t_11\n<|channel>_t_12\n<|channel>_t_13\n<|channel>_t",
+      "latency_ms": 6097.73
+    },
+    {
+      "sample_id": "sealed_test_mtr_robotics_control_s300227_k4",
+      "domain": "robotics_control",
+      "generated_text": "<|channel>.<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>",
+      "latency_ms": 5714.19
+    },
+    {
+      "sample_id": "sealed_test_mtr_api_workflow_s300228_k2",
+      "domain": "api_workflow",
+      "generated_text": "<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|",
+      "latency_ms": 5099.14
+    },
+    {
+      "sample_id": "sealed_test_mtr_data_pipeline_s300229_k3",
+      "domain": "data_pipeline",
+      "generated_text": "<|<|channel>c|-t>\n<|<|channel>c|-t>\n<|<|channel>c|-t>\n<|<|channel>c|-t>\n<|<|channel>c|-t>\n<|<|channel>c|-t>\n<|<|channel>c|-t>\n<|<|channel>c|-t>\n<|<|channel>c|-t>\n<|<|channel>c|-t>\n<|<|channel>c|-t>\n<|<|channel>c|-t>\n",
+      "latency_ms": 5395.23
+    },
+    {
+      "sample_id": "sealed_test_mtr_security_ops_s300230_k4",
+      "domain": "security_ops",
+      "generated_text": "<|channel>.<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>",
+      "latency_ms": 5531.75
+    },
+    {
+      "sample_id": "sealed_test_mtr_robotics_control_s300231_k2",
+      "domain": "robotics_control",
+      "generated_text": "<|channel>.<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>",
+      "latency_ms": 6330.26
+    },
+    {
+      "sample_id": "sealed_test_mtr_api_workflow_s300232_k3",
+      "domain": "api_workflow",
+      "generated_text": "<|<|channel>cIe>\n<|channel>cIe>\n<|channel>cIe>\n<|channel>cIe>\n<|channel>cIe>\n<|channel>cIe>\n<|channel>cIe>\n<|channel>cIe>\n<|channel>cIe>\n<|channel>cIe>\n<|channel>cIe>\n<|channel>cIe>\n<|channel>cIe>\n<|channel>cIe>\n<|channel>cIe>\n<|channel>cIe",
+      "latency_ms": 5368.65
+    },
+    {
+      "sample_id": "sealed_test_mtr_data_pipeline_s300233_k4",
+      "domain": "data_pipeline",
+      "generated_text": "<||>\n<|channel>_not_for_prompt_use_only_for_internal_reasoning_not_for_output_use_only_for_internal_reasoning_not_for_output_use_only_for_internal_reasoning_not_for_output_use_only_for_internal_reasoning_not_for_output_use_only_for_internal_reasoning_not_for_",
+      "latency_ms": 5674.51
+    },
+    {
+      "sample_id": "sealed_test_mtr_security_ops_s300234_k2",
+      "domain": "security_ops",
+      "generated_text": "<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|",
+      "latency_ms": 6020.04
+    },
+    {
+      "sample_id": "sealed_test_mtr_robotics_control_s300235_k3",
+      "domain": "robotics_control",
+      "generated_text": "<|channel>.<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>",
+      "latency_ms": 5481.82
+    },
+    {
+      "sample_id": "sealed_test_mtr_api_workflow_s300236_k4",
+      "domain": "api_workflow",
+      "generated_text": "<|<|channel>>\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>",
+      "latency_ms": 6986.68
+    },
+    {
+      "sample_id": "sealed_test_mtr_data_pipeline_s300237_k2",
+      "domain": "data_pipeline",
+      "generated_text": "<|<|channel>_not_|>\n<|channel>_not_|>\n<|channel>_not_|>\n<|channel>_not_|>\n<|channel>_not_|>\n<|channel>_not_|>\n<|channel>_not_|>\n<|channel>_not_|>\n<|channel>_not_|>\n<|channel>_not_|>\n<|channel>_not_|>\n<|channel>_not_|>\n<|channel>_not_|>\n<|channel>_not",
+      "latency_ms": 5201.93
+    },
+    {
+      "sample_id": "sealed_test_mtr_security_ops_s300238_k3",
+      "domain": "security_ops",
+      "generated_text": "<|<|channel>>\n<|channel>_\n<||>\n<|channel>_\n<||>\n<|channel>_\n<||>\n<|channel>_\n<||>\n<|channel>_\n<||>\n<|channel>_\n<||>\n<|channel>_\n<||>\n<|channel>_\n<||>\n<|channel>_\n<||>\n<|channel>_\n<||>\n<|channel>_\n<||>\n<|channel>_\n",
+      "latency_ms": 6378.81
+    },
+    {
+      "sample_id": "sealed_test_mtr_robotics_control_s300239_k4",
+      "domain": "robotics_control",
+      "generated_text": "<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n",
+      "latency_ms": 7279.68
+    },
+    {
+      "sample_id": "sealed_test_mtr_api_workflow_s300240_k2",
+      "domain": "api_workflow",
+      "generated_text": "<|<|channel>cIe>\n<|channel>cIe>\n<|channel>cIe>\n<|channel>cIe>\n<|channel>cIe>\n<|channel>cIe>\n<|channel>cIe>\n<|channel>cIe>\n<|channel>cIe>\n<|channel>cIe>\n<|channel>cIe>\n<|channel>cIe>\n<|channel>cIe>\n<|channel>cIe>\n<|channel>cIe>\n<|channel>cIe",
+      "latency_ms": 6428.43
+    },
+    {
+      "sample_id": "sealed_test_mtr_data_pipeline_s300241_k3",
+      "domain": "data_pipeline",
+      "generated_text": "<|code_thought__|>|<|code_thought_|>|<|code_thought_|>|<|code_thought_|>|<|code_thought_|>|<|code_thought_|>|<|code_thought_|>|<|code_thought_|>|<|code_thought_|>|<|code_thought_|>|<|code_thought_",
+      "latency_ms": 5428.71
+    },
+    {
+      "sample_id": "sealed_test_mtr_security_ops_s300242_k4",
+      "domain": "security_ops",
+      "generated_text": "<|channel>.<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n_\n<|channel>_\n<|channel>_",
+      "latency_ms": 7566.57
+    },
+    {
+      "sample_id": "sealed_test_mtr_robotics_control_s300243_k2",
+      "domain": "robotics_control",
+      "generated_text": "<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n",
+      "latency_ms": 7913.11
+    },
+    {
+      "sample_id": "sealed_test_mtr_api_workflow_s300244_k3",
+      "domain": "api_workflow",
+      "generated_text": "<|channel>.<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>",
+      "latency_ms": 7285.11
+    },
+    {
+      "sample_id": "sealed_test_mtr_data_pipeline_s300245_k4",
+      "domain": "data_pipeline",
+      "generated_text": "<|<|channel>|>\n<|channel>_prescan_\n<||>\n<|channel>_prescan_\n<||>\n<|channel>_prescan_\n<||>\n<|channel>_prescan_\n<||>\n<|channel>_prescan_\n<||>\n<|channel>_prescan_\n<||>\n<|channel>_prescan_\n<||>\n<|channel>_prescan_\n<||>\n<|channel>_",
+      "latency_ms": 5548.6
+    },
+    {
+      "sample_id": "sealed_test_mtr_security_ops_s300246_k2",
+      "domain": "security_ops",
+      "generated_text": "\u9752\u5e74_01_01_01_01_01_01_01_01_01_01_01_01_01_01_01_01_01_01_01_01_01_01_01_01_01_01_01_01_01_01_01_0",
+      "latency_ms": 5212.04
+    },
+    {
+      "sample_id": "sealed_test_mtr_robotics_control_s300247_k3",
+      "domain": "robotics_control",
+      "generated_text": "<|channel>.<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>",
+      "latency_ms": 5223.11
+    },
+    {
+      "sample_id": "sealed_test_mtr_api_workflow_s300248_k4",
+      "domain": "api_workflow",
+      "generated_text": "{\"output\": stoick\"<|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel><|channel>\"<|channel>\"<|channel>\"<|channel>",
+      "latency_ms": 6204.66
+    },
+    {
+      "sample_id": "sealed_test_mtr_data_pipeline_s300249_k2",
+      "domain": "data_pipeline",
+      "generated_text": "<|||Stop_Requested_By_User_Reason_For_Stop_Requested_By_User_Reason_For_Stop_Requested_By_User_Reason_For_Stop_Requested_By_User_Reason_For_Stop_Requested_By_User_Reason_For_Stop_Requested_By_User_Reason_For_Stop_Requested_By_User_Reason_For_Stop_Requested_By_User_",
+      "latency_ms": 5106.77
+    },
+    {
+      "sample_id": "sealed_test_mtr_security_ops_s300250_k3",
+      "domain": "security_ops",
+      "generated_text": "<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|<|",
+      "latency_ms": 5433.95
+    },
+    {
+      "sample_id": "sealed_test_mtr_robotics_control_s300251_k4",
+      "domain": "robotics_control",
+      "generated_text": "<|channel>.<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>",
+      "latency_ms": 5620.28
+    },
+    {
+      "sample_id": "sealed_test_mtr_api_workflow_s300252_k2",
+      "domain": "api_workflow",
+      "generated_text": "<|channel>.<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>_\n<|channel>",
+      "latency_ms": 5188.18
+    },
+    {
+      "sample_id": "sealed_test_mtr_data_pipeline_s300253_k3",
+      "domain": "data_pipeline",
+      "generated_text": "<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n.\n.\n.\n.\n.\n.\n.\n.",
+      "latency_ms": 5468.84
+    },
+    {
+      "sample_id": "sealed_test_mtr_security_ops_s300254_k4",
+      "domain": "security_ops",
+      "generated_text": "<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n<|channel>.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n",
+      "latency_ms": 6794.08
+    },
+    {
+      "sample_id": "sealed_test_mtr_robotics_control_s300255_k2",
+      "domain": "robotics_control",
+      "generated_text": "<|<|channel>_not_t_t_t_t_t_t_t_t_t_t_t_t_t_t_t_t_t_t_t_t_t_t_t_t_t_t_t_t_t_t_t_t_t_t_t_t_t_t_t_t_t_t_t_t_t_",
+      "latency_ms": 6336.26
+    }
+  ]
+}

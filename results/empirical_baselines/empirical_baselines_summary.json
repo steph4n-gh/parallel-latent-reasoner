@@ -1,0 +1,72 @@
+{
+  "timestamp": "2026-09-04T16:10:27.815419+00:00",
+  "sample_count": 256,
+  "conditions": {
+    "control_zeroed": {
+      "sample_count": 256,
+      "exact_match_pct": 97.27,
+      "terminal_match_pct": 99.61,
+      "valid_json_pct": 100.0,
+      "max_repetition": 2,
+      "mean_repetition": 1.01,
+      "mean_entropy": 4.44,
+      "mean_latency_ms": 3116.98,
+      "median_latency_ms": 3017.87
+    },
+    "adapter_t1": {
+      "sample_count": 256,
+      "exact_match_pct": 25.39,
+      "terminal_match_pct": 38.28,
+      "valid_json_pct": 40.23,
+      "max_repetition": 93,
+      "mean_repetition": 15.91,
+      "mean_entropy": 3.8,
+      "mean_latency_ms": 5156.36,
+      "median_latency_ms": 5383.12
+    },
+    "adapter_t4": {
+      "sample_count": 256,
+      "exact_match_pct": 18.75,
+      "terminal_match_pct": 30.08,
+      "valid_json_pct": 32.81,
+      "max_repetition": 93,
+      "mean_repetition": 14.85,
+      "mean_entropy": 3.85,
+      "mean_latency_ms": 5521.59,
+      "median_latency_ms": 5567.44
+    },
+    "non_recurrent": {
+      "sample_count": 256,
+      "exact_match_pct": 1.17,
+      "terminal_match_pct": 2.34,
+      "valid_json_pct": 2.73,
+      "max_repetition": 93,
+      "mean_repetition": 24.74,
+      "mean_entropy": 3.28,
+      "mean_latency_ms": 6019.98,
+      "median_latency_ms": 5705.53
+    },
+    "control_shuffled": {
+      "sample_count": 256,
+      "exact_match_pct": 17.97,
+      "terminal_match_pct": 30.86,
+      "valid_json_pct": 32.03,
+      "max_repetition": 93,
+      "mean_repetition": 14.73,
+      "mean_entropy": 3.85,
+      "mean_latency_ms": 5919.67,
+      "median_latency_ms": 5614.74
+    },
+    "repo_decoder": {
+      "sample_count": 256,
+      "exact_match_pct": 96.48,
+      "terminal_match_pct": 99.61,
+      "valid_json_pct": 100.0,
+      "max_repetition": 1,
+      "mean_repetition": 1.0,
+      "mean_entropy": 4.44,
+      "mean_latency_ms": 2838.56,
+      "median_latency_ms": 2817.6
+    }
+  }
+}

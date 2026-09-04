@@ -48,6 +48,9 @@ class GemmaCausalPrefixDecoder(nn.Module):
 
         if eos_token_ids is not None:
             self.eos_token_ids = set(eos_token_ids)
+            if self.is_gemma4_architecture() and 107 in self.eos_token_ids:
+                self.eos_token_ids.discard(107)
+                self.eos_token_ids.add(106)
         else:
             # Architecture-aware EOS tokens: Gemma 4 uses {1, 106} (<eos>, <turn|>),
             # while Gemma 2 uses {1, 107} (<eos>, <end_of_turn>).
@@ -102,8 +105,13 @@ class GemmaCausalPrefixDecoder(nn.Module):
         if hasattr(model, "language_model"):
             return True
         manifest = getattr(self.backbone, "manifest", None)
-        if manifest is not None and "gemma-4" in getattr(manifest, "model_id", ""):
+        if manifest is not None and ("gemma-4" in getattr(manifest, "model_id", "") or "12b" in getattr(manifest, "model_id", "").lower()):
             return True
+        tok = getattr(self.backbone, "tokenizer", None)
+        if tok is not None:
+            from prlr.domain.prompt_format import is_gemma4_tokenizer
+            if is_gemma4_tokenizer(tok):
+                return True
         return False
 
     def get_inner_model(self) -> Any:
@@ -298,6 +306,10 @@ class GemmaCausalPrefixDecoder(nn.Module):
             prefix_latents = prefix_latents[None, :, :]
 
         stop_tokens = self.eos_token_ids if eos_token_ids is None else set(eos_token_ids)
+        if self.is_gemma4_architecture() and 107 in stop_tokens:
+            stop_tokens = set(stop_tokens)
+            stop_tokens.discard(107)
+            stop_tokens.add(106)
         B, P = prompt_ids.shape
         if prefix_latents is not None and prefix_latents.shape[1] > 0:
             B_lat, M, D = prefix_latents.shape

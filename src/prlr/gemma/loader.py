@@ -151,7 +151,10 @@ def load_model(
             from transformers import AutoTokenizer
 
             tok_dir = tokenizer_path.parent if tokenizer_path.is_file() else tokenizer_path
-            loaded_tokenizer = AutoTokenizer.from_pretrained(str(tok_dir))
+            try:
+                loaded_tokenizer = AutoTokenizer.from_pretrained(str(tok_dir), fix_mistral_regex=True)
+            except TypeError:
+                loaded_tokenizer = AutoTokenizer.from_pretrained(str(tok_dir))
         except Exception:
             import sentencepiece as spm
 
@@ -186,7 +189,10 @@ def load_model(
     # 6. Load MLX Model Backbone
     import mlx_lm
 
-    model, _ = mlx_lm.load(str(weights_path))
+    try:
+        model, _ = mlx_lm.load(str(weights_path), tokenizer_config={"fix_mistral_regex": True})
+    except TypeError:
+        model, _ = mlx_lm.load(str(weights_path))
     model_layers = None
     if hasattr(model, "language_model") and hasattr(model.language_model, "model") and hasattr(model.language_model.model, "layers"):
         model_layers = model.language_model.model.layers

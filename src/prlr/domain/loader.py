@@ -16,6 +16,7 @@ from typing import Any, Dict, Iterator, List, Literal, Optional, Sequence, Set, 
 
 import mlx.core as mx
 
+from prlr.domain.prompt_format import format_canonical_prompt, is_gemma4_tokenizer
 from prlr.domain.schema import DomainSample, EvaluationInput
 from prlr.manifest import Rule5ViolationError
 
@@ -52,7 +53,7 @@ class PRLRDomainDataset:
         samples: Sequence[DomainSample],
         tokenizer: Any,
         pad_token_id: int = 0,
-        eos_token_ids: Sequence[int] = (1, 107),
+        eos_token_ids: Optional[Sequence[int]] = None,
         max_prompt_len: int = 1024,
         max_target_len: int = 128,
         pretokenize: bool = True,
@@ -65,7 +66,16 @@ class PRLRDomainDataset:
         self.samples = list(samples)
         self.tokenizer = tokenizer
         self.pad_token_id = pad_token_id
-        self.eos_token_ids = set(eos_token_ids)
+        self._is_gemma4 = is_gemma4_tokenizer(tokenizer)
+
+        if eos_token_ids is None:
+            self.eos_token_ids = {1, 106} if self._is_gemma4 else {1, 107}
+        else:
+            self.eos_token_ids = set(eos_token_ids)
+            if self._is_gemma4 and 107 in self.eos_token_ids:
+                self.eos_token_ids.discard(107)
+                self.eos_token_ids.add(106)
+
         self.max_prompt_len = max_prompt_len
         self.max_target_len = max_target_len
 
@@ -75,14 +85,22 @@ class PRLRDomainDataset:
             self._pretokenize_all()
 
     def _tokenize_prompt(self, text: str) -> List[int]:
+        canonical_text = format_canonical_prompt(text, self.tokenizer, is_gemma4=self._is_gemma4)
         if hasattr(self.tokenizer, "encode"):
-            tokens = self.tokenizer.encode(text, add_special_tokens=True)
+            tokens = self.tokenizer.encode(canonical_text, add_special_tokens=False)
             if hasattr(tokens, "tolist"):
                 tokens = tokens.tolist()
         elif hasattr(self.tokenizer, "encode_as_ids"):
-            tokens = self.tokenizer.encode_as_ids(text)
+            tokens = self.tokenizer.encode_as_ids(canonical_text)
         else:
-            tokens = list(self.tokenizer(text))
+            tokens = list(self.tokenizer(canonical_text))
+
+        bos_id = getattr(self.tokenizer, "bos_token_id", None)
+        if bos_id is None and hasattr(self.tokenizer, "bos_id"):
+            bos_id = self.tokenizer.bos_id()
+        if bos_id is not None and (len(tokens) == 0 or tokens[0] != bos_id):
+            tokens = [bos_id] + tokens
+
         if len(tokens) > self.max_prompt_len:
             tokens = tokens[: self.max_prompt_len]
         return tokens
@@ -97,12 +115,15 @@ class PRLRDomainDataset:
         else:
             tokens = list(self.tokenizer(text))
 
-        # Ensure termination with EOS (107 or 1)
+        term_id = 106 if self._is_gemma4 else 107
+        # Ensure termination with EOS / turn-end
         if not any(tok in self.eos_token_ids for tok in tokens):
-            tokens.append(107)
+            tokens.append(term_id)
 
+        # Truncation must never drop the turn-ending token
         if len(tokens) > self.max_target_len:
-            tokens = tokens[: self.max_target_len]
+            last_tok = tokens[-1] if tokens[-1] in self.eos_token_ids else term_id
+            tokens = tokens[: self.max_target_len - 1] + [last_tok]
         return tokens
 
     def _pretokenize_all(self):

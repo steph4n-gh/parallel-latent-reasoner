@@ -173,32 +173,10 @@ class PipelineResult:
 HybridDeliberationResult = PipelineResult
 
 
-def format_prompt_for_backbone(prompt: str, is_gemma4: bool) -> str:
-    """Format prompt according to backbone architecture requirements.
-
-    For Gemma 4 12B, strictly formats prompts using the official chat template
-    with thought channel:
-    <|turn>user\n{body}<turn|>\n<|turn>model\n<|channel>thought\n
-    """
-    if not is_gemma4:
-        return prompt
-
-    if "<start_of_turn>user" in prompt:
-        import re
-        match = re.search(r"<start_of_turn>user\s*\n(.*?)(?:<end_of_turn>|$)", prompt, re.DOTALL)
-        user_body = match.group(1).strip() if match else prompt.strip()
-        return f"<|turn>user\n{user_body}<turn|>\n<|turn>model\n<|channel>thought\n"
-    elif "<|turn>user" in prompt:
-        if "<|channel>thought" not in prompt:
-            if prompt.endswith("<|turn>model\n"):
-                return prompt + "<|channel>thought\n"
-            elif prompt.endswith("<|turn>model"):
-                return prompt + "\n<|channel>thought\n"
-            else:
-                return prompt + "\n<|channel>thought\n"
-        return prompt
-    else:
-        return f"<|turn>user\n{prompt.strip()}<turn|>\n<|turn>model\n<|channel>thought\n"
+def format_prompt_for_backbone(prompt: str, is_gemma4: bool, tokenizer: Optional[Any] = None) -> str:
+    """Format prompt according to canonical chat template."""
+    from prlr.domain.prompt_format import format_canonical_prompt
+    return format_canonical_prompt(prompt, tokenizer=tokenizer, is_gemma4=is_gemma4)
 
 
 class PRLRPipeline:
@@ -427,7 +405,7 @@ class PRLRPipeline:
         # ----------------------------------------------------------------------
         t0 = time.perf_counter()
         if isinstance(prompt, str):
-            formatted_prompt = format_prompt_for_backbone(prompt, self.is_gemma4)
+            formatted_prompt = format_prompt_for_backbone(prompt, self.is_gemma4, tokenizer=getattr(self.backbone, "tokenizer", None))
             prompt_ids, _ = self.backbone.encode_prompt_context(formatted_prompt)
         elif isinstance(prompt, list):
             prompt_arr = mx.array(prompt, dtype=mx.int32)
@@ -594,7 +572,7 @@ class PRLRPipeline:
         """
         t0 = time.perf_counter()
         if isinstance(prompt, str):
-            formatted_prompt = format_prompt_for_backbone(prompt, self.is_gemma4)
+            formatted_prompt = format_prompt_for_backbone(prompt, self.is_gemma4, tokenizer=getattr(self.backbone, "tokenizer", None))
             prompt_ids, _ = self.backbone.encode_prompt_context(formatted_prompt)
         elif isinstance(prompt, list):
             prompt_arr = mx.array(prompt, dtype=mx.int32)

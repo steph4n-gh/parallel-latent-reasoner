@@ -8,16 +8,18 @@
 - `google/gemma-4-12B-it-4bit` (official 4-bit affine weights, frozen, $D=3840$, 48 layers)
 **Trained Adapters**:
 - `checkpoints/gemma_2b_prlr_adapter.safetensors` (88.69M params, SHA-256: `6048262d99e5d28851adfc87a379a2796802926605ab74e33553b4d9347028d7`)
-- `checkpoints/gemma_4_12b_prlr_adapter.safetensors` (200.7M params, $D=3840$, 48 layers, SHA-256: `81412e358ad391753007f53e5148cb6a27097b4e97f06cff72a98701b4f18922`, < 11.1 GB Metal VRAM inference)
+- `checkpoints/gemma_4_12b_prlr_adapter.safetensors` (200.7M params, $D=3840$, 48 layers, SHA-256: `ffb26ccac589d81d69ee67cb0c74c120dfd7b8695dc954ae4a10aca13ab2da36`, < 11.9 GB Metal VRAM training, 11.67 GB inference)
 
 > [!WARNING]
 > **Evidence Status & Scope of Pretrained Implementation**
 > PRLR evaluates genuine pretrained Google Gemma backbones (`google/gemma-2b-it` and `google-gemma-4-12B-it-4bit`) with weight-tied recurrent latent deliberation adapters on Apple Silicon Metal GPU. All semantic benchmarks are evaluated blindly on held-out procedural splits (`data/prlr_domain_v1/sealed_test.jsonl`) under Non-Negotiable Evidence Rules 1–10.
-> - **Gemma 2B Semantic Accuracy**: On held-out sealed test splits, PRLR achieves **81.64% Terminal Tool Routing Accuracy** and **18.36% Exact Match Accuracy**. Per Rule 8, because target thresholds ($\ge 75\%$ EM, $\ge 85\%$ Terminal) were not met, these metrics are documented as `❌ FAIL`.
-> - **Gemma 4 12B Implementation**: BPTT distillation converged to loss 0.0725 (< 0.08) at Step 228 on 512 procedural samples, serializing a 200.7M parameter adapter (peak VRAM: 11.67 GB). On held-out sealed test splits, it achieves **7.42% Terminal Tool Routing** and **3.12% Exact Match Accuracy** (`❌ FAIL` vs targets). Claims remain strictly `experimental / unpromoted` per Rules 8 & 9.
-> - **Token Diversity**: Completely eliminates legacy repetition traps, achieving Shannon Entropy **$H = 4.45\text{ bits}$** (`✅ PASS` vs $\ge 3.0$) with mean 4-gram repetition of **1.09** (max: 5).
-> - **Dynamic Deliberation**: The post-hoc calibrated 4-signal E-Gate achieves **100.00% accuracy retention** (`✅ PASS` vs $\ge 99\%$) with a **20.02% depth reduction** (`✅ PASS` vs $\ge 15\%$) compared to fixed $T=4$.
-> - **Promotion Status**: Classified as `experimental / unpromoted`. Under Rule 9, reasoning speedup is not promoted as an unconditioned capability due to the exact match quality gap.
+> - **Gemma 4 12B Direct Base Model**: Evaluated unconditioned through the repository decoder with official chat template and closed thought channel, the frozen base model achieves **96.48% Exact Match** (247/256), **99.61% Terminal Match**, and **100.0% Valid JSON** with **Max Repetition 1** (`results/empirical_baselines/predictions_repo_decoder.json`).
+> - **Zeroed-Prefix Falsifier Control**: Setting the soft prefix to $\mathbf{0}$ recovers **97.27% Exact Match** and **100.0% Valid JSON** (`results/empirical_baselines/predictions_control_zeroed.json`), proving the causal decoder operates with near-perfect fidelity and confirming that unanchored soft prefix embeddings disrupt generation.
+> - **Gemma 4 12B Contract Repair & Adapter**: Following contract repair (closed thought channel `<|channel>thought\n<channel|>`, turn-ending token 106 `<turn|>`, and removing newline 107 from EOS), the retrained adapter improved from legacy 3.12% to **25.39% Exact Match** at $T=1$ (40.23% Valid JSON) and **18.75%** at $T=4$ (`❌ FAIL` vs $\ge 75\%$ target).
+> - **Gemma 2B Semantic Accuracy**: On held-out sealed test splits, PRLR achieves **81.64% Terminal Tool Routing Accuracy** and **18.36% Exact Match Accuracy** (`❌ FAIL` vs targets).
+> - **Token Diversity**: Eliminates repetition traps on base model (Max Rep 1) and zeroed control (Max Rep 2); Gemma 2B achieves Shannon Entropy **$H = 4.45\text{ bits}$** (`✅ PASS` vs $\ge 3.0$).
+> - **Dynamic Deliberation**: The post-hoc calibrated 4-signal E-Gate achieves **100.00% accuracy retention** (`✅ PASS` vs $\ge 99\%$) with a **20.02% depth reduction** (`✅ PASS` vs $\ge 15\%$) on Gemma 2B and **44.34% depth reduction** on Gemma 4.
+> - **Promotion Status**: Classified as `experimental / unpromoted`. Under Rule 9, reasoning speedup is disqualified from promotion due to the exact match quality gap between soft-prefix deliberation and direct unconditioned generation.
 
 ---
 

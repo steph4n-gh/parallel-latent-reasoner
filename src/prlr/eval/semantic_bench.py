@@ -269,30 +269,14 @@ class SemanticBenchmarkRunner:
         return False
 
     def format_prompt(self, raw_prompt: str) -> str:
-        """Format prompt according to backbone architecture requirements.
+        """Format prompt strictly using canonical chat template."""
+        from prlr.domain.prompt_format import format_canonical_prompt
 
-        For Gemma 4 12B, strictly formats prompts using the official chat template
-        with thought channel:
-        <|turn>user\n{body}<turn|>\n<|turn>model\n<|channel>thought\n
-        """
-        if not self.is_gemma4:
-            return raw_prompt
-
-        if "<start_of_turn>user" in raw_prompt:
-            match = re.search(r"<start_of_turn>user\s*\n(.*?)(?:<end_of_turn>|$)", raw_prompt, re.DOTALL)
-            user_body = match.group(1).strip() if match else raw_prompt.strip()
-            return f"<|turn>user\n{user_body}<turn|>\n<|turn>model\n<|channel>thought\n"
-        elif "<|turn>user" in raw_prompt:
-            if "<|channel>thought" not in raw_prompt:
-                if raw_prompt.endswith("<|turn>model\n"):
-                    return raw_prompt + "<|channel>thought\n"
-                elif raw_prompt.endswith("<|turn>model"):
-                    return raw_prompt + "\n<|channel>thought\n"
-                else:
-                    return raw_prompt + "\n<|channel>thought\n"
-            return raw_prompt
-        else:
-            return f"<|turn>user\n{raw_prompt.strip()}<turn|>\n<|turn>model\n<|channel>thought\n"
+        return format_canonical_prompt(
+            raw_prompt,
+            tokenizer=getattr(self.backbone, "tokenizer", None),
+            is_gemma4=self.is_gemma4,
+        )
 
     def evaluate_sample_with_depth(
         self,
