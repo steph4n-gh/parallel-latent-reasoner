@@ -36,14 +36,14 @@ pip install -e ".[dev]"
 
 ## 3. Testing Standard (100% Pass Required)
 
-PRLR enforces an invariant test suite covering numerical stability, parameter weight-tying, Lipschitz contractive bounds ($\alpha \le 0.05$), and end-to-end decoding:
+PRLR enforces an invariant test suite covering numerical stability, parameter weight-tying, bounded residual scaling, and end-to-end decoding:
 
 ```bash
 # Run the complete test suite
 pytest tests/ -v
 ```
 
-**All 248 tests must pass**. We do not merge pull requests with failing or flaky tests.
+**All tests must pass**. We do not merge pull requests with failing or flaky tests.
 
 ---
 
